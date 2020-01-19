@@ -1,0 +1,270 @@
+%\documentclass[12pt,twoside]{report}
+\documentclass[12pt]{report}
+
+%% last modification is May 26, 2014, Emma Pease
+
+% note that the document can be single or double sided.  
+
+%\usepackage[online]{suthesis-2e}
+\usepackage{suthesis-2e}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{cite}
+\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage[colorlinks,citecolor=blue,urlcolor=blue,breaklinks,pdftitle={xtz},pdfauthor={Aviv Cukierman}]{hyperref}
+\renewcommand{\arraystretch}{1.25}
+\usepackage{lscape}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\usepackage[makeroom]{cancel}
+\usepackage{multicol}
+
+%\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+%\addbibresource{Thesis.bib}
+
+%%%%%
+%Say ttZ: slightly less than one, as is supported by http://arxiv.org/pdf/1505.06520.pdf.
+
+%%%%%%
+
+\newcommand{\br}{\ensuremath{\mathcal{BR}}}
+
+\def\GeV{\ensuremath{\mathrm{GeV}}}
+\def\TeV{\ensuremath{\mathrm{TeV}}}
+\def\CLs{\ensuremath{\mathrm{CL}_s}}
+\def\CLsObs{\ensuremath{\mathrm{CL}_s^{\mathrm{observed}}}}
+\def\CLsExp{\ensuremath{\mathrm{CL}_s^{\mathrm{expected}}}}
+%\usepackage{a4wide}
+
+\def\ifb{\ensuremath{\mathrm{fb}^{-1}}}
+
+\newcommand{\formatGenerator}[1]{\textsc{#1}}
+\newcommand{\geantFour}{\formatGenerator{geant4}}
+
+\newcommand*{\pT}{\ensuremath{p_{\text{T}}}}
+\newcommand*{\pt}{\ensuremath{p_{\text{T}}}}
+\newcommand*{\ET}{\ensuremath{E_{\text{T}}}}
+\newcommand*{\eT}{\ensuremath{E_{\text{T}}}}
+\newcommand*{\et}{\ensuremath{E_{\text{T}}}}
+% ATLAS jets standard terms
+\newcommand*{\kt}{\ensuremath{k_{t}}}
+\newcommand*{\antikt}{anti-\kt}
+\newcommand*{\Antikt}{Anti-\kt}
+\newcommand*{\GEANT}{\textsc{Geant}}
+\newcommand*{\POWHEGBOX}{\textsc{Powheg-Box}}
+\newcommand*{\PYTHIA}{\textsc{Pythia}}
+
+%%%%%
+
+\def\ltri{\mbox{\begin{picture}(7,10)
+\put(1,0){\line(1,0){5}}
+\put(6,0){\line(-1,2){5}}
+\put(1,0){\line(0,1){10}}
+\end{picture}
+}}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{4}
+
+\makeatletter
+\@addtoreset{chapter}{part}
+\makeatother  
+
+\usepackage{titletoc}
+\titlecontents{chapter}
+[2.65em]
+{\addvspace{10pt}\bfseries}
+{\contentslabel{2.3em}}
+{\hspace*{-2.3em}}
+{\space\hfill}
+%{\space\hfill\contentspage}
+
+\titlecontents{part}
+[2.65em]
+{\addvspace{10pt}\bfseries}
+{\contentslabel{3.3em}}
+{\hspace*{-2.3em}}
+{\space\hfill}
+
+\usepackage{overpic}
+\usepackage{multirow}
+\usepackage{adjustbox}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{snakes}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\usepackage{comment}
+
+\usepackage{booktabs,siunitx}
+\sisetup{separate-uncertainty=true}
+
+\usepackage{fancyvrb}
+
+\tikzset{
+	% >=stealth', %%  Uncomment for more conventional arrows
+    vector/.style={decorate, decoration={snake}, draw},
+	provector/.style={decorate, decoration={snake,amplitude=2.5pt}, draw},
+	antivector/.style={decorate, decoration={snake,amplitude=-2.5pt}, draw},
+    fermion/.style={draw=black, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw=black]{>}}}},
+    fermionbar/.style={draw=black, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw=black]{<}}}},
+    fermionnoarrow/.style={draw=black},
+    gluon/.style={decorate, draw=black,
+        decoration={coil,amplitude=2pt, segment length=5pt}},
+    gluon2/.style={decorate, draw=black,
+        decoration={coil,amplitude=5pt, segment length=6pt}},        
+    scalar/.style={dashed,draw=black, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw=black]{>}}}},
+    scalarbar/.style={dashed,draw=black, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw=black]{<}}}},
+    scalarnoarrow/.style={dashed,draw=black},
+    electron/.style={draw=black, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow[draw=black]{>}}}},
+	bigvector/.style={decorate, decoration={snake,amplitude=4pt}, draw},
+}
+
+%\renewcommand{\thepart}{\large \Roman{part}}
+%\renewcommand{\thechapter}{\hspace{0.1em}\Roman{chapter}}
+%\renewcommand{\thesection}{\arabic{section}}
+%\renewcommand{\thesubsection}{\arabic{subsection}}
+%\renewcommand{\thesubsubsection}{\arabic{subsection}.\arabic{subsubsection}}
+%\renewcommand{\theparagraph}{\arabic{subsection}.\arabic{subsubsection}.\arabic{paragraph}} %\alph
+
+\usepackage{euler}
+\usepackage{verbdef}
+\verbdef{\vtext}{generate p p > t t~ a / t t~}
+%\usepackage{times}
+\usepackage{textcomp}
+\newcommand{\textapprox}{\raisebox{0.5ex}{\texttildelow}}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\newcommand\myeqa{\stackrel{\mathclap{\normalfont\mbox{\tiny(1)}}}{\implies}}
+\newcommand\myeqb{\stackrel{\mathclap{\normalfont\mbox{\tiny(2)}}}{\implies}}
+\newcommand\myeqc{\stackrel{\mathclap{\normalfont\mbox{\tiny(3)}}}{\implies}}
+\newcommand\myeqd{\stackrel{\mathclap{\normalfont\mbox{\tiny(4)}}}{\implies}}
+
+\newenvironment{dedication}
+  {\clearpage           % we want a new page
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{1}}% some space at the top 
+   \itshape             % the text is in italics
+   \raggedleft          % flush to the right margin
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }
+
+\makeatletter
+     \renewcommand*\l@figure{\@dottedtocline{1}{1em}{3.2em}}
+\makeatother
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+    \title{Searches for New Physics Using Jets with the ATLAS Detector}
+    \author{Aviv Cukierman}
+    \dept{Physics}
+    \principaladviser{Ariel Schwartzman}
+    %\coprincipaladviser{Ariel Schwartzman}
+    \secondreader{Su Dong}
+    \thirdreader{Patricia Burchat}
+    \fourthreader{Natalia Toro}
+
+    \begin{document}
+
+    \beforepreface
+
+\prefacesection{Abstract}
+\input{latex/Abstract}
+
+%\begin{dedication}
+\clearpage
+ \vspace*{\stretch{1}}
+\begin{flushright}
+\vspace{10mm}
+%{\it Is one PhD}\\
+%%{\it Too much to ask from a child}\\
+%{\it So much to ask from a child}\\
+%%{\it To please his mother?}
+%{\it After all I've done?}\\
+%\vspace{20mm}
+%{\it Story of a Jewish boy's life: dehooded at birth, hooded at graduation.}\\
+%{\it - Unknown}\\
+%\vspace{20mm}
+{\it ``Your mother needs three doctors in the family to keep up her health."}\\
+{ --- Valentin Cukierman}\\
+\end{flushright}
+\vspace{\stretch{3}}
+\clearpage
+%\end{dedication}
+
+\newpage
+
+\prefacesection{Acknowledgements}
+\input{latex/Acknowledgements}
+
+\afterpreface
+
+\chapter{Introduction}
+\label{ch:intro}\input{latex/Introduction}
+
+%\part[Particle Physics Theory and Experiment]{Particle Physics Theory and Experiment\\[1ex]\makebox[0pt]
+%{\includegraphics[width=0.5\paperwidth]{figures/JetCharge/Diagram}}\\\blfootnote{A schematic (oversimplified) diagram illustrating the transmission of quark charge to the quantum properties of jets. The $u$ and $\bar{d}$ quarks are not directly observable, but their electric and color charge have observable consequences for the pattern of hadrons.}
+%}\label{part:intro}
+
+%\part[Particle Physics Theory and Experiment]{Particle Physics Theory and Experiment\\[1ex]\makebox[0pt]
+%\label{part:intro}
+
+\chapter{The Standard Model of Particle Physics}
+\label{ch:SM}\input{latex/SM}
+
+\chapter{The Large Hadron Collider}
+\label{ch:LHC}\input{latex/LHC}
+
+\chapter{The ATLAS Detector}
+\label{ch:ATLAS}\input{latex/ATLAS}
+
+%\chapter{Jets in ATLAS}
+%\input{latex/Jets}\label{ch:Jets}
+
+%\part[Searches for New Particles]{Searches for New Particles\\[1ex]\makebox[0pt]
+%\label{part:searches}
+
+\chapter{A Search for a Beyond-the-Standard-Model Higgs Decay}
+\label{ch:HBSM}\input{latex/HBSM}
+
+\chapter{A Generic Data-Driven Resonance Search with Weak Supervision}
+\label{ch:CWoLa}\input{latex/CWoLa}
+
+\chapter{Pile-up Subtraction in Jets with Voronoi Areas}
+\label{ch:Voronoi}\input{latex/Voronoi}
+
+\chapter{Numerical Inversion for Jet Calibrations}
+\label{ch:NI}\input{latex/NI}
+
+\chapter{Improving Jet Calibrations with Machine Learning}
+\label{ch:Calib}\input{latex/Calib}
+
+\chapter{Conclusions}
+\label{ch:Conclusion}\input{latex/Conclusion}
+
+\appendix
+
+\chapter{Improving the Beamspot Measurement}
+\chapter{Numerical Inversion for Jet Calibrations}
+\label{ch:NI_app}\input{latex/NI_app}
+ 
+\bibliographystyle{JHEP-2}  
+\bibliography{ThesisRefs}{}
+%\printbibliography
+\end{document}

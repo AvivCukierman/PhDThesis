@@ -1,0 +1,295 @@
+\section{Gaussian Invariance Lemma}
+\label{sec:lemma}
+
+{\it Let $X\sim \mathcal{N}(\mu,\sigma)$ and $f$ be some function such that $f'(x)>0$.  Then, $f(X)\sim\mathcal{N}(\mu',\sigma')$ if and only if $f(x)$ is linear in $x$.}
+
+\vspace{5mm}
+
+\noindent {\bf Proof.} The converse is a well-known result, and can be obtained directly from application of Eq.~\ref{eqn:newdist}.
+
+Now suppose that $f(X)\sim\mathcal{N}(\mu',\sigma')$.  Let $Y=(X-\mu)/\sigma$ and define 
+\begin{align}
+g(y)=\frac{f(\sigma y+\mu)-\mu'}{\sigma'},
+\end{align}
+so that $Y$ and $Z=g(Y)$ both have a standard normal distribution. Furthermore,
+\begin{align}
+g'(y) = \frac{\sigma}{\sigma'}f'(\sigma y+\mu) > 0,
+\end{align}
+so $g$ is monotonic.
+
+We then can write for any $c$:
+\begin{align}
+\nonumber
+\Phi(c)=\Pr(Y<c)&=\Pr(g(Y)<g(c))\\\nonumber
+&=\Pr(Z<g(c))\\
+&=\Phi(g(c)),
+\end{align}
+Where $\Phi(x)$ is the normal distribution cumulative distribution function. Since $\Phi$ is invertible, we then have that $g(c)=c$.  Inserting the definition of $g$ then gives us the final result:
+\begin{align}
+f(x)=\frac{\sigma'}{\sigma} (x-\mu)+\mu'.\hspace{1 cm}\Box
+\end{align}
+
+\section{Closure of the Mean}
+\label{sec:mean_nonclosure}
+{\it The closure of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{me}(x)$ is given to first order by $C\approx 1-\frac{1}{2}\frac{f''(x)}{f'(x)^3}\frac{\sigma(x)^2}{x}$.}
+
+\vspace{5mm}
+
+\noindent  {\bf Derivation.}
+We begin by Taylor expanding $f^{-1}(y)$ about $y=f(x)$:
+\begin{align}
+f^{-1}(y) &= \sum_{n=0}^\infty \frac{1}{n!}\left(f^{-1}\right)^{(n)}\left(f(x)\right)\cdot\left(y-f(x)\right)^n\nonumber\\
+&=\sum_{n=0}^\infty \frac{1}{n!}g_n(x)\cdot\left(y-f(x)\right)^n,
+\end{align}
+where $g_n(x) \equiv (f^{-1})^{(n)}(f(x))$ means the $n$th derivative of $f^{-1}(y)$, evaluated at $y=f(x)$. Plugging this into Eq.~\ref{eqn:closuredef}, we have
+\begin{align}
+C &= \frac{1}{x}\int dy \rho_{Y|X}(y|x) f^{-1}(y)\nonumber\\
+&=\sum_{n=0}^\infty \frac{1}{n!}\frac{g_n(x)}{x}\int dy \rho_{Y|X}(y|x) \left(y-f(x)\right)^n\nonumber\\
+&=\sum_{n=0}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x),
+\end{align}
+where $\mu_n(x)$ are the standard central moments $\mu_n(x) = \mathbb{E}\left[\left(Y-\mathbb{E}\left[Y\right]\right)^n\middle| X=x\right]$, since by definition $f(x)=\mathbb{E}[Y|X=x]$.
+
+The first few central moments are independent of the distribution $\rho_{Y|X}$.  In particular, $\mu_0 = 1$ is the normalization, and $\mu_1 = 0$. Writing these terms out, we have
+\begin{align}
+C =\frac{g_0(x)}{x}+\sum_{n=2}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).
+\end{align}
+Noting that $g_0(x) = f^{-1}(f(x)) = x$,
+\begin{align}
+C &=1+\sum_{n=2}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).\label{eqn:closureseries}
+\end{align}
+
+\noindent We see that, if $f$ is linear, then so is $f^{-1}$, and so $g_n = 0$ for all $n\ge 2$. Then Eq.~\ref{eqn:closureseries} reduces to $C=1$, and numerical inversion closes, as was found in Eq.~\ref{eqn:closure_linear_proof}.
+
+It will be instructive to expand out the first few terms of Eq.~\ref{eqn:closureseries}. We note that, by definition, $\mu_2(x) = \sigma(x)^2$ is the variance, and $\mu_3(x) = \sigma(x)^3\gamma_1$ defines the skew $\gamma_1$. Then we have
+\begin{align}
+C &=1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2+\frac{1}{6}\frac{g_3(x)}{x}\sigma(x)^3\gamma_1+\sum_{n=4}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).\label{eqn:closureseriesexpand}
+\end{align}
+
+Suppose we are given an arbitrary distribution specified by its moments $\mu_n(x)$. Then the requirement that closure is satisfied in the form of the right hand side of Eq.~\ref{eqn:closureseries} converging to $1$ exactly imposes strict constraints on the function $g(x)$, so that only for a highly specific choice of $g$ and therefore $f$ is closure achieved. Thus in general we do not expect closure to be satisfied for an arbitrary initial distribution $\rho_{Y|X}$.
+
+We note that, since we expect the derivatives $g_n(x)$ and the moments $\mu_n(x)$ to grow considerably slower than $n!$ for functions $f$ and distributions $\rho_{Y|X}$ encountered at the LHC, we expect Eq.~\ref{eqn:closureseries} to converge, and Eq.~\ref{eqn:closureseriesexpand} gives the dominant contributions to the non-closure, i.e.
+\begin{align}
+C \approx 1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2+\frac{1}{6}\frac{g_3(x)}{x}\sigma(x)^3\gamma_1.
+\end{align}
+
+If $\rho_{Y|X}$ is symmetric or near-symmetric, or if the third derivative of $g$ is small, such that $g_3(x)\sigma(x)\gamma_1 \ll g_2(x)$, then the dominant contribution to the non-closure is just
+\begin{align}
+C \approx 1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2.
+\end{align}
+
+\noindent We further note that
+\begin{align}
+g_2(x) &= (f^{-1})^{(2)}(f(x)) = -\frac{f''(x)}{f'(x)^3}\nonumber\\
+\rightarrow C &\approx 1-\frac{1}{2}\frac{f''(x)}{f'(x)^3}\frac{\sigma(x)^2}{x}.\hspace{1 cm}\Box
+\label{eqn:closureseriesgaussian}
+\end{align}
+
+\newpage
+\section{Calibrated Resolution of the Mean}
+\label{sec:calibrated_resolution_calculation}
+{\it The calibrated resolution of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{me}(x)$ is given to first order by $\frac{\sigma(x)}{f'(x)}$.}
+
+\vspace{5mm}
+
+\noindent {\bf Derivation.}
+We note that, expanding $f^{-1}(y)$ about $y=f(x)$ out to one derivative, and using the definitions of $g_n(x)$ and $\mu_n(x)$ from the previous section,
+\begin{align}
+(f^{-1}(y))^2 \approx g_0(x)^2+2g_0(x)g_1(x)(y-f(x))+g_1(x)^2(y-f(x))^2,
+\end{align}
+so that
+\begin{align}
+\mathbb{E}\left[Z^2\middle| X=x\right]&=\int dy \rho_{Y|X}(y|x) (f^{-1}(y))^2\nonumber\\
+&\approx\int dy \rho_{Y|X}(y|x) \left(g_0(x)^2+2g_0(x)g_1(x)(y-f(x))+g_1(x)^2(y-f(x))^2\right)\nonumber\\
+&=g_0(x)^2\mu_0(x)+2g_0(x)g_1(x)\mu_1(x)+g_1(x)^2\mu_2(x)\nonumber\\
+&=g_0(x)^2+g_1(x)^2\sigma(x)^2.\hspace{5mm}\text{($\mu_1=0$ by construction)}
+\end{align}
+Out to one derivative we also have that (as derived in the previous section)
+\begin{align}
+\mathbb{E}\left[Z\middle| X=x\right]^2 &\approx g_0(x)^2\nonumber\\
+\rightarrow \sigma\left(Z|X=x\right)^2 &= \mathbb{E}\left[Z^2\middle| X=x\right]-\mathbb{E}\left[Z\middle| X=x\right]^2\nonumber\\
+&\approx g_1(x)^2\sigma(x)^2.
+\end{align}
+Then,
+\begin{align}
+g_1(x) = (f^{-1})'(f(x)) &= \frac{1}{f'(x)}\nonumber\\
+\rightarrow \sigma\left(Z|X=x\right)^2 &\approx \frac{\sigma(x)^2}{f'(x)^2}\nonumber\\
+\rightarrow \hat{\sigma}(x)=\sigma\left(Z|X=x\right) &\approx \frac{\sigma(x)}{f'(x)}. \hspace{1 cm} \Box \label{eqn:resolution}
+\end{align}
+
+\newpage
+\section{Closure of the Mode}
+\label{sec:calibrated_mode_calculation}
+{\it The closure of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{mo}(x)$ is given to first order by $C\approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}$.}
+
+\vspace{5mm}
+
+\noindent {\bf Derivation.}
+As a reminder for the reader, for brevity, we will let $\rho_Y(y)=\rho_Y(y|x)$ and $\rho_Z(z)=\rho_Z(z|x)$, and let the parameter $x$ be understood.
+
+We begin by supposing that the closure is not much different than 1, so that we can examine $\rho_Z(z)$ in the vicinity of $z=x$ to find the mode $z^*$. Expanding Eq.~\ref{eqn:newdist} about to second order in $(z-x)$:
+\begin{align}
+\rho_Z(z) &= f'(z)\rho_Y(f(z))\nonumber\\
+&\approx \left[f'(x)+(z-x)f''(x)+\frac{(z-x)^2}{2}f'''(x)\right]\nonumber\\
+&\times\left[\rho_Y(f(x))+(z-x)\rho_Y'(f(x))f'(x)+\frac{(z-x)^2}{2}\rho_Y''(f(x))f'(x)^2\right].
+\end{align}
+We note from the condition Eq.~\ref{eqn:modedef} that $\rho_Y'(f(x))=0$, so
+\begin{align}
+\rho_Z(z)&\approx \left[f'(x)+(z-x)f''(x)+\frac{(z-x)^2}{2}f'''(x)\right]\nonumber\\
+&\times\left[\rho_Y(f(x))+\frac{(z-x)^2}{2}\rho_Y''(f(x))f'(x)^2\right]\nonumber\\
+&\approx f'(x)\rho_Y(f(x))+(z-x)f''(x)\rho_Y(f(x))\nonumber\\
+&+\frac{(z-x)^2}{2}\left[f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x))\right],
+\end{align}
+so that
+\begin{align}
+\rho'_Z(z)&\approx f''(x)\rho_Y(f(x))+(z-x)\left[f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x))\right].
+\label{eqn:drhoz}
+\end{align}
+Then the closure condition Eq.~\ref{eqn:modeclosuredef} gives
+\begin{align}
+\rho'_Z(z^*)&=0\nonumber\\
+\rightarrow z^* &\approx x-\frac{f''(x)\rho_Y(f(x))}{f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x))},
+\end{align}
+i.e. the mode of $\rho_Z(z)$ occurs at $z=z^*$.  Then the closure is
+\begin{align}
+C &= \frac{z^*}{x}\nonumber\\
+&\approx 1-\frac{1}{x}\frac{f''(x)\rho_Y(f(x))}{f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x))}\nonumber\\
+&=1-\frac{1}{x}\frac{f''(x)\frac{\rho_Y(f(x))}{\rho_Y''(f(x))}}{f'''(x)\frac{\rho_Y(f(x))}{\rho_Y''(f(x))}+f'(x)^3}\nonumber\\
+&=1+\frac{f''(x)}{f'(x)^3-\tilde{\sigma}(x)^2f'''(x)}\frac{\tilde{\sigma}(x)^2}{x}.
+\label{eqn:mode_closure_df3}
+\end{align}
+
+In practice we find that for typical response functions, higher derivatives of $f$ tend to vanish. A comparison between the two terms in the denominator of Eq.~\ref{eqn:mode_closure_df3} can be found in Figure~\ref{fig:d_comp} for the toy model considered in~\ref{sec:toy_model}; we find that $f'(x)^3 \gg \tilde{\sigma}(x)^2f'''(x)$. Thus, in practice we recommend the approximation
+\begin{align}
+C\approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}.\hspace{1 cm} \Box
+\label{eqn:mode_closure_simple}
+\end{align}
+The agreement between the actual and estimated closure in Figure~\ref{fig:mode_closure} also confirms this approximation. Thus, in the body of this text Eq.~\ref{eqn:mode_closure_simple} is presented as the result, even though Eq.~\ref{eqn:mode_closure_df3} is technically more precise.
+\begin{figure}[]
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{figures/{d_comp}.pdf}
+\end{center}
+\caption{A comparison of derivative values using a toy model similar to conditions in ATLAS or CMS. In blue, $f'(x)^3$. In red, $\tilde{\sigma}(x)^2f'''(x)$. For details of the model, see~\ref{sec:toy_model}.}
+\label{fig:d_comp}
+\end{figure}
+
+\newpage
+\section{Resolution of the Mode}
+\label{sec:mode_resolution_calculation}
+{\it The resolution of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{mo}(x)$ is given to first order by $\hat{\tilde{\sigma}}(x)\approx \frac{\tilde{\sigma}(x)}{f'(x)}.$}
+
+\vspace{5mm}
+
+\noindent {\bf Derivation.}
+From Eq.~\ref{eqn:drhoz} we have
+\begin{align}
+\rho''_Z(z)&\approx f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x)).
+\end{align}
+Then the resolution is given as
+\begin{align}
+\hat{\tilde{\sigma}}(x)^2 &= -\frac{\rho_Z(z^*)}{\rho_Z''(z^*)}\nonumber\\
+&\approx-\frac{f'(x)\rho_Y(f(x))}{f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x))}\nonumber\\
+&=\frac{f'(x)\tilde{\sigma}(x)^2}{f'(x)^3-f'''(x)\tilde{\sigma}(x)^2}.
+\end{align}
+Following the discussion in~\ref{sec:calibrated_mode_calculation}, we simplify the denominator to get the approximation
+\begin{align}
+\tilde{\sigma}(x)^2 &\approx \frac{\tilde{\sigma}(x)^2}{f'(x)^2}\nonumber\\
+\rightarrow \tilde{\sigma}(x) &\approx \frac{\tilde{\sigma}(x)}{f'(x)}.\hspace{1 cm} \Box
+\end{align}
+
+\section{Iterated Numerical Inversion Calculation}
+\label{sec:iterated}
+{\it The closure $C_\text{new}(x)$ after iterating numerical inversion is not necessarily closer to 1 than the closure $C(x)$ after performing numerical inversion once.}
+
+\vspace{5mm}
+
+\noindent {\bf Derivation.}
+We limit ourselves to the case that we are using the modes of the distributions $Y|X=x$ and $Z|X=x$ to calibrate, as in practice that is what is used at ATLAS and CMS for numerical inversion.
+
+We use the estimation of the closure of the mode Eq.~\ref{eqn:closure_mode_text}:
+\begin{align}
+C(x) &\approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}\nonumber\\
+\rightarrow |C(x)-1|&\approx \left|\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}\right|.
+\end{align}
+We use the iterated numerical inversion response
+\begin{align}
+f_{\text{new}}(x) &= C(x)x\nonumber\\
+&\approx x+\frac{f''(x)}{f'(x)^3}\tilde{\sigma}(x)^2\\
+\rightarrow f'_{\text{new}}(x) &\approx 1-3\frac{f''(x)^2}{f'(x)^4}\tilde{\sigma}(x)^2\\
+\rightarrow f''_{\text{new}}(x) &\approx 12\frac{f''(x)^3}{f'(x)^5}\tilde{\sigma}(x)^2.
+\end{align}
+Where we have ignored higher derivatives of $f(x)$\footnote{See, e.g., Figure~\ref{fig:d_comp}.} and derivatives of $\sigma(x)$\footnote{For this specific counterexample, we are examining the case that $\sigma'(x)=0$, which is realistic for high pileup conditions.}.  We also have the estimation of the resolution of the calibrated distribution Eq.~\ref{eqn:resolutionmode_text}
+\begin{align}
+\hat{\tilde{\sigma}}(x) \approx \frac{\tilde{\sigma}(x)}{f'(x)},
+\end{align}
+
+\noindent So that we can estimate the closure after iterating numerical inversion as
+\begin{align}
+C_\text{new}(x) &\approx 1+\frac{f''_\text{new}(x)}{f'_\text{new}(x)^3}\frac{\hat{\tilde{\sigma}}(x)^2}{x}\nonumber\\
+&\approx 1+12\frac{f''(x)^3}{f'(x)^5}\tilde{\sigma}(x)^2\frac{\tilde{\sigma}(x)^2}{f'(x)^2}\frac{1}{x}\nonumber\\
+&=1+\frac{12}{x}\frac{f''(x)^3}{f'(x)^7}\tilde{\sigma}(x)^4\\
+\rightarrow |C_\text{new}(x)-1| &\approx \left|\frac{12}{x}\frac{f''(x)^3}{f'(x)^7}\tilde{\sigma}(x)^4\right|\\
+\rightarrow \frac{|C_\text{new}(x)-1|}{|C(x)-1|} &\approx \frac{12f''(x)^2\tilde{\sigma}(x)^2}{f'(x)^4}.\label{eqn:iterated_closure_ratio_app}
+\end{align}
+If the ratio in Eq.~\ref{eqn:iterated_closure_ratio_app} is greater than 1, then the closure gets worse after a second iteration of numerical inversion. $\hspace{1 cm} \Box$
+
+\section{Corrected Numerical Inversion Calculation}
+\label{sec:corrected_numerical_inversion_calculation}
+With $Y\mapsto Z_\text{corr} = g^{-1}(Y)$, we will get a corrected calibrated distribution $\rho_{Z_\text{corr}|X}(z|x)$. For brevity, let $\rho_{Z_\text{corr}}(z)=\rho_{Z_\text{corr}|X}(z|x)$, where it is understood we are examining the distributions around a particular value of $x$. We will again require that $g'(x)>0$, so that
+\begin{align}
+\rho_{Z_\text{corr}}(z) = g'(z)\rho_Y(g(z)).
+\end{align}
+The closure condition is then equivalent to the condition
+\begin{align}
+\rho'_{Z_\text{corr}}(x) = 0,
+\end{align}
+i.e., the mode of the distribution $Z_\text{corr}|X=x$ occurs at $x$.  We have that
+\begin{align}
+\rho_{Z_\text{corr}}'(z) = g''(z)\rho_Y(g(z))+g'(z)^2\rho'_Y(g(z)),
+\end{align}
+so that the closure condition requires
+\begin{align}
+0 &=\rho_{Z_\text{corr}}'(x)\nonumber\\
+&=g''(x)\rho_Y(g(x))+g'(x)^2\rho'_Y(g(x))\nonumber\\
+\rightarrow 0 &=g''(x)+g'(x)^2\frac{\rho'_Y(g(x))}{\rho_Y(g(x))}.
+\end{align}
+We suppose that $g(x)$ is close to $f(x)$, $g(x)=f(x)+\alpha(x)$, with $|\alpha(x)|\ll \tilde{\sigma}(x)$. Then we have directly from the supposition that the distribution $Y|X=x$ is approximately Gaussian about its mode $f(x)$ with width $\tilde{\sigma}(x)$ that
+\begin{align}
+\frac{\rho'_Y(g(x))}{\rho_Y(g(x))} &= -\frac{\left(g(x)-f(x)\right)}{\tilde{\sigma}(x)^2}.
+\end{align}
+Then, the closure condition gives
+\begin{align}
+0 &=g''(x)+g'(x)^2\frac{\rho'_Y(g(x))}{\rho_Y(g(x))}\nonumber\\
+&=g''(x)-g'(x)^2\frac{g(x)-f(x)}{\tilde{\sigma}(x)^2}.
+\end{align}
+
+\section{Corrected Numerical Inversion Parameterization}
+\label{sec:corrected_numerical_inversion_parameterization}
+We parameterize the corrected calibration function $g(x) = g(x;f(x);a_1,...,a_n)$. For the toy model used in this chapter, we use the parameterization
+\begin{align}
+g(x) = f(x)+\frac{a_1}{1+\exp(\frac{x-a_2}{a_3})}.
+\label{eqn:app_parameterization}
+\end{align}
+
+In the model considered here, and for the response functions at the LHC, the closure goes to $1$ for large $x$ and moves away from $1$ for small $x$, a natural result of Eq.~\ref{eqn:closure_mode_text}. Thus, the parameterization in Eq.~\ref{eqn:app_parameterization} includes a ``turn-off'' to recover $g(x)=f(x)$ at large $x$ (with $a_3>0$).
+
+In practice, there is some smallest value $x=x'$ which is being studied, and which per the discussion in the above paragraph tends to have the largest non-closure. The value $x'=20$ GeV is used in this chapter, which is the lowest calibrated $E_\text{T}$ at current conditions at the LHC. For the corrected calibration curve shown in Figure~\ref{fig:mode_closure_bigs}, the parameters $a_1,a_2,a_3$ are scanned over to minimize the non-closure at this value $x'$. For the corrected calibration curve shown in Figure~\ref{fig:mode_closure_bigs}, the values $a_2=a_3=x'=20$ GeV and $a_1 = 5$ GeV were used.
+
+\clearpage
+\newpage
+\section{Toy Model of the ATLAS/CMS Response Function}
+\label{sec:toy_model}
+All the ``Proofs'' quoted in this chapter are valid in general, regardless of the response function $R(x)$ and the underlying distributions $Y|X=x$ (within the assumptions outlined in Section~\ref{sec:assumptions}). We also expect that the ``Derivations'', which are all approximate formulas, to apply in a wide variety of cases. In order to visualize some of the results, and verify the approximations, a particular model was needed in order to get numerical values. All figures made in this chapter were derived from a simple model of the ATLAS or CMS jet $E_\text{T}$ response function\footnote{Energies are measured with calorimeters and momenta are measured with tracking detectors.  In-situ corrections using momentum balance techniques constrain the momentum.  For small-radius QCD jets, the $E_\text{T}$ and $p_\text{T}$ are nearly identical.  Since the simulation-based correction of calorimeter jets is used here as a model, the $E_\text{T}$ is used throughout. }. After specifying $f(x)$ and the distributions $Y|X=x$, the calibrated distributions were constructed using the analytic form of the calibrated distributions Eq.~\ref{eqn:newdist}. Then the various moments were found numerically for the calibrated distribution at each value $x$.
+
+The response function was guided both by physical intuition and by the intention to reasonably simulate response functions published by ATLAS~\cite{Aad:2011he} and CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb}. When there is only a small amount of energy already in a detector cell, the detector only reconstructs a small fraction of the energy put into it, because of noise thresholds and the non-compensating nature of the ATLAS and CMS detectors. Whereas if there is already a lot of energy in a detector cell, the detector reconstructs almost all of the energy put into it. Thus $f'(x)$ was designed  to be low at low values of $x$ and then to rise steadily to 1 at high values of $x$.  This intuition does not directly apply to jets that directly use tracking information (e.g. particle-flow jets in CMS), but the for the sake of simplicity only one (calorimeter) jet definition is used for illustration.
+
+$f'(x)$ was the integrated to get $f(x)$ and divided by $x$ to get $R(x)$. The resulting $R(x)$ distribution approximately corresponds to the $R=0.4$ anti-$k_t$~\cite{Cacciari:2008gp} central jet response at the EM scale available in Ref.~\cite{Aad:2011he} (e.g. Fig. 4a). The shapes of $f'(x)$ and $R(x)$ in this model can be seen in Figure~\ref{fig:model}.
+
+\begin{figure}[h!]
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{figures/{model}.pdf}
+\end{center}
+\caption{The toy model used in this chapter to simulate conditions in ATLAS or CMS. The left plot shows $f'(x)$ and the right plot shows $R(x)$.}
+\label{fig:model}
+\end{figure}
+
+In this simplified model, the distributions $Y|X=x\sim\mathcal{N}(f(x),\sigma(x))$ were used. In ATLAS and CMS, $Y|X=x$ is approximately Gaussian. The constant value of $\sigma(x)=7$ GeV was used, corresponding to a calibrated resolution (Fig.~\ref{fig:mean_resolution}) of about 50\% at $E_\text{T}=20$ GeV.  This is consistent with e.g. Ref.~\cite{Aad:2015ina} and has the property that $\sigma'(x) = 0$, which should be the case if pileup is the dominant contributor to the resolution of low $E_\text{T}$ jets.
