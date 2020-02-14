@@ -123,7 +123,40 @@ Fig.~\ref{fig:VBFH_feynman} shows a tree-level Feynman diagram of the VBF produc
 \begin{figure}[t]
   \centering 
   \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{HBSM_prodmodes}.pdf}\label{fig:HBSM_prodmodes}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{HBSM_prodmodes}.pdf}\label{fig:VBFH_feynman}}
+  \subfloat[]{
+    \begin{tikzpicture}
+      \begin{feynman}
+        \vertex (q1init) {\(q\)};
+        \vertex [below =4. of q1init] (q2init) {\(q\)};
+        \vertex [below right=1. and 2. of q1init] (qqV);
+        \vertex [above right=1. and 2. of q2init] (qqV2);
+        \vertex [above right=1. and 4. of  qqV] (q1final) {\(q\)};
+        \vertex [below right=1. and 4. of qqV2] (q2final) {\(q\)};
+        \vertex [below right=1. and 1. of qqV] (VVH);
+        \vertex [right=1. of VVH] (H);
+        \vertex [above right=1. and 1. of H] (ayy);
+        \vertex [below right=1. and 1. of H] (agg);
+        \vertex [above right=0.5 and 1. of ayy] (y1) {\(\gamma\)};
+        \vertex [below right=0.5 and 1. of ayy] (y2) {\(\gamma\)};
+        \vertex [above right=0.5 and 1. of agg] (g1) {\(g\)};
+        \vertex [below right=0.5 and 1. of agg] (g2) {\(g\)};
+        \diagram* {
+          (q1init) -- [fermion] (qqV) -- [fermion] (q1final),
+          (q2init) -- [fermion] (qqV2) -- [fermion] (q2final),
+          (qqV) -- [boson, edge label'=\(V\)] (VVH),
+          (qqV2) -- [boson, edge label'=\(V\)] (VVH),
+          (VVH) -- [scalar, edge label'=\(H\)] (H),
+          (H) -- [scalar, edge label'=\(a\)] (ayy),
+          (H) -- [scalar, edge label'=\(a\)] (agg),
+          (ayy) -- [photon] (y1),
+          (ayy) -- [photon] (y2),
+          (agg) -- [gluon] (g1),
+          (agg) -- [gluon] (g2),
+        };
+      \end{feynman}
+    \end{tikzpicture}
+    \label{fig:VBFH_feynman}
+  }
   \caption{
     (a) Projected branching ratio for $H\rightarrow \gamma\gamma gg$ in order to make a discovery of new physics at a significance level of $5\sigma$, as a function of integrated luminosity, when searching in the gluon fusion (GGH), vector boson fusion (VBF), and associated production (VH) production modes.
     The projection for GGH and VBF assumes a $20\%$ systematic uncertainty due to jet reconstruction effects, while the projection for VH uses the estimation from Ref.~\cite{hep-ph/0703247}, assuming the significance is statistics-dominated.
