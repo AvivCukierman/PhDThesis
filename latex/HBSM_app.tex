@@ -1,0 +1,44 @@
+\section{Existing Limits}
+\label{sec:HBSM_app:existinglimits}
+We would like to place a limit on BR$(H\rightarrow aa\rightarrow \gamma\gamma jj) = 2\text{BR}(H\rightarrow aa)\times\text{BR}(a\rightarrow\gamma\gamma)\text{BR}(a\rightarrow jj)$,
+given limits on BR$(H\rightarrow aa\rightarrow 2\gamma2\gamma)$ and BR$(H\rightarrow aa)$.
+
+\noindent For brevity, let $B\equiv \text{BR}(H\rightarrow aa)$, $x\equiv \text{BR}(a\rightarrow\gamma\gamma)$, and $y\equiv \text{BR}(a\rightarrow jj)$.
+
+\noindent With these conventions, we have that $B<0.34$ from~\cite{Khachatryan:2016vau}; we also have that $Bx^2<0.001$ from~\cite{Aad:2015bua}; and we would like to use this information to place a limit on $2Bxy$. 
+
+\noindent We note first that $y\le 1-x$, with the inequality satisfied when the $a$ particle decays exclusively into photons and jets.
+
+\noindent The following facts will be useful, which are true for any value of $x$.
+
+\noindent First, for any $s\le\frac{1}{2}$, if $x<s$ then $x(1-x)<s(1-s)$.
+
+\noindent Second, $x(1-x)\le \frac{1}{4}$.
+
+\noindent We do not know the true value of $B$,
+so we consider two cases which cover all possibilities: $B<0.004$, and $0.004\le B<0.34$.
+
+\noindent If $B<0.004$, then:
+\begin{align*}
+2Bxy &\le 2Bx(1-x) \\
+&<2\times0.004\times\frac{1}{4} \\
+&=0.002
+\end{align*}
+
+\noindent If $0.004\le B<0.34$, then: 
+\begin{align*}
+Bx^2 &< 0.001\\
+\rightarrow x&<\sqrt{\frac{0.001}{B}}\\
+&\le \frac{1}{2}\\
+\rightarrow x(1-x)&<\sqrt{\frac{0.001}{B}}\times\left(1-\sqrt{\frac{0.001}{B}}\right)
+\end{align*}
+\noindent Then we have: 
+\begin{align*}
+2Bxy &\le 2Bx(1-x) \\
+&<2\times B\times\sqrt{\frac{0.001}{B}}\times\left(1-\sqrt{\frac{0.001}{B}}\right) \\
+&=2(\sqrt{0.001B}-0.001)\\
+&<2(\sqrt{0.001\times0.34}-0.001)\\
+&\approx 0.035
+\end{align*}
+
+\noindent Thus no matter what $B$ is, we have $2Bxy<0.035$.
