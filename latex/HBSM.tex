@@ -92,9 +92,9 @@ and the $a$ decays only to photons and gluons
 The ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} sets 
 a limit $\sigma\times \text{B}(H\to aa\rightarrow 4\gamma)<10^{-3}\sigma_\text{SM}$ 
 for $10~\GeV<m_a<62~\GeV$.
-There is currently no direct limit set on $\text{B}(H\rightarrow aa\rightarrow \gamma\gamma gg)$;
+Before this work, there was no direct limit set on $\text{B}(H\rightarrow aa\rightarrow \gamma\gamma gg)$;
 however, in combination with $\text{B}_\text{exotic}<34\%$, 
-the $H\rightarrow 2a \to 4\gamma$ result sets indirect limits on $\text{B}(H\rightarrow aa\rightarrow \gamma\gamma gg)$ to less than $\sim4\%$.
+the $H\rightarrow 2a \to 4\gamma$ result sets indirect limits on $\text{B}(H\rightarrow aa\rightarrow \gamma\gamma gg)$ to less than $\sim4\%$ (Appendix~\ref{sec:HBSM_app:existinglimits}).
 Assuming a SM-like ratio of photon and gluon couplings, 
 the $H\rightarrow 4\gamma$ decay occurs very rarely relative to the $H\rightarrow \gamma\gamma gg$ decay (a typical value of the relative ratio of branching ratios is $3.8\times10^{-3}$~\cite{hep-ph/0703247})
 \footnote{The $H\rightarrow 4g$ final state is the most common, but is unfortunately swamped by background.},
@@ -182,7 +182,7 @@ These techniques can also be effective in the higher pileup conditions expected 
 
 The search presented in this chapter is based on the 36.7~\ifb{} dataset of proton--proton collisions
 recorded by the ATLAS experiment at the LHC at $\sqrt{s}=13$ \TeV{} during 2015 and 2016.
-The ATLAS detector~\cite{PERF-2007-01} comprises an inner detector in a 2 T axial magnetic field, 
+As discussed in Chapter~\ref{ch:ATLAS}, the ATLAS detector~\cite{PERF-2007-01} comprises an inner detector in a 2 T axial magnetic field, 
 for tracking charged particles and a precise localisation of the interaction vertex, 
 a finely segmented calorimeter, a muon spectrometer and a two-level trigger~\cite{TRIG-2016-01} that
 accepts about 1 kHz rate for data storage.
@@ -197,14 +197,12 @@ All MC event samples were processed through a detailed simulation~\cite{SOFT-201
 based on \geantFour{}~\cite{Agostinelli:2002hh}, and contributions from additional $pp$ interactions (pile-up), simulated using
 \PYTHIA{} and the MSTW2008LO PDF set~\cite{Martin:2009iq}, were overlaid onto the hard-scatter events.
 
-\section{Selection criteria}
-
+\section{Event Selection}
+\subsection{Trigger}
 Events are selected by two diphoton triggers.
 One trigger path requires the presence in the electromagnetic (EM) calorimeter of two clusters of energy
-deposits with transverse energy\footnote{ATLAS uses a right-handed coordinate system with its origin 
-  at the nominal interaction point (IP) in the centre of the detector and the $z$-axis along the beam pipe. The $x$-axis points from the IP to the centre of the LHC ring, 
-  and the $y$-axis points upward. Cylindrical coordinates $(r,\phi)$ are used in the transverse plane, $\phi$ being the azimuthal angle around the $z$-axis. 
-  The pseudorapidity is defined in terms of the polar angle $\theta$ as $\eta=-\ln\tan(\theta/2)$.}
+deposits with transverse energy
+%\footnote{ATLAS uses a right-handed coordinate system with its origin at the nominal interaction point (IP) in the centre of the detector and the $z$-axis along the beam pipe. The $x$-axis points from the IP to the centre of the LHC ring, and the $y$-axis points upward. Cylindrical coordinates $(r,\phi)$ are used in the transverse plane, $\phi$ being the azimuthal angle around the $z$-axis. The pseudorapidity is defined in terms of the polar angle $\theta$ as $\eta=-\ln\tan(\theta/2)$.}
 above 35 \GeV{} and 25 \GeV{} for the leading (highest transverse energy) and sub-leading
 (second-highest transverse energy) clusters, respectively. In the high-level trigger the shape of the energy
 deposit in both clusters is required to be loosely consistent with that expected from an EM shower initiated by a photon.
@@ -212,6 +210,7 @@ The other trigger path requires the presence of two clusters with transverse ene
 In order to suppress the additional rate due to the lower transverse energy threshold, the shape requirements for the energy deposits are
 more stringent.
 
+\subsection{Photons}
 The photon candidates are reconstructed from the clusters of energy deposits in the EM calorimeter within the range $|\eta|<2.37$.
 The energies of the clusters are calibrated to account for energy losses upstream of the calorimeter 
 and for energy leakage outside the cluster, as well as other effects due to the detector geometry and response.
@@ -226,31 +225,6 @@ The transverse energy of the photon candidate is subtracted from the calorimeter
 Contributions to the calorimeter isolation from the underlying event and pile-up are subtracted using the method proposed in Ref.~\cite{jetareas}.
 Candidates with a calorimeter isolation larger than 2.2\% of the photon's transverse energy are rejected.
 
-Jets are reconstructed from topological clusters~\cite{PERF-2014-07} using the anti-$k_t$
-algorithm~\cite{Cacciari:2008gp} implemented in the FastJet package~\cite{Cacciari:2011ma} with a radius parameter of $R=0.4$. 
-Jets are calibrated using an energy- and $\eta$-dependent
-calibration scheme, and are required to have a transverse momentum (\pt{}) greater than $20~\GeV{}$ and $|\eta|<2.5$ or $\pt>30~\GeV{}$ and $|\eta|<4.4$.
-A track- and topology-based veto~\cite{PERF-2014-03,PERF-2016-06} is used to suppress jets originating from pile-up interactions.
-Jets must have an angular separation of $\Delta R>0.4$ from any \textit{Loose} photon candidate in the event.
-
-\begin{figure}[t]
-  \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{vbf_mjj_shape_log_VBF8_combined_8.7.17}.pdf}\label{fig:dista}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{vbf_jet1pt_postselection_shape_log_VBF8_combined_8.7.17}.pdf}\label{fig:distb}}\\
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{hmass_amassdiff_shape_VBF8_combined_8.7.17}.pdf}\label{fig:distd}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{amassdiff_shape_VBF8_combined_8.7.17}.pdf}\label{fig:distc}}
-  \caption{
-    Distributions of kinematic observables before the requirements on \smash{$m_{jj}^\text{VBF}$}, leading VBF jet \pt{}, \smash{$m_{\gamma\gamma jj}$}
-    and $|m_{jj}-m_{\gamma\gamma}|$ for:
-    (a) $m_{jj}^\text{VBF}$; (b) leading VBF jet \pt{};
-    (c) $m_{\gamma\gamma jj}$ (with the additional requirement $|m_{jj}-m_{\gamma\gamma}|< 12~\GeV{}$ 
-    that defines the signal-enriched region); and (d) $|m_{jj}-m_{\gamma\gamma}|$.
-    The quantities are shown separately for simulated signal events (with $m_a=30$ \GeV{}) produced in the VBF mode 
-    and compared with those produced in the ggF mode and the observed data.
-    }
-  \label{fig:dist}
-\end{figure}
-
 Events are required to have at least two photon candidates. 
 The transverse energy requirements depend on the trigger path through which the event was recorded.
 For events passing the trigger with higher transverse energy thresholds, the leading photon is required to have $E_\text{T}>40$ \GeV{}, 
@@ -258,26 +232,144 @@ and the sub-leading photon is required to have $E_\text{T}>30$ \GeV{}. For event
 both the leading and sub-leading photons are required to have $E_\text{T}>27$ \GeV{}. 
 For events passing both triggers, the latter selection is applied.
 The invariant mass of the two leading photon candidates is denoted by $m_{\gamma\gamma}$.
+The $m_{\gamma\gamma}$ resolution is excellent at less than $2$ \GeV{}, as can be seen in Fig.~\ref{fig:HBSM:photon_kinematics}.
 
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{myy_unscaled_combine_ma_VBF8_8.7.17}.pdf}\label{fig:myy_unscaled}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/myy_shape_log.pdf}}\\
+  \caption{Distribution of $m_{\gamma\gamma}$. The quantities are plotted separately for signal MC produced in the VBF and GGF modes. (a) The distribution for all the signal samples used in this analysis (each signal normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$). (b) Zoomed in distribution, for a signal with $m_a=30$ GeV.}
+  \label{fig:HBSM:photon_kinematics}
+\end{figure}
+
+\subsection{Jets}
+Jets are reconstructed from topological clusters~\cite{PERF-2014-07} using the anti-$k_t$
+algorithm~\cite{Cacciari:2008gp} implemented in the FastJet package~\cite{Cacciari:2011ma} with a radius parameter of $R=0.4$. 
+Jets are calibrated using an energy- and $\eta$-dependent
+calibration scheme, and are required to have a transverse momentum (\pt{}) greater than $20~\GeV{}$ and $|\eta|<2.5$ or $\pt>30~\GeV{}$ and $|\eta|<4.4$.
+A track- and topology-based veto~\cite{PERF-2014-03,PERF-2016-06} is used to suppress jets originating from pile-up interactions.
+Jets must have an angular separation of $\Delta R>0.4$ from any \textit{Loose} photon candidate in the event.
+
+\subsection{VBF Selection}
+\label{sec:HBSM:VBF_sel}
 In the VBF production mode, the Higgs boson is produced in association with two additional light-quark jets
 with a large opening angle and a large invariant mass.
 Selected events are therefore required to have at least four jets and 
-the pair of jets with the highest invariant mass ($m_{jj}^\text{VBF}$) are referred to as \textit{VBF jets}.
-In VBF signal events, these jets correspond to the light quarks emitting the vector bosons 55\% of the time, 
-as estimated in simulation.
+the pair of jets with the highest invariant mass ($m_{jj}^\text{VBF}$, or \textit{VBF $m_{jj}$}) are referred to as \textit{VBF jets}.
+The two remaining highest-\pt{} jets are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
+The jet assignment is designed to choose the correct VBF and signal jets for VBF signal events. The truth parton label (the truth ID of the highest $p_T$ parton in the jet) is used to study the accuracy of this jet assignment in MC.
+
+As seen in Fig.~\ref{fig:numIDjets}, after the 4 jet preselection requirement, about 70\% of VBF signal events contain at least 2 gluon jets; also, about 70\% of VBF signal events contain at least 2 quark jets. This limits the possible accuracy of the jet assignment.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_numgluonjets_4j_VBF_a30_ggyy_6.21.17_Nominal}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_numquarkjets_4j_VBF_a30_ggyy_6.21.17_Nominal}.pdf}}
+  \caption{Jet multiplicity of (a) gluon and (b) quark jets in a VBF signal sample with $m_a=30$ GeV.}
+  \label{fig:numIDjets}
+\end{figure}
+
+The best possible jet assignment would choose the two gluon jets with mass closest to $m_a$ as the signal jets and two quark jets as the VBF jets, if such an assignment is possible.
+Fig.~\ref{fig:truegluon} shows the results of this assignment (which can only be done at truth level) for a VBF signal sample with $m_a=30$ GeV.
+
+In the $m_{jj}$ distribution there is a peak about $m_a$ with width about $0.4m_a = 12$ GeV.
+Only about 35\% of the events have two gluons with an invariant mass within this peak; this indicates that most of the time the two true signal gluons are either not reconstructed or below the jet $p_T$ cut.
+This 12 GeV width also informs the choice of a $0.4m_a$ cut on $|m_{jj}-m_{\gamma\gamma}|$ in the ABCD regions definition (\ref{sec:HBSM:signal_selection}).
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_true_gluon_signal_VBF_a30_ggyy_6.21.17_Nominal}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_mjj_true_gluon_signal_VBF_a30_ggyy_6.21.17_Nominal}.pdf}}
+  \caption{(a) Truth parton label of jets chosen as signal jets in a VBF signal sample with $m_a=30$ GeV; the jet assignment is to choose the two truth gluons with mass closest to $m_a$ as the signal jets and the two highest $p_T$ truth quark jets as the VBF jets, if such an assignment is possible (i.e., this assignment can only be done at truth level). (b) The distribution of $m_{jj}$ for the signal jets.}
+  \label{fig:truegluon}
+\end{figure}
+
+Fig.~\ref{fig:remove} shows the results of the jet assignment used in this analysis for a VBF signal sample with $m_a=30$ GeV.
+About 20\% of the events choose two gluons with an invariant mass within 12 GeV of $m_a$ as the signal jets.
+About 55\% of the events choose two quarks correctly as the VBF jets.
+
+Fig.~\ref{fig:VBFmjj_quarkquark} examines the distribution of VBF $m_{jj}$ with the jet assignment used in this analysis in a VBF signal sample with $m_a=30$ GeV using truth information.
+The distributions are compared among all events, events where both VBF jets are truth identified as quarks, and events where at least one VBF jet is not truth identified as a quark.
+It can be seen that the VBF $m_{jj}$ distribution is shifted upwards relative to the case where the truth quarks are not correctly selected, but the case where the truth quarks are always correctly selected is shifted to even higher values.
+
+Fig.~\ref{fig:remove} also shows the results of the jet assignment used in this analysis for a gluon fusion signal sample with $m_a=30$ GeV and for a photons + jets background MC sample.
+In the gluon fusion signal sample, about 20\% of the events choose two gluons with an invariant mass within 12 GeV of $m_a$ as the signal jets.
+In these events the jets labeled the ``VBF jets" in fact come from pileup, underlying event, or initial or final state radiation. 
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_remove_VBF_a30_ggyy_6.21.17_Nominal}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_remove_VBFID_VBF_a30_ggyy_6.21.17_Nominal}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_remove_ggH_a30_ggyy_6.21.17_Nominal}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_remove_VBFID_ggH_a30_ggyy_6.21.17_Nominal}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_remove_myy_0_55_7.6.17_Nominal}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{VBF7_count_ids_bar_remove_VBFID_myy_0_55_7.6.17_Nominal}.pdf}}\\
+  \caption{Truth parton label of jets chosen as (a) signal jets and (b) VBF jets in a VBF signal sample with $m_a=30$ GeV; (c) signal jets and (d) VBF jets in a gluon fusion signal sample with $m_a=30$ GeV; and (e) signal jets and (f) VBF jets in a photons + jets background sample.}
+  \label{fig:remove}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{vbf_mjj_truthid_shape}.pdf}}
+  \caption{Comparison of distribution of VBF $m_{jj}$ with the jet assignment used in this analysis in a VBF signal sample with $m_a=30$ GeV. The comparison is between the distribution for all events; the distribution for events where both jets identified as VBF jets are truth labeled as quark jets; and the distribution for events where at least one jet identified as as a VBF jet is not truth labeled as a quark jet.}
+  \label{fig:VBFmjj_quarkquark}
+\end{figure}
+
 The VBF Higgs boson signal is further enhanced,
 relative to the dominant $\gamma\gamma$+multi-jet background,
 by requiring $m_{jj}^\text{VBF}$ to be greater than 500 \GeV{} and 
 the \pt{} of the leading VBF jet to be greater than 60 \GeV{}.
 The discrimination power of these observables can be seen in the difference in shape between the VBF signal and the 
-data, shown in Figures~\ref{fig:dista} and \ref{fig:distb}.
-The two remaining highest-\pt{} jets are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
+data, shown in Fig.~\ref{fig:HBSM:VBF_jet_kinematics}.
+
+\begin{figure}[t]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{vbf_mjj_shape_log_VBF8_combined_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{vbf_jet1pt_postselection_shape_log_VBF8_combined_8.7.17}.pdf}}\\
+  \caption{
+    Distributions of kinematic observables before the requirements on \smash{$m_{jj}^\text{VBF}$}, leading VBF jet \pt{}, \smash{$m_{\gamma\gamma jj}$}
+    and $|m_{jj}-m_{\gamma\gamma}|$ for:
+    (a) $m_{jj}^\text{VBF}$; and (b) leading VBF jet \pt{}.
+    The quantities are shown separately for simulated signal events (with $m_a=30$ \GeV{}) produced in the VBF mode 
+    and compared with those produced in the ggF mode and the observed data.
+    }
+  \label{fig:HBSM:VBF_jet_kinematics}
+\end{figure}
+
+\subsection{Signal Selection}
+\label{sec:HBSM:signal_selection}
+As mentioned in~\ref{sec:HBSM:VBF_sel}, the two remaining highest-\pt{} jets after the VBF jet assignment are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
+The distribution of $m_{jj}$ is shown in Fig.~\ref{fig:HBSM:signal_kinematics}; the resolution is quite broad, on the order of 30\% of the central value.
+The tail of the $m_{jj}$ distribution comes from misidentifying the signal jets.
+The distribution of $|m_{jj}-m_{\gamma\gamma}|$ is also shown in Fig.~\ref{fig:HBSM:signal_kinematics}; 
+for $H\to aa \to \gamma\gamma gg$ signal events, where the $a$ boson candidates have similar masses, the difference $|m_{jj}-m_{\gamma\gamma}|$ tends to be smaller.
+This quantity is therefore used to define a signal-enhanced region for the data-driven background estimation (Section~\ref{sec:HBSM:background_est}).
+
 The two photon candidates and the two signal jets form the Higgs boson candidate with invariant mass $m_{\gamma\gamma jj}$, 
 which is required to be in the range $100 < m_{\gamma\gamma jj} < 150~\GeV{}$. 
-Figure~\ref{fig:distd} shows that most of the selected signal events lie within this range, 
+Figure~\ref{fig:HBSM:signal_kinematics} shows that most of the selected signal events lie within this range, especially after the requirement of $|m_{jj}-m_{\gamma\gamma}|$ used to define the signal-enhanced region,
 while the data have a broad distribution extending to higher values.
 
-In order to take advantage of the $m_{\gamma\gamma}$ resolution of about 1.3 \GeV{} to suppress the background with $m_{\gamma\gamma}$ far from the
+\begin{figure}[t]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/mjj_shape.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{amassdiff_shape_VBF8_combined_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/hmasses_shape.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{hmass_amassdiff_shape_VBF8_combined_8.7.17}.pdf}}\\
+  \caption{
+    Distributions of kinematic observables before the requirements on \smash{$m_{jj}^\text{VBF}$}, leading VBF jet \pt{}, \smash{$m_{\gamma\gamma jj}$}
+    and $|m_{jj}-m_{\gamma\gamma}|$ for:
+    (a) $m_{jj}$;
+    (b) $|m_{jj}-m_{\gamma\gamma}|$;
+    (c) $m_{\gamma\gamma jj}$;
+    and (d) $m_{\gamma\gamma jj}$ (with the additional requirement $|m_{jj}-m_{\gamma\gamma}|< 12~\GeV{}$ that defines the signal-enriched region).
+    The quantities are shown separately for simulated signal events (with $m_a=30$ \GeV{}) produced in the VBF mode 
+    and compared with those produced in the ggF mode and the observed data.
+    }
+  \label{fig:HBSM:signal_kinematics}
+\end{figure}
+
+In order to take advantage of the very good $m_{\gamma\gamma}$ resolution to suppress the background with $m_{\gamma\gamma}$ far from the
 range of interest, five overlapping $m_{\gamma\gamma}$ regimes are defined as summarised in Table~\ref{tab:amassdiffcut}.
 The boundaries of the $m_{\gamma\gamma}$ regimes are chosen so that for any value of $m_a$ 
 considered in the scope of this search there is at least one regime where there is no significant signal acceptance loss
@@ -285,7 +377,7 @@ due to the $m_{\gamma\gamma}$ requirement.
 For each $m_{\gamma\gamma}$ regime, the set of $m_a$ values for which this requirement causes no significant signal acceptance loss is also indicated.
 
 \section{Background estimation}
-
+\label{sec:HBSM:background_est}
 The $\gamma\gamma$+multi-jet background consists of multi-jet events with two reconstructed photon candidates, 
 originating from isolated EM radiation or from jets.
 A data-driven estimation based on two-dimensional sidebands is used to predict the background yields.
@@ -300,8 +392,7 @@ These regions are referred to respectively as \textit{Tight--Tight} (C and D) an
 The second axis separates events in regions B and D, satisfying $|m_{jj}-m_{\gamma\gamma}|< x_\text{R}$, 
 from events in regions A and C, satisfying $|m_{jj}-m_{\gamma\gamma}|>x_\text{R}$. 
 The value $x_\text{R}$ depends on the $m_{\gamma\gamma}$ regime R to account for the degradation in resolution at higher mass.
-For $H\to aa \to \gamma\gamma gg$ signal events, where the $a$ boson candidates have similar masses, the difference $|m_{jj}-m_{\gamma\gamma}|$ tends to be smaller, 
-as shown in Figure~\ref{fig:distc}.
+As mentioned in Section~\ref{sec:HBSM:signal_selection}, the difference $|m_{jj}-m_{\gamma\gamma}|$ tends to be smaller in the signal than in the background.
 The signal events that lie outside of the range $|m_{jj}-m_{\gamma\gamma}|< x_\text{R}$ are due to poor $m_{jj}$ resolution or to incorrect assignment of the jets corresponding 
 to the gluons originating from the $a$ boson decay.
 Specific $x_\text{R}$ values are given in Table~\ref{tab:amassdiffcut}.
