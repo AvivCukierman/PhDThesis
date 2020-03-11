@@ -106,11 +106,11 @@ with the new physics sector,
 while the $H\rightarrow 4\gamma$ final state is more sensitive to the enhanced photon scenarios. 
 
 The most common Higgs production modes at the LHC are through gluon fusion, vector boson fusion (VBF), or associated production with an additional vector boson (VH)~\cite{Dittmaier:2011ti}.
+The cross sections for each of these Higgs production modes is in a ratio of roughly 100:10:1~\cite{deFlorian:2016spz,TODO}; targeting any individual production mode requires a tradeoff between higher production cross section and increased handles on distinguishing signal from background.
 Ref.~\cite{hep-ph/0703247} shows that the search for $H \to \gamma\gamma gg$ in the VH mode, 
 where the additional vector boson
 decays leptonically, would require approximately $300~\ifb$ of LHC data in order to be sensitive to branching ratios less than 4\%. 
-The gluon fusion production has a larger cross section, 
-but is overwhelmed by background.
+While the gluon fusion production has a larger cross section, it is overwhelmed by background.
 We have found (Fig.~\ref{fig:HBSM_prodmodes}) that the search in the VBF production 
 mode can achieve sensitivity competitive with or better than the above two production modes in the range $20$ to $300~\ifb$ of LHC integrated luminosity data,
 and in particular with the approximately $150~\ifb$ of data at the end of LHC Run 2~\cite{lhc-commissioning}.
@@ -159,7 +159,7 @@ Fig.~\ref{fig:VBFH_feynman} shows a tree-level Feynman diagram of the VBF produc
   }
   \caption{
     (a) Projected branching ratio for $H\rightarrow \gamma\gamma gg$ in order to make a discovery of new physics at a significance level of $5\sigma$, as a function of integrated luminosity, when searching in the gluon fusion (GGH), vector boson fusion (VBF), and associated production (VH) production modes.
-    The projection for GGH and VBF assumes a $20\%$ systematic uncertainty due to jet reconstruction effects, while the projection for VH uses the estimation from Ref.~\cite{hep-ph/0703247}, assuming the significance is statistics-dominated.
+    The projection for GGH and VBF assumes a $20\%$ systematic uncertainty due to jet reconstruction effects, while the projection for VH uses the estimation from~\cite{hep-ph/0703247}, assuming the significance is statistics-dominated.
     With less than $\sim 20 \ifb$, the gluon fusion mode is most sensitive, but with more statistics this production mode quickly becomes dominated by systematic uncertainties and is unable to provide better limits.
     Up to $\sim 300 \ifb$, the VBF mode is most sensitive; in Run 2 the LHC has gathered 140$\ifb$.
     With more than $\sim 300 \ifb$, the VH mode likely provides the best sensitivity.
@@ -179,7 +179,6 @@ These efforts serve to develop new techniques for reconstructing the energies of
 These techniques can also be effective in the higher pileup conditions expected at the LHC in Run 3 and beyond, and are intended to be broadly applicable to other analyses than the one being studied here. 
 
 \section{Data and simulation}
-
 The search presented in this chapter is based on the 36.7~\ifb{} dataset of proton--proton collisions
 recorded by the ATLAS experiment at the LHC at $\sqrt{s}=13$ \TeV{} during 2015 and 2016.
 As discussed in Chapter~\ref{ch:ATLAS}, the ATLAS detector~\cite{PERF-2007-01} comprises an inner detector in a 2 T axial magnetic field, 
@@ -199,18 +198,38 @@ based on \geantFour{}~\cite{Agostinelli:2002hh}, and contributions from addition
 
 \section{Event Selection}
 \subsection{Trigger}
+\label{sec:HBSM:trigger}
 Events are selected by two diphoton triggers.
 One trigger path requires the presence in the electromagnetic (EM) calorimeter of two clusters of energy
 deposits with transverse energy
 %\footnote{ATLAS uses a right-handed coordinate system with its origin at the nominal interaction point (IP) in the centre of the detector and the $z$-axis along the beam pipe. The $x$-axis points from the IP to the centre of the LHC ring, and the $y$-axis points upward. Cylindrical coordinates $(r,\phi)$ are used in the transverse plane, $\phi$ being the azimuthal angle around the $z$-axis. The pseudorapidity is defined in terms of the polar angle $\theta$ as $\eta=-\ln\tan(\theta/2)$.}
 above 35 \GeV{} and 25 \GeV{} for the leading (highest transverse energy) and sub-leading
-(second-highest transverse energy) clusters, respectively. In the high-level trigger the shape of the energy
-deposit in both clusters is required to be loosely consistent with that expected from an EM shower initiated by a photon.
+(second-highest transverse energy) clusters, respectively.
+In the high-level trigger the shape of the energy deposit in both clusters is required to be loosely consistent with that expected from an EM shower initiated by a photon.
 The other trigger path requires the presence of two clusters with transverse energy above 22 \GeV{}.
 In order to suppress the additional rate due to the lower transverse energy threshold, the shape requirements for the energy deposits are
 more stringent.
+Using the ATLAS trigger nomenclature, these two trigger paths are called \texttt{HLT\_g35\_loose\_g25\_loose} and \texttt{HLT\_2g22\_tight}, respectively.
+Both of these high-level trigger are seeded by the Level 1 trigger \texttt{L1\_2EM15VH}, which requires two Level 1 objects consistent with the EM shower initiated by a photon with transverse energy greater than $15$ \GeV{}.
+In 2015 and 2016 data these triggers were unprescaled.
+The efficiency of each of the triggers on the signal events is shown in Table~\ref{tab:HBSM:trigeff}.
+
+\begin{table}[]
+\centering
+  \caption{Efficiency of triggers on a signal sample with $m_a=30$ GeV. The efficiencies are shown for the signal MC separated by production in the VBF and GGF modes, and for the combined production modes.}
+\label{tab:HBSM:trigeff}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+                                                      & \multicolumn{3}{c|}{Efficiency}  \\ \hline
+                                                      & VBF      & ggF  & Combined   \\ \hline
+\texttt{HLT\_g35\_loose\_g25\_loose}                  & 0.158  & 0.161 & 0.160\\ \hline
+\texttt{HLT\_2g22\_tight}                             & 0.166  & 0.208 & 0.200\\ \hline
+OR of triggers                                        & 0.201  & 0.242 & 0.234\\ \hline
+\end{tabular}
+\end{table}
 
 \subsection{Photons}
+\label{sec:HBSM:photons}
 The photon candidates are reconstructed from the clusters of energy deposits in the EM calorimeter within the range $|\eta|<2.37$.
 The energies of the clusters are calibrated to account for energy losses upstream of the calorimeter 
 and for energy leakage outside the cluster, as well as other effects due to the detector geometry and response.
@@ -222,17 +241,16 @@ In order to reject the hadronic jet background, photon candidates are required t
 The calorimeter isolation is defined as the sum of the transverse energy in the
 calorimeter within a cone of \mbox{$\Delta R = \sqrt{(\Delta\eta)^2+(\Delta\phi)^2}=0.4$} centred around the photon candidate,
 The transverse energy of the photon candidate is subtracted from the calorimeter isolation.
-Contributions to the calorimeter isolation from the underlying event and pile-up are subtracted using the method proposed in Ref.~\cite{jetareas}.
+Contributions to the calorimeter isolation from the underlying event and pile-up are subtracted using the method proposed in~\cite{jetareas}.
 Candidates with a calorimeter isolation larger than 2.2\% of the photon's transverse energy are rejected.
 
 Events are required to have at least two photon candidates. 
 The transverse energy requirements depend on the trigger path through which the event was recorded.
-For events passing the trigger with higher transverse energy thresholds, the leading photon is required to have $E_\text{T}>40$ \GeV{}, 
-and the sub-leading photon is required to have $E_\text{T}>30$ \GeV{}. For events passing the trigger with lower thresholds, 
-both the leading and sub-leading photons are required to have $E_\text{T}>27$ \GeV{}. 
+For events passing the trigger with higher transverse energy thresholds (\texttt{HLT\_g35\_loose\_g25\_loose}), the leading photon is required to have $E_\text{T}>40$ \GeV{}, and the sub-leading photon is required to have $E_\text{T}>30$ \GeV{}.
+For events passing the trigger with lower thresholds (\texttt{HLT\_2g22\_tight}), both the leading and sub-leading photons are required to have $E_\text{T}>27$ \GeV{}. 
 For events passing both triggers, the latter selection is applied.
 The invariant mass of the two leading photon candidates is denoted by $m_{\gamma\gamma}$.
-The $m_{\gamma\gamma}$ resolution is excellent at less than $2$ \GeV{}, as can be seen in Fig.~\ref{fig:HBSM:photon_kinematics}.
+The $m_{\gamma\gamma}$ resolution is excellent, with $>\sim97\%$ of signal events satisfying $|m_{\gamma\gamma}-m_a|<2.5$ \GeV{}, regardless of the value of $m_a$; this can be seen in Fig.~\ref{fig:HBSM:photon_kinematics}.
 
 \begin{figure}[htbp]
   \centering 
@@ -243,19 +261,62 @@ The $m_{\gamma\gamma}$ resolution is excellent at less than $2$ \GeV{}, as can b
 \end{figure}
 
 \subsection{Jets}
+\label{sec:HBSM:jets}
 Jets are reconstructed from topological clusters~\cite{PERF-2014-07} using the anti-$k_t$
 algorithm~\cite{Cacciari:2008gp} implemented in the FastJet package~\cite{Cacciari:2011ma} with a radius parameter of $R=0.4$. 
 Jets are calibrated using an energy- and $\eta$-dependent
 calibration scheme, and are required to have a transverse momentum (\pt{}) greater than $20~\GeV{}$ and $|\eta|<2.5$ or $\pt>30~\GeV{}$ and $|\eta|<4.4$.
-A track- and topology-based veto~\cite{PERF-2014-03,PERF-2016-06} is used to suppress jets originating from pile-up interactions.
+The jets with $|\eta|<2.5$ are referred to as \textit{central} jets and those with $2.5<|\eta|<4.4$ are referred to as \textit{forward} jets.
+In this analysis both central and forward jets are used, however the requirements on these two categories of jets differ due to the treatment of pile-up jets in the central and forward region of the detector.
+Central jets with $p_T<60$ GeV and $|\eta|$<2.4 are required to satisfy the \textit{Default} Jet Vertex Tagger selection~\cite{PERF-2014-03}.
+Forward jets with $p_T<50$ GeV are required to pass the \textit{Tight} forward JVT cut~\cite{PERF-2016-06}. 
 Jets must have an angular separation of $\Delta R>0.4$ from any \textit{Loose} photon candidate in the event.
+
+In the VBF production mode, the Higgs boson is produced in association with two additional light-quark jets
+with a large opening angle and a large invariant mass.
+Selected events are therefore required to have at least four jets.
+
+\subsection{Preselection}
+The preselection detailed in Sections~\ref{sec:HBSM:trigger},~\ref{sec:HBSM:photons}, and~\ref{sec:HBSM:jets} is summarized in Table~\ref{tab:HBSM:preselection}.
+
+\begin{table}[htbp]
+  \begin{center}
+  \caption{Event preselection.}
+  \label{tab:HBSM:preselection}
+    {\footnotesize
+  \begin{tabular}{ l c c}
+    \toprule
+    & \multicolumn{2}{c}{Selection} \\
+    \midrule
+    L1 trigger  & \multicolumn{2}{c}{\texttt{L1\_2EM15VH}} \\
+    \\
+    Primary HLT trigger  & \texttt{HLT\_g35\_loose\_g25\_loose} & \texttt{HLT\_2g22\_tight} \\
+    \\ 
+%    \multirow{2}{*}{Photon Selection} & $\geq 1$ photon with $E_T>35$ \GeV{} and $|\eta|<2.5$ \\
+%                                      & $\geq 2$ photons with $E_T>25$ \GeV{} and $|\eta|<2.5$\\ 
+%    \\
+%    \multirow{4}{*}{Jet Selection} & $\geq 4$ jets with: \\
+%                                   & $p_T>20$ \GeV{} and $|\eta|<2.5$ \\
+%                                   & or \\
+%                                   & $p_T>30$ \GeV{} and $2.5<|\eta|<4.5$\\ 
+    \multirow{2}{*}{Photon Selection} & $\geq 2$ photons with $E_\text{T}>30$ \GeV{} & $\geq 2$ photons with $E_\text{T}>27$ \GeV{}\\ 
+                                      & $\geq 1$ photon with $E_\text{T}>40$ \GeV{}\\
+    \\
+    Jet Selection & \multicolumn{2}{c}{$\geq 4$ jets, central or forward} \\
+    \\
+    \bottomrule
+  \end{tabular}
+    }
+  \end{center}
+\end{table}
+
+After the preselection, the expected dominant contribution to the background consists of events with two real radiated photons and additional radiated jets (photons + jets), as well as events with multiple jets with one or two of those falsely passing the photon identification requirements (fake photon + jets).
+Ultimately the background estimation is entirely data-driven, but the remaining selections are intended to enhance the signal presence while reducing the presence of this background component.
 
 \subsection{VBF Selection}
 \label{sec:HBSM:VBF_sel}
-In the VBF production mode, the Higgs boson is produced in association with two additional light-quark jets
-with a large opening angle and a large invariant mass.
-Selected events are therefore required to have at least four jets and 
-the pair of jets with the highest invariant mass ($m_{jj}^\text{VBF}$, or \textit{VBF $m_{jj}$}) are referred to as \textit{VBF jets}.
+The two additional light-quark jets that are produced in association with the Higgs boson in the VBF production mode tend to have a large opening angle and therefore a large combined invariant mass.
+The pair of jets with the highest invariant mass ($m_{jj}^\text{VBF}$, or VBF $m_{jj}$) are referred to as \textit{VBF jets}.
 The two remaining highest-\pt{} jets are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
 The jet assignment is designed to choose the correct VBF and signal jets for VBF signal events. The truth parton label (the truth ID of the highest $p_T$ parton in the jet) is used to study the accuracy of this jet assignment in MC.
 
@@ -336,18 +397,40 @@ data, shown in Fig.~\ref{fig:HBSM:VBF_jet_kinematics}.
   \label{fig:HBSM:VBF_jet_kinematics}
 \end{figure}
 
-\subsection{Signal Selection}
+This selection is summarized in Table~\ref{tab:HBSM:VBF_selection}.
+%The requirements are chosen to be loose enough such that a sufficient amount of background events are present in the validation and control regions (as defined in~\ref{sec:HBSM:background_est}) to allow for proper background estimation in the signal region.
+\begin{table}[htbp]
+  \begin{center}
+  \caption{VBF Selection.}
+  \label{tab:HBSM:VBF_selection}
+    {\footnotesize
+  \begin{tabular}{ l c }
+    \toprule
+    & Selection \\
+    \midrule
+    VBF $M_{jj}$ & >500 GeV \\
+    \\
+    VBF Leading Jet $p_T$  & >60 GeV \\
+    \\ 
+    \bottomrule
+  \end{tabular}
+    }
+  \end{center}
+\end{table}
+
+\subsection{Combined Signal Selection}
 \label{sec:HBSM:signal_selection}
 As mentioned in~\ref{sec:HBSM:VBF_sel}, the two remaining highest-\pt{} jets after the VBF jet assignment are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
 The distribution of $m_{jj}$ is shown in Fig.~\ref{fig:HBSM:signal_kinematics}; the resolution is quite broad, on the order of 30\% of the central value.
 The tail of the $m_{jj}$ distribution comes from misidentifying the signal jets.
-The distribution of $|m_{jj}-m_{\gamma\gamma}|$ is also shown in Fig.~\ref{fig:HBSM:signal_kinematics}; 
-for $H\to aa \to \gamma\gamma gg$ signal events, where the $a$ boson candidates have similar masses, the difference $|m_{jj}-m_{\gamma\gamma}|$ tends to be smaller.
+In signal events it is expected that $m_{jj}\sim m_{\gamma\gamma} \sim m_a$ up to misidentifications of the signal jets and resolution of the signal objects.
+Because of this, the difference $|m_{jj}-m_{\gamma\gamma}|$ is expected to be smaller for signal events than for the background; the distribution of this quantity is also shown in Fig.~\ref{fig:HBSM:signal_kinematics}.
 This quantity is therefore used to define a signal-enhanced region for the data-driven background estimation (Section~\ref{sec:HBSM:background_est}).
 
-The two photon candidates and the two signal jets form the Higgs boson candidate with invariant mass $m_{\gamma\gamma jj}$, 
-which is required to be in the range $100 < m_{\gamma\gamma jj} < 150~\GeV{}$. 
-Figure~\ref{fig:HBSM:signal_kinematics} shows that most of the selected signal events lie within this range, especially after the requirement of $|m_{jj}-m_{\gamma\gamma}|$ used to define the signal-enhanced region,
+The two photon candidates and the two signal jets form the Higgs boson candidate with invariant mass $m_{\gamma\gamma jj}$.
+The requirement $|m_{\gamma\gamma jj}-m_H| \le 25~\GeV{}$, with $m_H\sim125~\GeV{}$ the standard model Higgs mass~\cite{ref:TODO}, is imposed in order to select events consistent with a Higgs boson decay and is designated the \textit{signal} region.
+The region $|m_{\gamma\gamma jj} - m_H| > 25~\GeV{}$ is designated the \textit{validation} region and is used to validate the background estimation detailed in Section~\ref{sec:HBSM:background_est}.
+Figure~\ref{fig:HBSM:signal_kinematics} shows that most of the selected signal events lie within the signal region, especially after the requirement of $|m_{jj}-m_{\gamma\gamma}|$ used to define the signal-enhanced region,
 while the data have a broad distribution extending to higher values.
 
 \begin{figure}[t]
@@ -369,12 +452,52 @@ while the data have a broad distribution extending to higher values.
   \label{fig:HBSM:signal_kinematics}
 \end{figure}
 
+The definitions of the signal and validation regions are listed in Table~\ref{tab:HBSM:validation_definition}.
+\begin{table}[htbp]
+  \begin{center}
+  \caption{Signal and validation region definitions.}
+  \label{tab:HBSM:validation_definition}
+    {\footnotesize
+  \begin{tabular}{ l c }
+    \toprule
+    Region & Cuts \\
+    \midrule
+    Signal & $|m_{jj\gamma\gamma}-m_H|\le25$ GeV\\
+    Validation & $|m_{jj\gamma\gamma}-m_H|>25$ GeV\\
+    \bottomrule
+  \end{tabular}
+    }
+  \end{center}
+\end{table}
+
 In order to take advantage of the very good $m_{\gamma\gamma}$ resolution to suppress the background with $m_{\gamma\gamma}$ far from the
-range of interest, five overlapping $m_{\gamma\gamma}$ regimes are defined as summarised in Table~\ref{tab:amassdiffcut}.
-The boundaries of the $m_{\gamma\gamma}$ regimes are chosen so that for any value of $m_a$ 
-considered in the scope of this search there is at least one regime where there is no significant signal acceptance loss
-due to the $m_{\gamma\gamma}$ requirement.
+range of interest, five overlapping $m_{\gamma\gamma}$ regimes are defined as summarised in Table~\ref{tab:HBSM:amassdiffcut}.
+The size of the $m_{\gamma\gamma}$ window in each regime is 15 GeV, in order to fully cover two signal samples separated by 10 GeV in $m_a$.
+Slightly different window sizes are used for the lowest and highest $m_{\gamma\gamma}$ regimes.
+Since the efficiency of the trigger and preselections is very low on signal with $m_a<20$ GeV (as can be seen in Fig.~\ref{fig:HBSM:cutflow_ma}), the lowest $m_{\gamma\gamma}$ regime starts at $17.5$ GeV.
+Since the maximum possible value of $m_a$ is $\frac{m_H}{2}\approx 62.5$ GeV, the highest $m_{\gamma\gamma}$ regime is limited to $65$ GeV.
 For each $m_{\gamma\gamma}$ regime, the set of $m_a$ values for which this requirement causes no significant signal acceptance loss is also indicated.
+
+The efficiency of the various analysis cuts in the signal can be seen in Fig.~\ref{fig:HBSM:cutflow_ma}.
+The mass points with $m_a\le 10$ GeV have little acceptance from the trigger selection.
+The $m_a=20$ GeV mass point has almost an order of magnitude less overall efficiency than the other samples with greater values of $m_a$.
+The mass points with the highest efficiencies are the $m_a=30$ GeV and $m_a=40$ GeV samples, with the $m_a=50$ GeV and $m_a=60$ GeV samples having slightly worse efficiencies.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{wcutflow_log_VBF8_VBF_ggyy_8.7.17_ma}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{wcutflow_log_VBF8_ggH_ggyy_8.7.17_ma}.pdf}}
+  \caption{Efficiency of analysis cuts up to and including indicated cut on signal MC, for different mass points.
+  The cut definitions are: Trig. - HLT trigger selection (Table~\ref{tab:HBSM:preselection});
+Photon - Photon preselection (Table~\ref{tab:HBSM:preselection});
+Jet - Jet preselection (Table~\ref{tab:HBSM:preselection});
+$m_{\gamma\gamma}$ - The highest efficiency $m_{\gamma\gamma}$ analysis regime cuts (Table~\ref{tab:HBSM:amassdiffcut});
+VBF - VBF cuts (Table~\ref{tab:HBSM:VBF_selection});
+Signal - Signal region cuts (Table~\ref{tab:HBSM:validation_definition});
+D - D region cuts (as defined in \ref{sec:HBSM:background_est}).
+The signal is separated by production modes into (a) VBF and (b) ggF.}
+  \label{fig:HBSM:cutflow_ma}
+\end{figure}
 
 \section{Background estimation}
 \label{sec:HBSM:background_est}
@@ -395,7 +518,7 @@ The value $x_\text{R}$ depends on the $m_{\gamma\gamma}$ regime R to account for
 As mentioned in Section~\ref{sec:HBSM:signal_selection}, the difference $|m_{jj}-m_{\gamma\gamma}|$ tends to be smaller in the signal than in the background.
 The signal events that lie outside of the range $|m_{jj}-m_{\gamma\gamma}|< x_\text{R}$ are due to poor $m_{jj}$ resolution or to incorrect assignment of the jets corresponding 
 to the gluons originating from the $a$ boson decay.
-Specific $x_\text{R}$ values are given in Table~\ref{tab:amassdiffcut}.
+Specific $x_\text{R}$ values are given in Table~\ref{tab:HBSM:amassdiffcut}.
 In each $m_{\gamma\gamma}$ regime, the boundary for $|m_{jj}-m_{\gamma\gamma}|$ is 0.4 times the central $m_{\gamma\gamma}$ value.
 An exception is made for the lowest $m_{\gamma\gamma}$ regime, where $x_\text{R}$ is larger in order to increase the signal efficiency.
 
@@ -404,7 +527,7 @@ An exception is made for the lowest $m_{\gamma\gamma}$ regime, where $x_\text{R}
     \caption{
       Definition of each $m_{\gamma\gamma}$ regime, the range of $m_a$ values considered in the scope of this search with no significant signal loss acceptance due to the $m_{\gamma\gamma}$ requirement, and the corresponding boundary $x_\text{R}$ for $|m_{jj}-m_{\gamma\gamma}|$.  
     }
-  \label{tab:amassdiffcut}
+  \label{tab:HBSM:amassdiffcut}
     {\footnotesize
   \begin{tabular}{ c c c c }
     \toprule
@@ -422,40 +545,70 @@ An exception is made for the lowest $m_{\gamma\gamma}$ regime, where $x_\text{R}
 \end{table}
 
 Region D is expected to contain the highest contribution of signal. 
-In this region, 60\% of the signal events are produced in the VBF mode and the remaining 40\% in the ggF mode.
-Assuming no correlation in the background events between the two observables used to define the A/B/C/D regions,
-the number of background events in the signal region D ($N^\text{bkg}_\text{D}$) is related to the number
-of background events in the control regions A, B and C, denoted by $N^\text{bkg}_\text{A}$, $N^\text{bkg}_\text{B}$
-and $N^\text{bkg}_\text{C}$, respectively, by the formula
-\begin{align}
-N^\text{bkg}_\text{D} = \frac{N^\text{bkg}_\text{B}N^\text{bkg}_\text{C}}{N^\text{bkg}_\text{A}}.
-\label{eqn:closure}
-\end{align}
-In the following, the difference between the prediction $N^\text{bkg}_\text{D}$ and the actual background yield in region D 
-is referred to as \textit{non-closure}.
-The non-closure results from residual correlations between the two observables used to define the A/B/C/D regions,
-and the uncertainty accounting for this effect is referred to as \textit{closure uncertainty}.
-In order to quantify the non-closure, the data-driven estimation as described above is performed 
-with the exception that the requirement on $m_{\gamma\gamma jj}$ is inverted.
-For each $m_{\gamma\gamma}$ regime,
-the closure uncertainty is defined to be 
-the central value of the non-closure if it is found to be significant ($>1\sigma$) in comparison with its statistical uncertainty; 
-otherwise, the statistical uncertainty of its estimate is used.
+The efficiency in each of the A/B/C/D regions for the gluon fusion and VBF Higgs production modes in the signal region can be seen in Table~\ref{tab:HBSM:ABCD_separated}.
+It can be seen that in region D, $\sim60\%$ of the signal events are produced in the VBF mode and the remaining $\sim40\%$ in the ggF mode - the ggF events are produced about $10\times$ as often as VBF events, and the VBF efficiency is about $20\times$ higher than the ggF efficiency.
+The efficiency of the event selection for the $pp\to H\to aa \to \gamma\gamma gg$ signal combining the two production modes in each of the A/B/C/D regions is shown in Table~\ref{tab:HBSM:ABCD},
+assuming the SM cross-section and kinematics for the different production modes as described in~\cite{deFlorian:2016spz}.
 
-\section{Results}
-
-The efficiency of the event selection for the $pp\to H\to aa \to \gamma\gamma gg$ signal in each of the A/B/C/D regions is shown in Table~\ref{tab:ABCD},
-assuming the SM cross-section and kinematics for the different production modes as described in Ref.~\cite{deFlorian:2016spz}.
-The observed number of events in each of the A/B/C/D regions for each $m_{\gamma\gamma}$ regime is shown in Table~\ref{tab:ABCD_data}
-along with the predicted background in the signal region D, taking into account the closure uncertainty. 
-Due to the low event counts in each of the A/B/C/D regions,
-the median expected background yield in region D estimated from pseudo-data experiments involving asymmetric Poisson uncertainties 
-in the different regions slightly differs from the direct estimation from Eq.~(\ref{eqn:closure}).
-No large excess is observed in region D when comparing the data yield to the background predicted from the A/B/C regions
-assuming that the signal is absent in these regions.
-However, given that a signal contamination is possible, a more refined procedure
-taking into account signal contributions in all regions
-is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg$.
+\begin{table}[htbp]
+  \begin{adjustwidth}{-2cm}{-2cm}
+  \begin{center}
+    \caption{Efficiency of analysis cuts for a sample of signal masses $m_a$ in each of the ABCD regions.
+      The analysis regime used is the one most efficient at that signal mass.
+      The uncertainties account for the total effect of the systematic sources of uncertainty.
+      (a) Simulated signal events produced in the gluon fusion mode.
+      (b) Simulated signal events produced in the vector boson fusion mode.}
+    %(c) Combined production modes.}
+    \label{tab:HBSM:ABCD_separated}
+    % ggH effs:
+    \subfloat[][]{\footnotesize
+      \bgroup
+      \def\arraystretch{1.5}
+      \begin{tabular}{cllll}
+	\hline
+	   $m_a$ [GeV] & A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$   \\
+	   %A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$   \\
+	\hline
+%		    20 & $0.25^{+0.19}_{-0.10}$  & $0.26^{+0.20}_{-0.11}$  & $2.4^{+0.4}_{-0.4}$  & $2.4^{+0.8}_{-0.8}$   \\
+%		    30 & $0.86^{+0.25}_{-0.26}$ & $1.40^{+0.29}_{-0.34}$  & $4.4^{+0.8}_{-1.1}$   & $8.5^{+2.0}_{-1.9}$    \\
+%		    40 & $0.66^{+0.25}_{-0.26}$ & $1.4^{+0.6}_{-0.4}$   & $3.8^{+0.9}_{-1.3}$   & $10.0^{+2.4}_{-2.3}$   \\
+%		    50 & $0.28^{+0.11}_{-0.18}$ & $1.6^{+0.4}_{-0.4}$  & $2.4^{+0.6}_{-0.7}$  & $9.0^{+2.3}_{-2.0}$    \\
+%		    60 & $0.16^{+0.24}_{-0.05}$ & $1.8^{+0.4}_{-0.4}$  & $1.8^{+0.6}_{-0.5}$  & $8.4^{+2.4}_{-2.1}$    \\
+                    20 & $0.25^{+0.17}_{-0.12}$ & $0.26^{+0.20}_{-0.11}$ & $2.4\pm0.4$          & $2.4\pm0.8$          \\
+                    30 & $0.86\pm0.24$          & $1.39\pm0.31$          & $4.4^{+0.8}_{-1.1}$  & $8.5\pm2.0$           \\
+                    40 & $0.67\pm0.25$          & $1.4\pm0.5$          & $3.8^{+0.9}_{-1.3}$  & $10.3\pm2.3$           \\
+                    50 & $0.28\pm0.14$          & $1.6\pm0.4$          & $2.4\pm0.6$          & $9.0\pm2.2$           \\
+                    60 & $0.16^{+0.19}_{-0.11}$  & $1.8\pm0.4$          & $1.8\pm0.5$          & $8.4\pm2.2$           \\
+	\hline
+	\end{tabular}
+        \egroup
+          }
+    %VBF effs:
+    \subfloat[][]{\footnotesize
+            \bgroup
+            \def\arraystretch{1.5}
+            \begin{tabular}{llll}
+              \hline
+                 %$m_a$ [GeV] & A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
+                 A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
+              \hline
+%                          $4.1^{+2.2}_{-0.9}$    & $14^{+6}_{-5}$   & $27^{+16}_{-12}$ & $60^{+17}_{-17}$  \\
+%                          $6.9^{+2.6}_{-1.8}$    & $31^{+9}_{-8}$   & $55^{+20}_{-15}$ & $260^{+60}_{-70}$ \\
+%                          $8.6^{+4.5}_{-2.5}$    & $30^{+10}_{-9}$   & $68^{+16}_{-18}$ & $250^{+60}_{-60}$ \\
+%                          $10.1^{+2.5}_{-3.2}$   & $44^{+12}_{-16}$ & $42^{+18}_{-10}$ & $230^{+50}_{-70}$ \\
+%                          $9^{+4}_{-4}$          & $35^{+10}_{-13}$ & $50^{+16}_{-16}$ & $230^{+50}_{-60}$ \\
+ $4.1\pm1.6$           & $14\pm5$           & $27\pm13$          & $60\pm17$           \\
+ $6.9\pm2.1$           & $31\pm9$           & $55\pm18$          & $260^{+60}_{-80}$ \\
+ $8.6\pm3.4$           & $30\pm9$           & $68^{+14}_{-19}$ & $250\pm60$          \\
+ $10.1\pm2.8$           & $44\pm14$          & $42^{+18}_{-10}$ & $230^{+60}_{-70}$ \\
+ $9\pm4$           & $34\pm11$          & $50\pm16$          & $230\pm60$          \\
+              \hline
+            \end{tabular}
+            \egroup
+          }
+  \end{center}
+\end{adjustwidth}
+\end{table}
 
 \begin{table}[t]
   \begin{center}
@@ -464,7 +617,7 @@ is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg
       in each of the A/B/C/D regions, for different $m_a$ mass hypotheses.
       For each $m_a$ value, all $m_{\gamma\gamma}$ regimes in which there is no significant signal acceptance loss due to the $m_{\gamma\gamma}$ requirement are shown.
     }
-    \label{tab:ABCD}
+    \label{tab:HBSM:ABCD}
     \footnotesize
     \bgroup
     \def\arraystretch{1.5}
@@ -499,6 +652,38 @@ is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg
   \end{center}
 \end{table}
 
+Assuming no correlation in the background events between the two observables used to define the A/B/C/D regions,
+the number of background events in the signal region D ($N^\text{bkg}_\text{D}$) is related to the number
+of background events in the control regions A, B and C, denoted by $N^\text{bkg}_\text{A}$, $N^\text{bkg}_\text{B}$
+and $N^\text{bkg}_\text{C}$, respectively, by the formula
+\begin{align}
+N^\text{bkg}_\text{D} = \frac{N^\text{bkg}_\text{B}N^\text{bkg}_\text{C}}{N^\text{bkg}_\text{A}}.
+\label{eqn:HBSM:closure}
+\end{align}
+
+In the following, the difference between the prediction $N^\text{bkg}_\text{D}$ and the actual background yield in region D 
+is referred to as \textit{non-closure}.
+The non-closure results from residual correlations between the two observables used to define the A/B/C/D regions,
+and the uncertainty accounting for this effect is referred to as \textit{closure uncertainty}.
+In order to quantify the non-closure, the data-driven estimation as described above is performed 
+with the exception that the requirement on $m_{\gamma\gamma jj}$ is inverted.
+For each $m_{\gamma\gamma}$ regime,
+the closure uncertainty is defined to be 
+the central value of the non-closure if it is found to be significant ($>1\sigma$) in comparison with its statistical uncertainty; 
+otherwise, the statistical uncertainty of its estimate is used.
+
+\section{Results}
+The observed number of events in each of the A/B/C/D regions for each $m_{\gamma\gamma}$ regime is shown in Table~\ref{tab:HBSM:ABCD_data}
+along with the predicted background in the signal region D, taking into account the closure uncertainty. 
+Due to the low event counts in each of the A/B/C/D regions,
+the median expected background yield in region D estimated from pseudo-data experiments involving asymmetric Poisson uncertainties 
+in the different regions slightly differs from the direct estimation from Eq.~(\ref{eqn:HBSM:closure}).
+No large excess is observed in region D when comparing the data yield to the background predicted from the A/B/C regions
+assuming that the signal is absent in these regions.
+However, given that a signal contamination is possible, a more refined procedure
+taking into account signal contributions in all regions
+is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg$.
+
 \begin{table}[t]
   \begin{center}
     \caption{Number of events observed in each of the A/B/C/D regions, 
@@ -508,7 +693,7 @@ is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg
       The uncertainties in the prediction account for both the Poisson fluctuations of the number of events in the control regions 
       and the closure uncertainty.
     }
-    \label{tab:ABCD_data}
+    \label{tab:HBSM:ABCD_data}
           {\footnotesize
             \bgroup
             \def\arraystretch{1.3}
@@ -534,14 +719,14 @@ A likelihood function, describing both the expected background and signal, is fi
 The free parameters of the likelihood are the numbers of signal and background events in region D, 
 $\mu_\text{S}$ and $\mu_\text{bkg}$ respectively, the ratio of background events expected in region B to that in region D, $\tau_\text{B}$, 
 and the analogous ratio for region C, $\tau_\text{C}$.
-The assumption of no correlation in the total background, Eq.~(\ref{eqn:closure}), 
+The assumption of no correlation in the total background, Eq.~(\ref{eqn:HBSM:closure}), 
 allows the background to be parameterised in terms of only three parameters.
 The closure uncertainty, which accounts for the uncertainty due to assuming non-correlation, is included in the likelihood function by applying a Gaussian prior
 to the expected number of background events in region A, $\tau_\text{B}\tau_\text{C}\mu_\text{bkg}$.
-The Gaussian width is determined by the size of the closure uncertainty summarized in Table~\ref{tab:ABCD_data}.
+The Gaussian width is determined by the size of the closure uncertainty summarized in Table~\ref{tab:HBSM:ABCD_data}.
 The parameter $\mu_\text{S}$ can be expressed as the product of the total integrated luminosity, the signal cross-section 
 $\sigma_H\times B(H\to aa\to \gamma\gamma gg)$, and the signal selection efficiency estimated in MC simulation
-and quoted in Table~\ref{tab:ABCD}.
+and quoted in Table~\ref{tab:HBSM:ABCD}.
 The signal contamination in the control regions A, B, and C is estimated from MC simulation 
 and is varied coherently with $\mu_\text{S}$ in the likelihood fit.
 
