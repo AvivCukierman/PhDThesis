@@ -111,18 +111,18 @@ Ref.~\cite{hep-ph/0703247} shows that the search for $H \to \gamma\gamma gg$ in 
 where the additional vector boson
 decays leptonically, would require approximately $300~\ifb$ of LHC data in order to be sensitive to branching ratios less than 4\%. 
 While the gluon fusion production has a larger cross section, it is overwhelmed by background.
-We have found (Fig.~\ref{fig:HBSM_prodmodes}) that the search in the VBF production 
+We have found (Fig.~\ref{fig:HBSM:HBSM_prodmodes}) that the search in the VBF production 
 mode can achieve sensitivity competitive with or better than the above two production modes in the range $20$ to $300~\ifb$ of LHC integrated luminosity data,
 and in particular with the approximately $150~\ifb$ of data at the end of LHC Run 2~\cite{lhc-commissioning}.
 
 In the VBF production mode, two extra quarks are produced along with the Higgs in the hard scatter interaction.
 The gluons from the Higgs decay and the quarks from the VBF production are reconstructed as jets ($j$) in the ATLAS detector;
 therefore, this search is focused on the $H\to2\gamma2j$ final state with two additional jets from the VBF production.
-Fig.~\ref{fig:VBFH_feynman} shows a tree-level Feynman diagram of the VBF production and $\gamma\gamma gg$ decay of the Higgs boson, including the $aa$ intermediate state.
+Fig.~\ref{fig:HBSM:VBFH_feynman} shows a tree-level Feynman diagram of the VBF production and $\gamma\gamma gg$ decay of the Higgs boson, including the $aa$ intermediate state.
 
 \begin{figure}[t]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{HBSM_prodmodes}.pdf}\label{fig:HBSM_prodmodes}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{HBSM_prodmodes}.pdf}\label{fig:HBSM:HBSM_prodmodes}}
   \subfloat[]{
     \begin{tikzpicture}
       \begin{feynman}
@@ -155,7 +155,7 @@ Fig.~\ref{fig:VBFH_feynman} shows a tree-level Feynman diagram of the VBF produc
         };
       \end{feynman}
     \end{tikzpicture}
-    \label{fig:VBFH_feynman}
+    \label{fig:HBSM:VBFH_feynman}
   }
   \caption{
     (a) Projected branching ratio for $H\rightarrow \gamma\gamma gg$ in order to make a discovery of new physics at a significance level of $5\sigma$, as a function of integrated luminosity, when searching in the gluon fusion (GGH), vector boson fusion (VBF), and associated production (VH) production modes.
@@ -544,9 +544,20 @@ An exception is made for the lowest $m_{\gamma\gamma}$ regime, where $x_\text{R}
   \end{center}
 \end{table}
 
-Region D is expected to contain the highest contribution of signal. 
+The distribution of events across $|m_{jj}-m_{\gamma\gamma}|$ (i.e., the second axis of the A/B/C/D method), separated into Tight--Tight and Tight--Loose events (i.e., the first axis of the A/B/C/D method) can be seen in Fig.~\ref{fig:HBSM:amassdiff}, for both the validation and signal regions.
+It can be seen that in the validation region, where the data statistics are higher and there is little signal contamination, the two variables corresponding to the two axes are uncorrelated, prompting the background estimation strategy outlined below (Equation~\ref{eqn:HBSM:closure}).
+It can also be seen that the highest contribution of signal in the signal region occurs in region D.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{amassdiff_val_log_VBF8_m30_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{amassdiff_sig_VBF8_m30_8.7.17}.pdf}}
+  \caption{Distribution of data and signal MC with $m_a=30$ GeV, normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$, in each region of the ABCD method, using analysis regime 2. (a) The validation region. (b) The signal region.}
+  \label{fig:HBSM:amassdiff}
+\end{figure}
+
 The efficiency in each of the A/B/C/D regions for the gluon fusion and VBF Higgs production modes in the signal region can be seen in Table~\ref{tab:HBSM:ABCD_separated}.
-It can be seen that in region D, $\sim60\%$ of the signal events are produced in the VBF mode and the remaining $\sim40\%$ in the ggF mode - the ggF events are produced about $10\times$ as often as VBF events, and the VBF efficiency is about $20\times$ higher than the ggF efficiency.
+It can be seen that in region D, $\sim60\%$ of the signal events are produced in the VBF mode and the remaining $\sim40\%$ in the ggF mode - the ggF events are produced about $10\times$ as often as VBF events~\cite{deFlorian:2016spz}, and the VBF efficiency is about $20\times$ higher than the ggF efficiency.
 The efficiency of the event selection for the $pp\to H\to aa \to \gamma\gamma gg$ signal combining the two production modes in each of the A/B/C/D regions is shown in Table~\ref{tab:HBSM:ABCD},
 assuming the SM cross-section and kinematics for the different production modes as described in~\cite{deFlorian:2016spz}.
 
@@ -666,23 +677,148 @@ is referred to as \textit{non-closure}.
 The non-closure results from residual correlations between the two observables used to define the A/B/C/D regions,
 and the uncertainty accounting for this effect is referred to as \textit{closure uncertainty}.
 In order to quantify the non-closure, the data-driven estimation as described above is performed 
-with the exception that the requirement on $m_{\gamma\gamma jj}$ is inverted.
-For each $m_{\gamma\gamma}$ regime,
-the closure uncertainty is defined to be 
-the central value of the non-closure if it is found to be significant ($>1\sigma$) in comparison with its statistical uncertainty; 
-otherwise, the statistical uncertainty of its estimate is used.
+in the validation region.
+For each $m_{\gamma\gamma}$ regime, the closure uncertainty is defined to be the central value of the non-closure if it is found to be significant ($>1\sigma$) in comparison with its statistical uncertainty; otherwise, the statistical uncertainty of its estimate is used.
+The events in region D of the signal region were blinded while the analysis selections were being optimized, and only unblinded after the entire analysis strategy was frozen.
+Fig.~\ref{fig:HBSM:ABCD_bars} shows the distribution of the data in each of the $m_{\gamma\gamma}$ analyses regimes, in the validation and signal regions, with an expected signal that has high efficiency in that analysis regime.
+The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the predicted contribution from the background closure and the signal contribution.
+The unblinded results can be found in Section~\ref{sec:HBSM:results}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m20_a20_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m20_a20_ggyy_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m30_a30_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m30_a30_ggyy_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m40_a40_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m40_a40_ggyy_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m50_a50_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m50_a50_ggyy_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m60_a60_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m60_a60_ggyy_8.7.17}.pdf}}\\
+  \caption{Number of events in data and signal MC (with (top row) $m_a=20$ GeV; (second row) $m_a=30$ GeV; (third row) $m_a=40$ GeV; (fourth row) $m_a=50$ GeV; (fifth row) $m_a=60$ GeV) in each region of the ABCD method.
+  The analysis regimes are 1-5 from the top row to the bottom, respectively,. The data prediction assumes closure (\ref{eqn:HBSM:closure}) in the background in the absence of signal. The signal is normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$. The errors shown are statistical. (left) The validation region. (right) The signal region.
+The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the expected and the signal contribution.
+}
+  \label{fig:HBSM:ABCD_bars}
+\end{figure}
+
+In the validation region closure can be observed, to within the statistical uncertainties.
+
+\section{Statistical Analysis}
+\label{sec:HBSM:statanalysis}
+The statistical analysis is performed using an ABCD likelihood method which takes into account the likelihood of the data in each of the ABCD regions. This method is useful for dealing with situations in which the contamination of the signal in the control regions is non-trivial or the number of events in one of the control regions is small.
+
+The likelihood function is defined as a product of Poisson likelihood functions over each of the ABCD regions:
+\begin{align}
+  \mathcal{L}(\mu_S,\mu,\tau_B,\tau_C|N_A,N_B,N_C,N_D) &= \frac{(\mu_S+\mu)^{N_D}e^{-(\mu_S+\mu)}}{N_D!}\nonumber\\
+  &\times\frac{(b\mu_S+\tau_B\mu)^{N_B}e^{-(b\mu_S+\tau_B\mu)}}{N_B!}\nonumber\\
+  &\times\frac{(c\mu_S+\tau_C\mu)^{N_C}e^{-(c\mu_S+\tau_C\mu)}}{N_C!}\nonumber\\
+  &\times\frac{(a\mu_S+\tau_B\tau_C\mu)^{N_A}e^{-(a\mu_S+\tau_B\tau_C\mu)}}{N_A!}
+  \label{eqn:HBSM:likelihood}
+\end{align}
+The parameters are defined as follows. $\mu_S$ and $\mu$ are the expected number of signal and background events, respectively, in the D region. 
+$\tau_B$ and $\tau_C$ are the expected contamination of the background in the B and C regions respectively, 
+so that the expected number of background events are $\tau_B\mu$ and $\tau_C\mu$, respectively. 
+Closure in the signal region is assumed, 
+so that the expected number of background events in region A is $\tau_B\tau_C\mu$ (i.e., the assumption of closure allows the background to be parameterized in terms of only 3 variables across the A/B/C/D regions).
+$a$,$b$, and $c$ are the expected (from Monte Carlo) contamination of the signal in the A, B, and C regions respectively, so that the expected number of signal events are $a\mu_S$, $b\mu_S$, and $c\mu_S$, respectively (Table~\ref{tab:HBSM:ABCD}). 
+Finally, $N_A$, $N_B$, $N_C$, and $N_D$ are the number of data observed in each of the A, B, C, and D regions, respectively.
+
+The statistical uncertainty on the closure in the validation region is assessed as a systematic uncertainty on the background prediction in the signal region.
+In case the non-closure is larger than a 1-$\sigma$ statistical fluctuation, the size of the non-closure is applied as a systematic on the background prediction.\footnote{Note that the distribution of the non-closures in the validation region are consistent with that expected due to Poisson fluctuations; this larger uncertainty is applied conservatively.}
+This information is summarized in Table~\ref{tab:HBSM:closure_uncertainty}.
+The closure uncertainty, is included in the likelihood function by applying a Gaussian prior
+to the expected number of background events in region A.
+Note that this uncertainty is statistical in nature.
+
+\begin{table}[htbp]
+  \begin{center}
+    \caption{Closure in each $m_{\gamma\gamma}$ analysis regime.}
+  \label{tab:HBSM:closure_uncertainty}
+    {\footnotesize
+  \begin{tabular}{ l c c }
+    \toprule
+    Regime & Closure & Background uncertainty syst. \\
+    \midrule
+    1 & 1.11$\pm$0.50 & 0.50 \\
+    2 & 1.17$\pm$0.32 & 0.32 \\
+    3 & 0.93$\pm$0.20 & 0.20 \\
+    4 & 1.26$\pm$0.21 & 0.26 \\
+    5 & 1.28$\pm$0.20 & 0.28 \\
+    \bottomrule
+  \end{tabular}
+    }
+  \end{center}
+\end{table}
+
+The low number of observed events is the dominant source of uncertainty for this search.
+The second largest uncertainty is due to the closure uncertainty, also statistical in nature.
+
+Other sources of systematic uncertainty only affect the overall signal normalisation and the amount of signal contamination
+in control regions A, B and C.
+Dominant sources of experimental systematic uncertainty arise from the calibration and resolution of the energy of the 
+jets~\cite{PERF-2016-04,PERF-2011-04}. 
+Uncertainties associated with the photon energy calibration and resolution~\cite{PERF-2013-05}, as well as the photon identification and isolation
+efficiencies~\cite{PERF-2013-04}, are found to be negligible. Uncertainties associated 
+with the estimation of the integrated luminosity and the simulation of pile-up interactions (\textit{Lumi and Pile-up})
+are found to be negligible. 
+The systematic uncertainty associated with the modelling of the kinematics in signal 
+events (\textit{Modelling}) is evaluated by varying the choice of scales used in the generator program and
+assuming the SM Higgs boson production~\cite{Heinemeyer:2013tqa}.
+It is found to be similar in size to the experimental systematic uncertainty.
+The effect of these uncertainties on the best fit signal strength are included in Table~\ref{tab:HBSM:systs}.
+
+Nuisance parameters corresponding to each source of uncertainty are included in the profile likelihood as Gaussian constraints.
+
+The likelihood is maximized over all possible values of $\mu_S$, $\mu$, $\tau_B$, and $\tau_C$ using the \texttt{MINUIT} migrad algorithm, marginalizing over the nuisance parameters.
+Then the maximum likelihood (MLE) value of $\hat{\mu} = \text{BR}(H\rightarrow aa\rightarrow gg\gamma\gamma)$ is obtained by appropriately 
+normalizing the signal Monte Carlo efficiency to the expected number of Higgs events in the data sample based on the total integrated luminosity.
+
+The 95\% confidence limit on $\hat{\mu}$ is obtained using the asymptotic limit of the CLs method~\cite{Read:2002hq,Cowan:2010js}.
 
 \section{Results}
+\label{sec:HBSM:results}
 The observed number of events in each of the A/B/C/D regions for each $m_{\gamma\gamma}$ regime is shown in Table~\ref{tab:HBSM:ABCD_data}
 along with the predicted background in the signal region D, taking into account the closure uncertainty. 
+This information is also presented in Fig.~\ref{fig:HBSM:ABCD_bars_unblinded}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{ABCD_bars_sig_VBF8_m20_a20_ggyy_8.7.17_unblinded}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{ABCD_bars_sig_VBF8_m30_a30_ggyy_8.7.17_unblinded}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{ABCD_bars_sig_VBF8_m40_a40_ggyy_8.7.17_unblinded}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{ABCD_bars_sig_VBF8_m50_a50_ggyy_8.7.17_unblinded}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{ABCD_bars_sig_VBF8_m60_a60_ggyy_8.7.17_unblinded}.pdf}}
+  \caption{The observed number of events in each of the signal ABCD regions, as well as the predicted number of events in the D region under the background-only hypothesis. The error bars shown are purely statistical uncertainties (including the closure uncertainty). (a) Analysis regime 1. (b) Analysis regime 2. (c) Analysis regime 3. (d) Analysis regime 4. (e) Analysis regime 5.}
+  \label{fig:HBSM:ABCD_bars_unblinded}
+\end{figure}
+
 Due to the low event counts in each of the A/B/C/D regions,
 the median expected background yield in region D estimated from pseudo-data experiments involving asymmetric Poisson uncertainties 
 in the different regions slightly differs from the direct estimation from Eq.~(\ref{eqn:HBSM:closure}).
+The prior distribution of the number of events observed in the signal $D$ region is shown in Fig.~\ref{fig:HBSM:NinD_dist}.
+
+\begin{figure}[htbp]
+  \centering 
+  {\includegraphics[width=0.45\textwidth]{figures/NinD_distribution_sig_VBF8_m20.pdf}}
+  {\includegraphics[width=0.45\textwidth]{figures/NinD_distribution_sig_VBF8_m30.pdf}}\\
+  {\includegraphics[width=0.45\textwidth]{figures/NinD_distribution_sig_VBF8_m40.pdf}}
+  {\includegraphics[width=0.45\textwidth]{figures/NinD_distribution_sig_VBF8_m50.pdf}}\\
+  {\includegraphics[width=0.45\textwidth]{figures/NinD_distribution_sig_VBF8_m60.pdf}}
+  \caption{The blinded prior distribution of possible number of events in the signal $D$ region, taking into account the poisson uncertainty on the control regions $A$, $B$, and $C$.
+  The distribution was generated with toys.
+In green, the percentiles in the distribution corresponding to the [-2,-1,0,+1,+2]$\sigma$ points of a Normal distribution.
+In red, the predicted (dashed) and observed after unblinding (solid) number of events.
+(a) Analysis regime 1.
+(b) Analysis regime 2.
+(c) Analysis regime 3.
+(d) Analysis regime 4.
+(e) Analysis regime 5.
+}
+  \label{fig:HBSM:NinD_dist}
+\end{figure}
 No large excess is observed in region D when comparing the data yield to the background predicted from the A/B/C regions
 assuming that the signal is absent in these regions.
-However, given that a signal contamination is possible, a more refined procedure
-taking into account signal contributions in all regions
-is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg$.
 
 \begin{table}[t]
   \begin{center}
@@ -715,49 +851,23 @@ is employed to set limits on the production rate of $H\to aa \to \gamma\gamma gg
   \end{center}
 \end{table}
 
-A likelihood function, describing both the expected background and signal, is fit to all four A/B/C/D regions simultaneously.
-The free parameters of the likelihood are the numbers of signal and background events in region D, 
-$\mu_\text{S}$ and $\mu_\text{bkg}$ respectively, the ratio of background events expected in region B to that in region D, $\tau_\text{B}$, 
-and the analogous ratio for region C, $\tau_\text{C}$.
-The assumption of no correlation in the total background, Eq.~(\ref{eqn:HBSM:closure}), 
-allows the background to be parameterised in terms of only three parameters.
-The closure uncertainty, which accounts for the uncertainty due to assuming non-correlation, is included in the likelihood function by applying a Gaussian prior
-to the expected number of background events in region A, $\tau_\text{B}\tau_\text{C}\mu_\text{bkg}$.
-The Gaussian width is determined by the size of the closure uncertainty summarized in Table~\ref{tab:HBSM:ABCD_data}.
+In order to set limits, the likelihood function (Equation~\ref{eqn:HBSM:likelihood}) is used to fit to all four A/B/C/D regions simultaneously.
+
 The parameter $\mu_\text{S}$ can be expressed as the product of the total integrated luminosity, the signal cross-section 
-$\sigma_H\times B(H\to aa\to \gamma\gamma gg)$, and the signal selection efficiency estimated in MC simulation
-and quoted in Table~\ref{tab:HBSM:ABCD}.
-The signal contamination in the control regions A, B, and C is estimated from MC simulation 
-and is varied coherently with $\mu_\text{S}$ in the likelihood fit.
+$\sigma_H\times B(H\to aa\to \gamma\gamma gg)$, and the signal selection efficiency estimated in MC simulation and quoted in Table~\ref{tab:HBSM:ABCD}.
 
-The low number of observed events is the dominant source of uncertainty for this search.
-The second largest uncertainty is due to the closure uncertainty, also statistical in nature.
-Other sources of systematic uncertainty only affect the overall signal normalisation and the amount of signal contamination
-in control regions A, B and C.
-Dominant sources of experimental systematic uncertainty arise from the calibration and resolution of the energy of the 
-jets~\cite{PERF-2016-04,PERF-2011-04}. 
-Uncertainties associated with the photon energy calibration and resolution~\cite{PERF-2013-05}, as well as the photon identification and isolation
-efficiencies~\cite{PERF-2013-04}, are found to be negligible. Uncertainties associated 
-with the estimation of the integrated luminosity and the simulation of pile-up interactions (\textit{Lumi and Pile-up})
-are found to be negligible. 
-The systematic uncertainty associated with the modelling of the kinematics in signal 
-events (\textit{Modelling}) is evaluated by varying the choice of scales used in the generator program and
-assuming the SM Higgs boson production~\cite{Heinemeyer:2013tqa}.
-It is found to be similar in size to the experimental systematic uncertainty.
-
-Nuisance parameters corresponding to each source of uncertainty are included in the profile likelihood as Gaussian constraints.
-Their effects on the estimated number of signal events $\mu_\text{S}$ are studied using Asimov~\cite{Cowan:2010js} pseudo-datasets generated
-for an expected signal corresponding to the 95\% CL upper limit obtained in this search and using the values of the background 
+The effects of the uncertainties (Section~\ref{sec:HBSM:statanalysis}) on the estimated number of signal events $\mu_\text{S}$ are studied using Asimov~\cite{Cowan:2010js} pseudo-datasets generated
+for an expected signal corresponding to the 95\% CL upper limit obtained in this search (Table~\ref{tab:HBSM:limits}) and using the values of the background 
 parameters maximising the likelihood in a fit to data which assumes no signal.
-Table~\ref{tab:systs} summarises the impact of each source of uncertainty varied by $\pm1\sigma$ on the maximum-likelihood estimate for $\mu_\text{S}$ in each 
+Table~\ref{tab:HBSM:systs} summarises the impact of each source of uncertainty varied by $\pm1\sigma$ on the maximum-likelihood estimate for $\mu_\text{S}$ in each 
 of the $m_{\gamma\gamma}$ regimes for an illustrative $m_a$ hypothesis. The statistical uncertainty is the largest one for all regimes.
 \begin{table}[t]
   \begin{center}
     \caption{
       Maximum fractional impact on the fitted $\mu_\text{S}$ from sources of systematic uncertainty estimated using Asimov datasets.
-      The signal injected in the Asimov datasets corresponds to the observed upper limit quoted in Table~\ref{tab:limits}.
+      The signal injected in the Asimov datasets corresponds to the observed upper limit quoted in Table~\ref{tab:HBSM:limits}.
     }
-    \label{tab:systs}
+    \label{tab:HBSM:systs}
           {\footnotesize
 	  \begin{tabular}{cccccc}
 	  \hline
@@ -777,7 +887,8 @@ of the $m_{\gamma\gamma}$ regimes for an illustrative $m_a$ hypothesis. The stat
           }
   \end{center}
 \end{table}
-The best-fit values of the parameters of the likelihood function are given in Table~\ref{tab:MLE}.
+
+The best-fit values of the parameters of the likelihood function are given in Table~\ref{tab:HBSM:MLE}.
 The probability that the data are compatible with the background-only hypothesis is computed for each $m_{\gamma\gamma}$ regime and no significant 
 excess is observed. The smallest local $p$-value, obtained for the $m_{\gamma\gamma}$ regime 2 ($m_a\approx30~\GeV{}$), is of the order of 4\%.
 \begin{table}[t]
@@ -787,7 +898,7 @@ excess is observed. The smallest local $p$-value, obtained for the $m_{\gamma\ga
       The estimated uncertainties in the fit parameters assume
       that the likelihood function is parabolic around the minimum of the fit.
     }
-    \label{tab:MLE}
+    \label{tab:HBSM:MLE}
           {\footnotesize
 	    \begin{tabular}{
                 cc
@@ -808,10 +919,10 @@ excess is observed. The smallest local $p$-value, obtained for the $m_{\gamma\ga
   \end{center}
 \end{table}
 Since no significant excess is observed, an upper limit is derived at 95\% CL.            
-The expected and observed exclusion limits on $\mu_\text{S}$ are given in Table~\ref{tab:limits}.
+The expected and observed exclusion limits on $\mu_\text{S}$ are given in Table~\ref{tab:HBSM:limits}.
 This is related to the limit on the $pp\to H\to aa \to \gamma\gamma gg$ cross-section by appropriately normalising to the measured total integrated luminosity 
-and selection efficiencies relative to the inclusive signal production obtained from the ggF and VBF MC samples (Table~\ref{tab:ABCD}).
-The limit is also expressed relative to the SM cross-section for the Higgs boson, shown in Figure~\ref{fig:brazil_ma}.
+and selection efficiencies relative to the inclusive signal production obtained from the ggF and VBF MC samples (Table~\ref{tab:HBSM:ABCD}).
+The limit is also expressed relative to the SM cross-section for the Higgs boson, shown in Figure~\ref{fig:HBSM:brazil_ma}.
 Within a $m_{\gamma\gamma}$ analysis regime, limits are interpolated linearly in between simulated $m_a$ values.
 Finally, for each mass point, the $m_{\gamma\gamma}$ regime that yields the best expected limit is used to provide the observed exclusion limit.
 The limit is calculated using a frequentist $\text{CL}_\text{s}$ calculation~\cite{Read:2002hq}. 
@@ -821,7 +932,7 @@ The limit is calculated using a frequentist $\text{CL}_\text{s}$ calculation~\ci
     \caption{Observed (expected) upper limits at the 95\% CL, for each of the $m_a$ values considered in the search.
       In each case, the $m_{\gamma\gamma}$ regime used to calculate the limits is also indicated.
       The uncertainties include both the statistical and systematic sources of uncertainty in the fit.}
-    \label{tab:limits}
+    \label{tab:HBSM:limits}
           {\footnotesize
             \bgroup
             \def\arraystretch{1.5}
@@ -858,11 +969,35 @@ The limit is calculated using a frequentist $\text{CL}_\text{s}$ calculation~\ci
   The vertical lines indicate the boundaries between the different $m_{\gamma\gamma}$ analysis regimes.
   At the boundaries, the $m_{\gamma\gamma}$ regime that yields the best expected limit is used to provide the observed exclusion limit (filled circles); the observed limit provided by the regime that yields the worse limit is also indicated (empty circles).
 }
-  \label{fig:brazil_ma}
+  \label{fig:HBSM:brazil_ma}
+\end{figure}
+
+\section{Discussion}
+This analysis can be combined with the Run 1 search for $H\to 2a \to 4\gamma$~\cite{Aad:2015bua}
+to place a limit on the overall BR$(H\rightarrow aa)$. 
+Figure~\ref{fig:HBSM:compare_4gamma} shows a quantitative comparison of the two analyses.
+
+The two analyses have different sensitivities in different parts of the phase space, 
+parameterized by $\rho=\text{BR}(a\rightarrow \gamma\gamma)/\text{BR}(a\rightarrow jj)$. 
+The analysis presented in this note is more sensitive for lower values of $\rho$, 
+closer to SM-like couplings with photons and gluons; a typical value of $\rho$ in a 2HDM model as discussed in~\cite{Curtin:2013fra} is shown for reference.
+The $H\to 2a \to 4\gamma$ search is more sensitive if there is a large BR to photons.
+ 
+Both of these analyses are limited by statistics, 
+therefore these bounds will improve with more data. 
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/compare_4gamma_20.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/compare_4gamma_30.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/compare_4gamma_40.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/compare_4gamma_50.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/compare_4gamma_60.pdf}}
+  \caption{The exclusion limit placed on BR$(H\rightarrow aa)$ as a function of BR$(a\rightarrow \gamma\gamma)/\text{BR}(a\rightarrow jj)$, and comparing the ATLAS 4$\gamma$ analysis to this analysis. Also shown is a typical value for BR$(a\rightarrow \gamma\gamma)/\text{BR}(a\rightarrow jj)$ in the NMSSM. (a) $m_a=$20 GeV. (b) $m_a=$30 GeV. (c) $m_a=$40 GeV. (d) $m_a=$50 GeV. (e) $m_a=$60 GeV.}
+  \label{fig:HBSM:compare_4gamma}
 \end{figure}
 
 \section{Conclusions}
-
 In summary, a search for exotic decays of the Higgs boson into a pair of new (pseudo)scalar particles,
 $H\to aa$, in final states with two photons 
 and two jets is conducted using 36.7~\ifb{} of $pp$ collisions at $\sqrt{s}=13$ \TeV{} recorded 
