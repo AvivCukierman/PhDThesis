@@ -105,20 +105,20 @@ where the $H\rightarrow \gamma\gamma gg$ final state is more sensitive to SM-lik
 with the new physics sector, 
 while the $H\rightarrow 4\gamma$ final state is more sensitive to the enhanced photon scenarios. 
 
-The most common Higgs production modes at the LHC are through gluon fusion, vector boson fusion (VBF), or associated production with an additional vector boson (VH)~\cite{Dittmaier:2011ti}.
-The cross sections for each of these Higgs production modes is in a ratio of roughly 100:10:1~\cite{deFlorian:2016spz,TODO}; targeting any individual production mode requires a tradeoff between higher production cross section and increased handles on distinguishing signal from background.
+The most common Higgs production modes at the LHC are through gluon fusion (ggF), vector boson fusion (VBF), or associated production with an additional vector boson (VH)~\cite{Dittmaier:2011ti}.
+The cross sections for each of these Higgs production modes is in a ratio of roughly 100:10:1~\cite{deFlorian:2016spz}; targeting any individual production mode requires a tradeoff between higher production cross section and increased handles on distinguishing signal from background.
 Ref.~\cite{hep-ph/0703247} shows that the search for $H \to \gamma\gamma gg$ in the VH mode, 
 where the additional vector boson
 decays leptonically, would require approximately $300~\ifb$ of LHC data in order to be sensitive to branching ratios less than 4\%. 
 While the gluon fusion production has a larger cross section, it is overwhelmed by background.
-We have found (Fig.~\ref{fig:HBSM:HBSM_prodmodes}) that the search in the VBF production 
+We have found (Figure~\ref{fig:HBSM:HBSM_prodmodes}) that the search in the VBF production 
 mode can achieve sensitivity competitive with or better than the above two production modes in the range $20$ to $300~\ifb$ of LHC integrated luminosity data,
 and in particular with the approximately $150~\ifb$ of data at the end of LHC Run 2~\cite{lhc-commissioning}.
 
 In the VBF production mode, two extra quarks are produced along with the Higgs in the hard scatter interaction.
 The gluons from the Higgs decay and the quarks from the VBF production are reconstructed as jets ($j$) in the ATLAS detector;
 therefore, this search is focused on the $H\to2\gamma2j$ final state with two additional jets from the VBF production.
-Fig.~\ref{fig:HBSM:VBFH_feynman} shows a tree-level Feynman diagram of the VBF production and $\gamma\gamma gg$ decay of the Higgs boson, including the $aa$ intermediate state.
+Figure~\ref{fig:HBSM:VBFH_feynman} shows a tree-level Feynman diagram of the VBF production and $\gamma\gamma gg$ decay of the Higgs boson, including the $aa$ intermediate state.
 
 \begin{figure}[t]
   \centering 
@@ -172,7 +172,7 @@ The fully reconstructed final state contains four jets;
 the main challenges present in this analysis involve reconstructing and identifying these jets.
 
 When reconstructing the energy of the originating parton of a jet, both the effects of the energy response of the calorimeter and the effect of other proton-proton interactions in the event (pile-up) must be taken into account.
-Chapter~\ref{ch:NI} presents work on studying in a rigorous framework the mathematical process of reversing the effects of the calorimeter response in order to access the originating parton energy (\cite{Cukierman:2016dkb});
+Chapter~\ref{ch:NI} presents work on studying in a rigorous framework the mathematical process of reversing the effects of the calorimeter response in order to access the originating parton energy~\cite{Cukierman:2016dkb};
 and Chapter~\ref{ch:Calib} presents work on using machine learning to further improve this process.
 Appendix~\ref{ch:Voronoi} presents work on novel jet reconstruction algorithms which aim to reduce the effect of pileup on the jet reconstructed energy~\cite{ATLAS-CONF-2017-065}.
 These efforts serve to develop new techniques for reconstructing the energies of the jets that appear in the final state of this analysis, and therefore improve the ultimate sensitivity of this search.
@@ -250,13 +250,13 @@ For events passing the trigger with higher transverse energy thresholds (\texttt
 For events passing the trigger with lower thresholds (\texttt{HLT\_2g22\_tight}), both the leading and sub-leading photons are required to have $E_\text{T}>27$ \GeV{}. 
 For events passing both triggers, the latter selection is applied.
 The invariant mass of the two leading photon candidates is denoted by $m_{\gamma\gamma}$.
-The $m_{\gamma\gamma}$ resolution is excellent, with $>\sim97\%$ of signal events satisfying $|m_{\gamma\gamma}-m_a|<2.5$ \GeV{}, regardless of the value of $m_a$; this can be seen in Fig.~\ref{fig:HBSM:photon_kinematics}.
+The $m_{\gamma\gamma}$ resolution is excellent, with $>\sim97\%$ of signal events satisfying $|m_{\gamma\gamma}-m_a|<2.5$ \GeV{}, regardless of the value of $m_a$; this can be seen in Figure~\ref{fig:HBSM:photon_kinematics}.
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{myy_unscaled_combine_ma_VBF8_8.7.17}.pdf}\label{fig:myy_unscaled}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{myy_unscaled_combine_ma_VBF8_8.7.17_public}.pdf}}
   \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/myy_shape_log.pdf}}\\
-  \caption{Distribution of $m_{\gamma\gamma}$. The quantities are plotted separately for signal MC produced in the VBF and GGF modes. (a) The distribution for all the signal samples used in this analysis (each signal normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$). (b) Zoomed in distribution, for a signal with $m_a=30$ GeV.}
+  \caption{Distribution of $m_{\gamma\gamma}$. The quantities are plotted separately for signal MC produced in the VBF and GGF modes. (a) The distribution for some of the signal samples used in this analysis (each signal normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$). (b) Zoomed in distribution, for a signal with $m_a=30$ GeV.}
   \label{fig:HBSM:photon_kinematics}
 \end{figure}
 
@@ -320,7 +320,7 @@ The pair of jets with the highest invariant mass ($m_{jj}^\text{VBF}$, or VBF $m
 The two remaining highest-\pt{} jets are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
 The jet assignment is designed to choose the correct VBF and signal jets for VBF signal events. The truth parton label (the truth ID of the highest $p_T$ parton in the jet) is used to study the accuracy of this jet assignment in MC.
 
-As seen in Fig.~\ref{fig:numIDjets}, after the 4 jet preselection requirement, about 70\% of VBF signal events contain at least 2 gluon jets; also, about 70\% of VBF signal events contain at least 2 quark jets. This limits the possible accuracy of the jet assignment.
+As seen in Figure~\ref{fig:numIDjets}, after the 4 jet preselection requirement, about 70\% of VBF signal events contain at least 2 gluon jets; also, about 70\% of VBF signal events contain at least 2 quark jets. This limits the possible accuracy of the jet assignment.
 
 \begin{figure}[htbp]
   \centering 
@@ -331,7 +331,7 @@ As seen in Fig.~\ref{fig:numIDjets}, after the 4 jet preselection requirement, a
 \end{figure}
 
 The best possible jet assignment would choose the two gluon jets with mass closest to $m_a$ as the signal jets and two quark jets as the VBF jets, if such an assignment is possible.
-Fig.~\ref{fig:truegluon} shows the results of this assignment (which can only be done at truth level) for a VBF signal sample with $m_a=30$ GeV.
+Figure~\ref{fig:truegluon} shows the results of this assignment (which can only be done at truth level) for a VBF signal sample with $m_a=30$ GeV.
 
 In the $m_{jj}$ distribution there is a peak about $m_a$ with width about $0.4m_a = 12$ GeV.
 Only about 35\% of the events have two gluons with an invariant mass within this peak; this indicates that most of the time the two true signal gluons are either not reconstructed or below the jet $p_T$ cut.
@@ -345,15 +345,15 @@ This 12 GeV width also informs the choice of a $0.4m_a$ cut on $|m_{jj}-m_{\gamm
   \label{fig:truegluon}
 \end{figure}
 
-Fig.~\ref{fig:remove} shows the results of the jet assignment used in this analysis for a VBF signal sample with $m_a=30$ GeV.
+Figure~\ref{fig:remove} shows the results of the jet assignment used in this analysis for a VBF signal sample with $m_a=30$ GeV.
 About 20\% of the events choose two gluons with an invariant mass within 12 GeV of $m_a$ as the signal jets.
 About 55\% of the events choose two quarks correctly as the VBF jets.
 
-Fig.~\ref{fig:VBFmjj_quarkquark} examines the distribution of VBF $m_{jj}$ with the jet assignment used in this analysis in a VBF signal sample with $m_a=30$ GeV using truth information.
+Figure~\ref{fig:VBFmjj_quarkquark} examines the distribution of VBF $m_{jj}$ with the jet assignment used in this analysis in a VBF signal sample with $m_a=30$ GeV using truth information.
 The distributions are compared among all events, events where both VBF jets are truth identified as quarks, and events where at least one VBF jet is not truth identified as a quark.
 It can be seen that the VBF $m_{jj}$ distribution is shifted upwards relative to the case where the truth quarks are not correctly selected, but the case where the truth quarks are always correctly selected is shifted to even higher values.
 
-Fig.~\ref{fig:remove} also shows the results of the jet assignment used in this analysis for a gluon fusion signal sample with $m_a=30$ GeV and for a photons + jets background MC sample.
+Figure~\ref{fig:remove} also shows the results of the jet assignment used in this analysis for a gluon fusion signal sample with $m_a=30$ GeV and for a photons + jets background MC sample.
 In the gluon fusion signal sample, about 20\% of the events choose two gluons with an invariant mass within 12 GeV of $m_a$ as the signal jets.
 In these events the jets labeled the ``VBF jets" in fact come from pileup, underlying event, or initial or final state radiation. 
 
@@ -381,7 +381,7 @@ relative to the dominant $\gamma\gamma$+multi-jet background,
 by requiring $m_{jj}^\text{VBF}$ to be greater than 500 \GeV{} and 
 the \pt{} of the leading VBF jet to be greater than 60 \GeV{}.
 The discrimination power of these observables can be seen in the difference in shape between the VBF signal and the 
-data, shown in Fig.~\ref{fig:HBSM:VBF_jet_kinematics}.
+data, shown in Figure~\ref{fig:HBSM:VBF_jet_kinematics}.
 
 \begin{figure}[t]
   \centering 
@@ -421,10 +421,10 @@ This selection is summarized in Table~\ref{tab:HBSM:VBF_selection}.
 \subsection{Combined Signal Selection}
 \label{sec:HBSM:signal_selection}
 As mentioned in~\ref{sec:HBSM:VBF_sel}, the two remaining highest-\pt{} jets after the VBF jet assignment are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
-The distribution of $m_{jj}$ is shown in Fig.~\ref{fig:HBSM:signal_kinematics}; the resolution is quite broad, on the order of 30\% of the central value.
+The distribution of $m_{jj}$ is shown in Figure~\ref{fig:HBSM:signal_kinematics}; the resolution is quite broad, on the order of 30\% of the central value.
 The tail of the $m_{jj}$ distribution comes from misidentifying the signal jets.
 In signal events it is expected that $m_{jj}\sim m_{\gamma\gamma} \sim m_a$ up to misidentifications of the signal jets and resolution of the signal objects.
-Because of this, the difference $|m_{jj}-m_{\gamma\gamma}|$ is expected to be smaller for signal events than for the background; the distribution of this quantity is also shown in Fig.~\ref{fig:HBSM:signal_kinematics}.
+Because of this, the difference $|m_{jj}-m_{\gamma\gamma}|$ is expected to be smaller for signal events than for the background; the distribution of this quantity is also shown in Figure~\ref{fig:HBSM:signal_kinematics}.
 This quantity is therefore used to define a signal-enhanced region for the data-driven background estimation (Section~\ref{sec:HBSM:background_est}).
 
 The two photon candidates and the two signal jets form the Higgs boson candidate with invariant mass $m_{\gamma\gamma jj}$.
@@ -433,12 +433,14 @@ The region $|m_{\gamma\gamma jj} - m_H| > 25~\GeV{}$ is designated the \textit{v
 Figure~\ref{fig:HBSM:signal_kinematics} shows that most of the selected signal events lie within the signal region, especially after the requirement of $|m_{jj}-m_{\gamma\gamma}|$ used to define the signal-enhanced region,
 while the data have a broad distribution extending to higher values.
 
+The distributions of $m_{jj}$, $|m_{jj}-m_{\gamma\gamma}|$, and $|m_{\gamma\gamma jj}$ for other values of $m_a$ are included in Appendix~\ref{sec:HBSM_app:kinematics} - the conclusions for these other values of $m_a$ are largely the same.
+
 \begin{figure}[t]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/mjj_shape.pdf}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{amassdiff_shape_VBF8_combined_8.7.17}.pdf}}\\
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/hmasses_shape.pdf}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{hmass_amassdiff_shape_VBF8_combined_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{mjj_shape_m30}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{amassdiff_shape_m30}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{hmasses_shape_m30}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{hmasses_amassdiff_shape_m30}.pdf}}\\
   \caption{
     Distributions of kinematic observables before the requirements on \smash{$m_{jj}^\text{VBF}$}, leading VBF jet \pt{}, \smash{$m_{\gamma\gamma jj}$}
     and $|m_{jj}-m_{\gamma\gamma}|$ for:
@@ -474,11 +476,11 @@ In order to take advantage of the very good $m_{\gamma\gamma}$ resolution to sup
 range of interest, five overlapping $m_{\gamma\gamma}$ regimes are defined as summarised in Table~\ref{tab:HBSM:amassdiffcut}.
 The size of the $m_{\gamma\gamma}$ window in each regime is 15 GeV, in order to fully cover two signal samples separated by 10 GeV in $m_a$.
 Slightly different window sizes are used for the lowest and highest $m_{\gamma\gamma}$ regimes.
-Since the efficiency of the trigger and preselections is very low on signal with $m_a<20$ GeV (as can be seen in Fig.~\ref{fig:HBSM:cutflow_ma}), the lowest $m_{\gamma\gamma}$ regime starts at $17.5$ GeV.
+Since the efficiency of the trigger and preselections is very low on signal with $m_a<20$ GeV (as can be seen in Figure~\ref{fig:HBSM:cutflow_ma}), the lowest $m_{\gamma\gamma}$ regime starts at $17.5$ GeV.
 Since the maximum possible value of $m_a$ is $\frac{m_H}{2}\approx 62.5$ GeV, the highest $m_{\gamma\gamma}$ regime is limited to $65$ GeV.
 For each $m_{\gamma\gamma}$ regime, the set of $m_a$ values for which this requirement causes no significant signal acceptance loss is also indicated.
 
-The efficiency of the various analysis cuts in the signal can be seen in Fig.~\ref{fig:HBSM:cutflow_ma}.
+The efficiency of the various analysis cuts in the signal can be seen in Figure~\ref{fig:HBSM:cutflow_ma}.
 The mass points with $m_a\le 10$ GeV have little acceptance from the trigger selection.
 The $m_a=20$ GeV mass point has almost an order of magnitude less overall efficiency than the other samples with greater values of $m_a$.
 The mass points with the highest efficiencies are the $m_a=30$ GeV and $m_a=40$ GeV samples, with the $m_a=50$ GeV and $m_a=60$ GeV samples having slightly worse efficiencies.
@@ -514,7 +516,7 @@ These regions are referred to respectively as \textit{Tight--Tight} (C and D) an
 
 The second axis separates events in regions B and D, satisfying $|m_{jj}-m_{\gamma\gamma}|< x_\text{R}$, 
 from events in regions A and C, satisfying $|m_{jj}-m_{\gamma\gamma}|>x_\text{R}$. 
-The value $x_\text{R}$ depends on the $m_{\gamma\gamma}$ regime R to account for the degradation in resolution at higher mass.
+The value $x_\text{R}$ depends on the $m_{\gamma\gamma}$ regime R to account for size of the resolution at higher mass (Appendix~\ref{sec:HBSM_app:kinematics}).
 As mentioned in Section~\ref{sec:HBSM:signal_selection}, the difference $|m_{jj}-m_{\gamma\gamma}|$ tends to be smaller in the signal than in the background.
 The signal events that lie outside of the range $|m_{jj}-m_{\gamma\gamma}|< x_\text{R}$ are due to poor $m_{jj}$ resolution or to incorrect assignment of the jets corresponding 
 to the gluons originating from the $a$ boson decay.
@@ -544,7 +546,26 @@ An exception is made for the lowest $m_{\gamma\gamma}$ regime, where $x_\text{R}
   \end{center}
 \end{table}
 
-The distribution of events across $|m_{jj}-m_{\gamma\gamma}|$ (i.e., the second axis of the A/B/C/D method), separated into Tight--Tight and Tight--Loose events (i.e., the first axis of the A/B/C/D method) can be seen in Fig.~\ref{fig:HBSM:amassdiff}, for both the validation and signal regions.
+The definitions of the A/B/C/D regions are shown in Table~\ref{tab:HBSM:ABCD_definitions}.
+\begin{table}[htbp]
+  \begin{center}
+    \caption{The A/B/C/D regions. A different $x_\text{R}$ boundary is chosen for each analysis regime, as detailed in Table~\ref{tab:HBSM:amassdiffcut}.}
+    \label{tab:HBSM:ABCD_definitions}
+    \begin{tabular}{ rr| c | c }
+      && \multicolumn{2}{c}{Photon requirements}\\
+      && TightLoose & TightTight \\
+      \hline
+      \multirow{2}{*}{ 
+        \rotatebox[origin=c]{90}{$|m_{jj}-m_{\gamma\gamma}|$}} 
+      & \rotatebox[origin=c]{90}{$> x_\text{R}~~$} & A & C \\[12pt]
+      \cline{2-4}
+      & \rotatebox[origin=c]{90}{$\leq x_\text{R}~~$} & B & D \\
+    \end{tabular}
+  \end{center}
+\end{table}
+
+
+The distribution of events across $|m_{jj}-m_{\gamma\gamma}|$ (i.e., the second axis of the A/B/C/D method), separated into Tight--Tight and Tight--Loose events (i.e., the first axis of the A/B/C/D method) can be seen in Figure~\ref{fig:HBSM:amassdiff}, for both the validation and signal regions.
 It can be seen that in the validation region, where the data statistics are higher and there is little signal contamination, the two variables corresponding to the two axes are uncorrelated, prompting the background estimation strategy outlined below (Equation~\ref{eqn:HBSM:closure}).
 It can also be seen that the highest contribution of signal in the signal region occurs in region D.
 
@@ -680,7 +701,7 @@ In order to quantify the non-closure, the data-driven estimation as described ab
 in the validation region.
 For each $m_{\gamma\gamma}$ regime, the closure uncertainty is defined to be the central value of the non-closure if it is found to be significant ($>1\sigma$) in comparison with its statistical uncertainty; otherwise, the statistical uncertainty of its estimate is used.
 The events in region D of the signal region were blinded while the analysis selections were being optimized, and only unblinded after the entire analysis strategy was frozen.
-Fig.~\ref{fig:HBSM:ABCD_bars} shows the distribution of the data in each of the $m_{\gamma\gamma}$ analyses regimes, in the validation and signal regions, with an expected signal that has high efficiency in that analysis regime.
+Figure~\ref{fig:HBSM:ABCD_bars} shows the distribution of the data in each of the $m_{\gamma\gamma}$ analyses regimes, in the validation and signal regions, with an expected signal that has high efficiency in that analysis regime.
 The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the predicted contribution from the background closure and the signal contribution.
 The unblinded results can be found in Section~\ref{sec:HBSM:results}.
 
@@ -781,7 +802,7 @@ The 95\% confidence limit on $\hat{\mu}$ is obtained using the asymptotic limit 
 \label{sec:HBSM:results}
 The observed number of events in each of the A/B/C/D regions for each $m_{\gamma\gamma}$ regime is shown in Table~\ref{tab:HBSM:ABCD_data}
 along with the predicted background in the signal region D, taking into account the closure uncertainty. 
-This information is also presented in Fig.~\ref{fig:HBSM:ABCD_bars_unblinded}.
+This information is also presented in Figure~\ref{fig:HBSM:ABCD_bars_unblinded}.
 \begin{figure}[htbp]
   \centering 
   \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/{ABCD_bars_sig_VBF8_m20_a20_ggyy_8.7.17_unblinded}.pdf}}
@@ -796,7 +817,7 @@ This information is also presented in Fig.~\ref{fig:HBSM:ABCD_bars_unblinded}.
 Due to the low event counts in each of the A/B/C/D regions,
 the median expected background yield in region D estimated from pseudo-data experiments involving asymmetric Poisson uncertainties 
 in the different regions slightly differs from the direct estimation from Eq.~(\ref{eqn:HBSM:closure}).
-The prior distribution of the number of events observed in the signal $D$ region is shown in Fig.~\ref{fig:HBSM:NinD_dist}.
+The prior distribution of the number of events observed in the signal $D$ region is shown in Figure~\ref{fig:HBSM:NinD_dist}.
 
 \begin{figure}[htbp]
   \centering 
@@ -997,7 +1018,7 @@ therefore these bounds will improve with more data.
   \label{fig:HBSM:compare_4gamma}
 \end{figure}
 
-\section{Conclusions}
+\section{Conclusions and Future Work}
 In summary, a search for exotic decays of the Higgs boson into a pair of new (pseudo)scalar particles,
 $H\to aa$, in final states with two photons 
 and two jets is conducted using 36.7~\ifb{} of $pp$ collisions at $\sqrt{s}=13$ \TeV{} recorded 
@@ -1011,9 +1032,24 @@ on $m_a$, and is mostly driven by the statistical uncertainties.
 These results complement the previous upper limit on $H\to aa\to\gamma\gamma\gamma\gamma$ and
 further constrains the BSM parameter space for exotic decays of the Higgs boson.
 
-%Another challenge present in this analysis is identifying and labeling the jets in the event as coming from the final state gluons, the quarks from the VBF production, or from pileup or underlying event.
-%Tackling this challenge will involve utilizing newly developed techniques in quark-gluon tagging and pileup mitigation, including in the particularly difficult forward region of the calorimeter.
-%Particularly challenging is the low-$m_a$ regime of the parameter space;
-%in this regime, the gluons produced from the $a$ decay tend to be collimated and therefore can be reconstructed inside a single jet.
-%Specific techniques will have to be developed in order to separate these gluons using custom substructure and track-based jet algorithms.
-%
+This search is notably limited to $m_a>20$ \GeV{}; the ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} similarly sets limits only for $m_a>10$ \GeV{}.
+These lower bounds are due to the limitations set by using the diphoton trigger (Section~\ref{sec:HBSM:trigger}).
+For low $m_a$, the $a$ particle is boosted and the decay products are collimated - this ruins the diphoton trigger efficiency, as isolation is imposed on the photons at various stages in the trigger and offline object reconstruction.
+Thus, new techniques will be required to set limits on lower masses.
+
+Reference~\cite{Aaboud:2018djx} demonstrates a search for $X\rightarrow aa\rightarrow 4\gamma$ with $X$ a high-mass scalar particle with mass between $200$ and $2000$ \GeV{} (notably missing the Higgs mass $m_H\sim 125$ \GeV{}) and $a$ with mass between $100$ MeV and up to between $2$ and $10$ \GeV{}, depending on the $X$ mass.
+There is a similar search~\cite{ATLAS-CONF-2012-079} from Run 1 that sets limits for $X$ with a mass between $110$ and $150$ \GeV{} and $m_a$ between 100 and 400 MeV.
+These searches are accomplished by taking advantage of the fact that in these regimes, the $a$ is highly boosted, so that the photon decay products end up collimated in a single photonlike energy cluster and the trigger identiies these as a single isolated photon.
+Substructure of this photonlike energy cluster is used offline to enhance the signal presence.
+
+
+This search presents many interesting areas of research in order to improve the sensitivity of the analysis for the resolved mass range.
+The event selection (Section~\ref{sec:HBSM:jets}) requires four jets, and this analysis is enabled by the use of these jets, in keeping with the overall theme of this Thesis.
+The main challenges present in the analysis include the correct identification of the VBF and signal jets; the VBF selection including the VBF $m_{jj}$ selection and the leading VBF jet \pt{}; the resolution of the signal jet $m_{jj}$, which directly affects the resolution of $|m_{jj}-m_{\gamma\gamma}|$; and the final resolution of the signal $m_{jj\gamma\gamma}$.
+Each of these challenges would be better tackled by improving the energy and \pt{} resolution of the jets involved, since the invariant mass is a simple function of the individual jet energies and the angle between them\footnote{The VBF selection also relies on the resolution of the VBF $m_{jj}$.}.
+
+When reconstructing the true energy of a jet, both the effects of the energy response of the calorimeter and the effect of other proton-proton interactions in the event (pile-up) must be taken into account.
+Chapter~\ref{ch:NI} presents work on studying in a rigorous framework the mathematical process of reversing the effects of the calorimeter response in order to access the originating parton energy~\cite{Cukierman:2016dkb};
+and Chapter~\ref{ch:Calib} presents work on using machine learning to further improve this process.
+Appendix~\ref{ch:Voronoi} presents work on novel jet reconstruction algorithms which aim to reduce the effect of pileup on the jet reconstructed energy~\cite{ATLAS-CONF-2017-065}.
+By better reconstructing the energies of the jets that appear in the final state of this analysis, these efforts can improve the ultimate sensitivity of this search, in addition to being broadly applicable to other analyses than the one being studied here. 
