@@ -199,7 +199,7 @@ based on \geantFour{}~\cite{Agostinelli:2002hh}, and contributions from addition
 \section{Event Selection}
 \subsection{Trigger}
 \label{sec:HBSM:trigger}
-Events are selected by two diphoton triggers.
+Events are selected by requiring at least one of two diphoton triggers.
 One trigger path requires the presence in the electromagnetic (EM) calorimeter of two clusters of energy
 deposits with transverse energy
 %\footnote{ATLAS uses a right-handed coordinate system with its origin at the nominal interaction point (IP) in the centre of the detector and the $z$-axis along the beam pipe. The $x$-axis points from the IP to the centre of the LHC ring, and the $y$-axis points upward. Cylindrical coordinates $(r,\phi)$ are used in the transverse plane, $\phi$ being the azimuthal angle around the $z$-axis. The pseudorapidity is defined in terms of the polar angle $\theta$ as $\eta=-\ln\tan(\theta/2)$.}
@@ -212,7 +212,10 @@ more stringent.
 Using the ATLAS trigger nomenclature, these two trigger paths are called \texttt{HLT\_g35\_loose\_g25\_loose} and \texttt{HLT\_2g22\_tight}, respectively.
 Both of these high-level trigger are seeded by the Level 1 trigger \texttt{L1\_2EM15VH}, which requires two Level 1 objects consistent with the EM shower initiated by a photon with transverse energy greater than $15$ \GeV{}.
 In 2015 and 2016 data these triggers were unprescaled.
-The efficiency of each of the triggers on the signal events is shown in Table~\ref{tab:HBSM:trigeff}.
+The efficiency of each of the triggers on signal events with $m_a=30$ \GeV{} is shown in Table~\ref{tab:HBSM:trigeff}.
+The efficiency of requiring at least one of the two triggers for other masses of $m_a$ can be seen in Figure~\ref{fig:HBSM:cutflow_ma}.
+The trigger efficiency notably goes down for $m_a<20$ \GeV{}; this limits the sensitivity of this search.
+The cause of this trigger inefficiency is discussed in Appendix~\ref{sec:HBSM_app:lowmass}.
 
 \begin{table}[]
 \centering
@@ -231,15 +234,14 @@ OR of triggers                                        & 0.201  & 0.242 & 0.234\\
 \subsection{Photons}
 \label{sec:HBSM:photons}
 The photon candidates are reconstructed from the clusters of energy deposits in the EM calorimeter within the range $|\eta|<2.37$.
-The energies of the clusters are calibrated to account for energy losses upstream of the calorimeter 
-and for energy leakage outside the cluster, as well as other effects due to the detector geometry and response.
+The energies of the clusters are calibrated to account for energy losses upstream of the calorimeter and for energy leakage outside the cluster, as well as other effects due to the detector geometry and response.
 The calibration is refined by applying $\eta$-dependent correction factors of the order of $\pm1$\%, derived from $Z\to ee$ events~\cite{PERF-2013-05}.
 As in the trigger selection, photon candidates are required to satisfy a set of identification criteria based on the shape of the EM cluster~\cite{PERF-2013-04}.
 Two working points are defined: a \textit{Loose} working point, used for the preselection and the data-driven background estimation, and a 
 \textit{Tight} working point, with requirements that further reduce the misidentification of neutral hadrons decaying to two photons.
 In order to reject the hadronic jet background, photon candidates are required to be isolated from any other activity in the calorimeter.
 The calorimeter isolation is defined as the sum of the transverse energy in the
-calorimeter within a cone of \mbox{$\Delta R = \sqrt{(\Delta\eta)^2+(\Delta\phi)^2}=0.4$} centred around the photon candidate,
+calorimeter within a cone of \mbox{$\Delta R = \sqrt{(\Delta\eta)^2+(\Delta\phi)^2}=0.4$} centered around the photon candidate,
 The transverse energy of the photon candidate is subtracted from the calorimeter isolation.
 Contributions to the calorimeter isolation from the underlying event and pile-up are subtracted using the method proposed in~\cite{jetareas}.
 Candidates with a calorimeter isolation larger than 2.2\% of the photon's transverse energy are rejected.
@@ -249,6 +251,11 @@ The transverse energy requirements depend on the trigger path through which the 
 For events passing the trigger with higher transverse energy thresholds (\texttt{HLT\_g35\_loose\_g25\_loose}), the leading photon is required to have $E_\text{T}>40$ \GeV{}, and the sub-leading photon is required to have $E_\text{T}>30$ \GeV{}.
 For events passing the trigger with lower thresholds (\texttt{HLT\_2g22\_tight}), both the leading and sub-leading photons are required to have $E_\text{T}>27$ \GeV{}. 
 For events passing both triggers, the latter selection is applied.
+
+The efficiency of requiring at least two photon candidates in the signal can be seen in Figure~\ref{fig:HBSM:cutflow_ma}.
+This photon selection efficiency notably goes down for $m_a<20$ \GeV{} (beyond the inefficiency from the diphoton trigger); this further limits the sensitivity of this search.
+The cause of this inefficiency is discussed in Appendix~\ref{sec:HBSM_app:lowmass}, but is mostly due to the calorimeter isolation on photons discussed above.
+
 The invariant mass of the two leading photon candidates is denoted by $m_{\gamma\gamma}$.
 The $m_{\gamma\gamma}$ resolution is excellent, with $>\sim97\%$ of signal events satisfying $|m_{\gamma\gamma}-m_a|<2.5$ \GeV{}, regardless of the value of $m_a$; this can be seen in Figure~\ref{fig:HBSM:photon_kinematics}.
 
@@ -1032,18 +1039,20 @@ on $m_a$, and is mostly driven by the statistical uncertainties.
 These results complement the previous upper limit on $H\to aa\to\gamma\gamma\gamma\gamma$ and
 further constrains the BSM parameter space for exotic decays of the Higgs boson.
 
-This search is notably limited to $m_a>20$ \GeV{}; the ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} similarly sets limits only for $m_a>10$ \GeV{}.
-These lower bounds are due to the limitations set by using the diphoton trigger (Section~\ref{sec:HBSM:trigger}).
-For low $m_a$, the $a$ particle is boosted and the decay products are collimated - this ruins the diphoton trigger efficiency, as isolation is imposed on the photons at various stages in the trigger and offline object reconstruction.
+This search is notably limited to $m_a\ge20$ \GeV{}; the ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} similarly sets limits only for $m_a\ge10$ \GeV{}.
+As mentioned in Section~\ref{sec:HBSM:trigger} and Section~\ref{sec:HBSM:photons}, these lower bounds are due to the limitations set by using the diphoton trigger and the diphoton selection.
+For low $m_a$, the $a$ particle is boosted and the decay products are collimated - this ruins the efficiency of the diphoton selection, both because of the way photon objects are constructed in the calorimeter and because isolation is imposed on the photons in the offline object reconstruction.
+This inefficiency is discussed in detail in Appendix~\ref{sec:HBSM_app:lowmass}.
 Thus, new techniques will be required to set limits on lower masses.
 
 Reference~\cite{Aaboud:2018djx} demonstrates a search for $X\rightarrow aa\rightarrow 4\gamma$ with $X$ a high-mass scalar particle with mass between $200$ and $2000$ \GeV{} (notably missing the Higgs mass $m_H\sim 125$ \GeV{}) and $a$ with mass between $100$ MeV and up to between $2$ and $10$ \GeV{}, depending on the $X$ mass.
 There is a similar search~\cite{ATLAS-CONF-2012-079} from Run 1 that sets limits for $X$ with a mass between $110$ and $150$ \GeV{} and $m_a$ between 100 and 400 MeV.
 These searches are accomplished by taking advantage of the fact that in these regimes, the $a$ is highly boosted, so that the photon decay products end up collimated in a single photonlike energy cluster and the trigger identiies these as a single isolated photon.
 Substructure of this photonlike energy cluster is used offline to enhance the signal presence.
+Appendix~\ref{sec:HBSM_app:lowmass} discusses an already existing trigger and offline selection strategy that can be sensitive to $H\rightarrow aa\rightarrow gg\gamma\gamma$ with $m_a<20$ \GeV{}, and could enable a search for these low masses.
 
 
-This search presents many interesting areas of research in order to improve the sensitivity of the analysis for the resolved mass range.
+This search also presents many interesting areas of research in order to improve the sensitivity of the analysis for the resolved mass range $m_a\ge 20$ \GeV{}.
 The event selection (Section~\ref{sec:HBSM:jets}) requires four jets, and this analysis is enabled by the use of these jets, in keeping with the overall theme of this Thesis.
 The main challenges present in the analysis include the correct identification of the VBF and signal jets; the VBF selection including the VBF $m_{jj}$ selection and the leading VBF jet \pt{}; the resolution of the signal jet $m_{jj}$, which directly affects the resolution of $|m_{jj}-m_{\gamma\gamma}|$; and the final resolution of the signal $m_{jj\gamma\gamma}$.
 Each of these challenges would be better tackled by improving the energy and \pt{} resolution of the jets involved, since the invariant mass is a simple function of the individual jet energies and the angle between them\footnote{The VBF selection also relies on the resolution of the VBF $m_{jj}$.}.
