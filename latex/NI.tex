@@ -1,4 +1,5 @@
 \section{Introduction}
+%BEN
 Numerical inversion is a general detector calibration technique that is independent of the underlying spectrum.
 In this chapter, this procedure is formalized and important statistical properties are presented, using high energy jets at the Large Hadron Collider as an example setting.
 The results in this chapter are published in~\cite{Cukierman:2016dkb}.
@@ -11,6 +12,7 @@ These methods will be increasingly important to consider with degraded resolutio
 \section{Motivation}
 %-------------------------------------------------------------------------------
 
+%BEN
 At a proton-proton collider like the Large Hadron Collider (LHC), quarks and gluons are produced copiously.
 These partons fragment to produce collimated streams of colorless particles that leave their energy in the calorimeters of the ATLAS and CMS detectors\footnote{Jets have been calibrated in previous experiments, such as the Tevatron CDF~\cite{Bhatti:2005ai} and D0~\cite{Abazov:2013hda} experiments, but the methods were significantly different and so this section focuses on the general purpose LHC experiments.}.
 The energy depositions are organized using jet clustering algorithms to stand as experimental proxies for the initiating quarks and gluons. 
@@ -102,7 +104,7 @@ To ease the notation, we will often use $\rho_Y(y)$ and $\rho_Z(z)$ interchangea
 
 \section{Results}
 
-In the subsequent sections, we will derive properties about the closure $C$ for three different definitions of the central tendancy: mean (Sec.~\ref{sec:mean}), mode (Sec.~\ref{sec:mode}), and median (Sec.~\ref{sec:median}).
+In the subsequent sections, we will derive properties about the closure $C$ for three different definitions of the central tendency: mean (Sec.~\ref{sec:mean}), mode (Sec.~\ref{sec:mode}), and median (Sec.~\ref{sec:median}).
 
 \subsection{Mean}
 \label{sec:mean}
@@ -387,11 +389,13 @@ and
 \newpage
 \section{Discussion}
 \label{sec:discussion}
+%BEN
 
 After a quick summary in Section~\ref{sec:summary} of the results presented so far, Section~\ref{sec:recommendations} discusses the benefits and drawbacks of various methods of calibration, and Sections~\ref{sec:iterated_text} and~\ref{sec:corrected_numerical_inversion_text} describe extensions of numerical inversion that may help to improve closure.
 
 \subsection{Summary of Results}
 \label{sec:summary}
+%BEN
 In Section~\ref{sec:introclosure} we defined the concept of closure in the process of calibrating the $E_\text{T}$ of jets.  We found in Sections~\ref{sec:meanclosuresection} and ~\ref{sec:modeclosuresection} that when using the mean or mode, respectively, of the distribution $Y|X=x$ to calibrate, closure is not necessarily achieved; with the response functions found at ATLAS or CMS, it is expected that numerical inversion will not close. We also provided estimates for the non-closure for the mean (Eq.~\ref{eqn:closureseries_text}) and for the mode (Eq.~\ref{eqn:closure_mode_text}). In those estimates we find that as the underlying resolution $\sigma(x)$ or $\tilde{\sigma}(x)$ of the uncalibrated jet distribution $Y|X=x$ increases, the non-closure gets worse. This indicates that the non-closure issues raised in this chapter will become more important as the LHC moves to conditions with higher pileup in the future.
 
 \vspace{2mm}
@@ -486,6 +490,7 @@ Then the parameters $a_1,...,a_n$ can be chosen such that the closure is as clos
 \label{sec:conclusion}
 %-------------------------------------------------------------------------------
 
+%BEN
 Jets are ubiquitous at the LHC and their calibration is one of the most important preprocessing steps for data analysis.  The standard technique for jet calibration is numerical inversion.  This chapter has formally defined numerical inversion and derived many of its properties.  The three most important results:
 
 \begin{itemize}
