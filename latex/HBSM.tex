@@ -173,7 +173,7 @@ the main challenges present in this analysis involve reconstructing and identify
 
 When reconstructing the energy of the originating parton of a jet, both the effects of the energy response of the calorimeter and the effect of other proton-proton interactions in the event (pile-up) must be taken into account.
 Chapter~\ref{ch:NI} presents work on studying in a rigorous framework the mathematical process of reversing the effects of the calorimeter response in order to access the originating parton energy~\cite{Cukierman:2016dkb};
-and Chapter~\ref{ch:Calib} presents work on using machine learning to further improve this process.
+and Chapter~\ref{ch:Calib}~\cite{ATL-PHYS-PUB-2018-013} presents work on using machine learning to further improve this process.
 Appendix~\ref{ch:Voronoi} presents work on novel jet reconstruction algorithms which aim to reduce the effect of pileup on the jet reconstructed energy~\cite{ATLAS-CONF-2017-065}.
 These efforts serve to develop new techniques for reconstructing the energies of the jets that appear in the final state of this analysis, and therefore improve the ultimate sensitivity of this search.
 These techniques can also be effective in the higher pileup conditions expected at the LHC in Run 3 and beyond, and are intended to be broadly applicable to other analyses than the one being studied here. 
@@ -1041,24 +1041,26 @@ further constrains the BSM parameter space for exotic decays of the Higgs boson.
 
 This search is notably limited to $m_a\ge20$ \GeV{}; the ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} similarly sets limits only for $m_a\ge10$ \GeV{}.
 As mentioned in Section~\ref{sec:HBSM:trigger} and Section~\ref{sec:HBSM:photons}, these lower bounds are due to the limitations set by using the diphoton trigger and the diphoton selection.
-For low $m_a$, the $a$ particle is boosted and the decay products are collimated - this ruins the efficiency of the diphoton selection, both because of the way photon objects are constructed in the calorimeter and because isolation is imposed on the photons in the offline object reconstruction.
-This inefficiency is discussed in detail in Appendix~\ref{sec:HBSM_app:lowmass}.
+For low $m_a$, the $a$ particle is boosted and the decay products are collimated - this ruins the efficiency of the diphoton selection, both because of the way photon objects are constructed in the calorimeter at trigger level and because isolation is imposed on the photons in the offline object reconstruction.
+This inefficiency is discussed in detail in Appendix~\ref{ch:HBSM_lowmass_app}.
 Thus, new techniques will be required to set limits on lower masses.
 
 Reference~\cite{Aaboud:2018djx} demonstrates a search for $X\rightarrow aa\rightarrow 4\gamma$ with $X$ a high-mass scalar particle with mass between $200$ and $2000$ \GeV{} (notably missing the Higgs mass $m_H\sim 125$ \GeV{}) and $a$ with mass between $100$ MeV and up to between $2$ and $10$ \GeV{}, depending on the $X$ mass.
 There is a similar search~\cite{ATLAS-CONF-2012-079} from Run 1 that sets limits for $X$ with a mass between $110$ and $150$ \GeV{} and $m_a$ between 100 and 400 MeV.
 These searches are accomplished by taking advantage of the fact that in these regimes, the $a$ is highly boosted, so that the photon decay products end up collimated in a single photonlike energy cluster and the trigger identiies these as a single isolated photon.
 Substructure of this photonlike energy cluster is used offline to enhance the signal presence.
-Appendix~\ref{sec:HBSM_app:lowmass} discusses an already existing trigger and offline selection strategy that can be sensitive to $H\rightarrow aa\rightarrow gg\gamma\gamma$ with $m_a<20$ \GeV{}, and could enable a search for these low masses.
+Appendix~\ref{ch:HBSM_lowmass_app} proposes an already existing trigger and offline selection strategy that can be sensitive to $H\rightarrow aa\rightarrow gg\gamma\gamma$ with $m_a<20$ \GeV{}, and could enable a search for these low masses.
 
 
 This search also presents many interesting areas of research in order to improve the sensitivity of the analysis for the resolved mass range $m_a\ge 20$ \GeV{}.
 The event selection (Section~\ref{sec:HBSM:jets}) requires four jets, and this analysis is enabled by the use of these jets, in keeping with the overall theme of this Thesis.
 The main challenges present in the analysis include the correct identification of the VBF and signal jets; the VBF selection including the VBF $m_{jj}$ selection and the leading VBF jet \pt{}; the resolution of the signal jet $m_{jj}$, which directly affects the resolution of $|m_{jj}-m_{\gamma\gamma}|$; and the final resolution of the signal $m_{jj\gamma\gamma}$.
-Each of these challenges would be better tackled by improving the energy and \pt{} resolution of the jets involved, since the invariant mass is a simple function of the individual jet energies and the angle between them\footnote{The VBF selection also relies on the resolution of the VBF $m_{jj}$.}.
 
+The identification of the VBF and signal jets could be aided by using techniques intended to discriminate between jets initiated by quarks and those initiated by gluons~\cite{ATL-PHYS-PUB-2017-009,Aad:2014gea,ATLAS-CONF-2016-034,ATL-PHYS-PUB-2017-017}.
+
+Each of the remaining challenges would be better tackled by improving the energy and \pt{} resolution of the jets involved, since the invariant mass is a simple function of the individual jet energies and the angle between them\footnote{Actually, this would help with all the challenges mentioned, since the VBF selection also relies on the resolution of the VBF $m_{jj}$.}.
 When reconstructing the true energy of a jet, both the effects of the energy response of the calorimeter and the effect of other proton-proton interactions in the event (pile-up) must be taken into account.
 Chapter~\ref{ch:NI} presents work on studying in a rigorous framework the mathematical process of reversing the effects of the calorimeter response in order to access the originating parton energy~\cite{Cukierman:2016dkb};
-and Chapter~\ref{ch:Calib} presents work on using machine learning to further improve this process.
+and Chapter~\ref{ch:Calib} presents work on using machine learning to further improve this process~\cite{ATL-PHYS-PUB-2018-013}.
 Appendix~\ref{ch:Voronoi} presents work on novel jet reconstruction algorithms which aim to reduce the effect of pileup on the jet reconstructed energy~\cite{ATLAS-CONF-2017-065}.
 By better reconstructing the energies of the jets that appear in the final state of this analysis, these efforts can improve the ultimate sensitivity of this search, in addition to being broadly applicable to other analyses than the one being studied here. 
