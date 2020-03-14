@@ -1,31 +1,40 @@
 \section{Introduction}
-%BEN
-Numerical inversion is a general detector calibration technique that is independent of the underlying spectrum.
-In this chapter, this procedure is formalized and important statistical properties are presented, using high energy jets at the Large Hadron Collider as an example setting.
+Numerical inversion is a general method used for calibration of objects observed in detectors and in particular is used for the calibration of jets observed in the ATLAS detector.
+The key property of numerical inversion as a calibration method is that it is independent of the underlying spectrum.
+In this chapter this method is put into a formal framework and its statistical properties are explored rigorously.
 The results in this chapter are published in~\cite{Cukierman:2016dkb}.
-In particular, numerical inversion is inherently biased and common approximations to the calibrated jet energy tend to over-estimate the resolution.
-Analytic approximations to the closure and calibrated resolutions are demonstrated to effectively predict the full forms under realistic conditions.
-Finally, extensions of numerical inversion are presented which can reduce the inherent biases.
-These methods will be increasingly important to consider with degraded resolution at low jet energies due to a much higher instantaneous luminosity in the near future.
+There are a few key novel results from this study.
+First, the method itself is established to be inherently biased, and the size of this bias is estimated analytically for the first time.
+Second, common approximations for the calibrated jet energy resolution are shown to be inaccurate, and more accurate estimations are presented in their place. 
+Finally, extensions and corrections to numerical inversion are presented which can reduce the inherent bias.
+These approximations and corrections are shown to be increasingly important to consider as the LHC moves to higher instantaneous luminosities and pile-up conditions.
+
 
 %-------------------------------------------------------------------------------
 \section{Motivation}
 %-------------------------------------------------------------------------------
+Both of the main searches in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) use jets extensively in their final states, and in general the theme of this Thesis is the use of jets in ATLAS to search for new physics.
+As mentioned in their respective chapters, these searches would both benefit from improved kinematic resolution of the jets involved - in Chapter~\ref{ch:HBSM}, the small-R jet energy resolution, and in Chapter~\ref{ch:CWoLa}, the large-R jet energy and mass resolution.
+All of these observables are calibrated from their detector-level quantities in order to both set the scale at the same level as at particle-level (i.e. before passing through the detector) and to reduce the spread of the difference between the calibrated and the particle-level quantities (Section~\ref{sec:ATLAS:jet_calibration}).
+These calibration procedures at ATLAS~\cite{Aad:2011he} and also at CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb} involve several steps to correct for multiple nearly simultaneous $pp$ collisions (pileup), the non-linear detector response, the $\eta$-dependence of the jet response, flavor-dependence of the jet response, and residual data/simulation differences in the jet response.
+All of these calibrations proceed via a process known as \textit{numerical inversion}.
 
-%BEN
-At a proton-proton collider like the Large Hadron Collider (LHC), quarks and gluons are produced copiously.
-These partons fragment to produce collimated streams of colorless particles that leave their energy in the calorimeters of the ATLAS and CMS detectors\footnote{Jets have been calibrated in previous experiments, such as the Tevatron CDF~\cite{Bhatti:2005ai} and D0~\cite{Abazov:2013hda} experiments, but the methods were significantly different and so this section focuses on the general purpose LHC experiments.}.
-The energy depositions are organized using jet clustering algorithms to stand as experimental proxies for the initiating quarks and gluons. 
-The most widely used clustering scheme in ATLAS and CMS is the anti-$k_t$ algorithm~\cite{Cacciari:2008gp} with radius parameter $R=0.4$.
-Even though the inputs to jet clustering (topological clusters for ATLAS~\cite{topo1,topo2} and particle flow objects for CMS~\cite{pflow1,pflow2}) are themselves calibrated, the average reconstructed jet energy is not the same as the true jet energy, because of various detector effects.
-To account for this, calibrations are applied to each reconstructed jet.  
+While numerical inversion is essential for the jet calibration at ATLAS and CMS, the documentation is surprisingly sparse.
+The term was first introduced in a non-public ATLAS document~\cite{LopezMateos:1163916} which amusingly is accompanied by the note ``I asked that this note be refereed over 1 month ago and nobody has gotten back to me.'', dated August 2009. 
+The motivation behind introducing this method is to ensure that the calibration is independent of the underlying spectrum used to derive the calibration.
+This is important at a general-purpose detector like ATLAS, because the energy spectra corresponding to the searches for different particles can be wildly different; the calibration should perform well regardless of what are the needs at the analysis level.
+
+The purpose of this chapter is to formally document numerical inversion and describe some of its properties. 
+Perhaps due to the sparsity of documentation on the method, there are a few misunderstandings and misconceptions of how numerical inversion works and what it does.
+This chapter, and the paper in which these results are published, are intended to correct these misunderstandings, further shed light on the properties of numerical inversion, and propose corrections and extensions.
+In particular, the deep understanding of the method provided by this work led directly to the techniques described in Chapter~\ref{ch:Calib}, which incorporate machine learning via neural networks into the numerical inversion process, and in doing so improve the jet energy calibration.
 
 \section{Numerical Inversion}
 \label{sec:numinversion}
+Numerical inversion is a method that can be used to calibrate any quantity that is observed in the detector, e.g. the jet transverse momentum $p_\text{T}$ or the jet mass $m$.
+We focus here on the case of calibrating the $E_\text{T}$ for sake of concreteness.
 
-The jet calibration procedures of ATLAS~\cite{Aad:2011he} and CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb} involve several steps to correct for multiple nearly simultaneous $pp$ collisions (pileup), the non-linear detector response, the $\eta$-dependence of the jet response, flavor-dependence of the jet response, and residual data/simulation differences in the jet response.  The simulation-based corrections to correct for the calorimeter non-linearities in transverse energy $E_\text{T}$ and pseudorapidity $\eta$ are accounted for using {\it numerical inversion}.
-
-The purpose of this chapter is to formally document numerical inversion and describe (with proof) some of its properties.   In what follows, $X$ will be a random variable representing the particle-jet $E_\text{T}$ and $Y$ will be a random variable representing the reconstructed jet $E_\text{T}$.  Define\footnote{Capital letters represent random variables and lower case letters represent realizations of those random variables, i.e. $X=x$ means the random variable $X$ takes on the (non-random) value $x$.}
+In what follows, $X$ will be a random variable representing the particle-jet $E_\text{T}$ and $Y$ will be a random variable representing the reconstructed jet $E_\text{T}$.  Define\footnote{Capital letters represent random variables and lower case letters represent realizations of those random variables, i.e. $X=x$ means the random variable $X$ takes on the (non-random) value $x$.}
 
 \begin{align}
 \label{eq:fedef}
@@ -48,7 +57,12 @@ We will often think of $Y|X=x\sim \mathcal{N}(f(x),\sigma(x))$, where this notat
 \item Apply a jet-by-jet correction: $Y\mapsto Y/\tilde{R}(Y)$.
 \end{enumerate}
 
-The intuition for step 2 is that for a given value $y$ drawn from the distribution $Y|X=x$, $f^{-1}(y)$ is an estimate for $x$ and then $R(f^{-1}(y))$ is an estimate for the response at the value of $x$ that gives rise to $Y$. Let $p(x)$ be the prior probability density function of $E_\text{T}$. Then we note that we do not want to use $\mathbb{E}[X|Y]$ instead of $f^{-1}(Y)$ because the former depends on $p(x)$, whereas $f$ (and thus $f^{-1}$) does not depend on $p(x)$, by construction.  
+The intuition for step 2 is that for a given value $y$ drawn from the distribution $Y|X=x$, $f^{-1}(y)$ is an estimate for $x$ and then $R(f^{-1}(y))$ is an estimate for the response at the value of $x$ that gives rise to $Y$.
+Let $p(x)$ be the prior probability density function of $X=E_\text{T}$.
+Since $f$ is defined conditioning on a given value of $X$, $f$ is by construction independent of $p(x)$.
+Therefore, this calibration is independent of $p(x)$, since $f$ and thus $f^{-1}$ do not depend on $p(x)$.
+This is what we mean when we say that numerical inversion is independent of the underlying spectrum.
+We note that if we had chosen a different calibration strategy, e.g. using $\mathbb{E}[X|Y]$ instead of $f^{-1}(Y)$, the calbration would not be independent of $p(x)$.
 
 \newpage
 We can see now our first result, which will be useful for the rest of this chapter:
@@ -89,7 +103,8 @@ The general results presented in the following sections are based on three assum
 \item $f$ is twice-differentiable. The first derivative of $f$ has already been assumed to exist in Assumption 2, and the second derivative will also be required to exist for some of the later results. In practice we expect $f$ to be differentiable out to any desired order.
 \end{enumerate}
 
-We note that as long as the above three assumptions hold, the theorems stated in the remainder of this chapter are valid. In particular, this implies that $x$ could be any calibrated quantity that satisfies the above constraints, e.g. the jet transverse momentum $p_\text{T}$ or the jet mass $m$. We focus on the case of calibrating the $E_\text{T}$ for sake of concreteness.
+We note that as long as the above three assumptions hold, the theorems stated in the remainder of this chapter are valid.
+In particular, this implies that $x$ could be any calibrated quantity that satisfies the above constraints.
 
 We have separated the results in this chapter into ``Proofs'' and ``Derivations''. The ``Proofs'' require only the three assumptions stated above, and in particular do not assume anything about the shape of the underlying distributions, e.g. that the distributions $Y|X=x$ are Gaussian or approximately Gaussian. The ``Derivations'' are useful approximations that apply in the toy model described in~\ref{sec:toy_model}; we expect them to apply in a wide variety of cases relevant to LHC jet physics. In particular, we expect these approximations to hold in cases with properties similar to the toy model presented here - e.g., good approximation of $f$ by its truncated Taylor series about each point and approximately Gaussian underlying distributions of $Y|X=x$.\footnote{Note that we do not require that $Y|X=x$ is exactly Gaussian, only that it is approximately Gaussian, which is true for a wide range of energies and jet reconstruction algorithms at ATLAS and CMS. In particular, there are non-negligible (but still often small) asymmetries at low and high $E_\text{T}$ at ATLAS and CMS~\cite{Aad:2011he,Chatrchyan:2011ds,Khachatryan:2016kdb}. In any case, even if $Y|X=x$ {\it is} Gaussian, $Z|X=x$ is in general {\it not} Gaussian, for non-linear response functions; see~\ref{sec:lemma}.}
 
@@ -389,13 +404,11 @@ and
 \newpage
 \section{Discussion}
 \label{sec:discussion}
-%BEN
 
 After a quick summary in Section~\ref{sec:summary} of the results presented so far, Section~\ref{sec:recommendations} discusses the benefits and drawbacks of various methods of calibration, and Sections~\ref{sec:iterated_text} and~\ref{sec:corrected_numerical_inversion_text} describe extensions of numerical inversion that may help to improve closure.
 
 \subsection{Summary of Results}
 \label{sec:summary}
-%BEN
 In Section~\ref{sec:introclosure} we defined the concept of closure in the process of calibrating the $E_\text{T}$ of jets.  We found in Sections~\ref{sec:meanclosuresection} and ~\ref{sec:modeclosuresection} that when using the mean or mode, respectively, of the distribution $Y|X=x$ to calibrate, closure is not necessarily achieved; with the response functions found at ATLAS or CMS, it is expected that numerical inversion will not close. We also provided estimates for the non-closure for the mean (Eq.~\ref{eqn:closureseries_text}) and for the mode (Eq.~\ref{eqn:closure_mode_text}). In those estimates we find that as the underlying resolution $\sigma(x)$ or $\tilde{\sigma}(x)$ of the uncalibrated jet distribution $Y|X=x$ increases, the non-closure gets worse. This indicates that the non-closure issues raised in this chapter will become more important as the LHC moves to conditions with higher pileup in the future.
 
 \vspace{2mm}
