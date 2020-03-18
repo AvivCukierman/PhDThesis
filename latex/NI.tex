@@ -1,4 +1,4 @@
-\section{Itroduction}
+\section{Introduction}
 Numerical inversion is a general method used for calibration of objects observed in detectors and in particular is used for the calibration of jets observed in the ATLAS detector.
 The key property of numerical inversion as a calibration method is that it is independent of the underlying spectrum.
 In this chapter this method is put into a formal framework and its statistical properties are explored rigorously.
@@ -17,7 +17,7 @@ Both of the main searches in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref
 As mentioned in their respective chapters, these searches would both benefit from improved kinematic resolution of the jets involved - in Chapter~\ref{ch:HBSM}, the small-R jet energy resolution, and in Chapter~\ref{ch:CWoLa}, the large-R jet energy and mass resolution.
 The detector is not perfect, and so the observed quantities observed from the detector do not match exactly to the pre-detector, or particle-level, quantities;
 this can be confirmed either by using simulations of particles passing through the detector, by using calibration data where the pre-detector quantities are well-known, or by using data with well-defined topologies such that physics principles (e.g., conservation of energy) can give good approximations of the particle-level quantities.
-Thus, all of these jet observables are calibrated from their detector-level quantities in order to both set the scale at the same level as at particle-level and to reduce the spread of the difference between the calibrated and the particle-level quantities (Section~\ref{sec:ATLAS:jet_calibration}).
+Because of this, all of these jet observables are calibrated from their detector-level quantities in order to both set the scale at the same level as at particle-level and to reduce the spread of the difference between the calibrated and the particle-level quantities (Section~\ref{sec:ATLAS:jet_calibration}).
 These calibration procedures at ATLAS~\cite{Aad:2011he} and also at CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb} involve several steps to correct for multiple nearly simultaneous $pp$ collisions (pileup), the non-linear detector response, the $\eta$-dependence of the jet response, flavor-dependence of the jet response, and residual data/simulation differences in the jet response;
 at different stages of this process, what is used for the particle-level quantities varies according to the correction being applied.
 All of these calibrations proceed via a process known as \textit{numerical inversion}.
@@ -26,20 +26,21 @@ While numerical inversion is essential for the jet calibration at ATLAS and CMS,
 The term was first introduced in a non-public ATLAS document~\cite{LopezMateos:1163916} which amusingly is accompanied by the note ``I asked that this note be refereed over 1 month ago and nobody has gotten back to me.'', dated August 2009. 
 The motivation behind introducing this method is to ensure that the calibration is independent of the underlying spectrum used to derive the calibration.
 This is important at a general-purpose detector like ATLAS, because the energy spectra corresponding to the searches for different particles can be wildly different; the calibration should perform well regardless of what are the needs at the analysis level.
+This is further explained in Section~\ref{sec:NI:learningprior}.
 
 The purpose of this chapter is to formally document numerical inversion and describe some of its properties. 
 Perhaps due to the sparsity of documentation on the method, there are a few misunderstandings and misconceptions of how numerical inversion works and what it does.
 This chapter, and the paper in which these results are published, are intended to correct these misunderstandings, further shed light on the properties of numerical inversion, and propose corrections and extensions.
 In particular, the deep understanding of the method provided by this work led directly to the techniques described in Chapter~\ref{ch:Calib}, which incorporate machine learning via neural networks into the numerical inversion process, and in doing so improve the jet energy calibration.
 
-\section{Numerical Inversion}
-\label{sec:NI:numinversion}
+\section{Calibrations}
+\label{sec:NI:introclosure}
 Numerical inversion is a method that can be used to calibrate any quantity that is observed in the detector, e.g. the jet transverse momentum $p_\text{T}$ or the jet mass $m$.
 We focus here on the case of calibrating the $E_\text{T}$ for sake of concreteness.
 
-In what follows, $X$ will be a random variable representing the particle-jet $E_\text{T}$ and $Y$ will be a random variable representing the reconstructed jet $E_\text{T}$.
-Define\footnote{Capital letters represent random variables and lower case letters represent realizations of those random variables, i.e. $X=x$ means the random variable $X$ takes on the (non-random) value $x$.}
+In what follows, $X$ will be a random variable representing the particle-jet $E_\text{T}$ and $Y$ will be a random variable representing the reconstructed jet $E_\text{T}$.\footnote{Capital letters represent random variables and lower case letters represent realizations of those random variables, i.e. $X=x$ means the random variable $X$ takes on the (non-random) value $x$.}
 
+Define
 \begin{align}
 \label{eq:fedef}
 f_\text{me}(x)&=\mathbb{E}[Y|X=x]\\\label{eq:fedef2}
@@ -53,7 +54,79 @@ R_\text{mo}(x) &= \text{mode}\left[\frac{Y}{x}\middle| X=x\right] = \frac{f_\tex
 \end{align}
 We will often drop the subscript of $f$ and $R$ for brevity in the text, when it is clear which definition we are referring to. If not specified, $f$ and $R$ will refer to a definition using a generic definition of central tendency.  For all sensible notions of central tendency, we still have that $R(x) = \frac{f(x)}{x}$.
 
-We will often think of $Y|X=x\sim \mathcal{N}(f(x),\sigma(x))$, where this notation means `$Y$ given $X=x$ is normally distributed with mean $f(x)$ and standard deviation $\sigma(x)$'; however, in this chapter, we will remain general unless stated otherwise.  The function $R(x)$ is called the {\it response function}.  Formally, numerical inversion is the following procedure:
+We will often think of $Y|X=x\sim \mathcal{N}(f(x),\sigma(x))$, where this notation means `$Y$ given $X=x$ is normally distributed with mean $f(x)$ and standard deviation $\sigma(x)$'; however, we will remain general unless stated otherwise.  The function $R(x)$ is called the {\it response function}.
+
+The functions $f$ and $R$ should be thought of as parameterizing the response of the detector to jets with known energies $X$.
+In particular, $f$ and $R$ are independent of the underlying spectrum of $X$ - if two samples are examined, one with more jets produced at a lower energy, for example, the values of $f$ and $R$ derived from these two samples should be the same (to within statistical fluctuations).
+
+In the calibration we are given a list of ordered pairs $(X,Y)$, from which we can derive $f$ and $R$, and we need to correct $Y$ to be on the same scale as $X$ for each jet in the sample.
+The goal of the calibration therefore is to devise a calibration function $g: Y\rightarrow Z=g(Y)$ such that after the calibration, the scale of $Z$ is the same as the scale of $X$.
+There are two ways one might judge that.
+
+One way is to define the \textit{closure}
+\begin{align}
+  C_\text{me}(x) \equiv \mathbb{E}\left[\frac{Z}{x}\middle| X=x\right] = \frac{\mathbb{E}\left[Z\middle| X=x\right]}{x}
+\label{eqn:NI:closure_first},
+\end{align}
+and another way is to define the \textit{prior-dependent closure}
+\begin{align}
+  C^p_\text{me}(z) \equiv \mathbb{E}\left[\frac{X}{z}\middle| Z=z\right] = \frac{\mathbb{E}\left[X\middle| Z=z\right]}{z}
+\label{eqn:NI:closure_priordependent},
+\end{align}
+with $C_\text{mo}$ and $C^p_\text{mo}(z)$ defined analogously.
+The symbols $C$ and $C^p$ will denote the closure for a generic notion of central tendency.
+
+As the name suggests, the prior-dependent closure depends on the prior distribution of $X$ in the sample.
+A sample with more jets produced at lower energies, for example, will necessarily have a lower prior-dependent closure than another sample with more jets produced at higher energies.
+As mentioned in the motivation, at ATLAS there are samples targeting different physics regimes with wildly different prior distributions of true energies, so the prior-dependent closure cannot be relied on to be useful in physics analysis.
+
+On the other hand, the closure $C$ is independent of the prior distribution of $X$, given $g$.
+Therefore, this is the agreed-upon figure of merit for the calibration.
+We say that the calibration has {\it achieved closure} or simply {\it closes} if, for all $x$,
+\begin{align}
+C = 1.
+\end{align}
+
+\subsection{Learning the Prior}
+\label{sec:NI:learningprior}
+One way to define $g$ is to learn a function $M(Y)$ that predicts $X$ given $Y$ directly.
+I.e., define
+\begin{align}
+M_\text{me}(y)&=\mathbb{E}[X|Y=y]
+\end{align}
+and then let $g=M$ so that $Z=M(Y)$.
+
+This method is \emph{not} the way calibrations are done in ATLAS, and the reasoning for this decision is given below.
+
+It's clear that this definition of calibration function depends on the prior distribution of $X$ in the sample, and in particular the prior-dependent closure (Equation~\ref{eqn:NI:closure_priordependent}) is achieved for the sample used to learn $M$.
+
+That being said, $g$ is just some function, even if its definition is prior-dependent.
+One might think that one could define $g$ on a representative sample, e.g. with a uniform prior, and then apply the calibration function across various samples, achieving closure (Equation ~\ref{eqn:NI:closure_first}).
+
+However, even if the underlying distribution of $X$ is uniform across some range, this method does not necessarily lead to closure.
+In particular, if $f(x)$ is nonlinear or if the resolution $\sigma(Y|X=x)$ is nonconstant, then even with a uniform prior distribution of $X$ there can be large non-closures.
+Since both of these effects are present in the ATLAS jet calibration~\cite{Aad:2011he}, it is expected that these nonclosures will be present if this method were attempted in the ATLAS jet calibration.
+This effect can be seen in Fig.~\ref{fig:NI:learningprior}, using a toy model that approximates the ATLAS nonlinear $f(x)$ (Appendix~\ref{sec:NI:toy_model}) with a constant resolution and another toy model with a linear $f$ but the ATLAS nonconstant resolution $\sigma(Y|X=x)$.
+
+\begin{figure}[h!]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/nonlinearf_y_x.pdf}}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/nonlinearf_Myx_x.pdf}}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/nonconstantsigma_y_x.pdf}}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/nonconstantsigma_Myx_x.pdf}}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/uniformx.pdf}}}
+  \caption{
+    The effects of learning a function $M(Y)$ that predicts $X$ directly given $Y$, with a uniform underlying distribution of $X$ (e).  
+    (a,b) A nonlinear $f(x)$ intended to model the ATLAS nonlinear response function, with a constant resolution.
+    (c,d) A nonconstant $\sigma(Y|X=x)$ intended to model the ATLAS nonconstant resolution, with a linear $f(x)$.
+    In this figure only $X$ and $Y$ correspond to the truth and reconstructed jet $\pt$, respectively, rather than the $\et$, as will be the case for the remainder of this chapter; however, the principle is exactly the same.
+    }
+  \label{fig:NI:learningprior}
+\end{figure}
+
+\subsection{Numerical Inversion}
+\label{sec:NI:numinversion}
+Instead, the ATLAS calibration uses numerical inversion. Formally, numerical inversion is the following procedure:
 
 \begin{enumerate}
 \item Compute $f(x)$, $R(x)$.  
@@ -65,8 +138,8 @@ The intuition for step 2 is that for a given value $y$ drawn from the distributi
 Let $p(x)$ be the prior probability density function of $X=E_\text{T}$.
 Since $f$ is defined conditioning on a given value of $X$, $f$ is by construction independent of $p(x)$.
 Therefore, this calibration is independent of $p(x)$, since $f$ and thus $f^{-1}$ do not depend on $p(x)$.
+The question of whether numerical inversion achieve closure will be discussed in detail in the following sections, but at least the definition of the calibration function is independent of the prior distribution of $X$.
 This is what we mean when we say that numerical inversion is independent of the underlying spectrum.
-We note that if we had chosen a different calibration strategy, e.g. using $\mathbb{E}[X|Y]$ instead of $f^{-1}(Y)$, the calbration would not be independent of $p(x)$.
 
 We can see now our first result, which will be useful for the rest of this chapter:
 \vspace{6mm}
@@ -81,19 +154,7 @@ We can see now our first result, which will be useful for the rest of this chapt
 \rightarrow Z &= \frac{Y}{\tilde{R}(Y)}\nonumber\\
 &= f^{-1}(Y) \hspace{1 cm} \Box
 \end{align}
-
-\subsection{Closure}
-\label{sec:NI:introclosure}
-One important property of numerical inversion is the concept of {\it closure}, which quantifies whether the new distribution $f^{-1}(Y|X=x)$ obtained after numerical inversion is centered at $x$, using the same notion of central tendency as in the definition of $f$.  In particular, define the closure as
-
-\begin{align}
-C_\text{me}(x) \equiv \mathbb{E}\left[\frac{Z}{x}\middle| X=x\right] = \mathbb{E}\left[\frac{f^{-1}(Y)}{x}\middle| X=x\right]
-\label{eqn:NI:closure},
-\end{align}
-and $C_\text{mo}$ is defined in an analogous way.  The symbol $C$ will denote the closure for a generic notion of central tendency.  We say that numerical inversion has {\it achieved closure} or simply {\it closes} if, for all $x$,
-\begin{align}
-C = 1.
-\end{align}
+I.e., the calibration function $g$ is simply $g=f^{-1}$.
 
 \subsection{Assumptions and Definitions}
 \label{sec:NI:assumptions}
