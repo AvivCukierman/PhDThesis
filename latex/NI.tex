@@ -31,7 +31,7 @@ This is further explained in Section~\ref{sec:NI:learningprior}.
 The purpose of this chapter is to formally document numerical inversion and describe some of its properties. 
 Perhaps due to the sparsity of documentation on the method, there are a few misunderstandings and misconceptions of how numerical inversion works and what it does.
 This chapter, and the paper in which these results are published, are intended to correct these misunderstandings, further shed light on the properties of numerical inversion, and propose corrections and extensions.
-In particular, the deep understanding of the method provided by this work led directly to the techniques described in Chapter~\ref{ch:Calib}, which incorporate machine learning via neural networks into the numerical inversion process, and in doing so improve the jet energy calibration.
+In particular, the deep understanding of the method provided by this work led directly to the techniques described in Chapter~\ref{ch:GenNI}, which incorporate machine learning via neural networks into the numerical inversion process, and in doing so improve the jet energy calibration.
 
 \section{Calibrations}
 \label{sec:NI:introclosure}
@@ -60,13 +60,13 @@ The functions $f$ and $R$ should be thought of as parameterizing the response of
 In particular, $f$ and $R$ are independent of the underlying spectrum of $X$ - if two samples are examined, one with more jets produced at a lower energy, for example, the values of $f$ and $R$ derived from these two samples should be the same (to within statistical fluctuations).
 
 In the calibration we are given a list of ordered pairs $(X,Y)$, from which we can derive $f$ and $R$, and we need to correct $Y$ to be on the same scale as $X$ for each jet in the sample.
-The goal of the calibration therefore is to devise a calibration function $g: Y\rightarrow Z=g(Y)$ such that after the calibration, the scale of $Z$ is the same as the scale of $X$.
+The goal of the calibration therefore is to devise a calibration function $c: Y\mapsto Z=c(Y)$ such that after the calibration, the scale of $Z$ is the same as the scale of $X$.
 There are two ways one might judge that.
 
 One way is to define the \textit{closure}
 \begin{align}
   C_\text{me}(x) \equiv \mathbb{E}\left[\frac{Z}{x}\middle| X=x\right] = \frac{\mathbb{E}\left[Z\middle| X=x\right]}{x}
-\label{eqn:NI:closure_first},
+\label{eqn:NI:closure},
 \end{align}
 and another way is to define the \textit{prior-dependent closure}
 \begin{align}
@@ -80,7 +80,7 @@ As the name suggests, the prior-dependent closure depends on the prior distribut
 A sample with more jets produced at lower energies, for example, will necessarily have a lower prior-dependent closure than another sample with more jets produced at higher energies.
 As mentioned in the motivation, at ATLAS there are samples targeting different physics regimes with wildly different prior distributions of true energies, so the prior-dependent closure cannot be relied on to be useful in physics analysis.
 
-On the other hand, the closure $C$ is independent of the prior distribution of $X$, given $g$.
+On the other hand, the closure $C$ is independent of the prior distribution of $X$, given $c$.
 Therefore, this is the agreed-upon figure of merit for the calibration.
 We say that the calibration has {\it achieved closure} or simply {\it closes} if, for all $x$,
 \begin{align}
@@ -89,19 +89,19 @@ C = 1.
 
 \subsection{Learning the Prior}
 \label{sec:NI:learningprior}
-One way to define $g$ is to learn a function $M(Y)$ that predicts $X$ given $Y$ directly.
+One way to define $c$ is to learn a function $M(Y)$ that predicts $X$ given $Y$ directly.
 I.e., define
 \begin{align}
 M_\text{me}(y)&=\mathbb{E}[X|Y=y]
 \end{align}
-and then let $g=M$ so that $Z=M(Y)$.
+and then let $c=M$ so that $Z=M(Y)$.
 
 This method is \emph{not} the way calibrations are done in ATLAS, and the reasoning for this decision is given below.
 
 It's clear that this definition of calibration function depends on the prior distribution of $X$ in the sample, and in particular the prior-dependent closure (Equation~\ref{eqn:NI:closure_priordependent}) is achieved for the sample used to learn $M$.
 
-That being said, $g$ is just some function, even if its definition is prior-dependent.
-One might think that one could define $g$ on a representative sample, e.g. with a uniform prior, and then apply the calibration function across various samples, achieving closure (Equation ~\ref{eqn:NI:closure_first}).
+That being said, $c$ is just some function, even if its definition is prior-dependent.
+One might think that one could define $c$ on a representative sample, e.g. with a uniform prior, and then apply the calibration function across various samples, achieving closure (Equation~\ref{eqn:NI:closure}).
 
 However, even if the underlying distribution of $X$ is uniform across some range, this method does not necessarily lead to closure.
 In particular, if $f(x)$ is nonlinear or if the resolution $\sigma(Y|X=x)$ is nonconstant, then even with a uniform prior distribution of $X$ there can be large non-closures.
@@ -138,8 +138,14 @@ The intuition for step 2 is that for a given value $y$ drawn from the distributi
 Let $p(x)$ be the prior probability density function of $X=E_\text{T}$.
 Since $f$ is defined conditioning on a given value of $X$, $f$ is by construction independent of $p(x)$.
 Therefore, this calibration is independent of $p(x)$, since $f$ and thus $f^{-1}$ do not depend on $p(x)$.
-The question of whether numerical inversion achieve closure will be discussed in detail in the following sections, but at least the definition of the calibration function is independent of the prior distribution of $X$.
 This is what we mean when we say that numerical inversion is independent of the underlying spectrum.
+
+The question of whether numerical inversion achieves closure will be discussed in detail in the following sections; in particular, under certain conditions it is found that numerical inversion does \emph{not} achieve closure.
+This raises the question of whether using $f^{-1}$ instead of $M$ is indeed a better method of calibration.
+The first thing to note is that at least the definition of the calibration function is independent of the prior distribution of $X$, unlike the definition of $M$.
+Second, we will find that the non-closures can be approximated and understood in terms of properties of the distributions of $Y|X$, whereas the non-closures present when using $M$ to calibrate would depend necessarily on the prior distribution $p(x)$ used to learn $M$.
+Third, this is the method used in ATLAS and CMS for jet calibrations, and therefore the method deserves to be studied and its shortcomings understood.
+Finally, later in this chapter (Section~\ref{sec:NI:corrected_numerical_inversion_text}) we will propose a calibration function different from both $f^{-1}$ and $M$ which attempts to achieve better closure than either in a prior-independent way.
 
 We can see now our first result, which will be useful for the rest of this chapter:
 \vspace{6mm}
@@ -154,7 +160,7 @@ We can see now our first result, which will be useful for the rest of this chapt
 \rightarrow Z &= \frac{Y}{\tilde{R}(Y)}\nonumber\\
 &= f^{-1}(Y) \hspace{1 cm} \Box
 \end{align}
-I.e., the calibration function $g$ is simply $g=f^{-1}$.
+I.e., the calibration function is simply $c=f^{-1}$.
 
 \subsection{Assumptions and Definitions}
 \label{sec:NI:assumptions}
@@ -184,7 +190,7 @@ Finally, in the rest of this chapter, we write $\rho_{Y|X}(y|x)$ to represent th
 \label{eqn:NI:newdist}
 \end{align}
 
-To ease the notation, we will often use $\rho_Y(y)$ and $\rho_Z(z)$ interchangeably with $\rho_{Y|X}(y|x)$ and $\rho_{Z|X}(z|x)$, respectively, when it is clear (as is usually the case) that we are conditioning on some true value $x$.\footnote{In practice it is necessary to condition on a small range of $X$, e.g. $X\in[x,(1+\epsilon)x]$. If $\epsilon$ is large then there can be complications from the changing of $f(x)$ over the specified range and from the shape of the prior distribution of $X$ over the specified range.  These challenges can be solved by generating large enough Monte Carlo datasets.  We therefore assume that $\epsilon \ll 1$ and consider complications from finite $\epsilon$ beyond the scope of this Thesis.}
+To ease the notation, we will often use $\rho_Y(y)$ and $\rho_Z(z)$ interchangeably with $\rho_{Y|X}(y|x)$ and $\rho_{Z|X}(z|x)$, respectively, when it is clear (as is usually the case) that we are conditioning on some true value $x$.\footnote{In practice with a real sample it is necessary to condition on a small range of $X$, e.g. $X\in[x,(1+\epsilon)x]$. If $\epsilon$ is large then there can be complications from the changing of $f(x)$ over the specified range and from the shape of the prior distribution of $X$ over the specified range.  These challenges can be solved by generating large enough simulation or real datasets.  We therefore assume that $\epsilon \ll 1$ and consider complications from finite $\epsilon$ beyond the scope of this Thesis.}
 
 \section{Results}
 
@@ -291,7 +297,7 @@ In the following section only, for brevity, we will let $f$ be $f_\text{mo}$ and
 
 \subsubsection{Closure}
 \label{sec:NI:modeclosuresection}
-Assuming that the probability distribution function is unimodal, the mode is the point at which the first derivative of the function is 0:
+Assuming that the probability distribution function is unimodal, the mode is the point at which the first derivative of the probability distribution function is 0:
 \begin{align}
 f(x) = y^* \text{ s.t. } \rho'_Y(y^*) = 0.
 \label{eqn:NI:modedef}
@@ -594,7 +600,7 @@ Given the inherent nonclosure present in numerical inversion, the question of wh
 First, simply iterating numerical inversion is shown for the first time to not always help.
 Second, an extension is proposed in which a modified calibration function can be constructed to achieve a better closure than the standard technique.
 
-In addition to the corrections and extensions proposed, the deep understanding generally of numerical inversion provided for the creation of the technique described in Chapter~\ref{ch:Calib}.
+In addition to the corrections and extensions proposed, the deep understanding generally of numerical inversion provided for the creation of the technique described in Chapter~\ref{ch:GenNI}.
 The realization that numerical inversion was defined by a single function (Section~\ref{sec:NI:numinversion}), and that this function could be modified to achieve better closure, led directly to the idea that this function could be approximated with a neural network, which could simultaneously and automatically take into account multiple auxiliary variables.
 
 While this Thesis focuses on the use of jets at the LHC, numerical inversion is in fact a generic detector calibration method that can be applied as long as there is a reliable method for matching the value of an observable before and after passing through the detector (either via simulation or high-fidelity calibration data).
