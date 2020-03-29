@@ -1,5 +1,47 @@
+\newcommand{\AtlasCoordFootnote}{
+ATLAS uses a right-handed coordinate system with its origin at the nominal interaction point (IP)
+in the center of the detector and the $z$-axis along the beam pipe.
+The $x$-axis points from the IP to the center of the LHC ring,
+and the $y$-axis points upwards.
+Cylindrical coordinates $(r,\phi)$ are used in the transverse plane, 
+$\phi$ being the azimuthal angle around the $z$-axis.
+The pseudorapidity is defined in terms of the polar angle $\theta$ as $\eta = -\ln \tan(\theta/2)$.
+Angular distance is measured in units of $\Delta R \equiv \sqrt{(\Delta\eta)^{2} + (\Delta\phi)^{2}}$.}
+
+
+\section{ATLAS Detector}
+\label{sec:ATLAS:ATLAS}
+The ATLAS detector~\cite{PERF-2007-01} is a general-purpose particle physics detector 
+%
+with nearly $4\pi$ coverage in solid angle around the collision point.\footnote{\AtlasCoordFootnote}
+%
+It consists of an inner tracking detector (ID),  surrounded by a superconducting solenoid providing a \SI{2}{\tesla} axial magnetic field, a system of calorimeters, and a muon spectrometer (MS) incorporating three large superconducting toroid magnets.  
+The ID provides charged-particle tracking in the range $|\eta| < 2.5$ using three technologies: silicon pixel and silicon microstrip tracking detectors, and a transition radiation tracker (up to $|\eta| < 2$).  Due to their precise angular resolution, tracks can be well-associated to the hard-scatter vertex — the primary vertex with at least two associated tracks that also has the largest $\sum_\text{tracks in vertex} p_\text{T}^2$ over all such vertices.  As a result of this association, the contribution from pile-up to track-based observables is small.  
+%
+%
+Relatively fine-granularity electromagnetic and hadronic calorimeters cover the region $|\eta| < 4.9$. 
+The central hadronic calorimeter is a sampling calorimeter with scintillator tiles as the active medium with steel absorbers. All of the electromagnetic calorimeters, as well as the endcap and forward hadronic calorimeters, are sampling calorimeters with liquid argon as the active medium and lead, copper, or tungsten absorber.
+%
+%
+The MS consists of three layers of high-precision tracking chambers with coverage up to $|\eta|=2.7$ and dedicated chambers for triggering in the region $|\eta|<2.4$. 
+
+
 \section{Jets}
 \label{sec:ATLAS:jets}
+Detector-level (`reco') jets are formed from topologically connected, noise-suppressed calorimeter cell-clusters~\cite{PERF-2014-07} at the electromagnetic scale using the FastJet~\cite{Cacciari:2011ma} implementation of the \antikt jet algorithm~\cite{Cacciari:2008gp} with distance parameter $R = 0.4$.   The angular coordinates of the cell-clusters are corrected to point to the location of the $pp$ collision instead of the geometric center of the detector.  
 
 \subsection{Jet Calibration}
 \label{sec:ATLAS:jet_calibration}
+Hadron-level (`truth') jets are formed from detector-stable simulated particles ($c\tau > 10$ mm), excluding muons and neutrinos.  Reco jets are geometrically matched to truth jets using the $\Delta R$ distance metric; all jets with a reco-truth match are considered.  Truth jets are matched to partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label. 
+
+The goal of jet calibration is to ensure that the average calibrated detector-level momentum is the same as the corresponding particle-level quantity on average: $f(x)\equiv\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x\rangle\approx x$.  In practice, since $p_\text{T}^\text{reco}|p_\text{T}^\text{true}$ is not exactly normal, a Gaussian function is fit to the core of the probability distribution and the mean and standard deviation of the fit are used to quantify the bias and spread.  A related quantity to $f(x)$ is the average response $R(x)=f(x)/x$.  The closure of the jet calibration procedure is often quantified by the deviation of $R(x)$ from unity.
+
+The calibration procedure is achieved through a series of steps.
+Following jet reconstruction from the calorimeter cell-clusters, the impact of multiple nearly simultaneous $pp$ collisions (pile-up) is corrected for using a jet area-based~\cite{Cacciari:2007fd,Cacciari:2008gn} approach with a residual correction sensitive to both in-time and out-of-time pile-up~\cite{Aad:2015ina}.
+Following the pile-up correction, a calibration for the jet energy brings $E^\text{reco,calibrated}\approx E^\text{true}$.
+This absolute MC-based calibration also corrects the jet direction.
+After this calibration is applied, the GSC corrects the dependence of the jet $p_\text{T}$ on various jet quantities using information from the tracker, calorimeter, and MS (see Section $5.3$ in~\cite{PERF-2016-04} for the detailed list).
+This reduced dependence makes the response more similar for quark and gluon jets, reduces the uncertainty due to jet fragmentation modeling for a given jet type, and improves the jet energy resolution.
+The final step of the jet calibration procedure applied only to data is an in-situ correction that accounts for the residual difference in $R$ between data and simulation.
+Complete details about the ATLAS jet calibration procedure can be found in~\cite{PERF-2016-04,Aad:2011he}.  
+
