@@ -1,7 +1,7 @@
 \section{Abstract}
 This chapter presents a search for exotic decays of the Higgs boson to a pair of new (pseudo)scalar
 particles, $H\to aa$, with a mass in the range 20--60 \GeV{}, and where one of the $a$ bosons decays into a pair of photons and the other to a pair of gluons.
-The results of this search are published in~\cite{ref:TODO}.
+The results of this search are published in~\cite{Aaboud:2018gmx}.
 The search is performed in event samples enhanced in vector-boson fusion Higgs boson production
 by requiring two jets with large invariant mass in addition to the Higgs boson candidate decay products.
 The analysis is based on the full dataset of $pp$ collisions at $\sqrt{s}= 13$ \TeV{} recorded in 2015 and 2016 with the ATLAS detector at the CERN Large Hadron Collider,
@@ -1025,20 +1025,6 @@ therefore these bounds will improve with more data.
   \label{fig:HBSM:compare_4gamma}
 \end{figure}
 
-\section{Conclusions and Future Work}
-In summary, a search for exotic decays of the Higgs boson into a pair of new (pseudo)scalar particles,
-$H\to aa$, in final states with two photons 
-and two jets is conducted using 36.7~\ifb{} of $pp$ collisions at $\sqrt{s}=13$ \TeV{} recorded 
-with the ATLAS detector at the LHC. The search for $H\to aa \to \gamma\gamma gg$ is performed
-in the mass range $20 < m_a < 60~\GeV{}$ and with additional jet requirements 
-to enhance VBF-produced signal while suppressing the $\gamma\gamma$+jets background.
-No significant excess of data is observed relative to the SM predictions. An upper limit
-is set for the product of the production cross-section for $pp\to H$ and the branching
-ratio for the decay $H\to aa\to\gamma\gamma gg$. The upper limit ranges from 3.1 pb to 9.0 pb depending
-on $m_a$, and is mostly driven by the statistical uncertainties.
-These results complement the previous upper limit on $H\to aa\to\gamma\gamma\gamma\gamma$ and
-further constrains the BSM parameter space for exotic decays of the Higgs boson.
-
 This search is notably limited to $m_a\ge20$ \GeV{}; the ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} similarly sets limits only for $m_a\ge10$ \GeV{}.
 As mentioned in Section~\ref{sec:HBSM:trigger} and Section~\ref{sec:HBSM:photons}, these lower bounds are due to the limitations set by using the diphoton trigger and the diphoton selection.
 For low $m_a$, the $a$ particle is boosted and the decay products are collimated - this ruins the efficiency of the diphoton selection, both because of the way photon objects are constructed in the calorimeter at trigger level and because isolation is imposed on the photons in the offline object reconstruction.
@@ -1049,7 +1035,9 @@ Reference~\cite{Aaboud:2018djx} demonstrates a search for $X\rightarrow aa\right
 There is a similar search~\cite{ATLAS-CONF-2012-079} from Run 1 that sets limits for $X$ with a mass between $110$ and $150$ \GeV{} and $m_a$ between 100 and 400 MeV.
 These searches are accomplished by taking advantage of the fact that in these regimes, the $a$ is highly boosted, so that the photon decay products end up collimated in a single photonlike energy cluster and the trigger identiies these as a single isolated photon.
 Substructure of this photonlike energy cluster is used offline to enhance the signal presence.
+
 Appendix~\ref{ch:HBSM_lowmass_app} proposes an already existing trigger and offline selection strategy that can be sensitive to $H\rightarrow aa\rightarrow gg\gamma\gamma$ with $m_a<20$ \GeV{}, and could enable a search for these low masses.
+Though not necessary to enable this search, the weak supervision analysis techniques used in Chapter~\ref{ch:CWoLa} could be used to search for these signals while retaining limited dependence on the background simulation.
 
 
 This search also presents many interesting areas of research in order to improve the sensitivity of the analysis for the resolved mass range $m_a\ge 20$ \GeV{}.
@@ -1064,3 +1052,22 @@ Chapter~\ref{ch:NI} presents work on studying in a rigorous framework the mathem
 and Chapter~\ref{ch:GenNI} presents work on using machine learning to further improve this process~\cite{ATL-PHYS-PUB-2018-013}.
 Appendix~\ref{ch:Voronoi} presents work on novel jet reconstruction algorithms which aim to reduce the effect of pileup on the jet reconstructed energy~\cite{ATLAS-CONF-2017-065}.
 By better reconstructing the energies of the jets that appear in the final state of this analysis, these efforts can improve the ultimate sensitivity of this search, in addition to being broadly applicable to other analyses than the one being studied here. 
+
+\section{Conclusions}
+\label{sec:HBSM:conclusion}
+In summary, a search for exotic decays of the Higgs boson into a pair of new (pseudo)scalar particles,
+$H\to aa$, in final states with two photons 
+and two jets is conducted using 36.7~\ifb{} of $pp$ collisions at $\sqrt{s}=13$ \TeV{} recorded 
+with the ATLAS detector at the LHC. The search for $H\to aa \to \gamma\gamma gg$ is performed
+in the mass range $20 < m_a < 60~\GeV{}$ and with additional jet requirements 
+to enhance VBF-produced signal while suppressing the $\gamma\gamma$+jets background.
+No significant excess of data is observed relative to the SM predictions. An upper limit
+is set for the product of the production cross-section for $pp\to H$ and the branching
+ratio for the decay $H\to aa\to\gamma\gamma gg$. The upper limit ranges from 3.1 pb to 9.0 pb depending
+on $m_a$, and is mostly driven by the statistical uncertainties.
+These results complement the previous upper limit on $H\to aa\to\gamma\gamma\gamma\gamma$ and
+further constrains the BSM parameter space for exotic decays of the Higgs boson.
+
+This search can be extended to the low-mass regime using novel techniques (Appendix~\ref{ch:HBSM_lowmass_app}).
+In particular, the weak supervision analysis techniques used in Chapter~\ref{ch:CWoLa} could be used to target this low-mass regime.
+The sensitivity of the search presented here, and the extension to the low-mass regime, can be improved utilizing the novel technique for jet calibrations proposed in Chapter~\ref{ch:GenNI}, which builds upon the deep understanding of calibrations provided in Chapter~\ref{ch:NI}.

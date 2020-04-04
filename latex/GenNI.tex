@@ -1,10 +1,20 @@
 \section{Abstract}
-Jets that are reconstructed by the ATLAS detector are corrected to ensure that the reported energy is an unbiased measurement of the particle-level jet energy.
-This jet energy scale correction consists of multiple steps where features of the reconstructed jet are used sequentially, in order to improve the resolution and reduce the differences between quark and gluon jets (flavor dependence).
-This Chapter reports on a new method based on multivariate regression, demonstrated with neural networks, that generalizes the current (iterated) one-dimensional technique for performing jet energy scale corrections (numerical inversion), called \textit{generalized numerical inversion}.
+%Jets that are reconstructed by the ATLAS detector are corrected to ensure that the reported energy is an unbiased measurement of the particle-level jet energy.
+%This jet energy scale correction consists of multiple steps where features of the reconstructed jet are used sequentially, in order to improve the resolution and reduce the differences between quark and gluon jets (flavor dependence).
+%This Chapter reports on a new method based on multivariate regression, demonstrated with neural networks, that generalizes the current (iterated) one-dimensional technique for performing jet energy scale corrections (numerical inversion), called \textit{generalized numerical inversion}.
+%The results presented in this Chapter are published in~\cite{ATL-PHYS-PUB-2018-013}.
+%The new method remains an unbiased measurement of the particle-level energy, but allows for simultaneously using multiple features, such as the number of tracks inside jets and the average track radius, in order to account for correlations in the dependencies between features and with the jet energy.
+%This new procedure can further improve the jet energy resolution and flavor dependence beyond a sequential approach and can be systematically improved by exploiting more variables and their interdependence with the jet energy response.
+Jets reconstructed in the ATLAS detector have their energies corrected in order to be an unbiased measurement of the particle-level jet.
+This correction proceeds via multiple steps, the most significant of which include an absolute MC-based jet energy scale correction and following a correction based on auxiliary features of the jet observed in the detector.
+These two steps both use numerical inversion (Chapter~\ref{ch:NI}) in order to remain independent of the underlying spectrum.
+The current method of accounting for these features relies on a sequential application of numerical inversion to one feature at a time.
+This Chapter introduces a new technique which can perform this correction accounting for multiple feature simultaneously, accomplished through the use of neural networks.
+The multivariate nature of the new technique allows to account for correlations between the energy dependence on multiple features, which is not accounted for in the current method.
+The new technique, called \textit{generalized numerical inversion}, generalizes numerical inversion by retaining the key property of being independent of the underlying prior distribution, while accounting for multiple features simultaneously.
+This new technique further improves the correction on a variety of metrics relative to the sequential method.
+As a method for improving the jet energy scale and resolution, the new technique is widely applicable to analyses in ATLAS, and in particular to the two searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}).
 The results presented in this Chapter are published in~\cite{ATL-PHYS-PUB-2018-013}.
-The new method remains an unbiased measurement of the particle-level energy, but allows for simultaneously using multiple features, such as the number of tracks inside jets and the average track radius, in order to account for correlations in the dependencies between features and with the jet energy.
-This new procedure can further improve the jet energy resolution and flavor dependence beyond a sequential approach and can be systematically improved by exploiting more variables and their interdependence with the jet energy response.
 
 \section{Introduction}
 \label{sec:GenNI:intro}
@@ -17,23 +27,24 @@ These distortions are corrected for using a series of calibration steps~\cite{PE
 All of these steps proceed ultimately via numerical inversion, the properties of which are expounded upon in detail in Chapter~\ref{ch:NI}.
 This Chapter is concerned with improving one particular and important part of the current calibration procedure, the Global Sequential Calibration (GSC).
 This step incorporates auxiliary measurements about the jet, such as its reconstructed charged particle multiplicity, to improve the overall quality of the energy reconstruction~\cite{ATLAS-CONF-2015-002}.
-In particular, the calibration is designed to reduce the dependence of the reconstructed energy on jet and event features.
-%As a result, the size of the residual distortions decreases for different final states and the dependence on an accurate model of jet features is reduced.  
-The intention of this step of the calibration is to reduce the dependendence of the jet energy on the final state being used in analysis and on the model of the jet features being used to derive the correction.
 
-%The current scheme for incorporating auxiliary information treats the impact of each feature on the residual jet energy distortions as independent and thus proceeds as a sequential calibration.  This approach works well for the current set of features, which are chosen to satisfy the independence criteria.  However, there is more information about the jet that is available and using these data in a sequential way would be sub-optimal.  In addition, advances in machine learning for jets~\cite{Larkoski:2017jix} have shown that neural networks and other modern tools can exploit subtle correlations in high dimensions to improve performance.  This chapter describes the connection between these two concepts by demonstrating a machine learning approach to a jet calibration that uses auxiliary features.  In order to ensure that this machine learning approach has the same properties as the algorithm used by the standard calibration scheme~\cite{Cukierman:2016dkb}, a new technique called \textit{Generalized Numerical Inversion} is described.  The main advantage of this algorithm, unlike traditional machine learning regression algorithms, is that it is independent of the energy spectrum of jets used for training.  By including all of the available information at once, one can test the importance of correlations in the auxiliary features with the residual energy distortions and ultimately improve the quality of the calibration overall. 
+The correction based on auxiliary features intends to further improve the jet calibration via a few metrics.
+First, using features correlated with the provenance of the jet, the difference in energy scale between, e.g., quark and gluon jets can be reduced.
+Second, by reducing the dependence of the scale on auxiliary features, the effects of mismodeling in the underlying spectrum of these features can be mitigated.
+Third, the correction can remove the additional component of the jet energy resolution relative to the particle-level quantity due to the spread of these underlying features.
+
 The current method for the GSC treats the impact of each auxiliary feature sequentially and independently, which requires the set of features used in the correction to be chosen in such a way to have uncorrelated effects on the jet energy.
 However, there is additional information available which could improve the calibration and yet is not used in the current GSC because of this requirement of uncorrelation.
 This Chapter presents a new technique using neural networks to simultaneously take into account multiple auxiliary variables in this correction which may or may not have correlated effects on the jet energy.
 The technique relies both on the general capacity of neural networks to approximate well complicated functions in high dimensions~\cite{HORNIK1991251} and on recent advances in jet substructure~\cite{Larkoski:2017jix} which indicate useful features for applying this correction.
 As mentioned in Chapter~\ref{ch:NI}, it is important that the calibration is independent of the underlying spectrum, and therefore that ultimately it relies on numerical inversion.
-The new technique presented here, called \textit{Generalized Numerical Inversion}, incorporates neural networks into the numerical inversion framework in order to accomplish both goals of simultaneously taking into account the effect of multiple auxiliary variables and of remaining independent of the underlying spectrum.
-Ultimately this technique is shown to improve the overall quality of the jet calibration.
+The new technique presented here, called \textit{generalized numerical inversion}, incorporates neural networks into the numerical inversion framework in order to accomplish both goals of simultaneously taking into account the effect of multiple auxiliary variables and of remaining independent of the underlying spectrum.
+Ultimately this technique is shown to improve the overall quality of the jet calibration on the three metric outlined above.
 
 This Chapter is organized as follows.
 Section~\ref{sec:GenNI:atlas} discusses the simulated samples used in this study and Section~\ref{sec:GenNI:jetreco} briefly reviews the GSC and describes it in the notation used in this Thesis.
 Generalized numerical inversion is described in Section~\ref{sec:GenNI:genni} and first results using this new method are presented in Section~\ref{sec:GenNI:results}.
-The chapter closes with Section~\ref{sec:GenNI:conclusion}.
+There is a discussion of the results in Section~\ref{sec:GenNI:discussion} and the Chapter concludes with Section~\ref{sec:GenNI:conclusion}.
 
 %-------------------------------------------------------------------------------
 %\section{ATLAS Detector and Event Simulations}
@@ -97,8 +108,8 @@ Then, the function $f$ can be generalized as $f_\theta(x)\equiv \langle p_\text{
 %Although it may seem intuitive that one would want to correct for the dependence of the jet energy on auxiliary variables if such a dependence exists, it is worth delving into exactly what the reasons and implications of such a correction are.
 
 In general, if it is found that the jet energy $f_\theta(x)$ depends on some auxiliary variable $\theta$, then it is desirable that the calibration removes this dependence, for a few reasons.
-First, if $\theta$ is not well-modeled by the simulation then even though there may be closure in the simulation there may not be closure in the data, and this could introduce systematic uncertainties in the final calibration.
-Second, if the distribution of $\theta$ is sample-dependent, e.g. correlated with the jet originating parton, then there could be closure in one sample but not another, which could cause nonoptimal selections in the final analysis cuts.
+First, if the distribution of $\theta$ is sample-dependent, e.g. correlated with the jet originating parton, then there could be closure in one sample but not another, which could cause nonoptimal selections in the final analysis cuts.
+Second, if $\theta$ is not well-modeled by the simulation then even though there may be closure in the simulation there may not be closure in the data, and this could introduce systematic uncertainties in the final calibration.
 Third, there is a degradation of the resolution $\sigma(x)$ due to the spread of $\theta$, which again can cause the sensitivity of final analysis cuts to be worse.
 These are the three metrics by which we judge the performance of the GSC and of generalized numerical inversion in this Chapter.
 
@@ -156,7 +167,18 @@ To illustrate the potential of generalized numerical inversion, an example is pr
   -1 & \text{if $\ntrack=0$}
 \end{cases}
 \]
+The average track radius is also sometimes denoted more explicitly as $\langle p_\text{T,frac}\times \Delta R \rangle$.
 These observables are useful because the calorimeter response depends on the type of parton that initiated the jet as gluon jets have more particles and have a wider radiation pattern than quark jets.  These properties lead to a different response because of the non-linear calorimeter-cell response as well as out-of-cone effects.  Even though it is only sensitive to charged particles, the tracker is insensitive to pile-up and is an excellent detector for measuring these jet radiation properties.
+The underlying distributions of these two variables are given in Figure~\ref{fig:GenNI:distributions}.
+\begin{figure}[h!]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/hist_nTrack_shape_.pdf}}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/hist_wTrack_mod_shape_.pdf}}}
+  \caption{
+    The distributions of (a) $n_{\text{track}}$ and (b) $\Rtrack=\langle p_\text{T,frac}\times \Delta R \rangle$ in bins of $\pttrue$.
+    }
+  \label{fig:GenNI:distributions}
+\end{figure}
 
 Figure~\ref{fig:GenNI:R_scan} shows the dependence of the response (following the inclusive energy calibration) on $n_\text{track}$ and $\Rtrack$.  The response depends strongly on these two quantities, varying by about  20-30\% across the accessible range.  The trends are also not uniform in jet $p_\text{T}$ - the response of lower $p_\text{T}$ jets shows a stronger dependence on both $n_\text{track}$ and $\Rtrack$.
 %While the dependence of the response on $\Rtrack$ is non-linear, the residual dependence as shown in Fig.~\ref{fig:GenNI:R_scan}(a) is approximately linear and so is well-characterized by $dR/dn_\text{track}$.  
@@ -170,15 +192,16 @@ To control for this ability of the neural network to operate unbinned, the gener
 However, importantly the sequential approach demonstrated here does no worse than the GSC in correcting for the residual dependence of the response.
 
 %The learned functions in the sequential calibration, $L(\pttrue,\text{n}_\text{track})/\pttrue$ and $L(\pttrue,\Rtrack)/\pttrue$, are presented in Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan}(a) and (d).
-The learned functions $L$ in the sequential calibration are presented in Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan}(a) and (d).
-As expected, Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan}(a) looks similar to Figure~\ref{fig:GenNI:R_scan}(a), as the neural network has learned to approximate the shape of the response with respect to $\ntrack$ (Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan}(d) is not expected to look similar to Figure~\ref{fig:GenNI:R_scan}(b), since the previously applied $\ntrack$ correction affects the dependence of the response on $\Rtrack$).
-The ratio of $\ptreco$ to $L(\pttrue)$ (for the appropriate $\theta$, at the appropriate step of the sequential calibration) is shown in (b) and (e), and the ratio is very close to $1$, indicating the learning step is working properly.
-The closure of the calibrations at each step of the sequence is shown in (c) and (f) of Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan}.   In both cases, the calibration closes, with an average calibrated response at unity, independent of the features.
+The learned functions $L$ in the sequential calibration are presented in Figures~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:a} and~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:d}.
+As expected, Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:a} looks similar to Figure~\ref{fig:GenNI:R_scan:a}, as the neural network has learned to approximate the shape of the response with respect to $\ntrack$ (Figure~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:d} is not expected to look similar to Figure~\ref{fig:GenNI:R_scan:b}, since the previously applied $\ntrack$ correction affects the dependence of the response on $\Rtrack$).
+The ratio of $\ptreco$ to $L(\pttrue)$ (for the appropriate $\theta$, at the appropriate step of the sequential calibration) is shown in Figures~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:b} and ~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:d}, and the ratio is very close to $1$, indicating the learning step is working properly.
+The closure of the calibrations at each step of the sequence is shown in Figures~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:c} and~\ref{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:f}.
+In both cases, the calibration closes, with an average calibrated response at unity, independent of the features.
 
 \begin{figure}[h!]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/R_nTrack_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/R_wTrack_mod_scan_preliminary.pdf}}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/R_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:R_scan:a}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/R_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:R_scan:b}}
   \caption{The dependence of the response on (a) $n_\text{track}$ and (b) $\Rtrack$ in several bins of truth jet $p_\text{T}$.
     }
   \label{fig:GenNI:R_scan}
@@ -187,71 +210,84 @@ The closure of the calibrations at each step of the sequence is shown in (c) and
 
 \begin{figure}[h!]
   \centering 
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_LR_nTrack_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_LR_R_nTrack_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_CR_nTrack_scan_preliminary.pdf}}}\\
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_seq_LR_wTrack_mod_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_seq_LR_R_wTrack_mod_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_seq_CR_wTrack_mod_scan_preliminary.pdf}}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_LR_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:a}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_LR_R_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:b}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_CR_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:c}}\\
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_seq_LR_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:d}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_seq_LR_R_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:e}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_seq_CR_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan:f}}
   \caption{The dependence of the (a) learned response $L(\pttrue,\theta)/\pttrue$, (b) ratio of $\ptreco$ to learned approximation $L(\pttrue,\theta)$, and (c) calibrated response $C(\ptreco,\theta)/\pttrue$ on $n_\text{track}$ in several bins of truth jet $p_\text{T}$ for $\theta=\{n_\text{track}\}$. Also, the dependence of the (d) learned response $L(\pttrue,\theta)/\pttrue$, (e) ratio of $\ptreco$ to learned approximation $L(\pttrue,\theta)$, and (f) calibrated response $C(\ptreco,\theta)/\pttrue$ on $\Rtrack$ in several bins of truth jet $p_\text{T}$ for $\theta=\{\Rtrack\}$ in sequence after the $n_\text{track}$ correction.
     }
   \label{fig:GenNI:ntrack_wtrackmod_seq_LR_CR_scan}
 \end{figure}
 
 Corresponding results for the network trained to simultaneously learn the dependence on $\text{n}_\text{track}$ and $\Rtrack$ are shown in Figure~\ref{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan}.
-The network is able to learn the dependence on either of the two features in one dimension and the (c) and (f) of Figure~\ref{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan} also show that the calibration closes.
-The advantage of the simultaneous method is highlighted in Figure~\ref{fig:GenNI:dRdntrack_wTrack_mod}.
-After the calibration, in each step of the sequential method, there is still a residual dependence of the calibrated response $\hat{R}$ on $\ntrack$ in individual bins of $\Rtrack$.
-This residual dependence is monotonic, and so the single value $d\hat{R}/d\ntrack$ (obtained as the slope when fitting $\hat{R}$ versus $\ntrack$ to a line in bins of $\Rtrack$) parameterizes the remaining residual dependence.
-The residual dependence on $\ntrack$ in bins of $\Rtrack$ is nearly the same if the $\text{n}_\text{track}$ or sequential $\text{n}_\text{track}$, $\Rtrack$ calibrations are applied.
-However, the slope is zero and independent of $\Rtrack$ when the simultaneous calibration is performed.
-Similarly, there is still a residual dependence of $d\hat{R}/d\Rtrack$ on $\ntrack$ if the $\ntrack$ or sequential $\ntrack$, $\Rtrack$ calibrations are applied; this residual dependence goes away with the simultaneous calibration.
-Because of this residual dependence, there can be nonclosures in specific regions of the parameter space, despite the calibration closing inclusively overall. In the sequential calibration, large non-closures can be seen in some regions of the parameter space, while the simultaneous calibration almost completely removes these nonclosures.
-This comparison illustrates the main benefit of the generalized numerical inversion approach.
+The network is able to learn the dependence on either of the two features in one dimension and Figures~\ref{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:c} and~\ref{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:f} also show that the calibration closes.
 
 \begin{figure}[h!]
   \centering 
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_nTrack_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_R_nTrack_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_CR_nTrack_scan_preliminary.pdf}}}\\
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_wTrack_mod_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_R_wTrack_mod_scan_preliminary.pdf}}}
-  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_CR_wTrack_mod_scan_preliminary.pdf}}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:a}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_R_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:b}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_CR_nTrack_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:c}}\\
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:d}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_LR_R_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:e}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{{figures/ntrack_wtrackmod_simulK3U_CR_wTrack_mod_scan_preliminary.pdf}}\label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan:f}}
   \caption{The dependence of the (a,d) learned response $L(\pttrue,\theta)/\pttrue$, (b,e) ratio of $\ptreco$ to learned approximation $L(\pttrue,\theta)$, and (c,f) calibrated response $C(\ptreco,\theta)/\pttrue$ on (a,b,c) $n_\text{track}$ and (d,e,f) $\Rtrack$, respectively, in several bins of truth jet $p_\text{T}$ for a simultaneous calibration with $\theta=\{n_\text{track},\Rtrack\}$.
     }
   \label{fig:GenNI:ntrack_wtrackmod_simul_LR_CR_scan}
 \end{figure}
 
+The advantage of the simultaneous method is highlighted in Figure~\ref{fig:GenNI:dRdntrack_wTrack_mod}.
+After the calibration, in each step of the sequential method, there is still a residual dependence of the calibrated response $\hat{R}$ on $\ntrack$ in individual bins of $\Rtrack$.
+This residual dependence is monotonic, and so the single value $d\hat{R}/d\ntrack$ (obtained as the slope when fitting $\hat{R}$ versus $\ntrack$ to a line in bins of $\Rtrack$) parameterizes the remaining residual dependence.
+The residual dependence on $\ntrack$ in bins of $\Rtrack$ is nearly the same and clearly not zero at all values of $\Rtrack$ if the $\text{n}_\text{track}$ or sequential $\text{n}_\text{track}$, $\Rtrack$ calibrations are applied.
+However, the reidual dependence is zero and independent of $\Rtrack$ when the simultaneous calibration is performed.
+Similarly, there is still a residual dependence of $d\hat{R}/d\Rtrack$ on $\ntrack$ if the $\ntrack$ or sequential $\ntrack$, $\Rtrack$ calibrations are applied; this residual dependence goes away with the simultaneous calibration.
+
+Because of this residual dependence, there can be nonclosures in specific regions of the parameter space, despite the calibration closing inclusively overall.
+Figure~\ref{fig:GenNI:dRdntrack_wTrack_mod:c} shows a selection on $\ntrack$ and $\Rtrack$ which is more efficient on gluons than on quarks, and Figure~\ref{fig:GenNI:dRdntrack_wTrack_mod:d} shows a selection which is more efficient on quarks than on gluons.
+In the sequential calibration, large non-closures can be seen in some regions of the parameter space, while the simultaneous calibration almost completely removes these nonclosures.
+
 \begin{figure}[t]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/dRdntrack_wTrack_mod_ntrack_wtrackmod_preliminary}.pdf}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/dRdwTrack_mod_ntrack_ntrack_wtrackmod_preliminary}.pdf}}\\
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/CR_x_compare_ntrack_wtrackmod_all_ntrackg6_wtrackmodg010_preliminary}.pdf}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/CR_x_compare_ntrack_wtrackmod_all_ntrackl4_wtrackmodl030_preliminary}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/dRdntrack_wTrack_mod_ntrack_wtrackmod_preliminary}.pdf}\label{fig:GenNI:dRdntrack_wTrack_mod:a}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/dRdwTrack_mod_ntrack_ntrack_wtrackmod_preliminary}.pdf}\label{fig:GenNI:dRdntrack_wTrack_mod:b}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/CR_x_compare_ntrack_wtrackmod_all_ntrackg6_wtrackmodg010_preliminary}.pdf}\label{fig:GenNI:dRdntrack_wTrack_mod:c}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{{figures/CR_x_compare_ntrack_wtrackmod_all_ntrackl4_wtrackmodl030_preliminary}.pdf}\label{fig:GenNI:dRdntrack_wTrack_mod:d}}\\
   \caption{The dependence of (a) $\frac{d\hat{R}}{dn_\text{track}}$ on $\Rtrack$ and (b) $\frac{d\hat{R}}{d\Rtrack}$ on $\ntrack$ for: a calibration using a network with $\theta=\{n_\text{track}\}$ (circles); a calibration using a network with $\theta=\{\Rtrack\}$ employed sequentially after correcting for $n_\text{track}$ (squares); and a simultaneous calibration using a network with $\theta=\{n_\text{track},\Rtrack\}$ (diamonds).
-    Also, the closure as a function of $\pttrue$, highlighting the nonclosure due to this residual dependence in (c) a selection intended to target gluon jets; and (d) a selection intended to target quark jets.
+    Also, the closure as a function of $\pttrue$, in (c) a selection intended to target gluon jets; and (d) a selection intended to target quark jets.
     }
   \label{fig:GenNI:dRdntrack_wTrack_mod}
 \end{figure}
 
-As observables sensitive to the quark or gluon nature of a jet, $\text{n}_\text{track}$- and $\Rtrack$-based calibrations ideally reduce the response difference between jet types. Figure~\ref{fig:GenNI:quarkgluon_wtrackmod} shows the difference between the  response for quark and gluon jets as a function of the truth jet $p_\text{T}$ for different calibration methods.  Since gluon jets have a softer constituent $p_\text{T}$ spectrum, their response is lower than for quark jets on average.  Applying any residual correction can be seen to be beneficial in reducing the response difference and the largest reduction is observed for the simultaneous approach.  Reducing the response difference between quark and gluon jets is important for analyses that have an unknown or poorly modeled quark/gluon composition.  The properties of quark and gluon jets can depend on the specific model of jet fragmentation used; therefore, it is also important to check that the improvement in the quark-gluon response difference is robust to these model differences.  In addition to showing the results for \PYTHIA~8, Figure~\ref{fig:GenNI:quarkgluon_wtrackmod} also demonstrates that (without retraining) there are also improvements for \textsc{Herwig}~7. 
+As observables correlated with the quark or gluon provenance of a jet, the correction for the dependence of the energy on $\text{n}_\text{track}$ and $\Rtrack$ can reduce the response difference between jet types.
+Figure~\ref{fig:GenNI:quarkgluon_wtrackmod} shows the difference between the  response for quark and gluon jets as a function of the truth jet $p_\text{T}$ for different calibration methods.
+Since gluon jets have a softer constituent $p_\text{T}$ spectrum, their response is lower than for quark jets on average.
+The residual correction does reduce the response difference; the simultaneous approach is slightly better than the sequential approach at every value of truth jet $p_\text{T}$.
 
-%It is also interesting to study the residual response dependence on $\text{n}_\text{track}$ and $\Rtrack$ for a given parton type.  This will show the impact of the calibration on reducing the sensitivity (and thus the systematic uncertainty) of the modeling of jet fragmentation.   Figure~\ref{fig:GenNI:nonclosure_ntrack_quarkgluon} shows the non-closure as a function of $n_\text{track}$ for quark and gluon jets separately, after a sequential or simultaneous calibration.  For quark jets ((c) and (d) of Fig.~\ref{fig:GenNI:nonclosure_ntrack_quarkgluon}) there is a clear reduction in the non-closure from the simultaneous (d) over the sequential calibration (c).   Especially at low $p_\text{T}$, this reduction can reach 20\%.  For gluon jets ((a) and (b)), there is a reduction at high $n_\text{track}$, but not at low $n_\text{track}$.
-
-
-
-One step beyond reducing the quark/gluon composition dependence is to reduce the sensitivity to the modeling of the radiation pattern inside a given jet type.  An important consequence of such a reduction could be a smaller systematic uncertainty associated with jet fragmentation modeling.  Figure~\ref{fig:GenNI:respdiff_PythiaHerwig} quantifies this effect by showing the difference in the jet response between \PYTHIA~8 and \textsc{Herwig}~7 for quarks and gluons separately.  It can be seen that the jet response difference between the generators is generally better in the simultaneous calibration method than in the sequential method. 
-In particular, in some bins of $\pttrue$, the sequential method makes the difference between the generators worse than not including the second variable, while the simultaneous method retains or slightly improves the difference between the generators.
-This could happen if the correlation between the two features changes between the generators in such a way that the sequential calibration effectively undoes the correction of the first feature in the sample the network was not trained on. Another possible effect is that the correlation between the two features stays the same between the generators, but the underlying distribution of one or both of the features in the jets changes. In either case, since the simultaneous method conditions on both features at once, this does not affect the final performance.
+The properties of quark and gluon jets can depend on the specific model of jet fragmentation used; therefore, it is also important to check that the improvement in the quark-gluon response difference is robust to these model differences.
+In addition to showing the results for \PYTHIA~8, Figure~\ref{fig:GenNI:quarkgluon_wtrackmod:b} also demonstrates that (without retraining) there are also improvements for \textsc{Herwig}~7. 
 
 \begin{figure}[h!]
   \centering 
-  \subfloat[ \PYTHIA~8]{\includegraphics[width=0.45\textwidth]{{figures/quarkgluon_JZ3_Pythia_wtrackmod_ntrack_preliminary}.pdf}}
-  \subfloat[\textsc{Herwig}~7 ]{\includegraphics[width=0.45\textwidth]{{figures/quarkgluon_JZ3_Herwig_wtrackmod_ntrack_preliminary}.pdf}}
+  \subfloat[ \PYTHIA~8]{\includegraphics[width=0.45\textwidth]{{figures/quarkgluon_JZ3_Pythia_wtrackmod_ntrack_preliminary}.pdf}\label{fig:GenNI:quarkgluon_wtrackmod:a}}
+  \subfloat[\textsc{Herwig}~7 ]{\includegraphics[width=0.45\textwidth]{{figures/quarkgluon_JZ3_Herwig_wtrackmod_ntrack_preliminary}.pdf}\label{fig:GenNI:quarkgluon_wtrackmod:b}}
   \caption{The difference between the response of quarks and gluons as a function of $\pttrue$ for: before any $n_\text{track}$ or $\Rtrack$ correction (open circles); a calibration using a network with $\theta=\{n_\text{track}\}$ (circles); a calibration using a network with  $\theta=\{\Rtrack\}$ sequentially after correcting for $n_\text{track}$ (squares); and a simultaneous calibration using a network with $\theta=\{n_\text{track},\Rtrack\}$ (diamonds).
     }
   \label{fig:GenNI:quarkgluon_wtrackmod}
 \end{figure}
+
+
+%It is also interesting to study the residual response dependence on $\text{n}_\text{track}$ and $\Rtrack$ for a given parton type.  This will show the impact of the calibration on reducing the sensitivity (and thus the systematic uncertainty) of the modeling of jet fragmentation.   Figure~\ref{fig:GenNI:nonclosure_ntrack_quarkgluon} shows the non-closure as a function of $n_\text{track}$ for quark and gluon jets separately, after a sequential or simultaneous calibration.  For quark jets ((c) and (d) of Fig.~\ref{fig:GenNI:nonclosure_ntrack_quarkgluon}) there is a clear reduction in the non-closure from the simultaneous (d) over the sequential calibration (c).   Especially at low $p_\text{T}$, this reduction can reach 20\%.  For gluon jets ((a) and (b)), there is a reduction at high $n_\text{track}$, but not at low $n_\text{track}$.
+
+Another goal of the correction based on auxiliary variables is to reduce the sensitivity of the jet energy to mismodeling of the underlying features.
+An important consequence of such a reduction could be a smaller systematic uncertainty associated with jet fragmentation modeling.
+Figure~\ref{fig:GenNI:respdiff_PythiaHerwig} quantifies this effect by showing the difference in the jet response between \PYTHIA~8 and \textsc{Herwig}~7 for quarks and gluons separately.
+It can be seen that the jet response difference between the generators is generally better in the simultaneous calibration method than in the sequential method. 
+In particular, in some bins of $\pttrue$, the sequential method makes the difference between the generators worse than not including the second variable, while the simultaneous method retains or slightly improves the difference between the generators.
+This could happen if the correlation between the two features changes between the generators in such a way that the sequential calibration effectively undoes the correction of the first feature in the sample the network was not trained on.
+Another possible effect is that the correlation between the two features stays the same between the generators, but the underlying distribution of one or both of the features in the jets changes.
+In either case, since the simultaneous method conditions on both features at once, this does not affect the final performance.
 
 \begin{figure}[h!]
   \centering 
@@ -263,9 +299,13 @@ This could happen if the correlation between the two features changes between th
 \end{figure}
 
 
-A final metric for studying the impact of generalized numerical inversion is the jet energy resolution.  One component of the jet energy resolution is due to the spread in the jet energy response for various values of $\theta$.   In the extreme case that there is no spread in $p_\text{T}^\text{reco}$ given $p_\text{T}^\text{true}$ and $\theta$, there will still be an effective resolution resulting from the spread in values over the range of $\theta$.  This contribution to the resolution is reduced with any residual calibration.  However, the calibrated resolution is not only determined by the spread in the response values with $\theta$ and in general need not improve following the calibration.  Figure~\ref{fig:GenNI:stdCR_x_compare_ntrack_wtrackmod} shows both the inclusive (not differential in $\theta$)  closure as well as the inclusive resolution as a function of the truth jet $p_\text{T}$, for different calibration methods.  All methods achieve a similar inclusive closure and as desired, the residual calibration procedures reduce the resolution.  The overall resolution reduction is similar for the sequential and simultaneous approaches, with the simultaneous slightly better at higher $p_\text{T}$ and the sequential slightly better at low $p_\text{T}$.  The difference in the resolutions from the various approaches is small compared to the gain over no residual calibration.
-
-
+A final metric for studying the impact of generalized numerical inversion is the jet energy resolution.
+One component of the jet energy resolution is due to the spread in the jet energy response for various values of $\theta$ - in the extreme case that there is no spread in $p_\text{T}^\text{reco}$ given $p_\text{T}^\text{true}$ and $\theta$, there will still be an effective resolution resulting from the spread in values over the range of $\theta$.
+However, as mentioned in Section~\ref{GenNI:jetreco} and expounded upon in Appendix~\ref{sec:GenNI_app:auxiliary}, the calibrated resolution does not necessarily improve following the correction based on auxiliary variables.
+Figure~\ref{fig:GenNI:stdCR_x_compare_ntrack_wtrackmod} shows both the inclusive (not differential in $\theta$) closure as well as the inclusive resolution as a function of the truth jet $p_\text{T}$, for different calibration methods.
+All methods achieve a similar inclusive closure and as desired, the residual calibration procedures reduce the resolution.
+The overall resolution reduction is similar for the sequential and simultaneous approaches, with the simultaneous slightly better at higher $p_\text{T}$ and the sequential slightly better at low $p_\text{T}$.
+The difference in the resolutions from the various approaches is small compared to the gain over no residual calibration.
 
 %\begin{figure}[t]
 %  \centering 
@@ -275,8 +315,6 @@ A final metric for studying the impact of generalized numerical inversion is the
 %    }
 %  \label{fig:GenNI:dRdnTrack_quark_ntrack_wtrackmod_seq}
 %\end{figure}
-
-
 
 \begin{figure}[t]
   \centering 
@@ -294,8 +332,43 @@ A final metric for studying the impact of generalized numerical inversion is the
 
 
 %-------------------------------------------------------------------------------
+\section{Discussion}
+\label{sec:GenNI:discussion}
+%-------------------------------------------------------------------------------
+The results presented in Section~\ref{sec:GenNI:results} demonstrate that the simultaneous neural network-based method introduced in this Chapter improves the performance of the calibration on a variety of metrics.
+%In addition to directly removing the dependence of the energy on the features and combinations of the features themselves, Section~\ref{sec:GenNI:intro} outlined three metrics by which the correction based on auxiliary variables may improve the calibration: reducing the difference between quark and gluon jets, reducing the effect of mismodeling the underlying features, and improving the inclusive resolution.
+
+The search in Chapter~\ref{ch:HBSM} involves both quarks and gluons in the final state, and tagging the jets~\cite{ATL-PHYS-PUB-2017-009,Aad:2014gea,ATLAS-CONF-2016-034,ATL-PHYS-PUB-2017-017} may help both with background reduction and with the combinatorial problem of determining the jets decaying from the $a$ particle and the ones associated with the VBF production.
+Figures~\ref{fig:GenNI:dRdntrack_wTrack_mod:c} and~\ref{fig:GenNI:dRdntrack_wTrack_mod:d} show directly the reductions of non-closures when using the simultaneous method in selections targeting gluons and quarks, respectively.
+Any nonclosures can reduce the sensitivity of the analysis, in particular in the gluon jets, as the resolution of the $m_{jj}$ derived from the gluon jets is a major limitation in the analysis.
+
+In addition, if there is a dependence of the energy response on the underlying features then any mismodeling in the distribution of those features can affect the final energy and introduce systematic uncertainties.
+The low-mass extension of this search discussed in Appendix~\ref{sec:HBSM_app:lowmass} proposes in particular the use of small-$R$ jet substructure to tag the boosted low-mass decays, and so therefore reducing any uncertainties associated with that kind of selection can improve the optimality and sensitivity of the analysis.
+
+The search in Chapter~\ref{ch:CWoLa} uses only large-$R$ jets, which as mentioned in Section~\ref{sec:GenNI:jetreco} do not have any GSC applied.
+However, large-$R$ jets actually have two relevant parameters with dimensions of energy associated with them - their energy and their mass.
+The large-$R$ calibration calibrates the energy first and then the mass in sequence, taking into account the energy as a feature.
+Generalized numerical inversion can apply directly to this second step of the large-$R$ jet calibration in order to improve the mass scale - as this search tags on the masses of the involved large-$R$ jets, any improvement on the mass scale directly improves the tagging capabilities and performance of the search.
+
+The technique outlined here does not address the question of how to simultaneously calibrate multiple features, e.g. the jet energy and mass at the same time.
+The Author has contributed to a project~\cite{ATL-PHYS-PUB-2020-001} in which an extension of generalized numerical inversion is proposed that addresses exactly this question, and it is found that it is possible to calibrate multiple variables simultaneously while taking into account multiple simultaneous auxiliary variables.
+In particular, this project answers this question in the context of the large-$R$ jet calibration, which could directly further improve the sensitivity of the search in Chapter~\ref{ch:CWoLa}.
+
+One point that is not addressed in the formulation of generalized numerical inversion is the difference between the mean, median, and mode of the target distributions; this difference was expounded on particularly thorougly in the discussion of numerical inversion itself in Chapter~\ref{ch:NI}.
+The neural network $L$ in generalized numerical inversion learns whatever the loss function indicates it to learn; e.g., if the loss is a mean squared loss then it learns the mean over the corresponding distribution.
+The Author has contributed to a project~\cite{Cheong:2019upg} which discusses exactly how to learn the mean, median, or mode of the corresponding distributions with neural networks.
+This technique can be used to more closely align with the physics goals of the ATLAS jet calibration.
+
+%-------------------------------------------------------------------------------
 \section{Conclusion}
 \label{sec:GenNI:conclusion}
 %-------------------------------------------------------------------------------
 
-This chapter has presented a study of a regression-based residual jet energy calibration procedure, implemented with neural networks and designed to avoid binning effects and incorporate correlations in the response between various jet features.  This new method can eliminate the residual dependence on one feature after calibrating for a second feature with a strong influence on the response for the first feature.  This can be useful for mitigating the response difference between quark and gluon jets as well as for reducing the residual dependence on the feature for quark or gluon jets separately.  The simultaneous calibration offers similar benefits to the sequential calibration for the jet energy resolution and by construction has no impact on the inclusive closure of the jet calibration.  Generalized numerical inversion is a promising method for the future as more information about jets is included in the calibration procedure.  Further studies are required to incorporate more observables and quantify the potential reduction in the topology dependence and systematic uncertainties of the full approach.
+%This chapter has presented a study of a regression-based residual jet energy calibration procedure, implemented with neural networks and designed to avoid binning effects and incorporate correlations in the response between various jet features.  This new method can eliminate the residual dependence on one feature after calibrating for a second feature with a strong influence on the response for the first feature.  This can be useful for mitigating the response difference between quark and gluon jets as well as for reducing the residual dependence on the feature for quark or gluon jets separately.  The simultaneous calibration offers similar benefits to the sequential calibration for the jet energy resolution and by construction has no impact on the inclusive closure of the jet calibration.  Generalized numerical inversion is a promising method for the future as more information about jets is included in the calibration procedure.  Further studies are required to incorporate more observables and quantify the potential reduction in the topology dependence and systematic uncertainties of the full approach.
+
+This Chapter has presented a novel regression-based jet energy calibration procedure implemented with neural networks, called generalized numerical inversion.
+Generalized numerical inversion generalizes numerical inversion and in particular retains the key property of being independent of the underlying spectrum (Chapter~\ref{ch:NI}).
+The new method is able to take into account multiple auxiliary jet features simultaneously, which is an improvement over the current sequential method - in particular, correlations in the response between various jet features can be corrected for.
+The new technique is shown to reduce the response difference between quark and gluon jets by using features associated with the jet provenance, and furthermore is shown to mitigate the effect of mismodeling of the underlying disrtribution of the features themselves.
+The simultaneous calibration offers similar benefits to the sequential calibration for the jet energy resolution and by construction has no impact on the inclusive closure of the jet calibration.
+These improvements and new extensions of this technique can directly improve the performance of the searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) and of searches and measurements in ATLAS in general.

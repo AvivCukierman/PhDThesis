@@ -208,6 +208,13 @@ At the LHC, jet substructure for small-R jets focuses on distinguishing quark-in
 Jets with two prongs are a signature of $W$-jet decays, and so most work with this signature target large-R jets intended to tag $W$ decays at ATLAS~\cite{Aad:2015rpa,Aaboud:2018psm} and CMS~\cite{Khachatryan:2014vla}.
 There are no existing taggers that target small-R jets with two hard prongs.
 
-The Author has advised on a project intended to identify these collimated photon decays reconstructed in a single jet~\cite{mergedphotonid}.
+The Author has advised on a project intended to identify collimated photon decays reconstructed in a single jet~\cite{mergedphotonid}.
 The tagging algorithm uses convolutional neural networks to tag jet images, which have been used in ATLAS before for quark-gluon discrimination~\cite{ATL-PHYS-PUB-2017-017}.
 The tagging performance indicates a greatly improved signal/background discrimination power, enabling the offline selection for this analysis at low mass.
+These techniques could also be used to target the collimated gluon decays.
+
+One drawback of using the direct jet image-based approach outlined in that project is the reliance on the simulation of the jet substructure in the signal and background used for training.
+The weak supervision analysis technique used in Chapter~\ref{ch:CWoLa} could be useful as an alternative to this direct approach in order to derive a purely data-driven tagger.
+In particular, the masses of the two small-$R$ jets and their substructure features can be used as features for tagging in the classification without labels, which is particularly useful since the masses $m_a$ are unknown.
+The overall invariant mass of the two collimated jets can be used as the binning and bump hunt variable, with particular attention to the region around $m_H$.
+Such an approach would not only target these novel signatures but also both standard model processes like $H\rightarrow bb$ (if necessary, an anti-$b$ tag could be applied in order to remove this standard model ``background'') and more exotic processes where the $X$, $m_X \ne m_H$ is the mother particle of the two $a$ particles.
