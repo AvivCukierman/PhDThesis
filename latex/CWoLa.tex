@@ -1,46 +1,23 @@
-\section{Executive Summary}
-
-\subsection{Target}
-
-This analysis uses an innovative machine learning method to search for model-agnostic resonant new physics in the all-hadronic channel.   As the first search using these new techniques, we limit the feature space for the learning to be two-dimensional.  Future extensions will be more broadly sensitive by including more features and considering additional final states.  The analysis uses the full Run 2 dataset and targets early 2020.
-
-\subsection{Context}
-
-This search is complementary to existing dedicated searches for resonant new physics in the all-hadronic channel.  In particular, the analysis is similar to the inclusive dijet search~\cite{Aad:2019hjw} when the neural network cut efficiency is 100\% and is sensitive to models targeted by the all-hadronic diboson resonance search~\cite{Aad:2019fbh}.  For the former, the actual sensitivity of the ATLAS dijet search will be much weaker than our 100\% efficiency setup because they use $R = 0.4$ jets, while many of the signals targeted here are not well-captured by such small jets.  For the latter, our search will not be as sensitive when the daughter particles have masses near the Standard Model $W$ and $Z$ boson masses.  However, away from those masses, the diboson search will be largely insensitive and therefore our analysis can provide complementary coverage.  A quantitative comparison to these searches can be found in the main body of this note.  In principle, the low mass boosted dijet search (e.g. a direct search for $B$ or $C$) is also sensitive to the final states targeted in this analysis~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2019zxd,Sirunyan:2019vxa,Sirunyan:2017nvi,Sirunyan:2018ikr}.  However, those limits are order of magnitude weaker than the ones studies here and are therefore not considered further.
-
-\subsection{Contributors}
-
-In addition to the analysis team, we are grateful for additional contributions to the analysis: 
-
-\begin{itemize}
-\item Jack Collins: Analysis Consultant and Expert (ACE) (theorist).  Consultation on the training procedure for mitigating residual correlations.
-\item Kalliopi Iordanidou: Help with running VVJJ fit.
-\end{itemize}
-
-\section{Change log}
-
-\begin{itemize}
-\item Version 0.1: Initial version, to be used for editorial board request.
-\item Version 0.2: Version to be used for unblinding request (DBL approval).  v0.21 is a slight update that takes into account EB feedback.
-\item Version 0.3: Full account of analysis including unblinded data. Added appendices with various auxiliary studies.
-\end{itemize}
-
-\clearpage
+%This search is complementary to existing dedicated searches for resonant new physics in the all-hadronic channel.  In particular, the analysis is similar to the inclusive dijet search~\cite{Aad:2019hjw} when the neural network cut efficiency is 100\% and is sensitive to models targeted by the all-hadronic diboson resonance search~\cite{Aad:2019fbh}.  For the former, the actual sensitivity of the ATLAS dijet search will be much weaker than our 100\% efficiency setup because they use $R = 0.4$ jets, while many of the signals targeted here are not well-captured by such small jets.  For the latter, our search will not be as sensitive when the daughter particles have masses near the Standard Model $W$ and $Z$ boson masses.  However, away from those masses, the diboson search will be largely insensitive and therefore our analysis can provide complementary coverage.  A quantitative comparison to these searches can be found in the main body of this Chapter.  In principle, the low mass boosted dijet search (e.g. a direct search for $B$ or $C$) is also sensitive to the final states targeted in this analysis~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2019zxd,Sirunyan:2019vxa,Sirunyan:2017nvi,Sirunyan:2018ikr}.  However, those limits are order of magnitude weaker than the ones studies here and are therefore not considered further.
 
 %-------------------------------------------------------------------------------
 \section{Introduction}
 \label{sec:CWoLa:intro}
 %-------------------------------------------------------------------------------
 
-The dijet resonance search is one of the first analyses performed when hadron collider reaches a new center-of-mass energy.   In particular, ATLAS has an extensive program of inclusive dijet resonance searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt}.  While such searches are sensitive to nearly all resonance decays to hadronic or electromagnetic objects (excluding muons), dedicated searches for particular decays will always be (much) more sensitive.  Therefore, ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.  In all cases, a selection on the structure of the `jets' from each side of the decay is used to (significantly) enhance events with the targeted topology.  Searches for any combination of Standard Model (SM) particles can be well-motivated by one or more standard Beyond the SM (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
+%BEN
+The dijet resonance search is one of the first analyses performed when a hadron collider reaches a new center-of-mass energy.   In particular, ATLAS has an extensive program of inclusive dijet resonance searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt}.  While such searches are sensitive to nearly all resonance decays to hadronic or electromagnetic objects (excluding muons), dedicated searches for particular decays will always be (much) more sensitive.  Therefore, ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.  In all cases, a selection on the structure of the `jets' from each side of the decay is used to (significantly) enhance events with the targeted topology.  Searches for any combination of Standard Model (SM) particles can be well-motivated by one or more standard Beyond the SM (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
 
+%BEN
 Nearly all dijet resonance searches performed so far focus on decays to SM particles.  The only three exceptions are the XH search~\cite{Aaboud:2018eoy,Aaboud:2017ecz}, where the $X$ is a $Z$-prime or $H$-like particle with unknown mass, the photon-jet search~\cite{Aaboud:2018djx} ($X\rightarrow aa, a\rightarrow \text{photons}$), and the displaced jet search~\cite{Aaboud:2018aqj} (many models).  There is currently no search for $A\rightarrow BC$, where all of $A,B$ and $C$ are BSM particles and can have different masses (and other properties).
 
+%BEN
 While it is critical to continue searching for particular dijet topologies, the fact that not all SM and BSM possibilities are covered suggests that a complementary generic search effort is required.  What is needed is a method for searching for many particular topologies all at once that ideally does not pay a large trials factor for the large space of possibilities.  Based on weakly supervised approaches introduced in Ref.~\cite{Metodiev:2017vrx}, the authors of Ref.~\cite{Collins:2018epr,Collins:2019jip} introduced a new machine learning-based anomaly detection procedure to perform a dijet search where the jets from a potential signal have a non-trivial but unknown a priori structure\footnote{Alternatives to CWoLa hunting can be found in Section~\ref{sec:CWoLa:alternatives}.}.  Simply stated, classifiers are trained to distinguish particular $m_{JJ}$ bins from their neighbors.  Localized resonances will be enhanced with a selection based on the classifier.  A nested cross-validation scheme is used to avoid a large trials factor.  More details are provided in later sections.
 
-This support note documents a search for a generic $A\rightarrow BC$ resonance search, where all of $A,B$ and $C$ could be BSM particles and the decay products of $B$ and $C$ can be contained within single large-radius jets.  Events collected by the ATLAS detector using the full Run 2 $\sqrt{s}=13$ TeV $pp$ collision dataset are used for the search.  Neural networks are trained to enhance the sensitivity to BSM particles.  As this is the first search of this kind, the features of the two jets used for classification are limited.  In particular, only the two jet masses are used.  This simplifies the analysis and allows for the possibility to set limits in the absence of an excess, as the calibrations of jet masses are well constrained from various performance studies (in contrast to the full radiation pattern within the jet).  Therefore, this search is essentially a 3D bump hunt, without a large trials factor in the scan of the $B$ and $C$ masses.  There are dedicated searches for the direct production of $B$ and $C$~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2018zba} using initial state radiation to boost the potential new particles.  The search presented here is complementary to those searches, which are not sensitive to very small couplings between new particles and quarks/gluons (as well as decays that are not two-body).
+%BEN
+This Chapter documents a search for a generic $A\rightarrow BC$ resonance search, where all of $A,B$ and $C$ could be BSM particles and the decay products of $B$ and $C$ can be contained within single large-radius jets.  Events collected by the ATLAS detector using the full Run 2 $\sqrt{s}=13$ TeV $pp$ collision dataset are used for the search.  Neural networks are trained to enhance the sensitivity to BSM particles.  As this is the first search of this kind, the features of the two jets used for classification are limited.  In particular, only the two jet masses are used.  This simplifies the analysis and allows for the possibility to set limits in the absence of an excess, as the calibrations of jet masses are well constrained from various performance studies (in contrast to the full radiation pattern within the jet).  Therefore, this search is essentially a 3D bump hunt, without a large trials factor in the scan of the $B$ and $C$ masses.  There are dedicated searches for the direct production of $B$ and $C$~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2018zba} using initial state radiation to boost the potential new particles.  The search presented here is complementary to those searches, which are not sensitive to very small couplings between new particles and quarks/gluons (as well as decays that are not two-body).
 
-This note is organized as follows.
+This Chapter is organized as follows.
 First, Section~\ref{sec:CWoLa:eventsamples} introduces the data and simulated event samples.
 Section~\ref{sec:CWoLa:analysis} describes the analysis procedure in detail, including the machine learning setup and blinding approach.
 Section~\ref{sec:CWoLa:simulation_analysis} demonstrates the full analysis pipeline using dijet MC to simulate the expected data.
@@ -67,7 +44,7 @@ As will be described in Section~\ref{sec:CWoLa:analysis}, this analysis is compl
 
 \PYTHIA{} v8.2~\cite{Sjostrand:2007gs,Sjostrand:2006za} is used as the nominal MC generator for this analysis. Samples of $2\rightarrow 2$ dijet events are simulated using the A14 tune~\cite{ATL-PHYS-PUB-2014-021} and NNPDF 2.3~\cite{Ball:2012cx} parton distribution function (PDF) set. The after-burner generator EvtGen~\cite{Lange:2001uf} is used to model decays of heavy flavor hadrons. In order to fully populate a wide range of jet \pt, these samples are generated in slices of the particle-level $R=0.6$ jet \pt. Two alternative samples are generated with the \SHERPA{} v2.1~\cite{Gleisberg:2008ta} and \HERWIG{} v7.0.4~\cite{Bahr:2008pv,,Bellm:2015jjp} generators. The \HERWIG{} v7.0.4 sample is generated with the NNPDF 3.0 NLO PDF set and using the H7UE~\cite{Bellm:2015jjp} set of tuned parameters. The \SHERPA{} v2.1 leading-order multileg samples use the CT10 PDF set~\cite{Lai:2010vv} and are generated with the default \SHERPA{} tune and include $2\rightarrow 2$ and $2\rightarrow3$ processes at matrix element level, combined using the CKKW prescription~\cite{Catani:2001cc}.
 
-\href{https://its.cern.ch/jira/browse/ATLMCPROD-6767}{Signal samples are generated} using \PYTHIA{} v8.2 and the process $Z'\rightarrow WZ$, where the $W$ and $Z$ masses are altered, the widths are set to 0.1 GeV.  These altered bosons are required to decay hadronically, except that top quark decays are switched off.  As the parameter space of this simplified model is three-dimensional, we will consider only a subset of all possibilities.  The samples shown for the rest of this note use $m_{Z'}\in\{3,6\}$~TeV and $\{m_W,m_Z\}\in\{80,200,400\}$~GeV.  These samples have DSIDS 450279-450290.
+\href{https://its.cern.ch/jira/browse/ATLMCPROD-6767}{Signal samples are generated} using \PYTHIA{} v8.2 and the process $Z'\rightarrow WZ$, where the $W$ and $Z$ masses are altered, the widths are set to 0.1 GeV.  These altered bosons are required to decay hadronically, except that top quark decays are switched off.  As the parameter space of this simplified model is three-dimensional, we will consider only a subset of all possibilities.  The samples shown for the rest of this Chapter use $m_{Z'}\in\{3,5\}$~TeV and $\{m_W,m_Z\}\in\{80,200,400\}$~GeV.  These samples have DSIDS 450279-450290.
 
 All simulation is reconstructed using a full detector simulation and superimpose simulated minimum-bias interactions to represent multiple $pp$ interactions during the same or nearby bunch crossings (pile-up). The distribution of the average number of pile-up interactions in simulation is re-weighted during data analysis to match that observed in the Run 2 data.
 
@@ -181,25 +158,25 @@ It can be seen that the masses of the signal objects, $m_B$ and $m_C$, are well-
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_sigR7_4.10.19}.png}}
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_sigR8_4.10.19}.png}}\\
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_sigR9_4.10.19}.png}}
-  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_sigR10_4.10.19}.png}}
+  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_sigR10_4.10.19}.pdf}}
   \caption{Distribution of $m_1$ and $m_2$ in the background in $m_{JJ}$ regions (a) 0; (b) 1; (c) 2; (d) 3; (e) 4; (f) 5; (g) 6; (h) 7; (i) 8; (j) 9; (k) 10.  These bins are described in Section~\ref{sec:CWoLa:binning} and cover 1.1 TeV up to 8.17 TeV.}
 \label{fig:CWoLa:bkg_m1_m2}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m80_m80_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m80_m200_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m80_m400_1.14.20}.png}}\\
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m200_m200_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m200_m400_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m400_m400_1.14.20}.png}}\\
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m80_m80_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m80_m200_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m80_m400_1.14.20}.png}}\\
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m200_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m400_1.14.20}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m400_m400_1.14.20}.png}}\\
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m80_m80_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m80_m200_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m80_m400_1.14.20}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m200_m200_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m200_m400_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M3000_m400_m400_1.14.20}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m80_m80_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m80_m200_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m80_m400_1.14.20}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m200_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m400_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m400_m400_1.14.20}.pdf}}\\
   \caption{Distribution of $m_1$ and $m_2$ in for a signal model with
     (a) ($m_A,m_B,m_C=3000,80,80$ GeV);
     (b) ($m_A,m_B,m_C=3000,200,80$ GeV);
@@ -647,12 +624,12 @@ The network succesfully learns to tag the kinematic region near the true signal 
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m80_m80_nS1500_patience1000_4.10.19}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m80_m200_nS1500_patience1000_4.10.19}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m80_m400_nS1500_patience1000_4.10.19}.png}}\\
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1500_patience1000_4.10.19}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1500_patience1000_4.10.19}.png}}
-  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m400_m400_nS1500_patience1000_4.10.19}.png}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m80_m80_nS1500_patience1000_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m80_m200_nS1500_patience1000_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m80_m400_nS1500_patience1000_4.10.19}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1500_patience1000_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1500_patience1000_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m400_m400_nS1500_patience1000_4.10.19}.pdf}}
   \caption{Neural network output for signal region 5 with $\mu=1500$ for a signal with $m_A=3000$ GeV and
   (a) ($m_B,m_C = 80,80$ GeV);
   (b) ($m_B,m_C = 200,80$ GeV);
@@ -674,12 +651,12 @@ The network succesfully learns to tag the kinematic region near the true signal 
 %
 %\begin{figure}[htbp]
 %  \centering 
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m80_m80_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m80_m200_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m80_m400_nS5000_12.31.18}.png}}\\
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m200_m400_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m400_m400_nS5000_12.31.18}.png}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m80_m80_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m80_m200_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m80_m400_nS5000_12.31.18}.pdf}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m200_m400_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR9_Wprime_WZqqqq_M6000_m400_m400_nS5000_12.31.18}.pdf}}\\
 %  \caption{Neural network output for signal region 9 with $\mu=5000$ for a signal with $m_A=6000$ GeV and
 %  (a) ($m_B,m_C = 80,80$ GeV);
 %  (b) ($m_B,m_C = 200,80$ GeV);
@@ -693,12 +670,12 @@ The network succesfully learns to tag the kinematic region near the true signal 
 %
 %\begin{figure}[htbp]
 %  \centering 
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m80_m80_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m80_m200_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m80_m400_nS5000_12.31.18}.png}}\\
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m200_m400_nS5000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m400_m400_nS5000_12.31.18}.png}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m80_m80_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m80_m200_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m80_m400_nS5000_12.31.18}.pdf}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m200_m400_nS5000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{NNout_sigR8_Wprime_WZqqqq_M6000_m400_m400_nS5000_12.31.18}.pdf}}\\
 %  \caption{Neural network output for signal region 8 with $\mu=5000$ for a signal with $m_A=6000$ GeV and
 %  (a) ($m_B,m_C = 80,80$ GeV);
 %  (b) ($m_B,m_C = 200,80$ GeV);
@@ -722,10 +699,10 @@ As $\mu$ increases, the network becomes more confident about tagging the kinemat
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_patience1000_4.10.19}.png}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS750_patience1000_4.10.19}.png}}\\
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1000_patience1000_4.10.19}.png}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1500_patience1000_4.10.19}.png}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_patience1000_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS750_patience1000_4.10.19}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1000_patience1000_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{NNoutcontrast_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1500_patience1000_4.10.19}.pdf}}\\
   \caption{Neural network output for signal region 5 with a signal at ($m_A,m_B,m_C = 3000,200,400$ GeV) with (a) $\mu=0$; (b) $\mu=750$; (c) $\mu=1000$; (d) $\mu=1500$.}
 \label{fig:CWoLa:nS_study}
 \end{figure}
@@ -835,18 +812,18 @@ Away from the SM dibosons, CWoLa hunting with $\epsilon<1$ outperforms the other
 %
 %\begin{figure}[htbp]
 %  \centering 
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR5_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR5_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR5_12.31.18}.png}}\\
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.png}}\\
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR9_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR9_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR9_12.31.18}.png}}\\
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.png}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR5_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR5_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR5_12.31.18}.pdf}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.pdf}}\\
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR9_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR9_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR9_12.31.18}.pdf}}\\
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_all_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q90_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_q99_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.pdf}}\\
 %  \caption{
 %    Distribution of $m_{JJ}$ after training in signal region 5 with no injected signal with a cut on the neural network output of
 %    (a) $\epsilon=1$ (no cut);
@@ -877,18 +854,18 @@ Away from the SM dibosons, CWoLa hunting with $\epsilon<1$ outperforms the other
 %
 %\begin{figure}[htbp]
 %  \centering 
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m80_m80_nS100000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m80_m200_nS100000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m80_m400_nS100000_12.31.18}.png}}\\
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS100000_12.31.18}.png}}
-%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m400_m400_nS100000_12.31.18}.png}}\\
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m80_m80_nS5000_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m80_m200_nS5000_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m80_m400_nS5000_12.31.18}.png}}\\
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m200_m400_nS5000_12.31.18}.png}}
-%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m400_m400_nS5000_12.31.18}.png}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m80_m80_nS100000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m80_m200_nS100000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m80_m400_nS100000_12.31.18}.pdf}}\\
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS100000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS100000_12.31.18}.pdf}}
+%  \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR5_Wprime_WZqqqq_M3000_m400_m400_nS100000_12.31.18}.pdf}}\\
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m80_m80_nS5000_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m80_m200_nS5000_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m80_m400_nS5000_12.31.18}.pdf}}\\
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m200_m200_nS5000_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m200_m400_nS5000_12.31.18}.pdf}}
+%  %\subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{significance_ratio_sigR9_Wprime_WZqqqq_M6000_m400_m400_nS5000_12.31.18}.pdf}}\\
 %  \caption{Increase in significance, $\frac{\epsilon_s}{\sqrt{\epsilon_b}}$, as a function of neural network cut $\epsilon$ trained on signal region 5 for a signal model with
 %    (a) ($m_A,m_B,m_C=3000,80,80$ GeV);
 %    (b) ($m_A,m_B,m_C=3000,200,80$ GeV);
@@ -1580,5 +1557,5 @@ For $m_A=5000$ GeV, CWoLa hunting suffers from low statistics in the training, b
 \label{sec:CWoLa:conclusion}
 %-------------------------------------------------------------------------------
 
-This note has presented a model agnostic resonance search in the all-hadronic final state using the full LHC Run 2 dataset of the ATLAS experiment.  Weakly supervised NNs are used to identify the presence of potential signals without using simulations of any particular signal model.  For jets produced from Lorentz-boosted heavy particle decays, this search is more sensitive than the inclusive dijet search and extends the coverage of the all-hadronic diboson search away from the SM boson masses.  This is the first search that completely covers $A\rightarrow BC$ production where all of $A,B$ and $C$ are BSM particles and can have different masses.  The feature space used by the NNs was only two dimensional, so there is a great potential to extend this methodology to include additional features and more final states.  These extensions, combined with related novel methodologies, will extend the coverage of the ATLAS search program to ensure broad coverage to unanticipated scenarios.
+This Chapter has presented a model agnostic resonance search in the all-hadronic final state using the full LHC Run 2 dataset of the ATLAS experiment.  Weakly supervised NNs are used to identify the presence of potential signals without using simulations of any particular signal model.  For jets produced from Lorentz-boosted heavy particle decays, this search is more sensitive than the inclusive dijet search and extends the coverage of the all-hadronic diboson search away from the SM boson masses.  This is the first search that completely covers $A\rightarrow BC$ production where all of $A,B$ and $C$ are BSM particles and can have different masses.  The feature space used by the NNs was only two dimensional, so there is a great potential to extend this methodology to include additional features and more final states.  These extensions, combined with related novel methodologies, will extend the coverage of the ATLAS search program to ensure broad coverage to unanticipated scenarios.
 
