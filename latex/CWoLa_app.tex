@@ -1,5 +1,5 @@
-\section{List of MC samples}
-\label{sec:CWoLa:app:CWoLa:samples}
+%\section{List of MC samples}
+%\label{sec:CWoLa:app:CWoLa:samples}
 
 %Signal
 %
@@ -54,11 +54,17 @@
 %\label{fig:CWoLa:NNout_q99_sigRx}
 %\end{figure}
 
-
-
 \section{Analysis Software}
+\label{app:CWoLa:software}
 
 The \href{https://gitlab.cern.ch/acukierm/mc16-xAOD-ntuple-maker}{mc16-xAOD-ntuple-maker} package is used to create ntuples used for the analysis.  The machine learning code can be found in \href{https://gitlab.cern.ch/cwola-hunting/cwola-hunting-learning}{cwola-hunting-learning} package. The final fit was performed using the \href{https://gitlab.cern.ch/atlas-phys/exot/dbl/ResonanceFinder}{ResonanceFinder} package.   Our modifications to this package can be found \href{https://gitlab.cern.ch/cwola-hunting/fitting/tree/minimal}{here}.
+
+\section{Fitting Software}
+\label{app:CWoLa:fitting_software}
+The statistical analysis uses the \href{https://gitlab.cern.ch/atlas-phys/exot/dbl/ResonanceFinder}{\texttt{ResonanceFinder}} package from the DBL group.
+This code is based on RooFit~\cite{Verkerke:2003ir}, RooStats~\cite{Moneta:2010pm}, and HistFactory~\cite{Cranmer:1456844}.
+Significant modifications for the background fitting were made for this analysis, which can be found \href{https://gitlab.cern.ch/cwola-hunting/fitting.git}{here}.
+
 
 \section{Bin Offset Test}
 \label{app:CWoLa:binoffset}

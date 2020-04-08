@@ -6,7 +6,7 @@
 %-------------------------------------------------------------------------------
 
 %BEN
-The dijet resonance search is one of the first analyses performed when a hadron collider reaches a new center-of-mass energy.   In particular, ATLAS has an extensive program of inclusive dijet resonance searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt}.  While such searches are sensitive to nearly all resonance decays to hadronic or electromagnetic objects (excluding muons), dedicated searches for particular decays will always be (much) more sensitive.  Therefore, ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.  In all cases, a selection on the structure of the `jets' from each side of the decay is used to (significantly) enhance events with the targeted topology.  Searches for any combination of Standard Model (SM) particles can be well-motivated by one or more standard Beyond the SM (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
+The dijet resonance search is one of the first analyses performed when a hadron collider reaches a new center-of-mass energy.   In particular, ATLAS has an extensive program of inclusive dijet resonance searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt}.  While such searches are sensitive to nearly all resonance decays to hadronic or electromagnetic objects (excluding muons), dedicated searches for particular decays will always be (much) more sensitive.  Therefore, ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta,Aad:2019fbh}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.  In all cases, a selection on the structure of the `jets' from each side of the decay is used to (significantly) enhance events with the targeted topology.  Searches for any combination of Standard Model (SM) particles can be well-motivated by one or more standard Beyond the SM (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
 
 %BEN
 Nearly all dijet resonance searches performed so far focus on decays to SM particles.  The only three exceptions are the XH search~\cite{Aaboud:2018eoy,Aaboud:2017ecz}, where the $X$ is a $Z$-prime or $H$-like particle with unknown mass, the photon-jet search~\cite{Aaboud:2018djx} ($X\rightarrow aa, a\rightarrow \text{photons}$), and the displaced jet search~\cite{Aaboud:2018aqj} (many models).  There is currently no search for $A\rightarrow BC$, where all of $A,B$ and $C$ are BSM particles and can have different masses (and other properties).
@@ -19,7 +19,7 @@ This Chapter documents a search for a generic $A\rightarrow BC$ resonance search
 
 This Chapter is organized as follows.
 First, Section~\ref{sec:CWoLa:eventsamples} introduces the data and simulated event samples.
-Section~\ref{sec:CWoLa:analysis} describes the analysis procedure in detail, including the machine learning setup and blinding approach.
+Section~\ref{sec:CWoLa:analysis} gives a broad overview of the analysis, including the validation and blinding approach, and Section~\ref{sec:CWoLa:analysis_details} goes over the steps of the analysis in detail.
 Section~\ref{sec:CWoLa:simulation_analysis} demonstrates the full analysis pipeline using dijet MC to simulate the expected data.
 Section~\ref{sec:CWoLa:val_analysis} demonstrates the full analysis pipeline using validation data with an inverted delta rapidity cut as a proxy for the expected data in the non-inverted signal region.
 Section~\ref{sec:CWoLa:systs} discusses the systematic uncertainties present in the background and the signal.
@@ -143,6 +143,7 @@ Under these assumptions, the outline of the analysis is as follows.
   \item Tag events by choosing events with high neural network output.
     In Case~\ref{case1}, the neural network is a signal tagger, so the signal-to-background ratio increases, in particular increasing the significance of the signal peak over the background $m_{JJ}$ shape. 
     In Case~\ref{case2}, the network anti-tags signal, and in Case~\ref{case3}, the network tags only differences in the background between signal and sideband regions; in either case, the signal-to-background ratio after tagging is small or zero.
+  \label{step5}
   \item Fit to the $m_{JJ}$ shape after tagging.
     Because of Assumption~\ref{ass2}, the background spectrum is smooth after tagging.
     In Case~\ref{case1}, there will be a bump in the $m_{JJ}$ spectrum in the signal region due to the presence of signal, allowing the potential of a discovery of this signal.
@@ -159,18 +160,65 @@ Since the network learns what features distinguish the signal from the backgroun
 Furthermore, since the network learns the features that distinguish the signal from the background directly from data, the tagger does not need to be calibrated to account for differences between simulation and background; this removes a source of uncertainty relative to a dedicated search with a tagger trained to distinguish between signal and background in simulation.
 
 \subsection{Blinding and Validation Procedure}
+\label{sec:CWoLa:blinding}
+Validating the analysis in a blinded region of the data is a challenge for this analysis.
+In a typical analysis, after running the analysis entirely in simulation, some validation region is defined with orthogonal cuts with low signal efficiency in order to validate the analysis.
+This validation region is used to either do data/MC comparisons to verify that the simulation is describing the background adequately or to perform in situ checks of the assumptions of the analysis.
+For example, in the search described in Chapter~\ref{ch:HBSM}, the background is estimated in a data-driven way with an A/B/C/D matrix of regions; the highest signal efficiency is expected in region D.
+The assumption of the A/B/C/D method (that the ratio of events in B/A is the same as in D/C in the background) is verified both in simulations of the background and in a data validation region, inverting the $m_{gg\gamma\gamma}$ cut.
 
-%BEN
-Blinding is a challenge for two reasons.  First, blinding is a challenge for the inclusive dijet search because the event selection is inclusive by construction.  This is true for the $\epsilon=100\%$ version of this analysis.  Second, for $\epsilon < 100\%$, the event selection depends on the data, so there is no way to construct an orthogonal region ahead of time to unblind.   Our approach for these challenges is two-fold:
+In this analysis, the original event selection (Analysis Step~\ref{step1}) is inclusive and minimal, in order to be sensitive to a broad class of new models.
+The event selection learned by the NN depends on the data, so there is no way to construct an orthogonal signal-deficient region ahead of time.
+In Analysis Step~\ref{step5}, only events with some high NN score are chosen, so one idea is to use the events with lower NN scores for validation.
+However, this does not clearly work - if selecting only events that the NN assigned \textit{low} scores, then in Case~\ref{case2}, where the network has anti-tagged the signal, this selection would actually have a high signal efficiency, defeating the purpose of the validation region.
+Another option is to select only events with \textit{average} scores, i.e. close to the median NN output.
+However these events are exactly those for which the NN has decided it cannot distinguish between the signal and sideband regions, so that even if Assumption~\ref{ass2} were being violated in general by the NN selection, for these events the Assumption would \textit{not} be violated, again defeating the purpose of a validation region.
 
-%BEN
+In light of these considerations, the event selection is given one additional non-trivial selection, a maximum rapidity difference between the two jets in the event; and the validation region is defined to be the inverse of this.
+This rapidity selection is also present in the inclusive dijet search~\cite{Aaboud:2018fzt} and in the all-hadronic diboson resonance search~\cite{Aad:2019fbh}, two analyses which are sensitive to similar signals and also aim to be inclusive in their searches.
+This selection both suppresses contributions from $t$-channel QCD dijet production, while remaining efficient on $A\rightarrow BC$ signals.
+The distribution of the rapidity difference in the background simulation can be seen in Figure~\ref{fig:CWoLa:bkg_rapdiff}, and the distributions in various signal models can be seen in Figure~\ref{fig:CWoLa:sig_rapdiff}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_bn04_4.10.19}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_bn510_4.10.19}.pdf}}
+  \caption{Distribution of $|y_1-y_2|$ in the background simulation, broken down by the $m_{JJ}$ region, as described in Section~\ref{sec:CWoLa:binning}. (a) $m_{JJ}$ regions 0-4; (b) $m_{JJ}$ regions 5-9. The green line indicates the cut at 1.2 (Section~\ref{sec:CWoLa:eventselection}).}
+\label{fig:CWoLa:bkg_rapdiff}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_Wprime_WZqqqq_M3000_m200_m200_4.10.19}.pdf}}
+  %\subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_Wprime_WZqqqq_M6000_m200_m200_4.10.19}.pdf}}
+  \caption{Distribution of $|y_1-y_2|$ for a signal model with ($m_A,m_B,m_C=3000,200,200$ GeV).
+    %(a) ($m_A,m_B,m_C=3000,200,200$ GeV);
+    %(b) ($m_A,m_B,m_C=6000,200,200$ GeV).
+    The green line indicates the selection at 1.2 (Section~\ref{sec:CWoLa:eventselection}).}
+\label{fig:CWoLa:sig_rapdiff}
+\end{figure}
+
+The validation and unblinding procedure is then as follows:
 \begin{enumerate}
-\item Run the full method in simulation.  These results are presented in Section~\ref{sec:CWoLa:simulation_analysis}.  Two challenges with this validation are (i) we have less simulation than data and (ii) the simulated events are weighted.  The latter can be challenging for our training procedure and is not an issue for the real data version of the analysis. 
-\item Assuming (1) is okay, proceed to run the full method on data where the rapidity gap cut (detailed in Section~\ref{sec:CWoLa:eventselection}) is inverted.  Any $s$-channel model will have a reduced cross-section while the background rate increases.  This is discussed in Section~\ref{sec:CWoLa:val_analysis} and allows us to run the full procedure on data where we do not expect to see any signal.
-\item Assuming (2) is okay, run the method on the full dataset.  The results of this are reported in Section~\ref{sec:CWoLa:unblinded}.
+\item Run the full method in simulation.  These results are presented in Section~\ref{sec:CWoLa:simulation_analysis}.  Two challenges with this validation are (i) we have less simulation than data and (ii) the simulated events are weighted.  The latter can be challenging for our training procedure and is not an issue for the real data version of the analysis. This step is referred to as the ``simulation'' or ``MC'' analysis.
+\item Proceed to run the full method on data where the rapidity gap cut is inverted.  Any $s$-channel model will have a reduced cross-section while the background rate increases.  This is discussed in Section~\ref{sec:CWoLa:val_analysis} and allows us to run the full procedure on data where we do not expect to see any signal. This step is referred to as the ``inverted rapidity cut'', ``data validation'', or simply ``validation'' analysis, as it serves as the main validation in data before the full unblinded analysis.
+\item Run the method on the full dataset (with the uninverted rapidity gap cut).  The results of this are reported in Section~\ref{sec:CWoLa:unblinded}. This step is referred to as the ``uninverted'', ``unblinded'', ``signal selection'', or simply ``full'' analysis.
 \end{enumerate}
 
-The effective statistics of the inverted sample compared with the nominal sample and the simulation are presented in Figure~\ref{fig:CWoLa:effectivestats}.   For the simulation, the effective statistics is defined as the inverse of the sum of the squares of the normalized event weights.  For the central dataset, the MC statistics are relatively uniform in $m_{JJ}$ and there are only more effective events past the third bin.  Even in the fourth bin, there are events with a large weight, which makes the training and fitting unrealistic.  For the inverted dataset, the problem is much more severe because for a fixed $m_{JJ}$, lower $p_T$ jets can contribute than for the central dataset.  For the full Run 2 statistics, the MC has the same number of weighted events only by the eighth bin.   The MC statistics are roughly equivalent to the 2015 dataset.  Therefore, the studies for the inverted dataset do not make sense in MC and we only use the data.
+The development of this analysis occurred by progressing through each of these steps in turn, and though overall most of the analysis remained the same between each of the steps, naturally some details changed after learning things at various steps of the validation.
+The details of the analysis outlined in Section~\ref{sec:CWoLa:analysis_details} apply to each of these steps, but are clear about where they are different.
+In particular, the fitting process (Analysis Step~\ref{step6}) went through multiple iterations before settling on the final procedure.
+In general, doing a parametric background fit on large datasets tends to be a key challenge;
+this challenge was compounded due to the effective statistics of the background in each of these steps, which is expanded on below.
+
+The effective statistics of the inverted sample compared with the nominal sample and the simulation are presented in Figure~\ref{fig:CWoLa:effectivestats}\footnote{Also given for good measure are the statistics for 3.2\ifb, which corresponds to the 2015 LHC dataset.}.
+The binnings presented there are those defined in Section~\ref{sec:CWoLa:binning}, and given in Table~\ref{tab:mjj_bins}.
+For the simulation, the effective statistics is defined as the inverse of the sum of the squares of the normalized event weights.
+For the central dataset, the MC statistics are relatively uniform in $m_{JJ}$ and there are only more effective events past the third bin, with boundaries at $1.90 \le m_{JJ} < 2.28$ TeV.
+Even in the fourth bin ($2.28 \le m_{JJ} < 2.74$ TeV), there are events with a large weight, which makes the training and fitting unrealistic.
+
+For the inverted dataset, the problem is much more severe because for a fixed $m_{JJ}$, lower $p_T$ jets can contribute than for the central dataset.
+For the full Run 2 statistics, the MC has the same number of weighted events only by the eighth bin($4.73 \le m_{JJ} < 5.68$ TeV).
 
 \begin{figure}[h!]
 \centering
@@ -180,7 +228,10 @@ The effective statistics of the inverted sample compared with the nominal sample
 \label{fig:CWoLa:effectivestats}
 \end{figure}
 
-One key challenge with large datasets is that doing a parametric background fit is difficult.  The inverted dataset has about ten times more events than the nominal rapidity difference dataset above about 2 TeV.  In order for the inverted dataset to have comparable statistics to the nominal dataset for testing our methodology, random sampling without replacement is used to reduce the dataset.  The random sampling rate is determined from a fit to the ratio of efficiencies for the two rapidity differences cuts, as shown\footnote{In principle, by looking at this distribution, we have unblinded the $\epsilon=1$ full dataset.  However, we have not examined this distribution in detail and have not performed any statistical tests on the quality of the fit.  It actually may be easier to do the bump hunt in this ratio, which is relatively flat, but this is left for future studies.} in Figure~\ref{fig:CWoLa:invertedcutratio}.   Only data above 1.8 TeV (and below 8.2 TeV) are used for the validation analysis\footnote{We find that fitting the lower $m_{JJ}$ region is difficult because of the amount of data.  A more sophisticated (possibly non-parametric) fitting procedure may be able to extend the search to lower values in the future.}. 
+The inverted dataset has about ten times more events than the nominal rapidity difference dataset above about 3 TeV, which can be seen in Figure~\ref{fig:CWoLa:invertedcutratio}.
+In order for the inverted dataset to have comparable statistics to the nominal dataset for testing our methodology, random sampling without replacement is used to reduce the dataset.
+The random sampling rate is determined from a fit to the ratio of efficiencies for the two rapidity differences cuts (also shown in Figure~\ref{fig:CWoLa:invertedcutratio})
+\footnote{In principle, by looking at this distribution, we have unblinded the full dataset with no NN cut.  However, we have not examined this distribution in detail and have not performed any statistical tests on the quality of the fit.  It actually may be easier to do the bump hunt in this ratio, which is relatively flat, but this is left for future studies.}.
 
 \begin{figure}[h!]
 \centering
@@ -189,6 +240,11 @@ One key challenge with large datasets is that doing a parametric background fit 
 \label{fig:CWoLa:invertedcutratio}
 \end{figure}
 
+As will be mentioned in Section~\ref{sec:CWoLa:fitting}, each analysis imposes a cut of $m_{JJ}>1.8$ TeV for the fitting.
+For the simulation analysis, as mentioned above, the effective MC statistics are only reliable above around that value.
+For the data analyses, this cut results mainly from the finding that the fitting procedure simply is not sufficient to describe the background shape for the high numbers of events seen below that cut\footnote{A more sophisticated (possibly non-parametric) fitting procedure may be able to extend the search to lower values in the future.}.
+However, it is also the case that the inverted rapidity selection provides multiple copies of independent datasets to test the analysis when the ratio of efficiencies is $<\frac{1}{2}$;
+in particular, the ratio of efficiencies is $<\frac{1}{3}$ (so $3$ statistically independent copies) for $m_{JJ}>\sim 1.8$ TeV, which was useful for testing the statistical properties of the fitting.
 
 \section{Analysis Details}
 \label{sec:CWoLa:analysis_details}
@@ -220,27 +276,8 @@ There is no explicit lepton overlap removal or veto.
 
 Only the two jets with highest $\pt$ in the event are used in this analysis, and the remaining jets are discarded.
 For each jet $j=1,2$, the four-momentum $p^\mu_j$ recorded, in particular the jet mass $m_j^2 = (p^\mu_j)^2$.
-In order to suppress contributions from $t$-channel QCD dijet production, while remaining efficient on $A\rightarrow BC$ signals, a selection is placed on the rapidity difference, $|y_1-y_2|<1.2$.
-The distribution of the rapidity difference in the background simulation can be seen in Figure~\ref{fig:CWoLa:bkg_rapdiff}, and the distributions in various signal models can be seen in Figure~\ref{fig:CWoLa:sig_rapdiff}.
-
-\begin{figure}[htbp]
-  \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_bn04_4.10.19}.pdf}}
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_bn510_4.10.19}.pdf}}
-  \caption{Distribution of $|y_1-y_2|$ in the background simulation, broken down by the $m_{JJ}$ region, as described in Section~\ref{sec:CWoLa:binning}. (a) $m_{JJ}$ regions 0-4; (b) $m_{JJ}$ regions 5-9. The green line indicates the cut at 1.2.}
-\label{fig:CWoLa:bkg_rapdiff}
-\end{figure}
-
-\begin{figure}[htbp]
-  \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_Wprime_WZqqqq_M3000_m200_m200_4.10.19}.pdf}}
-  %\subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_Wprime_WZqqqq_M6000_m200_m200_4.10.19}.pdf}}
-  \caption{Distribution of $|y_1-y_2|$ for a signal model with ($m_A,m_B,m_C=3000,200,200$ GeV).
-    %(a) ($m_A,m_B,m_C=3000,200,200$ GeV);
-    %(b) ($m_A,m_B,m_C=6000,200,200$ GeV).
-    The green line indicates the cut at 1.2.}
-\label{fig:CWoLa:sig_rapdiff}
-\end{figure}
+As mentioned in Section~\ref{sec:CWoLa:blinding}, a selection is placed on the rapidity difference, $|y_1-y_2|<1.2$.
+%The distribution of the rapidity difference in the background simulation can be seen in Figure~\ref{fig:CWoLa:bkg_rapdiff}, and the distributions in various signal models can be seen in Figure~\ref{fig:CWoLa:sig_rapdiff}.
 
 The jets are ordered by their mass, so that $m_1 \ge m_2$.
 In order to suppress background and therefore increase sensitivity to massive signal objects, a minimum cut $m_1$, $m_2 > 30$ \GeV{} is applied.
@@ -251,12 +288,12 @@ In this analysis the dijet invariant mass is defined slightly differently: in or
 This new definition removes all correlations between $m_{JJ}$ and $m_1,m_2$ except for those arising from indirect correlations between the jet $m$ and the jet $p_T$ and $\eta$.
 In practice this is a very small change, because the jets in this analysis typically have energies much larger than their masses, and so the new definition gives almost the same value for the invariant mass.
 As discussed in Section~\ref{sec:CWoLa:binning}, a selection is applied on the dijet invariant mass of $1.1 \le m_{JJ} < 8.17$ TeV.
-In the analyses in data, both the validation selection (Section~\ref{sec:CWoLa:val_analysis}) and the final signal selection (Section~\ref{sec:CWoLa:unblinded}), effectively a selection of $1.8 \le m_{JJ}$ TeV is applied as the fitting range.
+As discussed in Section~\ref{sec:CWoLa:fitting}, effectively a selection of $1.8 \le m_{JJ}$ TeV is applied as the fitting range.
 
 These selections are summarized in Table~\ref{tab:event_selection}.
 \begin{table}[htbp]
   \begin{center}
-    \caption{Jet selection. The $m_{JJ}$ selection is indicated for the simulation-based analysis (Section~\ref{sec:CWoLa:simulation_analysis}), and in parentheses for the validation selection analysis (Section~\ref{sec:CWoLa:val_analysis}) and for the signal selection analysis (Section~\ref{sec:CWoLa:unblinded}).}
+    \caption{Jet selection. The $m_{JJ}$ selection is indicated for the $m_{JJ}$ bins (Section~\ref{sec:CWoLa:binning}) and also for the fitting range (Section~\ref{sec:CWoLa:fitting}).}
   \label{tab:event_selection}
     \begin{tabular}{c c}
       \hline
@@ -266,7 +303,8 @@ These selections are summarized in Table~\ref{tab:event_selection}.
       $|\eta|$ & $<2.0$ \\
       $|y_1-y_2|$ & $<1.2$ \\
       $m$ & $> 30$ GeV, $<500$ GeV \\
-      $m_{JJ}$ & $\ge 1.1 (1.8)$ TeV, $<8.17$ TeV \\
+      $m_{JJ}$ (bins) & $\ge 1.1$ TeV, $<8.17$ TeV \\
+      $m_{JJ}$ (fitting) & $\ge 1.8$ TeV \\
       \hline
     \end{tabular}
   \end{center}
@@ -275,11 +313,11 @@ These selections are summarized in Table~\ref{tab:event_selection}.
 The cutflow of these selections on the signal samples is given in Table~\ref{tab:cutflow_signal}.
 \begin{table}[htbp]
   \begin{center}
-    \caption{Signal sample efficiency with selections up to and including given selection. All selections are given in Section~\ref{sec:CWoLa:eventselection}. The jet selections are summarized in Table~\ref{tab:event_selection}. The $m_{JJ}$ selection is included for a selection of $1.1 \le m_{JJ} < 8.17$ TeV and for an additional selection of $1.8 \le m_{JJ}$ TeV.}
+    \caption{Signal sample efficiency with selections up to and including given selection. All selections are given in Section~\ref{sec:CWoLa:eventselection}. The jet selections are summarized in Table~\ref{tab:event_selection}. The $m_{JJ}$ selection is included for the binning selection of $1.1 \le m_{JJ} < 8.17$ TeV and for the additional selection from the fitting of $1.8 \le m_{JJ}$ TeV.}
   \label{tab:cutflow_signal}
     \begin{tabular}{c c c c c c c c c}
       \hline
-      $(m_A,m_B,m_C)$ [\GeV] & Derivation & Trigger & \pt & $|\eta|$ & $|y_1-y_2|$ & $m$ & $m_{JJ}$ & $m_{JJ} \ge 1.8$ \TeV \\
+      $(m_A,m_B,m_C)$ [\GeV] & Derivation & Trigger & \pt & $|\eta|$ & $|y_1-y_2|$ & $m$ & $m_{JJ}$ (bins) & $m_{JJ}$ (fitting) \\
       \hline
       (3000,80,80)   & 1.00 & 0.90 & 0.85 & 0.85 & 0.64 & 0.63 & 0.62 & 0.59 \\
       (3000,80,200)  & 1.00 & 0.91 & 0.85 & 0.85 & 0.63 & 0.62 & 0.61 & 0.58 \\
@@ -355,17 +393,17 @@ The resolution of $m_A$ with $m_{JJ}$ is roughly 20\%, which guides the sizing o
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_vlines_Wprime_WZqqqq_M5000_m200_m400_1.14.20}.pdf}}
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{mjj_loglog_vlines_Wprime_WZqqqq_M5000_m400_m400_1.14.20}.pdf}}\\
   \caption{Distribution of $m_{JJ}$ for a signal model with:\\
-    (a) ($m_A,m_B,m_C=3000,80,80$ GeV);\\
+    (a) ($m_A,m_B,m_C=3000,80,80$ GeV);
     (b) ($m_A,m_B,m_C=3000,200,80$ GeV);\\
-    (c) ($m_A,m_B,m_C=3000,400,80$ GeV);\\
+    (c) ($m_A,m_B,m_C=3000,400,80$ GeV);
     (d) ($m_A,m_B,m_C=3000,200,200$ GeV);\\
-    (e) ($m_A,m_B,m_C=3000,400,20$ GeV);\\
+    (e) ($m_A,m_B,m_C=3000,400,20$ GeV);
     (f) ($m_A,m_B,m_C=3000,400,400$ GeV);\\
-    (g) ($m_A,m_B,m_C=5000,80,80$ GeV);\\
+    (g) ($m_A,m_B,m_C=5000,80,80$ GeV);
     (h) ($m_A,m_B,m_C=5000,200,80$ GeV);\\
-    (i) ($m_A,m_B,m_C=5000,400,80$ GeV);\\
+    (i) ($m_A,m_B,m_C=5000,400,80$ GeV);
     (j) ($m_A,m_B,m_C=5000,200,200$ GeV);\\
-    (k) ($m_A,m_B,m_C=5000,400,20$ GeV);\\
+    (k) ($m_A,m_B,m_C=5000,400,20$ GeV);
     (l) ($m_A,m_B,m_C=5000,400,400$ GeV).
   }
 \label{fig:CWoLa:sig_mjj}
@@ -417,17 +455,17 @@ It can be seen that the masses of the signal objects, $m_B$ and $m_C$, are well-
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m400_1.14.20}.pdf}}
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m400_m400_1.14.20}.pdf}}\\
   \caption{Distribution of $m_1$ and $m_2$ in for a signal model with:\\
-    (a) ($m_A,m_B,m_C=3000,80,80$ GeV);\\
+    (a) ($m_A,m_B,m_C=3000,80,80$ GeV);
     (b) ($m_A,m_B,m_C=3000,200,80$ GeV);\\
-    (c) ($m_A,m_B,m_C=3000,400,80$ GeV);\\
+    (c) ($m_A,m_B,m_C=3000,400,80$ GeV);
     (d) ($m_A,m_B,m_C=3000,200,200$ GeV);\\
-    (e) ($m_A,m_B,m_C=3000,400,20$ GeV);\\
+    (e) ($m_A,m_B,m_C=3000,400,20$ GeV);
     (f) ($m_A,m_B,m_C=3000,400,400$ GeV);\\
-    (g) ($m_A,m_B,m_C=5000,80,80$ GeV);\\
+    (g) ($m_A,m_B,m_C=5000,80,80$ GeV);
     (h) ($m_A,m_B,m_C=5000,200,80$ GeV);\\
-    (i) ($m_A,m_B,m_C=5000,400,80$ GeV);\\
+    (i) ($m_A,m_B,m_C=5000,400,80$ GeV);
     (j) ($m_A,m_B,m_C=5000,200,200$ GeV);\\
-    (k) ($m_A,m_B,m_C=5000,400,20$ GeV);\\
+    (k) ($m_A,m_B,m_C=5000,400,20$ GeV);
     (l) ($m_A,m_B,m_C=5000,400,400$ GeV).
   }
 \label{fig:CWoLa:sig_m1_m2}
@@ -579,10 +617,17 @@ However, because of the extensive measures taken to reduce the sensitivity to st
 \subsection{Systematic Uncertainties}
 \label{sec:CWoLa:systs}
 
-As will be described in~\ref{sec:CWoLa:background}, the background is estimated in a fully data-driven manner, and the only uncertainties are associated with the background fit.
-For the signal, there are uncertainties on the jet mass scale and resolution as well as on the modeling of jet fragmentation.
-The cross-section limits are also dependent on the luminosity uncertainty.
-The former set of uncertainties use the \href{https://twiki.cern.ch/twiki/bin/view/AtlasProtected/JetUncertaintiesRel21Summer2019LargeR}{prescriptions of the Jet/MET group}.  More details are provided below.
+As will be described in Section~\ref{sec:CWoLa:fitting}, the background is estimated in a fully data-driven manner, and the only uncertainties are associated with the background fit.
+The uncertainties related to the signal simulation are only relevant for setting cross-section limits (Section~\ref{sec:CWoLa:limits}).
+For the signal, there are uncertainties on the jet mass scale and resolution as well as on the modeling of jet fragmentation; there is also an overall luminosity uncertainty.
+
+The former set of uncertainties use the prescriptions of the Jet/MET group~\cite{TWiki_JetUncertainties_2019}.
+
+The luminosity uncertainty for the full Run 2 dataset is 1.7\%~\cite{TWiki_LuminosityUncertainty}.
+It is derived from the calibration of the luminosity scale using $x$-$y$ beam-separation scans, following a methodology similar to that detailed in Ref.~\cite{Aaboud:2016hhf}, and using the LUCID-2 detector for the baseline luminosity measurements \cite{LUCID2}.
+The total integrated luminosity is $139$~fb$^{-1}$.
+
+%More details are provided below.
 
 The NN is not retrained for every systematic variation.
 Instead, the NN trained with the nominal signal and then applied to the events with the kinematic properties of the jets varied according to the uncertainty.
@@ -590,38 +635,57 @@ In principle this is a conservative treatment of the uncertainties, since the NN
 training the network on the nominal signal and then applying to the varied kinematic properties can therefore lead to artificially low NN signal tagging efficiencies.
 In practice, though, the uncertainties are small relative to the localization of the NN tagging.
 
-\subsubsection{Jet Kinematic Properties}
-The in situ uncertainty on the jet $p_\text{T}$ and jet mass are determined from momentum balancing and calorimeter-track matching, respectively~\cite{Aaboud:2018kfi}.
-Since the results from this analysis are not intended to be combined with other analyses\footnote{Any targeted analysis should be better in their sensitive parameter space, so combining would not improve the results.}, we use the Global Reduction set of nuisance parameters.
-This includes 6 jet mass scale uncertainties, 12 jet energy scale uncertainties, and one jet mass resolution uncertainty.
-The usual jet mass resolution prescription is to inflate the resolution by 20\% and symmetrize, which is accomplished with the standard tool by providing maps of smearing factors for particular topologies.
-However, since we have access to the true jet masses, and no single topology fits our signals, we use forward-folding to inflate and deflate the resolution by 20\% on a per-jet basis. 
-
-\subsubsection{Luminosity}
-
-The luminosity uncertainty for the full Run 2 dataset is 1.7\%, as described in \href{https://twiki.cern.ch/twiki/bin/viewauth/Atlas/LuminosityForPhysics#2018_13_TeV_proton_proton_Morion}{this twiki}.   It is derived from the calibration of the luminosity scale using $x$-$y$ beam-separation scans, following a methodology similar to that detailed in Ref.~\cite{Aaboud:2016hhf}, and using the LUCID-2 detector for the baseline luminosity measurements \cite{LUCID2}.  The total integrated luminosity is $139$~fb$^{-1}$.
+%\subsubsection{Jet Kinematic Properties}
+%The in situ uncertainty on the jet $p_\text{T}$ and jet mass are determined from momentum balancing and calorimeter-track matching, respectively~\cite{Aaboud:2018kfi}.
+%Since the results from this analysis are not intended to be combined with other analyses\footnote{Any targeted analysis should be better in their sensitive parameter space, so combining would not improve the results.}, we use the Global Reduction set of nuisance parameters.
+%This includes 6 jet mass scale uncertainties, 12 jet energy scale uncertainties, and one jet mass resolution uncertainty.
+%The usual jet mass resolution prescription is to inflate the resolution by 20\% and symmetrize, which is accomplished with the standard tool by providing maps of smearing factors for particular topologies.
+%However, since we have access to the true jet masses, and no single topology fits our signals, we use forward-folding to inflate and deflate the resolution by 20\% on a per-jet basis. 
 
 \subsection{Fitting}
-\label{sec:CWoLa:background}
+\label{sec:CWoLa:fitting}
+After the application of the NN selection, a standard parametric background fit is performed to estimate the background contribution in the signal region.
+As mentioned in Section~\ref{sec:CWoLa:blinding}, the fitting procedure is relatively simple for the simulation analysis, but more complex for the data validation and full unblinded analyses.
+There are in addition some small differences in the fitting procedure between these latter two analyses.
+Because of this, the fitting procedure for each of these analyses is broken out into separate subsections.
 
-\subsubsection{MC Analysis}
-After the application of the CWoLa training described above, a standard parametric background fit is performed to estimate the background contribution in the signal region.  The selected fit function is the same as the one used by the all-hadronic diboson resonance search:
+Details about the software used for the fitting are given in Appendix~\ref{app:CWoLa:fitting_software}.
+
+\subsubsection{Simulation Analysis}
+\label{sec:CWoLa:fitting:simulation_analysis}
+The parametric fit is performed using 100 GeV bins
+%actually from 2 TeV
+from 1.8 TeV to 8.2 TeV\footnote{The 8.2 TeV maximum bin edge contains the 8.17 TeV maximum $m_{JJ}$ from the event selection (Section~\ref{sec:CWoLa:eventselection}); this value is essentially arbitrary as there are expected to be $<1$ events at that high $m_{JJ}$.}.
+These bins are finer than the bins used for learning as described in Section~\ref{sec:CWoLa:binning}
+\footnote{In the corresponding Section (~\ref{sec:CWoLa:simulation_analysis}), some example fits are shown using the $m_{JJ}$ bins themselves for the parametric fit; these are not actually used for the final results.}.
+
+The selected fit function is the same as the one used by the all-hadronic diboson resonance search~\cite{Aad:2019fbh}:
 
 \begin{align}
 \label{eqn:CWoLa:fitfunction}
 \frac{dn}{dx}=p_1(1-x)^{p_2-\xi p_3}x^{-p_3},
 \end{align}
 
-\noindent where $x=m_{JJ}/\sqrt{s}$, $p_1$ is a normalization parameter, $p_2$ and $p_3$ are dimensionless shape parameters, and $\xi$ is a constant (not varied in the fit).  For simplicity, we set $\xi=0$ (in the diboson search, it is chosen to reduce correlations between $p_2$ and $p_3$). More details of the fitting and its interplay with the statistical interpretation can be found in the next section.  The fitting procedure was tweaked for the data analysis, as described in Section~\ref{sec:CWoLa:inverted:datafitting}.
+\noindent where $x=m_{JJ}/\sqrt{s}$, $p_1$ is a normalization parameter, $p_2$ and $p_3$ are dimensionless shape parameters, and $\xi=4.2955$ is a constant (this value chosen by the all-hadronic resonance search to remove correlations between $p_2$ and $p_3$).
+%For simplicity, we set $\xi=0$ (in the diboson search, it is chosen to reduce correlations between $p_2$ and $p_3$).
 
-%The statistical analysis uses the \href{https://gitlab.cern.ch/atlas-phys/exot/dbl/ResonanceFinder}{\texttt{ResonanceFinder}} package from the DBL group.  This code is based on RooFit~\cite{Verkerke:2003ir}, RooStats~\cite{Moneta:2010pm}, and HistFactory~\cite{Cranmer:1456844}.  For the simulation analysis, there were not modifications to the methodology used by the all-hadronic diboson resonance analysis.  Modifications for the data analysis can be found in Section~\ref{sec:CWoLa:datastatisticalanalysis} for the actual statistical setup and Section~\ref{sec:CWoLa:inverted:datafitting} for the background fitting.
+The parameter $p_2$ is initialized to 10 and restricted to the range $[-100,100]$ and the parameter $p_3$ is initialized to $-30$ and restricted to the range $[-100,100]$ as well.
+The signal region is not masked during this fit.
+After the fit, the prediction is normalized to have the same integral as the data over the entire range.
+As there are two free parameters, the fit produces a $2\times 2$ covariance matrix.  
 
-%The core ideas for the statistical analysis can be found in Section~\ref{sec:CWoLa:limits} and the specific implementation details are described here.  First, given the simulation after a cut on the NN (or not), a parametric fit is performed using 100 GeV bins from 2 TeV to 8.2 TeV, with 69 bins total\footnote{The 8.2 TeV maximum bin edge contains the 8.17 TeV maximum $m_{JJ}$ from the event selection (Section~\ref{sec:CWoLa:eventselection}); this value is essentially arbitrary as there are expected to be $<1$ events at that high $m_{JJ}$.}.  These bins are finer than the bins used for learning and described in Section~\ref{sec:CWoLa:binning}.  The fit function is the one from Section~\ref{sec:CWoLa:background}, with $\xi=4.2955$, as used by the all-hadronic diboson resonance search.  The parameter $p_2$ is initialized to 10 and restricted to the range $[-100,100]$ and the parameter $p_3$ is initialized to $-30$ and restricted to the range $[-100,100]$ as well.  The signal region is not masked during this fit.  After the fit, the prediction is normalized to have the same integral as the data over the entire range.  As there are two free parameters, the fit produces a $2\times 2$ covariance matrix.  
-
-%The background fit is decoupled from the POI scan.  A background prediction is generated as a histogram from the central values of the background fit.  There is one nuisance parameter for the background fit systematic uncertainty.  The `up' and `down' variations are created by taking the sum in quadrature of the uncertainties from the two parameters from the original background fit ($p_2$ and $p_3$).  This nuisance parameter can be profiled in the second fit used to fit the POI.   
+The background fit is decoupled from the signal strength scan; the signal strength is used as a POI to set limits, as discussed in Section~\ref{sec:CWoLa:limits}.
+A background prediction is generated as a histogram from the central values of the background fit.
+There is one nuisance parameter for the background fit systematic uncertainty.
+The ``up'' and ``down'' variations are created by taking the sum in quadrature of the uncertainties from the two parameters from the original background fit ($p_2$ and $p_3$).
+This nuisance parameter can be profiled in the second fit used to fit the POI.   
 
 \subsubsection{Validation Analysis}
-The fitting procedure has been updated from the all-hadronic diboson resonance search and is described in detail below.   The starting point is similar to Section~\ref{sec:CWoLa:statanalysis}.  In particular, bins of size 100 GeV are used for the fitting, spanning 1.8 TeV to 8.2 TeV.  Unlike the diboson search, \textbf{the signal region is masked for this fit}.  In order to remove the dependence of a potential signal, the masked region for each bin is enlarged to include half of both the left and right neighboring bins.  In particular, the bins used for training and the windows used for masking in the fit are presented in Table~\ref{tab:mjj_bins2}.
+\label{sec:CWoLa:fitting:val_analysis}
+As in the fitting for the simulation analysis (Section~\ref{sec:CWoLa:fitting:simulation_analysis}), the parametric fit uses bins of size 100 GeV, spanning 1.8 TeV to 8.2 TeV.
+Unlike in that fit, \textbf{the signal region is masked for this fit}.
+In order to remove the dependence of a potential signal, the masked region for each bin is enlarged to include half of both the left and right neighboring bins.
+In particular, the bins used for training and the windows used for masking in the fit are presented in Table~\ref{tab:mjj_bins2}.
 
 \begin{table}[htb]
   \centering
@@ -638,7 +702,7 @@ The fitting procedure has been updated from the all-hadronic diboson resonance s
   \end{tabular}
 \end{table} 
 
-The fitting procedure (code is \href{https://gitlab.cern.ch/cwola-hunting/fitting/tree/minimal}{here}) then proceeds as follows\footnote{We are grateful to advice from Kate Pachal on the fitting used for the inclusive dijet search.}:
+The fitting procedure then proceeds as follows:
 
 \begin{enumerate}
   \item \label{fitstep:1} Perform a fit using the sidebands using Equation~\ref{eqn:CWoLa:fitfunction}.  Compute the $\chi^2$ in the sideband:
@@ -650,8 +714,8 @@ The fitting procedure (code is \href{https://gitlab.cern.ch/cwola-hunting/fittin
 
 \noindent where $O_i$ is the number of events observed in data in bin $i$, $E_i$ is the expected number of events from the fit function in bin $i$, and the sum runs over all $N$ sideband bins.
 The parameter $p_1$ is fixed by the normalization in the sidebands.
-The sideband $p$-value is then computed using $N-3$ degrees of freedom (3 fit parameters).
-If this $p$-value is less than 5\%, move on to step~\ref{fitstep:4}.
+The sideband $p$-value is then computed using $N-3$ degrees of freedom, since there are 3 fit parameters.
+If this $p$-value is greater than $0.05$, move on to step~\ref{fitstep:4}, else:
 \item \label{fitstep:2} Try an extended fit function:
 
 \begin{align}
@@ -659,7 +723,7 @@ If this $p$-value is less than 5\%, move on to step~\ref{fitstep:4}.
 \end{align}
 
 \noindent As before, compute the sideband $p$-value (now with $N-4$ degrees of freedom).
-If this $p$-value is less than 5\%, move on to step~\ref{fitstep:4}.
+If this $p$-value is greater than $0.05$, move on to step~\ref{fitstep:4}, else:
 
 \item \label{fitstep:3} Try with the UA2 fit function~\cite{Alitti:1990kw}:
 
@@ -668,12 +732,18 @@ If this $p$-value is less than 5\%, move on to step~\ref{fitstep:4}.
 \end{align}
 
 \noindent As before, compute the sideband $p$-value with $N-4$ degrees of freedom.
-If this $p$-value is less than 5\%, move on to step~\ref{fitstep:4}.
+If this $p$-value is greater than $0.05$, move on to step~\ref{fitstep:4}, else:
 
+\item Reduce the sideband window size and repeat steps~\ref{fitstep:1}-\ref{fitstep:3} until the sideband $p$-value is above $0.05$ or the range used to fit in the sideband is smaller than 800 GeV (in which case, the fit fails).
+The sideband is range is reduced as follows.
+If the right sideband is bigger than the left one, the rightmost 400 GeV is removed from the right sideband.
+If the left sideband is larger than the right one, the leftmost 400 GeV is removed from the left sideband.
+If both sidebands are the same size, then 200 GeV is removed from both.
 
-\item Reduce the sideband window size and repeat steps~\ref{fitstep:1}-\ref{fitstep:3} until the sideband $p$-value is above 5\% or the range used to fit in the sideband is smaller than 800 GeV (in which case, the fit fails).  The sideband is range is reduced as follows.  If the right sideband is bigger than the left one, the rightmost 400 GeV is removed from the right sideband.  If the left sideband is larger than the right one, the leftmost 400 GeV is removed from the left sideband.  If both sidebands are the same size, then 200 GeV is removed from both.
-
-\item \label{fitstep:4} After a reasonable fit is found, the $\xi_i$ parameters are optimized to reduce correlations between parameters in order to improve the quality of the uncertainties used for the statistical analysis (Section~\ref{sec:CWoLa:statanalysis}).  For all of the fits, the $\xi_i$ are initialized to zero.  Then, whatever fit setup was found in the previous steps is repeated after iteratively adjusting the $\xi_i$ as follows.   For the three parameter fits, we set
+\item \label{fitstep:4} After a fit is found with $p$-value greater than $0.05$, the $\xi_i$ parameters are optimized to reduce correlations between parameters in order to improve the quality of the uncertainties used for the statistical analysis (Section~\ref{sec:CWoLa:statanalysis}).
+  For all of the fits, the $\xi_i$ are initialized to zero.
+  Then, whatever fit setup was found in the previous steps is repeated after iteratively adjusting the $\xi_i$ as follows.
+  For the three parameter fits, we set
 
 \begin{align}
 \xi=\text{correlation}(p_2,p_3)\frac{\sigma_{p_2}}{\sigma_{p_3}}.
@@ -690,7 +760,7 @@ If this $p$-value is less than 5\%, move on to step~\ref{fitstep:4}.
 %&=0
 %\end{align}
 
-\noindent The fitting procedure is iteratively repeated automatically until the residual correlation is less than 25\%.
+\noindent The $\xi$ setting is iteratively repeated automatically until the residual correlation is less than $0.25$.
 In practice, we find that after one iteration, the correlation converges to $10^{-5}$ or smaller.
 For the four-parameter fit, the pairwise correlations are removed in a similar fashion:
 
@@ -700,7 +770,7 @@ For the four-parameter fit, the pairwise correlations are removed in a similar f
 \xi_3&=\text{correlation}(p_2,p_4)\frac{\sigma_{p_2}}{\sigma_{p_4}}.
 \end{align}
 
-\noindent This procedure converges slower than the three-parameter fit and sometimes does stop at close to 25\% correlation between some pair of two variables.
+\noindent This procedure converges slower than the three-parameter fit and sometimes does stop at close to (but less than) $0.25$ correlation between some pair of two variables.
 
 \item Finally, the local $p$-value in the masked region is quoted to give a sense of the deviations from the background expectation in the signal region.
 The $\chi^2$ is calculated including the signal uncertainties:
@@ -714,14 +784,15 @@ Since the masked region is not used to derive the fit, the number of degrees of 
 \end{enumerate}
 
 \subsubsection{Unblinded Analysis}
-The fitting procedure is very similar the all-hadronic diboson resonance search and is described in detail below.
-The starting point is similar to Section~\ref{sec:CWoLa:statanalysis}.
+The fitting procedure is very similar to the procedure in the data validation analysis (Section~\ref{sec:CWoLa:fitting:val_analysis}).
+%The starting point is similar to Section~\ref{sec:CWoLa:statanalysis}.
 In particular, bins of size 100 GeV are used for the fitting, spanning 1.8 TeV to 8.2 TeV.
-Like the diboson search, and unlike the fitting for the validation analysis described in Section~\ref{sec:CWoLa:inverted:datafitting}, \textbf{the signal region is not masked for this fit}, and the likelihood of the fit function is minimized across the entire range.
+Like the all-hadronic diboson search, and unlike the fitting for the validation analysis described in Section~\ref{sec:CWoLa:fitting:val_analysis}, \textbf{the signal region is not masked for this fit}, and the likelihood of the fit function is minimized across the entire range.
 However, in order to fit the background when there is the presence a potential signal, there is still a masked region defined, and \textbf{the fit quality is evaluated on only the sidebands outside the masked region}.
-The masked regions are the same as for the validation analysis as described in Section~\ref{sec:CWoLa:inverted:datafitting} (Table~\ref{tab:mjj_bins2}); in particular, the masked region for each bin is enlarged to include half of both the left and right neighboring bins.
+This change was applied as it was found that the fit function was sometimes performing poorly in the masked regions.
+The masked regions are the same as for the validation analysis as described in Section~\ref{sec:CWoLa:fitting:val_analysis} (Table~\ref{tab:mjj_bins2}); in particular, the masked region for each bin is enlarged to include half of both the left and right neighboring bins.
 
-The fitting procedure is exactly the same as described in Section~\ref{sec:CWoLa:inverted:datafitting}, other than that, in Fit Step~\ref{fitstep:1}, the fit includes the masked region.
+The fitting procedure is exactly the same as described in Section~\ref{sec:CWoLa:fitting:val_analysis}, other than that, in Fit Step~\ref{fitstep:1}, the fit includes the masked region.
 In particular, the fit is still evaluated on the sidebands outside the masked region and continues through the steps until the $\chi^2$ $p$-value in the sidebands is greater than $0.05$.
 The local $p$-value in the masked region is quoted to give a sense of the deviations from the background expectation in the signal region.
 Since the signal region is used in the overall fit, the $\chi^2$ is calculated using only the statistical uncertainties on the background expectation, not including the uncertainties on the fit:
@@ -735,19 +806,9 @@ Since the masked region is used to derive the fit, the number of degrees of free
 Since the fit includes the masked region as well as the sidebands, in the presence of a signal the background expectation can be biased upwards, leading to a negative bias on the fitted $\hat{\mu}$ when setting limits (Section~\ref{sec:CWoLa:limits}).
 This effect is small, though, when the signal presence is at or less than the limits that are actually set; the results of a signal injection test can be found in Appendix~\ref{app:CWoLa:signalinjection}.
 
-Tests on the validation dataset (Section~\ref{sec:CWoLa:val_analysis}) indicated that the $\epsilon=1.0$ and $\epsilon=0.25$ background spectra were not adequately described by the fitting functions used.
-Therefore, the final analysis only includes the results with $\epsilon=0.1$ and $\epsilon=0.01$; these chosen efficiency values are listed in Table~\ref{tab:effs_final}.
-\begin{table}[htb]
-  \centering
-  \caption{Chosen values of NN cuts with efficiency $\epsilon$ for analysis.}
-  \label{tab:effs_final}
-  \begin{tabular}{c c}
-    \hline
- & Values   \\ \hline
-$\epsilon$ & [0.1,0.01] \\
-    \hline
-  \end{tabular}
-\end{table}
+Detailed tests on the validation dataset (Section~\ref{sec:CWoLa:fitting:val_analysis}) indicated that the $\epsilon=1.0$ and $\epsilon=0.25$ background spectra were not adequately described by the fitting functions used.
+Therefore, the final analysis only includes the results with $\epsilon=0.1$ and $\epsilon=0.01$.
+
 For these values also it was found in the validation dataset that the fitting function was inadequate to describe the background spectra - the fit function tends to underestimate the data at low $m_{JJ}$ and overestimate at high $m_{JJ}$, leading to a non-closure in the significances (Equation~\ref{eqn:CWoLa:significance_def}) of the data with respect to the background (meaning a mean significance of $<0$).
 However, this effect is quite small (mean significance of $\sim -0.2$), so it can be corrected.
 This correction is described in detail in Appendix~\ref{app:CWoLa:fit_closure}.
@@ -756,7 +817,7 @@ This correction is derived in the validation dataset, and then validated by test
 An uncertainty on this correction is derived in the validation dataset and applied as an additional uncertainty on the background expectation.
 
 \subsection{Statistical Analysis}
-\label{sec:CWoLa:limits}
+\label{sec:CWoLa:statanalysis}
 
 \subsubsection{Background Compatibility}
 Where indicated, the significance of the data with respect to the background fit is shown.
@@ -769,10 +830,10 @@ where $O_i$ is the observed count in bin $i$, $E_i$ is the expected count in bin
 When $k=0$, the $p$-value is $0$, so the significance is in principle $-\infty$; in these bins the significance is simply quoted as $0$.
 As mentioned in Section~\ref{sec:CWoLa:unblinded:fitting}, since each bin is included in the fit, the uncertainties on the background fit itself are not included when calculating the significance.
 However, the additional uncertainty on the background fit due to the fit correction derived in the validation selection (Appendix~\ref{app:CWoLa:fit_closure}) \textit{is} included in the background-only significance calculation by allowing $E_i$ to vary within Gaussian constraints when calculating the $p$-value.
-
+This significance is directly used as the test of the background-only hypothesis; a significance $>5$ would indicate a ``discovery'' of a new signal.
 
 \subsubsection{Setting Limits}
-
+\label{sec:CWoLa:limits}
 The observed results are interpreted using a frequentist statistical analysis.
 The parameter of interest is the signal strength, $\mu$, defined as a scale factor on the total number of signal events expected relative to some benchmark, so that $\mu=0$ corresponds to no signal, and $\mu=1$ corresponds to the benchmark.
 As we do not have a specific signal model, the couplings and thus cross-sections are free parameters.
@@ -790,9 +851,9 @@ The likelihood function is defined as follows:
 where $n_\text{obs}^i$ is the number of events observed in bin $i$,
 $s_i$ is the fraction of signal expected in bin $i$ (including the acceptance of the trigger and the event selection),
 $b_i$ is the total number of background expected in bin $i$,
-as detailed in Section~\ref{sec:CWoLa:background},
+as detailed in Section~\ref{sec:CWoLa:fitting},
 $\theta_s$ are the nuisance parameters corresponding to the systematic uncertainties on the signal shape,
-and $\theta_b$ are the nuisance parameters corresponding to the uncertainty on the background fit, as described in Section~\ref{sec:CWoLa:background},
+and $\theta_b$ are the nuisance parameters corresponding to the uncertainty on the background fit, as described in Section~\ref{sec:CWoLa:fitting},
 $P_\text{pois}(n|e)$ is a Poisson likelihood of $n$ events given $e$ expected, and $\mathcal{G}$ is a  Gaussian.
 Note that, since $\theta_s$ only affect the shape of the signal, these uncertainties cannot be profiled.
 %Furthermore, they are not included in the likelihood function directly, but are rather used as post-fit uncertainties on the derived limits, as explained below.
@@ -800,8 +861,8 @@ Note that, since $\theta_s$ only affect the shape of the signal, these uncertain
 %and that the uncertainties on the signal normalization are degenerate with $\mu$.}
 
 The test statistic $\lambda(\mu)$ based on the profile likelihood ratio is defined using the lowest order asymptotic approximation~\cite{Cowan:2010js}.
-The significance of an observed excess with respect to the background-only hypothesis is quantified in terms of the local $p_0$, defined as the probability of the background-only model to produce an excess at least as large as the one observed.
-When $p_0 = 1-\Phi(5.0) \approx 3\times10^{-7}$ (with $\Phi$ the standard normal CDF), this is called a ``discovery" of a potential new signal.
+%The significance of an observed excess with respect to the background-only hypothesis is quantified in terms of the local $p_0$, defined as the probability of the background-only model to produce an excess at least as large as the one observed.
+%When $p_0 = 1-\Phi(5.0) \approx 3\times10^{-7}$ (with $\Phi$ the standard normal CDF), this is called a ``discovery" of a potential new signal.
 %In the absence of such an observed excess, the ``signal discovery potential strength" $\mu_{5\sigma}$ is defined to be the amount of signal such that, when injected into the data, causes an excess with a local $p_0$ small enough to claim discovery.
 Exclusion limits at the 95\% confidence level, $\mu_{95}$ are also set following the CL$_s$ prescription~\cite{Read:2002hq}.
 
@@ -829,14 +890,20 @@ Therefore, the $\mu_{95}$ values are evaluated by first injecting a certain amou
 In particular, the values $\mu_{95}(\mu)$ are functions of the injected signal strength $\mu$, derived from performing the statistical analysis after such a signal is injected.
 Ideally, $\mu$ would be scanned until $\mu_{95}(\mu)=\mu\equiv\hat{\mu}_{95}$ - with this strength of signal present, that exact signal would be exluded.
 
-However, it is expensive to scan finely over the injected $\mu$ (because of the requirement to retrain the NN at each value), so upper limits on $\hat{\mu}_{95}$ are derived by injecting a coarse grid of signal strengths $\mu$; for each analysis (validation in simulation (Section~\ref{sec:CWoLa:statanalysis}), validation in data (Section~\ref{sec:CWoLa:inverted:statisticalanalysis}), and unblinded (Section~\ref{sec:CWoLa:unblinded:statanalysis})) this grid is provided in the respective section.
+However, it is expensive to scan finely over the injected $\mu$ (because of the requirement to retrain the NN at each value), so upper limits on $\hat{\mu}_{95}$ are derived by injecting a coarse grid of signal strengths $\mu$; for each analysis (validation in simulation (Section~\ref{sec:CWoLa:simulation:statanalysis}), validation in data (Section~\ref{sec:CWoLa:inverted:statisticalanalysis}), and unblinded (Section~\ref{sec:CWoLa:unblinded:statanalysis})) this grid is provided in the respective section.
 In order to simulate a true signal, for each given injected signal strength $\mu$, exactly $\mu$ events are chosen from the given signal MC sample, with probability proportional to the MC weight.
 These events are then injected into the data sample with weight $1$ and included with all the rest of the data when being passed through the steps of the analysis, in particular the event selection (Analysis Step~\ref{NNstep1}), the cross-validation splits (Section~\ref{sec:CWoLa:network}), the mass decorrelation and training (Analysis Step~\ref{NNstep5}),
 However, for the tagging (Analysis Step~\ref{NNstep7}), the derived NN is applied to the entire signal sample with weights in order to get the full signal $m_{JJ}$ histogram after tagging.
 The signal is injected in this way with weights $1$ for the training in order to simulate as close as possible for the NN what a true signal would look like.
 The tagging is done with the full sample with the MC weights in order to derive limits as a multiple of the injected $\mu$ with the NN fixed, as described above.
 For each of the $3\times4\times5=60$ (Section~\ref{sec:CWoLa:network}) iterations of the signal training, the chosen signal events injected for the NN training are held fixed.
-However, for the final unblinded analysis (Section~\ref{sec:CWoLa:unblinded:statanalysis}), this entire process is repeated for $5$ different random samplings of the signal MC as a smoothing procedure, and the limit that is used for the given $\mu$ value is the limit derived from the sampling which gives the median expected limit over the $5$ random samplings.
+
+However, for the final unblinded analysis (Section~\ref{sec:CWoLa:unblinded:statanalysis}), this entire process is repeated for $5$ different random samplings of the signal MC as a smoothing procedure, and the expected limits that are used for the given $\mu$ value (median and bands) are the limits derived from the sampling which gives the \textit{median} median expected limit over the $5$ random samplings.
+The $5$ random samplings indicate an uncertainty in the output of the NN, based on the specific presence of the signal the NN is trained on.
+This uncertainty is added to the bands of the expected limits:
+the (unbiased or Bessel-corrected) variance of the median expected limits is added in quadrature to the $\pm 1,2\sigma$ bands relative to the median.
+The observed limits that are used for the given $\mu$ value are the limits derived from the samplings with gives the median (over the $5$ random samplings) observed limit.
+
 Once a limit $\mu_{95}(\mu)$ is derived for each injected $\mu$, the final limit overall is derived as described below.
 
 A crucial observation is that $\mu_{95}(\mu_1) \ge \mu_{95}(\mu_2)$ if $\mu_1<\mu_2$; this is because, when more signal is injected, the NN only gets better at discriminating that signal from the background, and the exclusion limit therefore only gets better (recall that the total efficiency in the signal region $\epsilon$ is fixed).
@@ -849,18 +916,15 @@ Therefore, if $\mu>\mu_{95(\mu)}$, then $\mu$ is an appropriate upper limit on $
 In summary, with a signal injection of $\mu$, the upper limit on $\hat{\mu}$ that is set is $\text{max}\left(\mu_{95},\mu\right)$.
 Since it is desirable to derive an exclusion limit as close as possible to $\hat{\mu}$, a few different values of $\mu$ are injected (depending on the signal region), and the value of $\mu$ that leads to the lowest median expected upper limit is used.
 
+For some signals, at low $\mu$ values, the rule $\mu_{95}(\mu_1) \ge \mu_{95}(\mu_2)$ if $\mu_1<\mu_2$ can be violated; this is due to the NN learning to tag basically a random region of the parameter space and just happening to tag the signal.
+For these signals, the limits at those $\mu$ values are thrown out and not trusted.
+
 %It should be noted that, while the uncertainties on the background due to the fit parameters go directly into the likelihood (Equation~\ref{eqn:CWoLa:likelihood}) and therefore into evaluating $\mu_{95}(\mu)$, the uncertainties on the signal shape $\theta_s$ can affect the NN in an unpredictable way.
 %Therefore, the effect of the systematic uncertainties that affect the signal $\theta_s$ on $\mu_{95}(\mu)$ are evaluated by running the whole procedure (including retraining the NN and varying $\mu$ to find the upper limit on $\hat{\mu}$) at discrete values of $\theta_s = \{-1,0,1\}$ and imposing a post-fit uncertainty on $\mu_{95}$.
 
 %For the global significance, one could look at the $\chi^2$ for the fit and then do a Bonferroni correction for all $m_{JJ}$ bins. It is proposed to not add this explicitly to the paper.
 
-As mentioned in~\ref{sec:CWoLa:limits}, given the injected signal strength $\mu$, exactly $\mu$ events are chosen from the given signal MC sample, with probability proportional to the MC weight, and injected into the NN training with weight $1$.
-For the final unblinded analysis, this entire process is repeated for $5$ different random samplings of the signal MC as a smoothing procedure.
-The expected limits (median and bands) that are used for the given $\mu$ value are the limits derived from the sampling which gives the median (over the $5$ random samplings) median expected limit.\footnote{Note that this does not at all affect the results with no injected signal, for which limits are not derived.}
-The observed limits that are used for the given $\mu$ value are the limits derived from the samplings with gives the median (over the $5$ random samplings) observed limit.
-The $5$ random samplings indicate an uncertainty in the output of the NN, based on the specific presence of the signal the NN is trained on.
-This uncertainty is added to the bands of the expected limits:
-the (unbiased, using Bessel's correction) variance of the median expected limits is added in quadrature to the $\pm 1,2\sigma$ bands relative to the median.
+%As mentioned in~\ref{sec:CWoLa:limits}, given the injected signal strength $\mu$, exactly $\mu$ events are chosen from the given signal MC sample, with probability proportional to the MC weight, and injected into the NN training with weight $1$.
 
 %-------------------------------------------------------------------------------
 \section{Simulation Analysis}
@@ -981,7 +1045,7 @@ Example fits in the coarse bins used for training are shown in Figure~\ref{fig:C
 \end{figure}
 
 \subsection{Statistical Analysis}
-\label{sec:CWoLa:statanalysis}
+\label{sec:CWoLa:simulation:statanalysis}
 
 
 As described in Section~\ref{sec:CWoLa:limits}, there is a coarse scan of injected $\mu$ values to train the NN, following which, for each injected $\mu$, limits are set following the CL$_s$ procedure by scanning the overall signal strength as the POI while keeping the NN fixed.
@@ -1268,7 +1332,7 @@ At this cut level, for these mass points, there is a maximum excess of $\ge 5\si
 \subsection{Statistical Analysis}
 \label{sec:CWoLa:inverted:statisticalanalysis}
 
-Aside from the modifications to the fit described in the previous section, the statistical analysis is as described in Section~\ref{sec:CWoLa:statanalysis}.
+% Aside from the modifications to the fit described in the previous section, the statistical analysis is as described in Section~\ref{sec:CWoLa:statanalysis}.
 
 The values of $\mu$ injected for this analysis are given in Table~\ref{tab:inverted:injectedmu}.
 
@@ -1408,7 +1472,7 @@ The number of events in each of the bins 3-10 (bins 3 and 10 are used as sideban
 
 \subsection{Fitting}
 \label{sec:CWoLa:unblinded:datafitting}
-The fitting is as described in~\ref{sec:CWoLa:background}.
+The fitting is as described in~\ref{sec:CWoLa:fitting}.
 
 %Each choice of $\epsilon$ is treated as a separate statistical analysis; since the choices of $\epsilon$ differ by a factor of $10$, the results with a given NN at different values of $\epsilon$ are mostly uncorrelated.
 %In particular, the analysis with a cut at $\epsilon=1.0$, which is very similar to the standard dijet search~\cite{ATLAS:2015nsi}, is excluded.
@@ -1416,7 +1480,7 @@ The fitting is as described in~\ref{sec:CWoLa:background}.
 
 \subsection{Statistical Analysis}
 \label{sec:CWoLa:unblinded:statanalysis}
-Aside from the modifications to the fit described in the previous section, the statistical analysis is as described in Section~\ref{sec:CWoLa:statanalysis}.
+%Aside from the modifications to the fit described in the previous section, the statistical analysis is as described in Section~\ref{sec:CWoLa:statanalysis}.
 
 The values of $\mu$ injected for this analysis are given in Table~\ref{tab:unblinded:injectedmu}.
 \begin{table}[htb]
@@ -1431,6 +1495,19 @@ The values of $\mu$ injected for this analysis are given in Table~\ref{tab:unbli
     \hline
   \end{tabular}
 \end{table} 
+
+The efficiency values used in this analysis are listed in Table~\ref{tab:effs_final}.
+\begin{table}[htb]
+  \centering
+  \caption{Chosen values of NN cuts with efficiency $\epsilon$ for analysis.}
+  \label{tab:effs_final}
+  \begin{tabular}{c c}
+    \hline
+ & Values   \\ \hline
+$\epsilon$ & [0.1,0.01] \\
+    \hline
+  \end{tabular}
+\end{table}
 
 \subsection{Results}
 \label{sec:CWoLa:unblinded:results}
