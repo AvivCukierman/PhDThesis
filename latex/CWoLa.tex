@@ -6,13 +6,13 @@
 %-------------------------------------------------------------------------------
 
 %BEN
-The dijet resonance search is one of the first analyses performed when a hadron collider reaches a new center-of-mass energy.   In particular, ATLAS has an extensive program of inclusive dijet resonance searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt}.  While such searches are sensitive to nearly all resonance decays to hadronic or electromagnetic objects (excluding muons), dedicated searches for particular decays will always be (much) more sensitive.  Therefore, ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta,Aad:2019fbh}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.  In all cases, a selection on the structure of the `jets' from each side of the decay is used to (significantly) enhance events with the targeted topology.  Searches for any combination of Standard Model (SM) particles can be well-motivated by one or more standard Beyond the SM (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
+The dijet resonance search is one of the first analyses performed when a hadron collider reaches a new center-of-mass energy.   In particular, ATLAS has an extensive program of inclusive dijet resonance searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt,Aad:2019hjw}.  While such searches are sensitive to nearly all resonance decays to hadronic or electromagnetic objects (excluding muons), dedicated searches for particular decays will always be (much) more sensitive.  Therefore, ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta,Aad:2019fbh}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.  In all cases, a selection on the structure of the `jets' from each side of the decay is used to (significantly) enhance events with the targeted topology.  Searches for any combination of Standard Model (SM) particles can be well-motivated by one or more standard Beyond the SM (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
 
 %BEN
 Nearly all dijet resonance searches performed so far focus on decays to SM particles.  The only three exceptions are the XH search~\cite{Aaboud:2018eoy,Aaboud:2017ecz}, where the $X$ is a $Z$-prime or $H$-like particle with unknown mass, the photon-jet search~\cite{Aaboud:2018djx} ($X\rightarrow aa, a\rightarrow \text{photons}$), and the displaced jet search~\cite{Aaboud:2018aqj} (many models).  There is currently no search for $A\rightarrow BC$, where all of $A,B$ and $C$ are BSM particles and can have different masses (and other properties).
 
 %BEN
-While it is critical to continue searching for particular dijet topologies, the fact that not all SM and BSM possibilities are covered suggests that a complementary generic search effort is required.  What is needed is a method for searching for many particular topologies all at once that ideally does not pay a large trials factor for the large space of possibilities.  Based on weakly supervised approaches introduced in Ref.~\cite{Metodiev:2017vrx}, the authors of Ref.~\cite{Collins:2018epr,Collins:2019jip} introduced a new machine learning-based anomaly detection procedure to perform a dijet search where the jets from a potential signal have a non-trivial but unknown a priori structure\footnote{Alternatives to CWoLa hunting can be found in Section~\ref{sec:CWoLa:alternatives}.}.  Simply stated, classifiers are trained to distinguish particular $m_{JJ}$ bins from their neighbors.  Localized resonances will be enhanced with a selection based on the classifier.  A nested cross-validation scheme is used to avoid a large trials factor.  More details are provided in later sections.
+While it is critical to continue searching for particular dijet topologies, the fact that not all SM and BSM possibilities are covered suggests that a complementary generic search effort is required.  What is needed is a method for searching for many particular topologies all at once that ideally does not pay a large trials factor for the large space of possibilities.  Based on weakly supervised approaches introduced in Ref.~\cite{Metodiev:2017vrx}, the authors of Ref.~\cite{Collins:2018epr,Collins:2019jip} introduced a new machine learning-based anomaly detection procedure to perform a dijet search where the jets from a potential signal have a non-trivial but unknown a priori structure\footnote{Alternatives to CWoLa hunting can be found in Section~\ref{app:CWoLa:alternatives}.}.  Simply stated, classifiers are trained to distinguish particular $m_{JJ}$ bins from their neighbors.  Localized resonances will be enhanced with a selection based on the classifier.  A nested cross-validation scheme is used to avoid a large trials factor.  More details are provided in later sections.
 
 %BEN
 This Chapter documents a search for a generic $A\rightarrow BC$ resonance search, where all of $A,B$ and $C$ could be BSM particles and the decay products of $B$ and $C$ can be contained within single large-radius jets.  Events collected by the ATLAS detector using the full Run 2 $\sqrt{s}=13$ TeV $pp$ collision dataset are used for the search.  Neural networks are trained to enhance the sensitivity to BSM particles.  As this is the first search of this kind, the features of the two jets used for classification are limited.  In particular, only the two jet masses are used.  This simplifies the analysis and allows for the possibility to set limits in the absence of an excess, as the calibrations of jet masses are well constrained from various performance studies (in contrast to the full radiation pattern within the jet).  Therefore, this search is essentially a 3D bump hunt, without a large trials factor in the scan of the $B$ and $C$ masses.  There are dedicated searches for the direct production of $B$ and $C$~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2018zba} using initial state radiation to boost the potential new particles.  The search presented here is complementary to those searches, which are not sensitive to very small couplings between new particles and quarks/gluons (as well as decays that are not two-body).
@@ -20,11 +20,10 @@ This Chapter documents a search for a generic $A\rightarrow BC$ resonance search
 This Chapter is organized as follows.
 First, Section~\ref{sec:CWoLa:eventsamples} introduces the data and simulated event samples.
 Section~\ref{sec:CWoLa:analysis} gives a broad overview of the analysis, including the validation and blinding approach, and Section~\ref{sec:CWoLa:analysis_details} goes over the steps of the analysis in detail.
-Section~\ref{sec:CWoLa:simulation_analysis} demonstrates the full analysis pipeline using dijet MC to simulate the expected data.
+Section~\ref{sec:CWoLa:simulation_analysis} demonstrates the full analysis pipeline using dijet monte carlo to simulate the expected data.
 Section~\ref{sec:CWoLa:val_analysis} demonstrates the full analysis pipeline using validation data with an inverted delta rapidity cut as a proxy for the expected data in the non-inverted signal region.
-Section~\ref{sec:CWoLa:systs} discusses the systematic uncertainties present in the background and the signal.
 The results of the unblinded analysis are presented in Section~\ref{sec:CWoLa:unblinded}.
-Finally, the conclusions are provided in Section~\ref{sec:CWoLa:conclusion}.
+Finally, some aspects of the analysis, including the future outlook, are discussed in Section~\ref{sec:CWoLa:discussion} and the conclusions are provided in Section~\ref{sec:CWoLa:conclusion}.
 
 \section{Event Samples}
 \label{sec:CWoLa:eventsamples}
@@ -178,7 +177,7 @@ However these events are exactly those for which the NN has decided it cannot di
 These ideas and others for constructing a validation sample are explored in Appendix~\ref{app:CWoLa:validation_alternate}.
 
 In light of these considerations, the event selection is given one additional non-trivial selection, a maximum rapidity difference between the two jets in the event; and the validation region is defined to be the inverse of this.
-This rapidity selection is also present in the inclusive dijet search~\cite{Aaboud:2018fzt} and in the all-hadronic diboson resonance search~\cite{Aad:2019fbh}, two analyses which are sensitive to similar signals and also aim to be inclusive in their searches.
+This rapidity selection is also present in the inclusive dijet search~\cite{Aad:2019hjw} and in the all-hadronic diboson resonance search~\cite{Aad:2019fbh}, two analyses which are sensitive to similar signals and also aim to be inclusive in their searches.
 This selection both suppresses contributions from $t$-channel QCD dijet production, while remaining efficient on $A\rightarrow BC$ signals.
 The distribution of the rapidity difference in the background simulation can be seen in Figure~\ref{fig:CWoLa:bkg_rapdiff}, and the distributions in various signal models can be seen in Figure~\ref{fig:CWoLa:sig_rapdiff}.
 
@@ -621,6 +620,8 @@ However, because of the extensive measures taken to reduce the sensitivity to st
 \end{figure}
 
 %Briefly about the trials factor in $(m_1,m_2)$: no event is selected with a classifier that was trained using that event.  The nested cross-validation is like dividing the dataset in half, training on one half and testing on the other.  The nested cross-validation extends this to use $(k-1)/k$ events for training each network (all $k$-folds get a different network) and use all events for testing. 
+
+Details about the software used to execute the analysis pipeline up to this point (Sections~\ref{sec:CWoLa:eventselection,sec:CWoLa:binning,sec:CWoLa:features,sec:CWoLa:network}) can be found in Appendix~\ref{app:CWoLa:software}.
 
 \clearpage
 \subsection{Systematic Uncertainties}
@@ -1422,7 +1423,7 @@ Away from the SM dibosons, CWoLa hunting with $\epsilon<1$ outperforms the other
 
 \clearpage
 %-------------------------------------------------------------------------------
-\section{Unblinded Results}
+\section{Unblinded Analysis}
 \label{sec:CWoLa:unblinded}
 %-------------------------------------------------------------------------------
 
@@ -1687,6 +1688,13 @@ For $m_A=5000$ GeV, CWoLa hunting suffers from low statistics in the training, b
 \end{figure}
 
 \clearpage
+%-------------------------------------------------------------------------------
+\section{Discussion}
+\label{sec:CWoLa:discussion}
+%-------------------------------------------------------------------------------
+Computing resources:~\ref{app:CWoLa:computing}.
+
+%\clearpage
 %-------------------------------------------------------------------------------
 \section{Conclusion}
 \label{sec:CWoLa:conclusion}
