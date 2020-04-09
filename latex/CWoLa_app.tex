@@ -54,6 +54,42 @@
 %\label{fig:CWoLa:NNout_q99_sigRx}
 %\end{figure}
 
+\section{Alternate Ideas for Validation}
+\label{app:CWoLa:validation_alternate}
+Typically, analyses validate the analysis process by defining a control region in which it is expected that there is low signal contamination, and testing that there are some expected results in this control region.
+It is important that the control region has little signal contamination so that the validation remains blind to the possible presence of signal; this can be achieved for example by inverting the event selection used to target signal.
+In this analysis, this approach encounters problems, because most of the cuts are not known in advance, and are determined by the number and nature of any possible signal.  Therefore, we define two additional control regions, beyond a standard one based on the delta rapidity cut, which use the full dataset, but are constructed so that they are unlikely to be useful for finding signal.
+
+\subsection{Rapidity Cut}
+The first validation set is formed by simply inverting the rapidity cut, $|y_1-y_2|>1.2$.
+This inversion removes a large fraction of the signal, while also allowing for a much larger amount of background, decreasing the signal fraction significantly.
+Since this selection still has some efficiency on the signal, it is still possible to perform signal injection tests, by injecting signals with cross sections much larger than those already ruled out by the standard dijet search~\cite{ATLAS:2015nsi}.
+
+\subsection{Swapped Dataset}
+We propose a different control sample which is derived from data, and still retains the property that the signal contamination is low, called the \textit{jet swapped} dataset.
+In this dataset, leading and subleading jets are swapped between random pairs of events.
+It is expected that this sample has low signal contamination, because it is unlikely that two random events chosen from the original sample will both be signal events.
+In particular, suppose that there is some number of signal, $S$, and some number of background, $B$, in the original sample with no cuts.
+We can suppose that the signal fraction $\frac{S}{B} = p\ll1$, based on results from the standard dijet search~\cite{ATLAS:2015nsi} (note that the limits from previous searches set a stronger bound, that the significance $\frac{S}{\sqrt{B}}=p\sqrt{B} \lesssim 1$).
+Then the signal contamination in the swapped dataset is expected to be on the order of $p^2 \ll p$ (and therefore with significance $p^2\sqrt{B} \ll 1$).
+
+The $m_{JJ}$ distribution in the swapped dataset is different than in the original sample, and some correlations between the ensemble of jet features and the $m_{JJ}$ value will not be preserved.
+However, any correlations between the individual jet features and the jet $p_T$ will be preserved, and thus some significant part of the correlations between the individual jet features and the $m_{JJ}$ value.
+The swapped dataset therefore serves as an entirely data-derived reasonable proxy for the background spectrum of the features and of $m_{JJ}$, and can be used as a validation region for testing the validity of the background shape fit, for demonstrating that the learned features do not sculpt the $m_{JJ}$ distribution and therefore violate Assumption~\ref{ass2}, and for demonstrating the sensitivity of the method to (unswapped) injected signal.
+%In particular, if the learned cuts sculpted the $m_{JJ}$ spectrum based on the individual jet features, the jet swapped dataset would also observe this effect.
+
+\subsection{Median Dataset}
+After learning the neural network scores to distinguish events in the signal region from events in the sideband regions, cuts are placed at some efficiency $\epsilon < 1$ in order to find the most signal-like events.
+That is to say, every event $i$ has a score $0\le S_i \le 1$ based on the neural network output, with larger $S_i$ indicating an event more signal-like, and moreover the scores are scaled such that a cut $S_i>1-\epsilon$ has efficiency exactly $\epsilon$ in the signal region bin.
+
+There is a concept of anti-tagging in this framework: by applying a cut $S_i<\epsilon$, the $\epsilon$ fraction of events that are the least signal-like are chosen.
+However, this anti-tagged dataset may still be contaminated by signal, in particular if the true signal is actually mostly in the sideband region rather than the signal region i.e. Case~\ref{case2}; in this case the scores $S_i$ are signal anti-taggers in the first place, and so the anti-tagged dataset is in fact anti-anti-tagging signal, i.e. positively tagging signal.
+
+Another possibility is to consider the \textit{median dataset}, where the cut that is placed is $|S_i-0.5|<\frac{\epsilon}{2}$.
+These are the set of events that the neural network has decided it is agnostic about being in the signal region or the sideband regions; it is therefore expected that this dataset has little signal contamination, because regardless of whether the true signal was in the signal or sideband regions, it would not end up with this median score.
+It is not expected that the $m_{JJ}$ distribution will be exactly the same in the median dataset as in the signal-tagged dataset, even in the case there is no true signal, since there are some residual correlations between the features and $m_{JJ}$.
+However, the median dataset can be used to test the validity of the background shape fit, and for looking at jet kinematics in a blinded way.
+
 \section{Analysis Software}
 \label{app:CWoLa:software}
 
