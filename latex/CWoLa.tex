@@ -1,11 +1,11 @@
 \section{Abstract}
 This Chapter presents a search for dijet resonances enabled by new techniques with weak supervision.
-The search does not rely on a specific signal model hypothesis and is sensitive to generic final states of the form $A\rightarrow BC$, where all of $A,B,C$ are massive and may be beyond the Standard Model, with $m_A\sim$O(TeV) and $m_B,m_C\sim$O(100 GeV).
+The search does not rely on a specific signal model hypothesis and is sensitive to generic final states of the form $A\rightarrow BC$, where all of $A,B,C$ are massive and may be beyond the Standard Model, with $m_A\sim$ O(TeV) and $m_B,m_C\sim$ O(100 GeV).
 The $B$ and $C$ particles are each reconstructed as single large-$R$ jets and the $A$ particle is reconstructed as a resonance in the dijet invariant mass spectrum.
 The search uses a novel technique in weak supervision called classification without labels (CWoLa) to tag events with jets corresponding to possible signals with a neural network trained entirely in data.
-As the first demonstation of this technique, the neural network uses a reduced set of features of just the masses of the two jets to tag potential signals.
+As the first demonstration of this technique, the neural network uses a reduced set of features of just the masses of the two jets to tag potential signals.
 As the neural network learns what to tag directly from data, this technique allows for avoiding the large trials factor associated with searching in the 3-dimensional feature space of $\{m_A,m_B,m_C\}$.
-The search uses the full Run 2 $\sqrt{s}=13$ TeV $pp$ collisions dataset of 139\ifb gathered by the ATLAS detector at the LHC.
+The search uses the full Run 2 $\sqrt{s}=13$ TeV $pp$ collisions dataset of 139\ifb{} gathered by the ATLAS detector at the LHC.
 Background-only $p$-values for the dijet invariant mass between 1.8 and 8.2 TeV are reported on and no significant evidence for a localized excess is found.
 In addition, new limits are set on the cross section of a variety of specific signal models with narrow-width $B,C$ decaying hadronically, with the limits ranging from 1-10 fb corresponding to improvements of up to 10 times existing limits from the inclusive dijet search, especially at high $m_B,m_C$.
 
@@ -17,7 +17,8 @@ One of the simplest searches that can be done at any particle collider is to loo
 In ATLAS the generic object formed in the calorimeter is a jet; almost all light standard model (SM) particles other than muons and neutrinos are reconstructed as jets in the ATLAS calorimeter, and more massive particles like the top quark, the vector bosons, and the Higgs boson have dominant or significant hadronic decays which are in turn reconstructed as jets, especially when boosted as is expected when decaying from a more massive resonant particle.
 ATLAS has an extensive history of searches for for these \textit{inclusive} dijet resonances, including searches at $\sqrt{s}=7$~\cite{Aad:2010ae,Aad:2011aj,Aad:2011fq}, $\sqrt{s}=8$~\cite{Aad:2014aqa}, and $\sqrt{s}=13$ TeV~\cite{ATLAS:2015nsi,Aaboud:2017yvp,Aaboud:2018fzt,Aad:2019hjw}.
 These searches are generically sensitive to beyond the SM (BSM) resonant decays to hadronic, electromagnetic, or electroweak objects reconstructed as jets in the calorimeter, and therefore are one of the first searches performed when a collider reaches a new center-of-mass energy.
-Dedicated searches for specific final states will always be more sensitive than the generic inclusive search, and ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta,Aad:2019fbh}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more
+
+Dedicated searches for specific final states will always be more sensitive than the generic inclusive search, and ATLAS has an extensive program searching for di-$\tau$~\cite{Aaboud:2016cre,Aaboud:2017sjh}, di-$b$ quark resonances~\cite{Aaboud:2016nbq,Aaboud:2018tqo}, di-top quark resonances~\cite{Aaboud:2018mjh}, $bt$ resonances~\cite{Aaboud:2018juj}, di-W/Z boson resonances~\cite{Aaboud:2016okv,Aaboud:2017fgj,Aaboud:2017itg,Aaboud:2017eta,Aad:2019fbh}, VH resonances~\cite{Aaboud:2018eoy,Aaboud:2017cxo,Aaboud:2017ahz}, di-Higgs resonances~\cite{Aaboud:2018knk}, and many more.
 These dedicated searches tag events based on the structure of the underlying jets in order to enhance the presence of the specific signal being searched for relative to the overwhelming background from events corresponding to SM QCD interactions.
 There are also complementary searches for the direct production of BSM particles decaying into SM particles and reconstructed as a single large-$R$ jet~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2019zxd} using initial state radiation to boost the potential new particles.
 Searches for any combination of SM particles can be well-motivated by one or more standard (BSM) theory frameworks~\cite{Craig:2016rqv,Kim:2019rhy,}, but not all combinations are currently covered by dedicated searches.
@@ -25,8 +26,8 @@ Searches for any combination of SM particles can be well-motivated by one or mor
 In addition, nearly all dijet resonance searches focus on decays to SM particles.
 Notable exceptions include the XH search~\cite{Aaboud:2018eoy,Aaboud:2017ecz}, where the $X$ is a $Z$-prime or $H$-like particle with unknown mass and the displaced jet search~\cite{Aaboud:2018aqj}.
 Of particular relevance to this Thesis is the photon-jet search~\cite{Aaboud:2018djx} ($X\rightarrow aa, a\rightarrow \text{photons}$), with the $a$ particles boosted and reconstructed as single small-$R$ jets;
-this search is sensitive to exactly the same models being targeted by the search presented in Chapter~\ref{ch:HBSM}, and though that search does not exactly fall under the realm of dijet searches (since the decays of the $a$ particles in that search are resolved into two separate small-$R$ jets, and the $X$ is constrained to be the Higgs boson),
-future iterations of that analysis will have exactly the dijet resonance topology (Appendix~\ref{app:HBSM_app_lowmass}).
+this search is sensitive to exactly the same class of models being targeted by the search presented in Chapter~\ref{ch:HBSM}, and though that search does not exactly fall under the realm of dijet searches (since the decays of the $a$ particles in that search are resolved into two separate small-$R$ jets, and the $X$ is constrained to be the Higgs boson),
+future iterations of that analysis will have exactly the dijet resonance topology (Appendix~\ref{sec:HBSM_app:lowmass}).
 There is currently no search for $A\rightarrow BC$, where all of $A,B,C$ can be BSM particles with possibly different masses.
 
 This motivates the pursuit of a search which can be generically sensitive to these dijet topologies by tagging on the structure of the underlying jets which is complementary to these targeted efforts.
@@ -38,7 +39,7 @@ Since the classifier is trained directly on data, no specific signal model hypot
 The details of this technique and the application to this specific search are presented in later Sections.
 
 This Chapter presents a search for a generic $A\rightarrow BC$ resonance where the $B$ and $C$ particles are each reconstructed as single massive large-$R$ jets, and the $A$ particle is reconstructed as a resonance in the dijet invariant mass spectrum, but other than that the properties of $A,B,C$ are not specified, and in particular may or may not be BSM.
-Events collected by the ATLAS detector using the full Run 2 $\sqrt{s}=13$ TeV $pp$ collision dataset are used for the search, corresponding to 139\ifb of data.
+Events collected by the ATLAS detector using the full Run 2 $\sqrt{s}=13$ TeV $pp$ collision dataset are used for the search, corresponding to 139\ifb{} of data.
 The CWoLa technique is used by training a neural network (NN) to act as the classifier of potential signal.
 Though the original proposal for this kind of analysis~\cite{Collins:2019jip} uses a broad class of features related to the substructure of the jet, this analysis uses a reduced feature space of just the masses $\{m_1,m_2\}$ of the two jets.
 As this is the first search of its kind, this reduction is intended to simplify the analysis and understand fully all the various effects.
@@ -46,12 +47,12 @@ This simplification also allows for the setting of limits on specific signal mod
 This search is therefore essentially a search in the 3-dimensional space of $\{m_A,m_B,m_C\}$, without paying the large trials factor associated with the scan in $\{m_B,m_C\}$.
 
 The results of this search are compared to the results from the ATLAS inclusive dijet search~\cite{Aad:2019hjw}, which as mentioned above is also generically sensitive to decays of the form $A\rightarrow \text{jets}$, but is not specifically sensitive to massive decay products of the $A$
-\footnote{In fact, the incusive dijet search uses small-$R$ jets, so that the decay products of the $B$ and $C$ are not necessarily entirely contained within the jet. Because of this, as the masses of the $B$ and $C$ particle get larger for fixed $m_A$, the limits from the incusive dijet search get worse.}.
-Also relevant are the results from the ATLAS all-hadronic diboson resonance search~\cite{Aad:2019fbh}, which targets signal models of the form $A\rightarrow WW/WZ/ZZ$ and is thus sensitive to signals with $m_B~m_C~m_{W/Z}$
+\footnote{In fact, the incusive dijet search uses small-$R$ jets, so that the decay products of the $B$ and $C$ are not necessarily entirely contained within the jet. Because of this, as $m_B$ and $m_C$ get larger for fixed $m_A$, the limits from the incusive dijet search get worse.}.
+Also relevant are the results from the ATLAS all-hadronic diboson resonance search~\cite{Aad:2019fbh}, which targets signal models of the form $A\rightarrow WW/WZ/ZZ$ and is thus sensitive to signals with $m_B\sim m_C\sim m_{W/Z}$
 \footnote{In fact this analysis is expected to be considerably more sensitive to these signals, since the substructure of the jets is used in addition to the masses in order to tag the $W$ and $Z$ particles.}
 , but has no sensitivity outside that range.
 There are also searches for direct production of $B,C$~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2019zxd} when these are produced in association with photons or jets and their decay products are therefore collimated into a single large-$R$ jet as in this analysis.
-However, those limits are order of magnitude weaker than the ones studies here and are therefore not considered further.
+However, those limits are orders of magnitude weaker than the ones studied here.
 %$Sirunyan:2019vxa,Sirunyan:2017nvi,Sirunyan:2018ikr
 This analysis does not present the limits on an exhaustive set of signal models, but rather shows the limits on a few specific models in order to demonstrate the sensitivity of the method.
 For some of these signal models the limits are improved by considerable factors, up to 10 times the existing limits at high $m_B,m_C$;
@@ -113,15 +114,15 @@ The distribution of the average number of pile-up interactions in simulation is 
 
 \subsection{Background: CWoLa and CWoLa Hunting}
 \label{sec:CWoLa:schematic}
-In a standard search for BSM at the LHC, some particular signal model is designated and an event selection is optimized to target this signal relative to the expected background using signal simulation some some proxy for the background (either simulation- or data-based).
+In a standard search for BSM at the LHC, some particular signal model is designated and an event selection is optimized to target this signal relative to the expected background using signal simulation and some proxy for the background (either simulation- or data-based).
 This is for example the strategy pursued in the search presented in Chapter~\ref{ch:HBSM}, in which the event selection was chosen roughly manually to optimize the signal to background discrimination power.
 This strategy is also employed for example by the all-hadronic diboson resonance search~\cite{Aad:2019fbh}, where dedicated $W/Z$ taggers are trained as somewhat of a black box on simulation and then calibrated in data.
 This method of tagging signal can be broadly classified as ``supervised learning'', since the tagger is told what is signal and what is background at time of training.
 
 There are two major drawbacks related to training a classifier in simulation and using it in data.
 First, the simulation of the signal may not itself be entirely accurate, leading to a suboptimal selection even on the specific signal model in data.
-Second, the trained tagger will only be sensitive to the specific signal model used for training, limiting sensitivity to other similar signals but with different values of the features used in training.
 While data/simulation calibrations can remove bias in the tagger, they do not in general remove this suboptimality.
+Second, the trained tagger will only be sensitive to the specific signal model used for training, limiting sensitivity to other similar signals but with different values of the features used in training.
 There is therefore a motivation to train a classifier directly on data to tag whatever signals that may be found there.
 
 There is of course the obvious issue that in data there are no labels on individual events telling the tagger whether the event comes from a signal or background process.
@@ -130,7 +131,7 @@ The basic idea for this method is shown in Figure~\ref{fig:CWoLa:cwolasetup}.
 The setup of CWoLa is that there are two samples, each of which has a mixed composition of signal and background events.
 Crucially, the fraction of signal and background events between the two samples must be different; and while of course the signal and background events must differ from each other in the distributions of some features, the signal events and background events cannot differ among themselves between the two samples
 \footnote{
-Or rather, if there are differences between background events in Sample 1 and background events in Sample 2, those differences must be smaller than the difference in signal/background ratio times the difference between signal and background between the two samples.  
+Or rather, if there are differences between background events in Mixed Sample 1 and background events in Mixed Sample 2, those differences must be smaller than the difference in signal fraction between the two samples times the difference between signal and background.  
 }.
 The insight of the CWoLa method is that a classifier can be trained to distinguish between the two mixed samples using any supervised learning technique.
 The resulting classifier learns to distinguish between the signal and background events.
@@ -144,28 +145,28 @@ The main result of~\cite{Metodiev:2017vrx} is that it can be proved that this pr
   There are two samples, each of which has a mixed but different composition of signal and background events.
   A supervised classifier is trained to distinguish between the two mixed samples.
   This same classifier is then used to distinguish between signal and background events.
-  Figure adapted from~\ref{Metodiev:2017vrx}.
+  Figure adapted from~\cite{Metodiev:2017vrx}.
 }
 \label{fig:CWoLa:cwolasetup}
 \end{figure}
 
 It is worth noting the properties and limitations of this method.
-First, the features used to distinguish between signal and background events cannot or can only be very bad at distinguishing between background events in Mixed Sample 1 and Mixed Sample 2 (and similarly for signal events, though in this analysis the features are chosen such that the signal events have localized distributions in those features and therefore this is not as much of a concern).
+First, the features used to distinguish between signal and background events cannot or can only be very bad at distinguishing between background events in Mixed Sample 1 and Mixed Sample 2 (and similarly for signal events, though typically the signal presence is very small in one sample and basically zero in the other, so this is not as much of a concern).
 Second, the key insight is that it is okay if there is some signal in both mixed samples; however, learning is easiest when the fraction of signal between the two mixed samples differs the most.
 This being said, because the classifier is trained directly on data, it avoids the first major drawback of supervised learning mentioned above, since there is no possible simulation-data difference.
 
 As mentioned above, the second major drawback of supervised learning is that the trained classifier is only sensitive to one particular signal model.
-The idea of ``CWoLa hunting''~\cite{Collins:2018epr,Collins:2019jip} is to use the CWoLa method to be search for BSM physics without a particular signal model in mind.
+The idea of ``CWoLa hunting''~\cite{Collins:2018epr,Collins:2019jip} is to use the CWoLa method to search for BSM physics without a particular signal model in mind.
 In fact, the method learns to tag whatever signal is present in the data, allowing the search to be generically sensitive to new signals that have different distributions of whatever features are used than the background.
 The setup CWoLa hunting is shown schematically in Figure~\ref{fig:CWoLa:cwolahuntingsetup}.
 There is some feature $m_\text{res}$ for which the background has a smoothly falling spectrum, while the signal is narrowly peaked (\textit{resonant}) in that feature.
 Two mixed samples are formed: one with values of $m_\text{res}$ centered near the potential new resonance and one using events in neighboring regions of $m_\text{res}$.
 A neural network (NN) is trained to distinguish between these two mixed samples based on some other features, resulting in an overall score $y$.
-The first mixed sample clearly has a higher signal fraction than the second.
-Because the two mixed samples come from nearby regions of $m_\text{res}$, the difference in distributions of features in the background between the two mixed samples can be smaller than the fraction of signal times the difference in distributions between the signal and background.
+The first mixed sample clearly has a higher signal fraction than the second;
+and because the two mixed samples come from nearby regions of $m_\text{res}$, the difference in distributions of features in the background between the two mixed samples can be smaller than the fraction of signal times the difference in distributions between the signal and background.
 Therefore, because of the principles of CWoLa, the scores from the resulting network $y$ can distinguish between signal and background events. 
 In the case that in fact there was no signal in the first mixed sample, the tagger will either learn to tag randomly or learn to tag based on the minute differences in the background between the samples.
-In either case, after tagging based on the output $y$, the combined spectrum of $m_\text{res}$ can be fit with a smooth function - if indeed there was a signal, there will be a bump in the $m_\text{res}$ spectrum; while if there was no signal, the background should remain smooth, even if the network learned to tag some differences in the background\footnote{This is why it is key to use neighboring regions on both sides. The prevention of background sculpting is a major consideration in this analysis, as discussed in more detail in Section~\ref{sec:CWoLa:Analysis:Overview}}.
+In either case, after tagging based on the output $y$, the combined spectrum of $m_\text{res}$ can be fit with a smooth function - if indeed there was a signal, there will be a bump in the $m_\text{res}$ spectrum; while if there was no signal, the background should remain smooth, even if the network learned to tag some differences in the background\footnote{This is why it is key to use neighboring regions on both sides. The prevention of background sculpting is a major consideration in this analysis, as discussed in more detail in Section~\ref{sec:CWoLa:Analysis:Overview}.}.
 This process is then repeated for different regions of $m_\text{res}$ in order to be sensitive to a broad spectrum of BSM masses.
 One of the key aspects of this technique is a nested cross-validation procedure, which prevents overtraining in the case of no signal presence.
 
@@ -182,7 +183,7 @@ One of the key aspects of this technique is a nested cross-validation procedure,
 \label{fig:CWoLa:cwolahuntingsetup}
 \end{figure}
 
-This and other key aspects are discussed in the following Section, which lays out the assumptions and details of this analysis based on the above ideas with $m_\text{res}=m_{JJ}$.
+This and other key aspects are discussed in the following Section, which lays out the assumptions and specifics of this analysis based on the above ideas with $m_\text{res}=m_{JJ}$.
 
 \clearpage
 \subsection{Analysis Strategy}
@@ -1765,14 +1766,28 @@ For $m_A=5000$ GeV, CWoLa hunting suffers from low statistics in the training, b
 \section{Discussion}
 \label{sec:CWoLa:discussion}
 %-------------------------------------------------------------------------------
-Computing resources:~\ref{app:CWoLa:computing}.
+Fitting and limits.
+Computing resources: Appendix~\ref{app:CWoLa:computing}.
+
+Importance of mass calibration (Chapter~\ref{ch:NI} and Chapter~\ref{ch:GenNI}).
+
+More features.
+Decorrelation (Section~\ref{sec:CWoLa:decorrelation}) and systematics (Section~\ref{sec:CWoLa:systs}).
+
+Application to search in Chapter~\ref{ch:HBSM} (Appendix~\ref{sec:HBSM_app:lowmass}).
+
+Alternates to CWoLa hunting: Appendix~\ref{app:CWoLa:alternatives}.
 
 %\clearpage
 %-------------------------------------------------------------------------------
 \section{Conclusion}
 \label{sec:CWoLa:conclusion}
 %-------------------------------------------------------------------------------
-
-%BEN
-This Chapter has presented a model agnostic resonance search in the all-hadronic final state using the full LHC Run 2 dataset of the ATLAS experiment.  Weakly supervised NNs are used to identify the presence of potential signals without using simulations of any particular signal model.  For jets produced from Lorentz-boosted heavy particle decays, this search is more sensitive than the inclusive dijet search and extends the coverage of the all-hadronic diboson search away from the SM boson masses.  This is the first search that completely covers $A\rightarrow BC$ production where all of $A,B$ and $C$ are BSM particles and can have different masses.  The feature space used by the NNs was only two dimensional, so there is a great potential to extend this methodology to include additional features and more final states.  These extensions, combined with related novel methodologies, will extend the coverage of the ATLAS search program to ensure broad coverage to unanticipated scenarios.
-
+This Chapter has presented a model agnostic search in the dijet final state using the full LHC Run 2 dataset recorded by ATLAS.
+Weakly supervised neural networks are trained entirely in data, without a specific signal model hypothesis, under the principle of classification without labels (CWoLa) in order to identify potential signals.
+The search is sensitive to generic final states of the form $A\rightarrow BC$, where all of $A,B,C$ are massive and may be BSM, with $m_A\sim$ O(TeV) and $m_B,m_C\sim$ O(100 GeV).
+This is the first search to that completely covers the space of $\{m_A,m_B,m_C\}$, and in doing so avoids the large trials factor associated with searching in this 3-dimensional feature space.
+No significant evidence for a localized excess is found in the dijet spectrum between $1.8$ and $8.2$ TeV.
+The search significantly improves the limits for certain specific signal models relative to the incusive dijet search, especially at high $m_B,m_C$.
+As the first analysis to use this new technique, a reduced feature set is used to tag the jets corresponding to the $B$ and $C$ particles, but there is great potential to extend this analysis to include additional features and therefore be more sensitive to specific final states.
+This analysis and these possible extensions extend the coverage of the ATLAS search program and provide an essential means for ensuring ATLAS is sensitive to unanticipated scenarios.
