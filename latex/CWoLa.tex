@@ -1,5 +1,3 @@
-%This search is complementary to existing dedicated searches for resonant new physics in the all-hadronic channel.  In particular, the analysis is similar to the inclusive dijet search~\cite{Aad:2019hjw} when the neural network cut efficiency is 100\% and is sensitive to models targeted by the all-hadronic diboson resonance search~\cite{Aad:2019fbh}.  For the former, the actual sensitivity of the ATLAS dijet search will be much weaker than our 100\% efficiency setup because they use $R = 0.4$ jets, while many of the signals targeted here are not well-captured by such small jets.  For the latter, our search will not be as sensitive when the daughter particles have masses near the Standard Model $W$ and $Z$ boson masses.  However, away from those masses, the diboson search will be largely insensitive and therefore our analysis can provide complementary coverage.  A quantitative comparison to these searches can be found in the main body of this Chapter.  In principle, the low mass boosted dijet search (e.g. a direct search for $B$ or $C$) is also sensitive to the final states targeted in this analysis~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2019zxd,Sirunyan:2019vxa,Sirunyan:2017nvi,Sirunyan:2018ikr}.  However, those limits are order of magnitude weaker than the ones studies here and are therefore not considered further.
-
 \section{Abstract}
 This Chapter presents a search for dijet resonances enabled by new techniques with weak supervision.
 The search does not rely on a specific signal model hypothesis and is sensitive to generic final states of the form $A\rightarrow BC$, where all of $A,B,C$ are massive and may be beyond the Standard Model, with $m_A\sim$O(TeV) and $m_B,m_C\sim$O(100 GeV).
@@ -46,6 +44,18 @@ Though the original proposal for this kind of analysis~\cite{Collins:2019jip} us
 As this is the first search of its kind, this reduction is intended to simplify the analysis and understand fully all the various effects.
 This simplification also allows for the setting of limits on specific signal models, since any limit setting requires the use of simulations of signal models, and the calibration of the large-$R$ jet mass is well-constrained and the uncertainties are well-understood (a similar statement cannot be made about the general substructure of large-$R$ jets).
 This search is therefore essentially a search in the 3-dimensional space of $\{m_A,m_B,m_C\}$, without paying the large trials factor associated with the scan in $\{m_B,m_C\}$.
+
+The results of this search are compared to the results from the ATLAS inclusive dijet search~\cite{Aad:2019hjw}, which as mentioned above is also generically sensitive to decays of the form $A\rightarrow \text{jets}$, but is not specifically sensitive to massive decay products of the $A$
+\footnote{In fact, the incusive dijet search uses small-$R$ jets, so that the decay products of the $B$ and $C$ are not necessarily entirely contained within the jet. Because of this, as the masses of the $B$ and $C$ particle get larger for fixed $m_A$, the limits from the incusive dijet search get worse.}.
+Also relevant are the results from the ATLAS all-hadronic diboson resonance search~\cite{Aad:2019fbh}, which targets signal models of the form $A\rightarrow WW/WZ/ZZ$ and is thus sensitive to signals with $m_B~m_C~m_{W/Z}$
+\footnote{In fact this analysis is expected to be considerably more sensitive to these signals, since the substructure of the jets is used in addition to the masses in order to tag the $W$ and $Z$ particles.}
+, but has no sensitivity outside that range.
+There are also searches for direct production of $B,C$~\cite{Aaboud:2018zba,Aaboud:2018fzt,Aaboud:2019zxd} when these are produced in association with photons or jets and their decay products are therefore collimated into a single large-$R$ jet as in this analysis.
+However, those limits are order of magnitude weaker than the ones studies here and are therefore not considered further.
+%$Sirunyan:2019vxa,Sirunyan:2017nvi,Sirunyan:2018ikr
+This analysis does not present the limits on an exhaustive set of signal models, but rather shows the limits on a few specific models in order to demonstrate the sensitivity of the method.
+For some of these signal models the limits are improved by considerable factors, up to 10 times the existing limits at high $m_B,m_C$;
+for other signals, especially at low $m_B,m_C$, the technique sets about the same, worse, or no limits at all.
 
 This Chapter is organized as follows.
 First, Section~\ref{sec:CWoLa:eventsamples} introduces the data and simulated event samples.
@@ -97,52 +107,85 @@ The distribution of the average number of pile-up interactions in simulation is 
 
 \clearpage
 %-------------------------------------------------------------------------------
-\section{Analysis Strategy}
+\section{Analysis Overview}
 \label{sec:CWoLa:analysis}
 %-------------------------------------------------------------------------------
 
-\subsection{Background: classification without labels (CWoLa)}
+\subsection{Background: CWoLa and CWoLa Hunting}
 \label{sec:CWoLa:schematic}
+In a standard search for BSM at the LHC, some particular signal model is designated and an event selection is optimized to target this signal relative to the expected background using signal simulation some some proxy for the background (either simulation- or data-based).
+This is for example the strategy pursued in the search presented in Chapter~\ref{ch:HBSM}, in which the event selection was chosen roughly manually to optimize the signal to background discrimination power.
+This strategy is also employed for example by the all-hadronic diboson resonance search~\cite{Aad:2019fbh}, where dedicated $W/Z$ taggers are trained as somewhat of a black box on simulation and then calibrated in data.
+This method of tagging signal can be broadly classified as ``supervised learning'', since the tagger is told what is signal and what is background at time of training.
 
-%BEN
-In a traditional search for BSM at the LHC, a particular signal sample is simulated and an event selection (`cuts') are optimized to maximize some proxy for the discovery $p$-value or exclusion $\text{CL}_\text{s}$ value (these quantities are discussed more in Section~\ref{sec:CWoLa:statanalysis}).  For example, this is the strategy used in the all-hadronic diboson resonance search, where dedicated $W/Z$ jet taggers are developed based on simulation and then calibrated with data.  This class of analysis techniques is called `supervised learning'.  
+There are two major drawbacks related to training a classifier in simulation and using it in data.
+First, the simulation of the signal may not itself be entirely accurate, leading to a suboptimal selection even on the specific signal model in data.
+Second, the trained tagger will only be sensitive to the specific signal model used for training, limiting sensitivity to other similar signals but with different values of the features used in training.
+While data/simulation calibrations can remove bias in the tagger, they do not in general remove this suboptimality.
+There is therefore a motivation to train a classifier directly on data to tag whatever signals that may be found there.
 
-%BEN
-Training in simulation and calibrating/testing (`applying') on data has two major drawbacks.  First, a signal model is required to train the classifier (e.g. pick the `cuts' or train a neural network).  This drawback will be revisited later in this section.  Second, if the information that is useful for distinguishing signal and background is not the same between data and simulation, then the classifier developed in simulation will be sub-optimal when applied to data.  Calibration ensures that the classifier is unbiased, but does not guarantee optimality.  To see this, consider a classifier that randomly guesses: this is easy to calibrate, but obviously performs poorly.  As a result of these drawbacks, there is a strong motivation to train directly on data.
+There is of course the obvious issue that in data there are no labels on individual events telling the tagger whether the event comes from a signal or background process.
+However, a series of techniques using ``weakly supervised learning'' have been developed for high energy physics, which allow for learning even when these per-instance labels are not present~\cite{Metodiev:2017vrx,Dery:2017fap,Cohen:2017exh,Komiske:2018oaa}.
+The basic idea for this method is shown in Figure~\ref{fig:CWoLa:cwolasetup}.
+The setup of CWoLa is that there are two samples, each of which has a mixed composition of signal and background events.
+Crucially, the fraction of signal and background events between the two samples must be different; and while of course the signal and background events must differ from each other in the distributions of some features, the signal events and background events cannot differ among themselves between the two samples
+\footnote{
+Or rather, if there are differences between background events in Sample 1 and background events in Sample 2, those differences must be smaller than the difference in signal/background ratio times the difference between signal and background between the two samples.  
+}.
+The insight of the CWoLa method is that a classifier can be trained to distinguish between the two mixed samples using any supervised learning technique.
+The resulting classifier learns to distinguish between the signal and background events.
+The main result of~\cite{Metodiev:2017vrx} is that it can be proved that this procedure produces an optimal classifier for distinguishing signal from background in the asymptotic limit (enough data, flexible enough training model, etc.).
 
-%BEN
-The reason that training directly on data is complicated is that we do not have per-instance labels, i.e. we do not know on an event-by-event basis if the event is signal or background.  A series of techniques in weakly supervised learning have been developed for high energy physics, which allow for learning with less than per-instance labels~\cite{Metodiev:2017vrx,Dery:2017fap,Cohen:2017exh,Komiske:2018oaa}.  One such technique is called classification without labels (CWoLa)~\cite{Metodiev:2017vrx}.  The setup for this method is shown schematically in Figure~\ref{fig:CWoLa:cwolasetup}.  In this setup, there are two event samples that are each a superposition of signal and background.  The fraction of signal in each sample is not known, but the statistical properties of the signal (and background) events are the same between the two mixed samples.  The only difference between the samples is that the fraction of signal could be different.  In the CWoLa method, each event in the first mixed sample is labeled as 0 and each event in the second mixed sample is labeled as 1.  Now, each event has a label and one can apply any supervised learning technique.  The resulting classifier is then used to distinguish signal from background.  The main result of Ref.~\cite{Metodiev:2017vrx} is that this procedure produces a provably optimal classifier to distinguishing signal from background in the asymptotic limit (enough data, flexible enough training model, etc.).  It is worth pausing for a moment to point out key features of this method:
-
-%BEN
-\begin{itemize}
-\item Whatever technique was used to make the mixed samples can't be useful for distinguishing signal and background events.
-  This is another way of restating the requirement that the statistics of the signal in mixed sample 1 must be the same as the statistics of the signal in mixed sample 2.
-  {\color{white!70!black}In Section~\ref{sec:CWoLa:Analysis:Overview} this will mean that the jet substructure features used for tagging must be approximately independent of $m_{JJ}$ (actually, only a weaker condition will be required).}
-\item It is okay that there is signal in both mixed samples.  However, learning is easiest (need the least amount of data) when the fraction of signal is much smaller in one of the two mixed samples.  Related: CWoLa will learn nothing if the fraction of signal is the same in both mixed samples.   {\color{white!70!black}In Section~\ref{sec:CWoLa:Analysis:Overview} this will mean that (a) it is okay if a signal is not fully contained in one $m_{JJ}$ bin and (b) we are doubly-penalized for weak signals (few events for training and few events for testing).}
-\end{itemize}
-
-%BEN - Citation
 \begin{figure}
 \centering
 \includegraphics[width=0.6\textwidth]{figures_CWoLa/cwola.pdf}
-\caption{In the setup of classification without labels, there are two mixed samples with an unknown composition of signal and background.  In the CWoLa approach, all events in the first of these two mixed samples is labeled 0 and all events in the second mixed sample are labeled 1.  A supervised classifier is then trained to distinguish between the 0's and 1's.  This same classifier is then used to distinguish signal from background.}
+\caption{
+  Schematic of basic idea behind classification without labels (CWoLa), represented by a koala bear.
+  There are two samples, each of which has a mixed but different composition of signal and background events.
+  A supervised classifier is trained to distinguish between the two mixed samples.
+  This same classifier is then used to distinguish between signal and background events.
+  Figure adapted from~\ref{Metodiev:2017vrx}.
+}
 \label{fig:CWoLa:cwolasetup}
 \end{figure}
 
-%BEN
-As mentioned above, the second drawback of traditional supervised learning is that one needs a signal model.  The idea of `CWoLa hunting'~\cite{Collins:2018epr,Collins:2019jip} is to use the CWoLa training scheme to look for BSM physics without a particular signal model in mind.  The setup for the CWoLa-based search is shown schematically in Figure~\ref{fig:CWoLa:cwolahuntingsetup}.  There is one dimension where a potential signal is known to be localized (`resonant'), denoted $m_\text{res}$.  Two mixed samples are formed: one centered on the potential resonance and one formed on regions just to the left and right of the signal region.  These sideband regions should be as small as possible so that other properties of the events do not change significantly between the signal region and sideband region, but as large as possible to have sufficient training statistics.  Features (`y') that are approximately orthogonal (this statement is made more precise in Section~\ref{sec:CWoLa:Analysis:Overview}) are then used for the CWoLa training described above.  If there is signal in the signal region, then placing a threshold on the resulting neural network should enhance it over the background.  This process is then repeated for different partitions of signal and sideband to be sensitive to a broad spectrum of BSM masses.  One of the key aspects of the full technique is a nested cross-validation procedure in order to mitigate the look-elsewhere effect.  This is described in Section~\ref{sec:CWoLa:network}.
+It is worth noting the properties and limitations of this method.
+First, the features used to distinguish between signal and background events cannot or can only be very bad at distinguishing between background events in Mixed Sample 1 and Mixed Sample 2 (and similarly for signal events, though in this analysis the features are chosen such that the signal events have localized distributions in those features and therefore this is not as much of a concern).
+Second, the key insight is that it is okay if there is some signal in both mixed samples; however, learning is easiest when the fraction of signal between the two mixed samples differs the most.
+This being said, because the classifier is trained directly on data, it avoids the first major drawback of supervised learning mentioned above, since there is no possible simulation-data difference.
 
-%BEN - citation
+As mentioned above, the second major drawback of supervised learning is that the trained classifier is only sensitive to one particular signal model.
+The idea of ``CWoLa hunting''~\cite{Collins:2018epr,Collins:2019jip} is to use the CWoLa method to be search for BSM physics without a particular signal model in mind.
+In fact, the method learns to tag whatever signal is present in the data, allowing the search to be generically sensitive to new signals that have different distributions of whatever features are used than the background.
+The setup CWoLa hunting is shown schematically in Figure~\ref{fig:CWoLa:cwolahuntingsetup}.
+There is some feature $m_\text{res}$ for which the background has a smoothly falling spectrum, while the signal is narrowly peaked (\textit{resonant}) in that feature.
+Two mixed samples are formed: one with values of $m_\text{res}$ centered near the potential new resonance and one using events in neighboring regions of $m_\text{res}$.
+A neural network (NN) is trained to distinguish between these two mixed samples based on some other features, resulting in an overall score $y$.
+The first mixed sample clearly has a higher signal fraction than the second.
+Because the two mixed samples come from nearby regions of $m_\tex{res}$, the difference in distributions of features in the background between the two mixed samples can be smaller than the fraction of signal times the difference in distributions between the signal and background.
+Therefore, because of the principles of CWoLa, the scores from the resulting network $y$ can distinguish between signal and background events. 
+In the case that in fact there was no signal in the first mixed sample, the tagger will either learn to tag randomly or learn to tag based on the minute differences in the background between the samples.
+In either case, after tagging based on the output $y$, the combined spectrum of $m_\text{res}$ can be fit with a smooth function - if indeed there was a signal, there will be a bump in the $m_\text{res}$ spectrum; while if there was no signal, the background should remain smooth, even if the network learned to tag some differences in the background\footnote{This is why it is key to use neighboring regions on both sides. The prevention of background sculpting is a major consideration in this analysis, as discussed in more detail in Section~\ref{sec:CWoLa:Analysis:Overview}}.
+This process is then repeated for different regions of $m_\text{res}$ in order to be sensitive to a broad spectrum of BSM masses.
+One of the key aspects of this technique is a nested cross-validation procedure, which prevents overtraining in the case of no signal presence.
+
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{figures_CWoLa/cwolahuntingsetup.pdf}
-\caption{The setup for a search-based application of the CWoLa technique.  The other features $y$ can be used to train CWoLa.  The requirement is that $y$ is (nearly) independent of $m_\text{res}$.  Note that it is okay if there is some signal in the sidebands.}
+\caption{
+  A schematic for the setup of CWoLa hunting.
+  The background has a smoothly falling spectrum in some feature $m_\text{res}$, while the signal is narrowly peaked (resonant) in that feature.
+  A network is trained to distinguish between a narrow region of $m_\text{res}$ in which the signal lies from its neighboring regions.
+  Because of the principles of CWoLa, the scores from the resulting network $y$ can distinguish between signal and background events. 
+  Figure adapted from~\cite{ref:TODO}.
+}
 \label{fig:CWoLa:cwolahuntingsetup}
 \end{figure}
 
-The next section describes the analysis strategy, based on the above ideas with $m_\text{res}=m_{JJ}$.
+This and other key aspects are discussed in the following Section, which lays out the assumptions and details of this analysis based on the above ideas with $m_\text{res}=m_{JJ}$.
 
-\subsection{Analysis Overview}
+\clearpage
+\subsection{Analysis Strategy}
 \label{sec:CWoLa:Analysis:Overview}
 This analysis utilizes the concept of Classification Without Labels (CWoLa) described in Section~\ref{sec:CWoLa:schematic} in order to be sensitive to a broad class of non-SM models of the form $A\rightarrow BC$, with $A$ massive and on-shell, and the decay products of $B$ and $C$ reconstructed as large-$R$ jets in the ATLAS calorimeter.
 In these models, the reconstructed dijet mass $m_{JJ}$ will show a peak near the mass of the $A$, with width determined by the dijet mass resolution.
