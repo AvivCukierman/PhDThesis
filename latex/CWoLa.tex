@@ -1766,17 +1766,45 @@ For $m_A=5000$ GeV, CWoLa hunting suffers from low statistics in the training, b
 \section{Discussion}
 \label{sec:CWoLa:discussion}
 %-------------------------------------------------------------------------------
-Fitting and limits.
-Computing resources: Appendix~\ref{app:CWoLa:computing}.
+The search presented in this Chapter demonstrates for the first time the use of CWoLa hunting to search for unanticipated signals directly in data.
+As such, considerable effort was put into the neural network training, especially the intricate cross-validation procedure (Section~\ref{sec:CWoLa:network}).
+However, some of the most challenging aspects of this analysis were the fitting procedure (Section~\ref{sec:CWoLa:fitting}) and the subsequent limit setting (Section~\ref{sec:CWoLa:limits}).
+While the task of fitting an $m_{JJ}$ spectrum with a parametric fit function over large numbers of events is one aspect that this analysis shares with almost every other dijet resonance search, the number of such fits required in this analysis is far greater than any existing analysis.
+Most dijet searches only do a few fits ultimately, especially if the background fit is decoupled from the POI scan (so that the POI scan fits have only a couple free parameters and converge quickly) like in this analysis.
+However, this analysis uniquely requires a huge number of background fits for the limit setting - one for each signal hypothesis, for each injected signal strength $\mu$, for each NN selection $\epsilon$ - amounting to hundreds of background fits.
+The limit setting procedure used in this analysis is also novel, due to the unique situation where the event selection depends on the presence of the signal and therefore the likelihood function $\mathcal{L}(\mu,\theta)$ is extremely complicated.
+Therefore, the likelihood function can only be approximated by examining it at a few discrete points $\mu$, rather than having an analytic dependence as is the usual case.
+Each of these challenges could be helped by simply increasing the computing time spent on this analysis.
+That being said, the computing resources used in this analysis are already considerable, taking days-weeks just to train all the neural networks.
+More details about the computing resources used in this analysis can be found in Appendix~\ref{app:CWoLa:computing}.
 
-Importance of mass calibration (Chapter~\ref{ch:NI} and Chapter~\ref{ch:GenNI}).
+In this iteration of the analysis, the features used were simply the masses of the two jets $\{m_1,m_2\}$.
+It is anticipated that this kind of 3-dimensional search in $\{m_A,m_B,m_C\}$ will turn into a standard result ATLAS publishes like the inclusive dijet search.
+For this search, the only handles on tagging the signal are the masses of the jets, and in particular rely heavily on an accurate calibration and good resolution of the large-$R$ jet mass.
+The dijet resolution is also important for narrowing the $m_{JJ}$ signal regions, which depends on an accurate calibration and good resolution of the large-$R$ jet energy.
+The techniques presented in Chapter~\ref{ch:NI} and Chapter~\ref{ch:GenNI} focus mostly on calibrations of small-$R$ jets, but these techniques are intended as general calibration techniques which should apply readily to the calibration of large-$R$ jets as well.
+In particular, the Author has contributed to a project intended to better calibrate the mass and energy of large-$R$ jets~\cite{ATL-PHYS-PUB-2020-001} based directly on the novel technique presented in Chapter~\ref{ch:GenNI}.
 
-More features.
-Decorrelation (Section~\ref{sec:CWoLa:decorrelation}) and systematics (Section~\ref{sec:CWoLa:systs}).
+A natural extension of this analysis is to include more features of the two jets, especially the jet substructure which is known to tag jets resulting from top quarks and $W/Z$ hadronic decays~\cite{Aaboud:2018psm}.
+Indeed, the original proposal for this analysis~\cite{Collins:2018epr} uses jet substructure information like N-subjettiness~\cite{Thaler:2010tr} to tag the jets and be much more sensitive to new signals that have non-trivial distributions in those features.
+Other ideas for using additional information about the jets are to include features which are typically used for $b$- or $c$-tagging~\cite{ref:TODO}, di-$b$-tagging for Higgs identification~\cite{ref:TODO}, photon and electron identification~\cite{ref:TODO}, $\tau$-tagging~\cite{ref:TODO}, or quark-gluon tagging~\cite{ATL-PHYS-PUB-2017-009}.
+Each of these sets of features would allow this analysis to be more sensitive to resonant decays to the given standard model particles, but also other more exotic jets produced from BSM particles.
+For example, using the entire jet image~\cite{ATL-PHYS-PUB-2017-017} to construct features with convolutional neural networks~\cite{ref:TODO} could enable the low-mass extension of the search presented in Chapter~\ref{ch:HBSM}, in which the $a$ particles are each reconstructed as single small-$R$ jets with exotic substructures due to the boosted $gg$ and $\gamma\gamma$ decays.
 
-Application to search in Chapter~\ref{ch:HBSM} (Appendix~\ref{sec:HBSM_app:lowmass}).
+A word of caution should be raised here about these exciting possibilities, though.
+The first thing to mention is that one advantage of using a reduced feature space is that calibrations and systematic uncertainties are available on all the included features (Section~\ref{sec:CWoLa:systs}).
+This allows limits to be set on specific signal models while including all the known uncertainties between the simulation and the data.
+The use of any other jet substructure features may not come with these calibrations and uncertainties, meaning that the limit projections may be biased or that additional performance work will need to be done to enable the analysis.
+Of course, one of the main advantages of CWoLa hunting in the first place is that it does not require a specific signal model hypothesis and simply learns to tag whatever signal happens to be in data, if such a signal exists; i.e., the network itself does not need to be calibrated, and the only reason simulations are required are to understand what would have happened if a given signal were present.
+The second consideration that should go into adding additional features has to do with accounting for correlations between the features and $m_{JJ}$.
+This analysis spent considerable effort on imposing a decorrelation between the features and $m_{JJ}$ (Section~\ref{sec:CWoLa:decorrelation}), and it is not clear exactly how this could be extended to arbitrary numbers and types of features.
+That being said, it is also true that of all the jet substructure features other than the jet \pt{} itself, the jet mass is probably the most correlated with the jet \pt{} and therefore with $m_{JJ}$, so that some other set of jet substructure features may not need to be decorrelated in this way.
 
-Alternates to CWoLa hunting: Appendix~\ref{app:CWoLa:alternatives}.
+There are even more speculative extensions using the principle of CWoLa beyond the dijet search involving more complicated topologies or even whole event information.
+The formulation of CWoLa and CWoLa hunting (Section~\ref{sec:CWoLa:schematic}) is quite general and any set of features satisfying the underlying principles should lend itself to the CWoLa hunting technique.
+
+It is also important to mention that there are alternatives to CWoLa hunting which can also be broadly sensitive to new unanticipated signal models in data.
+These alternative techniques are discussed in Appendix~\ref{app:CWoLa:alternatives}.
 
 %\clearpage
 %-------------------------------------------------------------------------------

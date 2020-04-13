@@ -492,12 +492,6 @@ For $m_A=5000$ GeV, for the best-performing signals at high $m_B,m_C$, the limit
 \end{figure}
 
 \clearpage
-\section{Alternatives to CWoLa Hunting}
-\label{app:CWoLa:alternatives}
-
-%BEN
-A variety of background-model dependent searches have been proposed with and without machine learning~\cite{DAgnolo:2018cun,DeSimone:2018efk,CMS:2017yoc,Aaboud:2018ufy}.  Many searches have been proposed based on autoencoders~\cite{Farina:2018fyg,Heimel:2018mkt,Roy:2019jae,Cerri:2018anq,Blance:2019ibf,Hajer:2018kqm}, but these must also be combined with a background estimation strategy, either in the form of a bump hunt, or using simulation.  Other unsupervised approaches have also been proposed that must also be combined with a background estimation strategy~\cite{1809.02977,Dillon:2019cqt}.  Unsupervised approaches tend to be less sensitive than CWoLa hunting when signal rates are large enough because they do not use anything about the signal to construct the classifier.  For the same reason, these approaches can do well when there is very little signal.
-
 \section{Computing Resources}
 \label{app:CWoLa:computing}
 
@@ -516,4 +510,19 @@ Altogether it takes $\mathcal{O}$(days-weeks) in compute time to reproduce all t
 
 Each job stores $\mathcal{O}(100)$ MB of data in output, since there are tens of millions of events for which a few key features have to be stored, e.g. the NN output and the values of the features and $m_{JJ}$.
 Probably wastefully, each step of the validation combination process is stored as a new file, in order to reduce computation time, increasing the amount of storage by a factor of $\sim 2$.
-Therefore the whole analyses uses a few TB in storage space, which again we are grateful to the SLAC computing facilities for providing and maintaining.
+Therefore the whole analysis uses a few TB in storage space, which again we are grateful to the SLAC computing facilities for providing and maintaining.
+
+\section{Alternatives to CWoLa Hunting}
+\label{app:CWoLa:alternatives}
+
+A variety of searches have been proposed (with and without machine learning) which basically test the compatibility of the observed data with the background-only hypothesis in a portmanteau test by comparing the observed data directly to the simulation of the background~\cite{DAgnolo:2018cun,DeSimone:2018efk,CMS:2017yoc,Aaboud:2018ufy}.
+These searches obviously rely heavily on accurate simulations of the background processes, while CWoLa hunting does not use any background simulations in the final analysis pipeline.
+
+As more direct competitors to CWoLa hunting, many searches have been proposed based on autoencoders~\cite{Farina:2018fyg,Heimel:2018mkt,Roy:2019jae,Cerri:2018anq,Blance:2019ibf,Hajer:2018kqm}, as well as other unsupervised techniques that do not use autoencoders~\cite{1809.02977,Dillon:2019cqt}.
+These techniques must also be combined with a background estimation strategy, either in the form of a bump hunt, or using simulation, similarly to CWoLa hunting.
+The main difference between these techniques and CWoLa hunting is that they are \textit{un}supervised, while CWoLa hunting is \textit{weakly} supervised.
+I.e., the unsupervised methods simply find natural groupings or patterns in the data, and it may be the case that a new signal does not fit into those groupings or follow those patterns so that the unsupervised network can tag these as anomalies (however such an outcome is not guaranteed).
+The weakly supervised method, on the other hand, does see the signal during its training, if it exists, and so therefore can be biased towards better tagging the signal.
+Because of this difference, when signal rates are large enough such that the weakly supervised network can learn some information to tag the signal itself, the weak supervision method is superior.
+On the other hand, the unsupervised approaches can do better when there is very little signal.
+
