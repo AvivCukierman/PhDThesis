@@ -1,0 +1,143 @@
+\section{Introduction}
+At a hadron collider like the LHC, quarks and gluons are produced copiously.
+These quarks and gluons are not observed directly - because of color confinement, these \textit{partons} fragment and hadronize almost immediately, leading to a collimated spray of hadronic particles which are ultimately observed in the calorimeter.
+Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ particles, are also produced and play vital roles in searches and measurements at the LHC; the hadronic decays of these particles either are the primary way or an extremely important way of identifying their production in an event.
+Jets are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
+
+There are a variety of jet algorithms, the most common one being used at the LHC today being the \antikt{} algorithm, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
+These algorithms act on any set of seeds, which in the context of ATLAS correspond to individual clusters of energy observed in the calorimeter.
+Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ particles, photons, and electrons are in addition reconstructed as small-$R$ jets in the calorimeter; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
+Both small- and large-$R$ jets have a variety of \textit{grooming} techniques applied to clean up the substructure in order to remove the effects of the underlying event and of multiple in and out of time simultaneous collisions (\textit{pile-up}).
+There is also often a \textit{tagging} step where the substructure of the jet is used to identify the provenance of the jet.
+
+As almost all particles produced at the LHC are reconstructed as jets, other than muons and neutrinos, jets play an essential role in almost every search and measurement in ATLAS.
+This Thesis in particular discusses two searches (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) that use jets extensively, and further delves deeply into methods for improving the calibration of the energy of jets (Chapter~\ref{ch:NI} and Chapter~\ref{ch:GenNI}).
+
+This Chapter is organized as follows.
+Section~\ref{sec:jets:def} discusses the definition of jets used in ATLAS.
+Section~\ref{sec:jets:grooming} goes over how these jets are groomed, and Section~\ref{sec:jets:tagging} discusses how jets are tagged.
+
+\section{Jet Definition}
+\label{sec:jets:def}
+Jet algorithms are functions for mapping a set of \textit{seeds} observed in a calorimeter to groupings of those seeds, called jets.
+For example, Figure~\ref{fig:jets:eventdisplays} shows two events recorded in the ATLAS detector - one with two hard jets (\textit{dijet}) and one with multiple (\textit{multijet}).
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{eventdisplay_dijet}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{eventdisplay_multijet}.png}}\\
+  \caption{Two events recorded by the ATLAS detector in data-taking at $\sqrt{s}=7$ TeV $pp$ collisions. (a) A dijet event. (b) A multijet event. Figures sourced from ~\cite{EventDisplayStandAlone}.}
+  \label{fig:jets:eventdisplays}
+\end{figure}
+
+In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeter~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; or as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker.
+From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum (\pt) and some position ($\eta,\phi$) in the calorimeter (in particular, seeds are assumed to have zero mass).
+Figure~\ref{fig:jets:seeds} shows an event display with the seeds in the ($\eta,\phi$) plane.
+
+Jets have a long history in high energy physics and various definition with different properties have been used~\cite{Salam:2009jx}.
+The Snowmass Accords~\cite{Huth:1990mi} laid out a series of properties jet definitions should have in order to be both useful experimentally and also tractable theoretically and computationally.
+In particular, jets should be \textit{IRC} safe, which is a portmanteau of \textit{IR} and \textit{collinear} safety.
+IR safety requires that soft (i.e., infrared) emissions should not affect the set of jets the algorithm produces, as soft emissions can grow without bound in theoretical computations.
+Collinear safety requires that if a single seed splits into multiple collinear seeds sharing the original seed's momentum, this should also not affect the output of the algorithm; again, theoretically there is no difference between a single particle and that same particle split into multiple entities with the same total four-momentum.
+In practice calorimeters tend to be both IR and collinear safe, as noise-suppression removes soft emissions and the finite size of calorimeter cells sum up nearly collinear particles; but it is still desired for the algorithm itself to obey these properties for theoretical calculations.
+
+The most common contemporary jet algorithms are called \textit{sequential recombination} algorithms, though there is a long history of other types of algorithms which will not covered here~\cite{Salam:2009jx}.
+In these algorithms, every seed is first denoted to be a \textit{proto-jet}, and a distance parameter $d_{ij}$ is defined between every pair of proto-jets $i$ and $j$.
+The algorithm then proceeds as folows:
+\begin{enumerate}
+  \item Calculate the distance $d_{ij}$ between every pair of existing proto-jets.\label{jets:step1}
+  \item Find the minimum $d_{ij}$ over all pairs of proto-jets $i,j$, $d_\text{min}$.
+  \item If $d_\text{min}$ is less than some threshold, then combine proto-jets $i$ and $j$ into a single proto-jet and go back to step~\ref{jets:step1}.
+  \item Else, terminate and let all existing proto-jets be the output jets of the algorithm.
+\end{enumerate}
+
+\noindent The \kt{} jet algorithms use the distance metric
+\begin{align}
+  d_{ij} &= \text{min}\left(p_{\text{T}i}^{2p},p_{\text{T}j}^{2p}\right)\frac{\Delta R_{ij}^2}{R^2}, \hspace{2cm}\Delta R_{ij}^2 = (y_i-y_j)^2+(\phi_i-\phi_j)^2\\
+  d_{iB}&=p_{\text{T}i}^{2p}
+\end{align}
+with $p$ and $R$ free parameters of the algorithm\footnote{Here the rapidity $y$ is used instead of the pseudorapidity $\eta$. $y$ is a kinematic quantity: $y=\frac{1}{2}\ln\frac{E+p_z}{E-p_z}$; while $\eta$ is a geometric quantity: $\eta = -\ln\tan\theta/2$. For massless particles $y=\eta$, so originally the distinction is meaningless; however, proto-jets may and in general do have non-zero mass. Differences in rapidity are invariant under longitudinal boosts, while differences in pseudorapidity are invariant only for massless particles.}.
+$d_{iB}$ is called the beam distance, and if $d_\text{min}$ is a $d_{iB}$ the proto-jet is removed from the event and added to the list of final jets; there is no minimum threshold but rather the algorithm continues until there are no more proto-jets in the event.
+
+The algorithm with $p=1$ is called the \kt{} algorithm~\cite{Ellis:1993tq}, with $p=0$ is called the Cambridge-Aachen algorithm~\cite{Dokshitzer:1997in}, and with $p=-1$ is called the \antikt algorithm~\cite{Cacciari:2008gp}.
+The \antikt{} algorithm is the standard jet algorithm used in ATLAS and CMS.
+First, it is manifestly IRC safe - low \pt{} seeds get added to high \pt{} proto-jets if $\Delta R<R$ without affecting the proto-jet itself in the limit $\pt\rightarrow 0$, and collinear splittings are combined together since $\Delta R\rightarrow 0$.
+Second, the algorithm tends to make circular jets with radius $R$ for isolated clusters, and if there are two clusters within $R<\Delta R<2R$ then the highest \pt{} cluster is circular while the second cluster is a crescent.
+The results of an \antikt{} jet algorithm can be seen in Figure~\ref{fig:jets:clustered}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{eventdisplay_dijet_seeds}.png}\label{fig:jets:seeds}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{eventdisplay_dijet_clustered}.png}\label{fig:jets:clustered}}\\
+  \caption{A simulation of a dijet event. (a) The seeds in the ($\eta,\phi$) plane. (b) The results of the \antikt{} jet algorithm with distance parameter $R=1.0$ (jets with $\pt<20$ GeV removed). Figures sourced from~\cite{JetEtmissApprovedBOOST2014EventDisplays}.}
+  \label{fig:jets:algo}
+\end{figure}
+
+As mentioned above, the most common distance parameters used are $R=0.4$ (\textit{small-$R$ jets}) and $R$=1.0 (\textit{large-$R$ jets}).
+The distance parameters correspond exactly to the size of the circular cone formed by the jet, and are intended to target the decays of particles with typical sizes on the order of the respective $R$.
+
+The decay products of light quarks and gluons have a spread due to the hadronic fragmentation.
+The calculation of the size of this spread is in general very complicated, but jets with $R=0.4$ are used to capture the decay products of these partons.
+Gluons are slightly wider than quarks due to the difference in their color charge, and for $R=0.4$ roughly 89\% of the originating particle \pt{} for gluons and 95\% for quarks ends up within the catchment area of the jet~\cite{Salam:2009jx}.
+Photons and electrons decay primarily in the electromagnetic calorimeter, but as the seeds are formed from clusters in the electromagnetic and hadronic calorimeters, and the typical size of photon and electron decays is $\sim 0.2$~\cite{ref:TODO}, these are also reconstructed as small-$R$ jets.
+
+For massive particles, the opening angle of the decay products is generically roughly $\Delta R \sim \frac{2m}{\pt}$~\cite{Shelton:2013an}.
+With $\pt\gtrsim 2m$, the opening angle is therefore $\Delta R \lesssim 1.0$, and the particle can be reconstructed as a single large-$R$ jet.
+When the decay products of a massive particle can be reconstructed as a single jet, it is called \textit{boosted}, while for lower \pt{} it is called \textit{resolved}.
+$\tau$ particles decay hadronically roughly 65\% of the time~\cite{ref:TODO}, although with their mass around 1.7 \GeV{} they are reconstructed as small-$R$ jets.
+Large-$R$ jets are used for particles on the electroweak scale, like $W/Z$ bosons, top quarks, and even boosted Higgs bosons, for $\pt\gtrsim 200$ GeV, which are typical scales for these particles at the LHC.
+The opening angle $\Delta R$ for the decay products of $W$ bosons and top quarks can be seen for example in Figure~\ref{fig:jets:deltaR}.
+These large-$R$ jets have substructure that can be used to tag the provenance of the jet; these techniques are discussed further in Section~\ref{sec:jets:tagging}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{deltaR_W_qq}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{deltaR_top_Wb}.png}}\\
+  \caption{Simulated distributions of $\Delta R$ between decay products of massive particles as a function of the particle \pt. (a) For hadronically decaying $W\rightarrow q\bar{q}$. (b) For hadronically decaying $t \rightarrow Wb$. Figures sourced from~\cite{Aad:2013gja}.}
+  \label{fig:jets:deltaR}
+\end{figure}
+
+If there are $N$ seeds in the event, then the set of \kt{} algorithms require calculating the pair-wise distance $d_{ij}$ among all proto-jets, which takes $O(N^2)$ time; and then repeating that process until all jets have been found, which in general is $O(N)$.
+Thus the whole algorithm naively takes $O(N^3)$ time, which is prohibitive for events in which $N$ can be in the hundreds.
+However, faster algorithms using nearest neighbor algorithms~\cite{Cacciari:2005hq} have reduced this computation time to $O(N\log N)$, a significant improvement.
+In practice this algorithm is executed with the FastJet package~\cite{Cacciari:2011ma}.
+
+\section{Grooming}
+\label{sec:jets:grooming}
+A typical $pp$ collision at the LHC produces many radiative particles other than the hard-scatter interaction just from the interactions of all the constituent quarks and internal gluons in the protons; this is referred to as \textit{underlying event}.
+In addition, as will be mentioned in~\ref{sec:LHC:luminosity}, the collisions occur in whole bunches of $10^{11}$ protons, so that there are multiple simultaneous interactions in single bunch crossing; this is referred to as \textit{in-time pile-up}.
+There is also \textit{out-of-time pile-up}, which are leftover energy deposits from previous bunch crosses.
+Taken together these effects form a layer of soft particles spread diffusely over the entire event, which can end up in the catchment area of jets and add noise to the jet measurements.
+
+Because of this, there is a desire to \textit{groom} jets by removing whatever seeds ended up in their catchment areas and originate from underlying event or pile-up.
+
+Small-$R$ jets are not typically groomed directly, but rather the first step of the calibration process is a jet-wide pile-up subtraction formed by estimating the pile-up density in the event $\rho$ and area of the jet $A$.
+However, there are a series of exciting new techniques proposed which do groom small-$R$ jets on the constituent level.
+The Author has contributed towards implementing some of these techniques~\cite{ATLAS-CONF-2017-065} by estimating the catchment areas of seeds using Voronoi areas and subtracting pile-up from the seeds directly; these subtracted seeds can further be removed as a grooming procedure.
+
+Large-$R$ jets have a much larger catchment area and are therefore more susceptible to underlying event and pile-up.
+Though the soft radiation from underlying event and pile-up does not affect the overall energy that much, especially for jets with high \pt{}, the jet mass can be significantly adversely affected by soft wide-angle radiation.
+Since large-$R$ jets are typically used to identify massively decaying particles, it is therefore important to remove this source of noise.
+
+There have been a variety of grooming techniques proposed for large-$R$ jets~\cite{Aad:2013gja}, but the standard contemporary technique in ATLAS is jet trimming~\cite{Krohn:2009th}.
+In trimming, the constituents of a jet are reclustered using a different jet algorithm with smaller distance parameter in order to find distinct subjets.
+These subjets are then removed (`trimmed') if their \pt{} fraction of the whole jet is less than some $f_\text{sub}$; then the only remaining subjets are hard clusters of energy, removing a significant amount of underlying event and pile-up.
+In ATLAS the reclustering uses the \kt{} algorithm with $R$ parameter $0.2$, and $f_\text{sub}=0.05$; the effect of this trimming can be seen in Figure~\ref{fig:jets:trimming}.
+The choice of trimming and these parameters were optimized at the beginning of Run 2 for boosted $W$ tagging~\cite{ATL-PHYS-PUB-2014-004}, though there is still an active effort to understand the best way to groom large-$R$ jets~\cite{ATL-PHYS-PUB-2019-027}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{TrimSequence_subjetsColorPt_etaphi_default}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{TrimSequence_subjetsTrimmedPtFrac_etaphi_default}.png}}\\
+  \caption{A simulation of a dijet event, showing the effect of trimming. (a) The reclustered large-$R$ jets, showing the subjets (this event uses $R=0.3$ instead of the current standard $R=0.2$). (b) After trimming with $f_\text{sub}=0.05$. Figures sourced from~\cite{JetEtmissApprovedBOOST2014EventDisplays}.}
+  \label{fig:jets:trimming}
+\end{figure}
+
+\section{Tagging}
+\label{sec:jets:tagging}
+After grooming, the substructure of jets can be used to tag the provenance of the jet.
+
+Jet substructure has a long history in high energy physics~\cite{Larkoski:2017jix,Asquith:2018igt};
+its use can be traced back to LEP~\cite{Alexander:1991ce,Barate:1998cp,Abreu:1995hp,Acciarri:1997it}, Tevatron~\cite{Abe:1992wv,Abachi:1995zw}, and HERA~\cite{Breitweg:1997gg,Breitweg:1998gf,Adloff:1998ni}.
+At the LHC, jet substructure for small-R jets focuses on distinguishing quark-initiated from gluon-initiated jets at ATLAS~\cite{ATL-PHYS-PUB-2017-009,Aad:2014gea,ATLAS-CONF-2016-034,ATL-PHYS-PUB-2017-017} and CMS~\cite{CMS-PAS-JME-16-003,CMS-PAS-JME-13-002,CMS-DP-2016-070,CMS-DP-2017-027}.
+Jets with two prongs are a signature of $W$-jet decays, and so most work with this signature target large-R jets intended to tag $W$ decays at ATLAS~\cite{Aad:2015rpa,Aaboud:2018psm} and CMS~\cite{Khachatryan:2014vla}.
