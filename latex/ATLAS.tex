@@ -8,29 +8,119 @@ $\phi$ being the azimuthal angle around the $z$-axis.
 The pseudorapidity is defined in terms of the polar angle $\theta$ as $\eta = -\ln \tan(\theta/2)$.
 Angular distance is measured in units of $\Delta R \equiv \sqrt{(\Delta\eta)^{2} + (\Delta\phi)^{2}}$.}
 
-
-\section{ATLAS Detector}
-\label{sec:ATLAS:ATLAS}
+\section{Introduction}
 The ATLAS detector~\cite{PERF-2007-01} is a general-purpose particle physics detector 
-%
 with nearly $4\pi$ coverage in solid angle around the collision point.\footnote{\AtlasCoordFootnote}
-%
-It consists of an inner tracking detector (ID),  surrounded by a superconducting solenoid providing a \SI{2}{\tesla} axial magnetic field, a system of calorimeters, and a muon spectrometer (MS) incorporating three large superconducting toroid magnets.  
-The ID provides charged-particle tracking in the range $|\eta| < 2.5$ using three technologies: silicon pixel and silicon microstrip tracking detectors, and a transition radiation tracker (up to $|\eta| < 2$).  Due to their precise angular resolution, tracks can be well-associated to the hard-scatter vertex - the primary vertex with at least two associated tracks that also has the largest $\sum_\text{tracks in vertex} p_\text{T}^2$ over all such vertices.  As a result of this association, the contribution from pile-up to track-based observables is small.  
-%
-%
+The physics results that ATLAS produce are enabled not only by the hardware that measures the properties of outgoing particles, but also by software which simulates, stores, and processes this enormous amount of data.
+
+The detector itself is designed in an ``onion'' shape with many concentric layers serving different purposes (Section~\ref{sec:ATLAS:ATLAS}).
+
+The physics phenomena that occur in the $pp$ collisions provided by the LHC and their subsequent interactions with the ATLAS detector are simulated using a variety of generators and a detailed detector simulation (Section~\ref{sec:ATLAS:simulation}).
+
+Because of the extremely high rate of events and large amount of data read out per event, there is a trigger system which lowers the rate that is written to disk (Section~\ref{sec:ATLAS:trigger}).
+
+Finally, the readouts of all the various detector subsystems are combined to construct objects intended to match individual Standard Model particles (Section~\ref{sec:ATLAS:objects}).
+Tracks and calorimeter clusters are combined to form detector-level photons, electrons, taus, jets (Chapter~\ref{ch:Jets}), and muons.
+All of these objects are taken together to calculate the missing energy in the event which could be due to neutrinos or beyond-the-Standard-Model physics.
+
+\section{Hardware}
+\label{sec:ATLAS:ATLAS}
+As mentioned above, the ATLAS detector (A Toroidal LHC ApparatuS) is a general purpose particle physics detector built around the nominal interaction point for $pp$ collisions provided by the LHC.
+It is an enormous instrument, roughly cylindrical with a diameter of about 25 m and a length of about 44 m.
+A cutout of the ATLAS detector with some parts labeled can be seen in Figure~\ref{fig:ATLAS:ATLAS}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{figures_AtlasDetectorLabelled.png}}}
+  \caption{A cutout view of the ATLAS detector with major subsystems labeled. People included for scale. Figure sourced from~\cite{PERF-2007-01}.}
+  \label{fig:ATLAS:ATLAS}
+\end{figure}
+
+ATLAS consists of an inner tracking detector surrounded by a superconducting solenoid providing a \SI{2}{\tesla} axial magnetic field (Section~\ref{sec:ATLAS:tracker}), a system of calorimeters (Section~\ref{sec:ATLAS:calorimeter}), and a muon spectrometer incorporating three large superconducting toroid magnets (Section~\ref{sec:ATLAS:MS}).
+The various layers target different kinds of particles based on their interactions with matter, as can be seen in Figure~\ref{fig:ATLAS:schematic}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{ATLAS_schematic.jpg}}}
+  \caption{A schematic of various particles passing through the ATLAS detector. Figure sourced from ~\cite{Pequenao:1096081}.}
+  \label{fig:ATLAS:schematic}
+\end{figure}
+
+This schematic only shows the ideal or targeted case; in practice the object identification is a non-trivial problem (Section~\ref{sec:ATLAS:objects}).
+Charged particles leave tracks in the tracker, which is surrounded by a solenoid magnet to bend their tracks and measure charge and momentum.
+Photons and electrons are stopped and their energies measured in the electromagnetic calorimeter, while hadrons interact to a lesser extent and are ultimately stopped and measured in the hadronic calorimeter.
+Muons pass through the entire calorimeter system and are measured in the muon system, which is surrounded by superconducting toroids.
+Finally, neutrinos interact only very weakly with matter and pass right through the detector; these can only be reconstructed as missing energy and momentum in the event.
+
+\subsection{Tracker}
+\label{sec:ATLAS:tracker}
+The tracker, or inner detector (as it is the closest part of ATLAS to the beamline), consists of 3 layers with different technologies: the silicon pixel detectors, the semiconductor strip tracker (SCT), and the transition radiation tracker (TRT).
+The entire tracking system is immersed in a 2 T magnetic field provided by a surrounding solenoid.
+These components, when taken together, provide charged-particle tracking in the range $|\eta| < 2.5$.
+A cutout view of the tracking system can be seen in Figure~\ref{fig:ATLAS:tracker}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{ATLAS_tracker}.png}}
+  \caption{A cutout view of the tracking system showing the various layers. Figure sourced from~\cite{ATL-PHYS-PUB-2015-018}.}
+  \label{fig:ATLAS:tracker}
+\end{figure}
+
+The pixel detectors are the innermost part of the ATLAS detector to the beamline.
+The original design included 3 layers, although a 4th layer, the insertable $B$-layer (IBL), was installed between Run 1 and Run $2$ in 2014.
+The pixel detectors are composed of silicon and operate as ionizing radiation detectors.
+As charged particles pass through the material, electrons are knocked loose and these are measured in each individual pixel, without substantially affecting the momentum of the charged particle.
+The pixel system has very good spatial resolution, with each pixel having a size of $50\times 400$ $\mu\text{m}^2$ in the outer 3 layers and $50\times 250$ $\mu\text{m}^2$ in the IBL.
+There is both a cylindrical set of pixel detectors in the barrel and an endcap set on the ends.
+The accuracies of the pixels are $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times z$ in the barrel and also $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times R$ in the endcaps.
+There are roughly 80.4 million independent pixel channels.
+
+The next outermost layer is the SCT, which operates under very similar principles to the pixel detectors.
+However, insted of small pixels long and thin strips are used, which provide spatial information in only one direction.
+Because of this, each of the 4 layers of the SCT are actually composed of 2 layered and slightly offset strips at an angle of 40 mrad to each other, in order to get a (rough) measurement in the second direction as well.
+In the barrel region these strips are parallel to the beam direction; in the endcaps they are radial.
+The strips have an accuracy of $17\times 580$ $\mu\text{m}$ in $R-\phi \times z$ in the barrel and also $17\times 580$ $\mu\text{m}$ in $R-\phi \times R$ in the endcaps.
+There are approximately 6.3 million readout channels in the SCT.
+
+The final layer consists of the TRT, which is composed of $4$ mm (in diameter) drift tubes.
+These drift tubes are not made out of silicon, but rather are filled with gas which, as charged particles pass through, gets ionized; this signal is amplified by a large voltage difference (1530 V) between the center and exterior of the tube.
+The tubes do not provide any $z$ resolution, but only information in $R-\phi$ with an accuracy of 130 $\mu\text{m}$, both in the barrel and endcap regions.
+However, this is mitigated somewhat by every particle passing through about 30 tubes before exiting the tracker.
+There are approximately 351000 readout channels in the TRT.
+
+The entire tracking system is surrounded by a superconducting solenoid which generates an axial field of 2 T.
+As charged particles pass through this magnetic field, their total momentum is not changed as magnetic fields do no work, but the direction of the momentum curves with the radius of curvature determined by the charge-to-(transverse) momentum ratio.
+
+The individual hits in the various layers are combined together in software to identify paths of charged particles through the tracker and magnetic field, measuring both the charge and momentum of the charged particle (Section~\ref{sec:ATLAS:tracks}).
+
+\subsection{Calorimeters}
+\label{sec:ATLAS:calorimeter}
 Relatively fine-granularity electromagnetic and hadronic calorimeters cover the region $|\eta| < 4.9$. 
 The central hadronic calorimeter is a sampling calorimeter with scintillator tiles as the active medium with steel absorbers. All of the electromagnetic calorimeters, as well as the endcap and forward hadronic calorimeters, are sampling calorimeters with liquid argon as the active medium and lead, copper, or tungsten absorber.
-%
-%
+\subsection{Muon System}
+\label{sec:ATLAS:MS}
 The MS consists of three layers of high-precision tracking chambers with coverage up to $|\eta|=2.7$ and dedicated chambers for triggering in the region $|\eta|<2.4$. 
 
+\section{Simulation}
+\label{sec:ATLAS:simulation}
 
-\section{Jets}
+\section{Trigger}
+\label{sec:ATLAS:trigger}
+
+\section{Object Reconstruction}
+\label{sec:ATLAS:objects}
+\subsection{Tracks}
+\label{sec:ATLAS:tracks}
+Due to their precise angular resolution, tracks can be well-associated to the hard-scatter vertex - the primary vertex with at least two associated tracks that also has the largest $\sum_\text{tracks in vertex} p_\text{T}^2$ over all such vertices.  As a result of this association, the contribution from pile-up to track-based observables is small.  
+\subsection{Clusters}
+\label{sec:ATLAS:clusters}
+\subsection{Photons, Electrons, and Taus}
+\label{sec:ATLAS:EM}
+
+\subsection{Jets}
 \label{sec:ATLAS:jets}
 Detector-level (`reco') jets are formed from topologically connected, noise-suppressed calorimeter cell-clusters~\cite{Aad:2016upy} at the electromagnetic scale using the FastJet~\cite{Cacciari:2011ma} implementation of the \antikt jet algorithm~\cite{Cacciari:2008gp} with distance parameter $R = 0.4$.   The angular coordinates of the cell-clusters are corrected to point to the location of the $pp$ collision instead of the geometric center of the detector.  
 
-\subsection{Jet Calibration}
+\subsubsection{Jet Calibration}
 \label{sec:ATLAS:jet_calibration}
 Hadron-level (`truth') jets are formed from detector-stable simulated particles ($c\tau > 10$ mm), excluding muons and neutrinos.  Reco jets are geometrically matched to truth jets using the $\Delta R$ distance metric; all jets with a reco-truth match are considered.  Truth jets are matched to partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label. 
 
@@ -45,3 +135,8 @@ This reduced dependence makes the response more similar for quark and gluon jets
 The final step of the jet calibration procedure applied only to data is an in-situ correction that accounts for the residual difference in $R$ between data and simulation.
 Complete details about the ATLAS jet calibration procedure can be found in~\cite{PERF-2016-04,Aad:2011he}.  
 
+\subsection{Muons}
+\label{sec:ATLAS:muons}
+
+\subsection{Missing Energy}
+\label{sec:ATLAS:met}
