@@ -1,12 +1,12 @@
 \section{Introduction}
 At a hadron collider like the LHC, quarks and gluons are produced copiously.
 These quarks and gluons are not observed directly - because of color confinement, these \textit{partons} fragment and hadronize almost immediately, leading to a collimated spray of hadronic particles which are ultimately observed in the calorimeter.
-Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ particles, are also produced and play vital roles in searches and measurements at the LHC; the hadronic decays of these particles either are the primary way or an extremely important way of identifying their production in an event.
+Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ leptons, are also produced and play vital roles in searches and measurements at the LHC; the hadronic decays of these particles either are the primary way or an extremely important way of identifying their production in an event.
 Jets are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
 
 There are a variety of jet algorithms, the most common one being used at the LHC today being the \antikt{} algorithm, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
 These algorithms act on any set of seeds, which in the context of ATLAS correspond to individual clusters of energy observed in the calorimeter.
-Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ particles, photons, and electrons are in addition reconstructed as small-$R$ jets in the calorimeter; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
+Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ leptons, photons, and electrons are in addition reconstructed as small-$R$ jets in the calorimeter; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
 Both small- and large-$R$ jets have a variety of \textit{grooming} techniques applied to clean up the substructure in order to remove the effects of the underlying event and of multiple in and out of time simultaneous collisions (\textit{pile-up}).
 There is also often a \textit{tagging} step where the substructure of the jet is used to identify the provenance of the jet.
 
@@ -16,6 +16,7 @@ This Thesis in particular discusses two searches (Chapter~\ref{ch:HBSM} and Chap
 This Chapter is organized as follows.
 Section~\ref{sec:jets:def} discusses the definition of jets used in ATLAS.
 Section~\ref{sec:jets:grooming} goes over how these jets are groomed, and Section~\ref{sec:jets:tagging} discusses how jets are tagged.
+Finally, Section~\ref{sec:jets:conclusion} summarizes the Chapter and puts it into context of the rest of the Thesis.
 
 \section{Jet Definition}
 \label{sec:jets:def}
@@ -73,18 +74,27 @@ The results of an \antikt{} jet algorithm can be seen in Figure~\ref{fig:jets:cl
   \label{fig:jets:algo}
 \end{figure}
 
+If there are $N$ seeds in the event, then the \kt{} algorithms require calculating the pair-wise distance $d_{ij}$ among all proto-jets, which takes $O(N^2)$ time; and then repeating that process until all jets have been found, which in general is $O(N)$.
+Thus the whole algorithm naively takes $O(N^3)$ time, which is prohibitive for events in which $N$ can be in the hundreds.
+However, faster algorithms using nearest neighbor algorithms~\cite{Cacciari:2005hq} have reduced this computation time to $O(N\log N)$, a significant improvement.
+In practice this algorithm is executed with the FastJet package~\cite{Cacciari:2011ma}.
+
 As mentioned above, the most common distance parameters used are $R=0.4$ (\textit{small-$R$ jets}) and $R$=1.0 (\textit{large-$R$ jets}).
 The distance parameters correspond exactly to the size of the circular cone formed by the jet, and are intended to target the decays of particles with typical sizes on the order of the respective $R$.
 
 The decay products of light quarks and gluons have a spread due to the hadronic fragmentation.
 The calculation of the size of this spread is in general very complicated, but jets with $R=0.4$ are used to capture the decay products of these partons.
 Gluons are slightly wider than quarks due to the difference in their color charge, and for $R=0.4$ roughly 89\% of the originating particle \pt{} for gluons and 95\% for quarks ends up within the catchment area of the jet~\cite{Salam:2009jx}.
+
 Photons and electrons decay primarily in the electromagnetic calorimeter, but as the seeds are formed from clusters in the electromagnetic and hadronic calorimeters, and the typical size of photon and electron decays is $\sim 0.2$~\cite{ref:TODO}, these are also reconstructed as small-$R$ jets.
+However jets originating from photons and electrons can be identified with high discrimination power based on the three-dimensional energy shower shape~\cite{ref:TODO}, and typically jets that overlap with these are identified and removed from consideration of the hadronic activity in the event (``overlap-removed'').
+In addition, jets originating from bottom quarks take advantage of the relatively long lifetime of hadrons containing bottom quarks and the resulting presence of a secondary vertex~\cite{ref:TODO}.
 
 For massive particles, the opening angle of the decay products is generically roughly $\Delta R \sim \frac{2m}{\pt}$~\cite{Shelton:2013an}.
 With $\pt\gtrsim 2m$, the opening angle is therefore $\Delta R \lesssim 1.0$, and the particle can be reconstructed as a single large-$R$ jet.
 When the decay products of a massive particle can be reconstructed as a single jet, it is called \textit{boosted}, while for lower \pt{} it is called \textit{resolved}.
-$\tau$ particles decay hadronically roughly 65\% of the time~\cite{ref:TODO}, although with their mass around 1.7 \GeV{} they are reconstructed as small-$R$ jets.
+$\tau$ leptons decay hadronically roughly 65\% of the time~\cite{ref:TODO}, although due to their light mass they are reconstructed as small-$R$ jets.
+Again, there are dedicated tagging algorithms with high discrimination power that can identify hadronically-decaying $\tau$ leptons.
 Large-$R$ jets are used for particles on the electroweak scale, like $W/Z$ bosons, top quarks, and even boosted Higgs bosons, for $\pt\gtrsim 200$ GeV, which are typical scales for these particles at the LHC.
 The opening angle $\Delta R$ for the decay products of $W$ bosons and top quarks can be seen for example in Figure~\ref{fig:jets:deltaR}.
 These large-$R$ jets have substructure that can be used to tag the provenance of the jet; these techniques are discussed further in Section~\ref{sec:jets:tagging}.
@@ -96,11 +106,6 @@ These large-$R$ jets have substructure that can be used to tag the provenance of
   \caption{Simulated distributions of $\Delta R$ between decay products of massive particles as a function of the particle \pt. (a) For hadronically decaying $W\rightarrow q\bar{q}$. (b) For hadronically decaying $t \rightarrow Wb$. Figures sourced from~\cite{Aad:2013gja}.}
   \label{fig:jets:deltaR}
 \end{figure}
-
-If there are $N$ seeds in the event, then the set of \kt{} algorithms require calculating the pair-wise distance $d_{ij}$ among all proto-jets, which takes $O(N^2)$ time; and then repeating that process until all jets have been found, which in general is $O(N)$.
-Thus the whole algorithm naively takes $O(N^3)$ time, which is prohibitive for events in which $N$ can be in the hundreds.
-However, faster algorithms using nearest neighbor algorithms~\cite{Cacciari:2005hq} have reduced this computation time to $O(N\log N)$, a significant improvement.
-In practice this algorithm is executed with the FastJet package~\cite{Cacciari:2011ma}.
 
 \section{Grooming}
 \label{sec:jets:grooming}
@@ -136,8 +141,31 @@ The choice of trimming and these parameters were optimized at the beginning of R
 \section{Tagging}
 \label{sec:jets:tagging}
 After grooming, the substructure of jets can be used to tag the provenance of the jet.
+The term ``substructure'' here is taken to mean functions of the distribution of the seeds associated to a jet in $(\eta,\phi,\pt)$ space.
+For many of the following taggers the tracks resulting from charged particles that lie within the catchment area of the jet are used to wholly or partially supplant the seeds themselves as tracks are significantly more robust to pile-up than the calorimeter seeds.
 
 Jet substructure has a long history in high energy physics~\cite{Larkoski:2017jix,Asquith:2018igt};
 its use can be traced back to LEP~\cite{Alexander:1991ce,Barate:1998cp,Abreu:1995hp,Acciarri:1997it}, Tevatron~\cite{Abe:1992wv,Abachi:1995zw}, and HERA~\cite{Breitweg:1997gg,Breitweg:1998gf,Adloff:1998ni}.
-At the LHC, jet substructure for small-R jets focuses on distinguishing quark-initiated from gluon-initiated jets at ATLAS~\cite{ATL-PHYS-PUB-2017-009,Aad:2014gea,ATLAS-CONF-2016-034,ATL-PHYS-PUB-2017-017} and CMS~\cite{CMS-PAS-JME-16-003,CMS-PAS-JME-13-002,CMS-DP-2016-070,CMS-DP-2017-027}.
-Jets with two prongs are a signature of $W$-jet decays, and so most work with this signature target large-R jets intended to tag $W$ decays at ATLAS~\cite{Aad:2015rpa,Aaboud:2018psm} and CMS~\cite{Khachatryan:2014vla}.
+
+Jet substructure for small-$R$ jets focuses on distinguishing quark-initiated from gluon-initiated jets at ATLAS~\cite{ATL-PHYS-PUB-2017-009,Aad:2014gea,ATLAS-CONF-2016-034,ATL-PHYS-PUB-2017-017} and CMS~\cite{CMS-PAS-JME-16-003,CMS-PAS-JME-13-002,CMS-DP-2016-070,CMS-DP-2017-027}.
+The discrimination typically focuses on the fact that gluon-initiated jets are slightly wider than quark-initiated jets.
+Jet substructure has also been used to discriminate between small-$R$ jets that arise from a single particle and those that arise stochastically from multiple pile-up interactions~\cite{Aaboud:2017pou}.
+
+For large-$R$ jets a variety of techniques are employed to tag those jets originating from $W/Z$ bosons~\cite{ATL-PHYS-PUB-2014-004,Aad:2015rpa,Aaboud:2018psm}, top quarks~\cite{Aad:2016pux,Aaboud:2018psm} and boosted Higgs~\cite{Aad:2019uoz} decaying to two bottom quarks.
+The fully hadronic decays that these taggers target are $W/Z\rightarrow q\bar{q}$, $H\rightarrow b\bar{b}$, $t\rightarrow Wb \rightarrow q\bar{q} b$ (there are also decays involving leptons or photons which as mentioned have their own dedicated taggers).
+Of course, in addition to the substructure itself the decays involving $b$ quarks can use the dedicated $b$-tagging algorithms mentioned above to further discriminate.
+The intention of these taggers is primarily to discriminate these jets from those originating from quark and gluons; though as mentioned above small-$R$ jets are sufficient to capture these particle showers, expanding the $R$ parameter in the jet algorithm still finds these, albeit with a small hard core.
+The most obvious substructure variable is the mass of the jet itself~\cite{ATLAS-CONF-2016-035}; but in addition, each of the above taggers rely on the fact that the decays of these objects will have multiple hard cores.
+While all of these taggers now make use of a complicated combination of multiple substructure variables, a prominent one is $n$-subjettiness~\cite{Thaler:2010tr}, which gives a sense of how compatible a given jet is with having $n$ hard subjets.
+
+\section{Conclusion}
+\label{sec:jets:conclusion}
+Jets are ubiquitious at a hadronic collider like the LHC.
+As generic groupings of calorimeter seeds, almost every Standard Model particle other than muons and neutrinos are reconstructed as jets.
+The precise definition of the jet algorithm is a choice, governed by the physics requirements and implications of that choice.
+Both small-$R$ and large-$R$ jets are groomed to remove soft additions due to underlying event or pile-up.
+Finally, a suite of taggers has been developed to tag jets originating from each individual particle.
+
+Jets are interesting theoretical, algorithmic, and physical objects in and of themselves.
+In this Thesis in particular, Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa} discuss two searches that use jets extensively, and Chapter~\ref{ch:NI} and Chapter~\ref{ch:GenNI} further delve deeply into methods for improving the calibration of the energy of jets.
+In light of this material, the use of jets can be considered a central theme of this Thesis.
