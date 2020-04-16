@@ -13,7 +13,7 @@ The ATLAS detector~\cite{PERF-2007-01} is a general-purpose particle physics det
 with nearly $4\pi$ coverage in solid angle around the collision point.\footnote{\AtlasCoordFootnote}
 The physics results that ATLAS produce are enabled not only by the hardware that measures the properties of outgoing particles, but also by software which simulates, stores, and processes this enormous amount of data.
 
-The detector itself is designed in an ``onion'' shape with many concentric layers serving different purposes (Section~\ref{sec:ATLAS:ATLAS}).
+The detector itself is designed to have many concentric layers serving different purposes, in particular to detect and identify all kinds of particles that may be encountered from the collisions at the LHC (Section~\ref{sec:ATLAS:ATLAS})\footnote{This Section is sourced mainly from the description of ATLAS in~\cite{PERF-2007-01}; however, the Author is also grateful for the additional explanations that can be found in previous SLAC ATLAS students' PHD theses, in particular~\cite{Swiatlowski:2040684} and~\cite{Nachman:2016qyc}. The later Sections of this Chapter also benefit from these sources.}.
 
 The physics phenomena that occur in the $pp$ collisions provided by the LHC and their subsequent interactions with the ATLAS detector are simulated using a variety of generators and a detailed detector simulation (Section~\ref{sec:ATLAS:simulation}).
 
@@ -88,17 +88,89 @@ However, this is mitigated somewhat by every particle passing through about 30 t
 There are approximately 351000 readout channels in the TRT.
 
 The entire tracking system is surrounded by a superconducting solenoid which generates an axial field of 2 T.
-As charged particles pass through this magnetic field, their total momentum is not changed as magnetic fields do no work, but the direction of the momentum curves with the radius of curvature determined by the charge-to-(transverse) momentum ratio.
+As charged particles pass through this magnetic field, their total momentum is not changed as magnetic fields do no work, but the direction of the momentum curves in the $\phi$ direction with the radius of curvature determined by the charge-to-(transverse) momentum ratio.
 
 The individual hits in the various layers are combined together in software to identify paths of charged particles through the tracker and magnetic field, measuring both the charge and momentum of the charged particle (Section~\ref{sec:ATLAS:tracks}).
 
 \subsection{Calorimeters}
 \label{sec:ATLAS:calorimeter}
-Relatively fine-granularity electromagnetic and hadronic calorimeters cover the region $|\eta| < 4.9$. 
-The central hadronic calorimeter is a sampling calorimeter with scintillator tiles as the active medium with steel absorbers. All of the electromagnetic calorimeters, as well as the endcap and forward hadronic calorimeters, are sampling calorimeters with liquid argon as the active medium and lead, copper, or tungsten absorber.
+The ATLAS calorimeter system is designed to stop and measure the energy of all charged and neutral particles that exit the tracker other than muons and neutrinos.
+These calorimeters cover the region $|\eta| < 4.9$, in comparison to the tracker which only covers $|\eta|<2.5$. 
+The calorimeter system consists of two main subsystems: the inner electromagnetic calorimeter, which is intended to interact electromagnetically and measure particles like photons and electrons, and the outer hadronic calorimeter, which is intended to interact both electromagnetically and via nuclear interactions in order to measure hadronic particles.
+A cutout view of the calorimeter system can be seen in Figure~\ref{fig:ATLAS:calorimeters}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{ATLAS_calorimeters}.png}}
+  \caption{A cutout view of the calorimeter system showing the various subsystems. Figure sourced from~\cite{PERF-2007-01}.}
+  \label{fig:ATLAS:calorimeters}
+\end{figure}
+
+Both subsystems are sampling calorimeters which operate under the principle of alternating passive and active layers.
+The passive layers are made of some dense material (lead, steel, copper, or tungsten) that have high probability of interacting with the energetic particles passing through them, causing a cascade of lower energy radiation that is easier to measure (\textit{sample}) in the active materials.
+The active materials use ionization or scintillation to measure the energies of the particles passing through them.
+In ioniziation, the material is ionized by electrons being knocked free; the free electrons are then drifted to the side of the cell and measured.
+In scintillation, excited molecules emit photon radiation which can then be read out by photomultiplier tubes.
+All systems are non-compensating, meaning they do not account for energy loss in the passive layers; this is one cause for the need to calibrate the energy of physics objects formed in the calorimeter, in particular jets (Section~\ref{sec:ATLAS:jet_calibration}).
+However, the innermost layer of electromagnetic calorimeter is a presampler which does compensate for the energy loss in the tracker.
+
+High energy charged electrons and positrons interacting with nuclei in the materials are dominated by bremsstrahlung, which is photon radiation due to deceleration in the material~\cite{Lechner:2674116}.
+High energy photons, in turn, primarily convert to electron-positron pairs in the field of nuclei, which further lose energy to bremsstrahlung; this back-and-forth is referred to as an \textit{electromagnetic shower}.
+Below a certain energy (depending on the material, but usually some MeV), other processes take over.
+Muons can be considered to be heavy electrons; however, because of their higher mass, bremmstrahlung does not dominate until the muon energy is above $\sim 1000$ GeV~\cite{TASI_day3_school}; thus muons tend to pass through the entire calorimeter without losing much energy and can only be measured in the muon spectrometer (Section~\ref{sec:ATLAS:MS}).
+
+The loss of energy in an electromagnetic shower at high energies can be characterized as
+\begin{align}
+\frac{dE}{dx} = -\frac{E}{X_0},
+\label{eqn:ATLAS:radiation}
+\end{align}
+where $X_0$ is called the \textit{radiation length}, and is characteristic of the interacting material. 
+The solution to~\ref{eqn:ATLAS:radiation} implies an exponential loss of energy as a function of distance in the material, meaning the shower length is logarithmic in initial energy and also that a fixed size detector can cover many orders of magnitude of energy.
+
+For nuclear interactions the underlying processes are more complicated, but the \textit{hadronic interaction length} $\lambda$ gives a similar length scale for hadrons passing through a material and forming \textit{hadronic showers}~\cite{TASI_day3_school} of pions, photons, and positrons/electrons.
+For dense materials $\lambda > X_0$ by a factor of 5-10~\cite{Lechner:2674116}, implying that hadronic showers are much longer and occur later than electromagnetic showers; this is why the hadronic calorimeter is outside the electromagnetic calorimeter.
+
+The electromagnetic calorimeter is broken down into the barrel, which covers $|\eta|<1.475$, and two end-caps which cover $1.375<|\eta|<3.2$.
+Each of these have three layers in addition to the innermost presampler layer.
+Both of these use lead as the passive material and liquid argon (LAr) as the active material, which measures the energy of particles via ionization.
+The total thickness of the electromagnetic calorimeter is $>22 X_0$ in the barrel and $>24 X_0$ in the endcaps.
+The size of the calorimeter cells vary with $\eta$ and depth, but the smallest cells, which occur in the second layer, are $0.025 \times 0.025$ in $\eta \times \phi$.
+
+The hadronic calorimeter consists of the barrel, which covers $|\eta|<1.7$, two end-caps which cover $1.5<|\eta|<3.2$, and two forward calorimeters which cover $3.1<|\eta|<4.9$.
+These three components consist of 3, 4, and 3 independent layers respectively.
+The barrel uses steel as the passive material and scintillating tiles as the active material; however, the end-caps and forward calorimeters use ionizing LAr as the active material, with copper (in the end-caps and the first layer of the forward calorimeter) and tungsten (in the second and third layers of the forward calorimeter) as the passive materials.
+The total thickness of the hadronic calorimeter is $\gtrsim 10\lambda$ over the entire detector.
+The smallest calorimeter cells in the barrel and end-caps are $0.1 \times 0.1$ in $\eta \times \phi$.
+In the forward calorimeters, $\eta$ increases rapidly with $\theta$, so the sizes are simply measured on an absolute scale, with the smallest cells $3.0 \times 2.6$ $\text{cm}^2$ in $x \times y$.
+
 \subsection{Muon System}
 \label{sec:ATLAS:MS}
-The MS consists of three layers of high-precision tracking chambers with coverage up to $|\eta|=2.7$ and dedicated chambers for triggering in the region $|\eta|<2.4$. 
+The outermost radial component of the detector is the muon system, or muon spectrometer (MS).
+In principle due to the interactions with the calorimeters the only particles that can make it out so far are muons; the MS provides measurements of muon tracks out to $|\eta|<2.7$, with an additional triggering system that goes out to $|\eta|<2.4$.
+However, very energetic hadrons can ``punch through'' to the MS; the energy of jets therefore not measured in the calorimeter can be corrected (Section~\ref{sec:ATLAS:jet_calibration}).
+A cutout view of the MS can be seen in Figure~\ref{fig:ATLAS:MS}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{ATLAS_MS}.png}}
+  \caption{A cutout view of the muon system showing the various subsystems. Figure sourced from~\cite{PERF-2007-01}.}
+  \label{fig:ATLAS:MS}
+\end{figure}
+
+The MS is surrounded by a toroid magnet system which bends muons in the $\pm z/\eta$ direction in the barrel.
+In the barrel, there are eight toroids arranged symmetrically about the beam axis; there are in addition two end-cap toroids.
+
+The main component of the MS are the monitored drift tubes (MDT), which operate similarly to the TRTs in Section~\ref{sec:ATLAS:tracker}.
+These cover the region $|\eta|<2.7$, with three layers out to $|\eta|<2.0$ and two beyond that.
+As drift tubes, they provide a resolution of $35$ $\mu\text{m}$ in the $z$ direction and no measurement in the $\phi$ direction; this choice of orientation is intended to measure the trajectory of the muons in the magnetic field and therefore their momentum.
+In addition, the drift time in the MDTs is large (approximately $700$ ns) relative to the frequency of bunch crossings ($25$ ns), so that other systems must be used to trigger (Section~\ref{sec:ATLAS:trigger}) on muons.
+
+Cathode-strip chambers (CSC) provide tracking measurements in the end-cap region $2.0<|\eta|<2.7$ with alternating layers of perpendicular strips.
+The CSCs are multi-wire proportional chambers which drift electrons from the inside to the outside of the chamber.
+Because of the perpendicular strips, the CSCs provide measurements in both directions, with a resolution of $40$ $\mu\text{m}$ $\times$ $5$ $\text{mm}$ in $R \times \phi$.
+
+The muon triggering system is provided by the resistive plate chambers (RPC) in the barrel region $|\eta|<1.05$, and by thin-gap chambers (TGC) in the end-cap region $1.05<|\eta|<2.4$.
+The RPCs are parallel plate capacitors filled with gas which are segmented in order to provide measurements in both directions, $10\times 10$ $\text{mm}^2$ in $z \times \phi$.
+The drift time in the parallel plates is significantly less than in the MDTs, allowing for use in triggering.
+The TGCs are multi-wire proportional chambers similar to the CSCs, and provide resolution of about $5\times 5$ $\text{mm}^2$ in $R \times \phi$.
 
 \section{Simulation}
 \label{sec:ATLAS:simulation}
