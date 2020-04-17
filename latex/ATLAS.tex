@@ -178,10 +178,33 @@ Every analysis in ATLAS relies on simulated events in some way.
 Both of the analyses presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) are searches for new BSM physics; since BSM particles have never been observed, simulations are required to understand the sensitivity of the analysis to these new signals.
 Many analyses in ATLAS use simulations to model their background - both of these searches avoid this by estimating the background in a data-driven way, but still require simulations of the background in order to set up and validate the analysis chain.
 Furthermore, a major step of object calibrations is understanding the effect of the detector in simulated events, which is the subject of Chapters~\ref{ch:NI} and~\ref{ch:GenNI}.
+These are just some of the ways that simulations are used in ATLAS.
 
-Simulations of physics events are \textit{factorized}, often using different software programs entirely for matrix element calculations, fragmentation and hadronization, and detector simulation.
+Simulations of physics events are \textit{factorized}, often using different software programs entirely for matrix element calculations and parton showering, fragmentation and hadronization, and detector simulation~\cite{powhegintro}.
 Fundamentally each step of this process is random due to quantum effects, so events are simulated via Monte Carlo, or \textit{MC}, methods to fully populate the relevant probability distributions.
 Since even the most common ``interesting'' physics processes have cross sections on the order of $10^{-5}$ of the total $pp$ cross section, and many other important processes are much rarer still, events are typically simulated not inclusively but rather by first specifying the underlying \textit{hard-scatter} (i.e., the tree-level $pp$ interaction) process and proceeding from there.
+
+The matrix element calculations cover the initial $2\rightarrow N$ interactions of the constituent quarks in the colliding protons at the very high energies of the beams.
+The parton showering further simulates the produced partons as they radiate down to the hadronization scale around $\mathcal{O}($GeV$)$.
+Because the energies in these steps are above the hadronization scale, they can be calculated perturbatively at fixed order in $\alpha_s$, and the generators are specified as to what order they go to (leading order ``LO'', next-to-leading order ``NLO'', etc.).
+The three most common generators in use are \PYTHIA~\cite{Sjostrand:2007gs,Sjostrand:2014zea}, \SHERPA~\cite{Gleisberg:2008ta}, and \HERWIG~\cite{Bahr:2008pv,Bellm:2015jjp}.
+Each of these can use \POWHEGBOX~\cite{Frixione:2007vw,Alioli:2010xd} to interface between the matrix element and parton showering.
+Often a single generator will be used primarily for the simulated events in an analysis, and one or multiple other generators will be used to estimate the uncertainties related to the theoretical calculations.
+
+The fragmentation and hadronization covers the conversion of partons to hadrons.
+This process is not described well by any fundamental theory, and so the generators use phenomenological models that are tuned to empirical data (e.g.,~\cite{ATL-PHYS-PUB-2014-021}); similarly, generators are specified by this hadronization tune.
+The underlying event that comes from the soft interactions of the proton constituents is also simulated at this stage, with the parton distribution functions again coming from phenomenological models~\cite{Lai:2010vv}.
+These are also typically covered by the above-mentioned generators.
+The decays of heavy flavor hadrons (those containing bottom and charm quarks) are also simulated at this stage using dedicated programs like EvtGen~\cite{Lange:2001uf}.
+
+The other simultaneous $pp$ collisions in the event (pile-up) are not simulated but rather overlay minimum bias (i.e., minimal triggering requirements) events on top of the simulated ones, according to the expected number of interactions in the event.
+
+The above-mentioned steps constitute what is known as the ``truth'' event.
+The observables related to the particles at this stage (in particular, the four-momentum) are not accessible in real life, because they have to be observed in the detector (Section~\ref{sec:ATLAS:ATLAS}).
+The simulated events are passed through a full simulation of the ATLAS detector modeled in \GEANT\cite{Agostinelli:2002hh}.
+This simulates both the particle interactions with the material and the resulting digitization of the signals.
+This is considered to be the ``reconstructed'' event, which is in the exact same format that real data would be observed.
+The reconstructed event is passed through various post-processing stages (Section~\ref{sec:ATLAS:objects}), the overall goal of which is to attempt to construct the ``truth'' event that would have given rise to the ``reconstructed'' (nonsimulated) event as well as possible.
 
 The majority of ATLAS computing resources are dedicated to running simulations.
 Figure~\ref{fig:ATLAS:simulation} shows the fraction of disk space and CPU time projected to be needed in 2028 for the various ATLAS computing activities.
@@ -190,9 +213,9 @@ Similarly, for the CPU time, about 75\% of the roughly 20 MHS06\footnote{A HS06 
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{disk2028_baseline}.png}}
-  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{cpu2028}.png}}
-  \caption{Projected computing resources needed by ATLAS in 2028. (a) Disk space. (b) CPU resources.}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{disk2028_baseline}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{cpu2028}.pdf}}
+  \caption{Projected computing resources needed by ATLAS in 2028. (a) Disk space. (b) CPU resources.Figures sourced from~\cite{computingandsoftware}.}
   \label{fig:ATLAS:simulation}
 \end{figure}
 
