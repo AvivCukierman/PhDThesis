@@ -174,9 +174,32 @@ The TGCs are multi-wire proportional chambers similar to the CSCs, and provide r
 
 \section{Simulation}
 \label{sec:ATLAS:simulation}
+Every analysis in ATLAS relies on simulated events in some way.
+Both of the analyses presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) are searches for new BSM physics; since BSM particles have never been observed, simulations are required to understand the sensitivity of the analysis to these new signals.
+Many analyses in ATLAS use simulations to model their background - both of these searches avoid this by estimating the background in a data-driven way, but still require simulations of the background in order to set up and validate the analysis chain.
+Furthermore, a major step of object calibrations is understanding the effect of the detector in simulated events, which is the subject of Chapters~\ref{ch:NI} and~\ref{ch:GenNI}.
+
+Simulations of physics events are \textit{factorized}, often using different software programs entirely for matrix element calculations, fragmentation and hadronization, and detector simulation.
+Fundamentally each step of this process is random due to quantum effects, so events are simulated via Monte Carlo, or \textit{MC}, methods to fully populate the relevant probability distributions.
+Since even the most common ``interesting'' physics processes have cross sections on the order of $10^{-5}$ of the total $pp$ cross section, and many other important processes are much rarer still, events are typically simulated not inclusively but rather by first specifying the underlying \textit{hard-scatter} (i.e., the tree-level $pp$ interaction) process and proceeding from there.
+
+The majority of ATLAS computing resources are dedicated to running simulations.
+Figure~\ref{fig:ATLAS:simulation} shows the fraction of disk space and CPU time projected to be needed in 2028 for the various ATLAS computing activities.
+For the disk space, about 75\% of the roughly 1500 petabytes needed by ATLAS by 2028~\cite{computingandsoftware} will be dedicated to simulations (``MC'' in the Figure).
+Similarly, for the CPU time, about 75\% of the roughly 20 MHS06\footnote{A HS06 is a CPU benchmark tailored for high energy physics typical use cases~\cite{hepix}. Typical high-performance CPUs are equivalent to 500-1000 HS06. A MHS06 is a mega-HS06, or 1 million HS06.} needed by ATLAS by 2028~\cite{computingandsoftware} will be dedicated to simulations (``MC'' and ``EvGen'' in the Figure).
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{disk2028_baseline}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{cpu2028}.png}}
+  \caption{Projected computing resources needed by ATLAS in 2028. (a) Disk space. (b) CPU resources.}
+  \label{fig:ATLAS:simulation}
+\end{figure}
+
 
 \section{Trigger}
 \label{sec:ATLAS:trigger}
+The trigger system lies somewhere between the hardware and software systems.
 
 \section{Object Reconstruction}
 \label{sec:ATLAS:objects}
