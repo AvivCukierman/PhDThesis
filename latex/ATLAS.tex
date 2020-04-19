@@ -223,6 +223,39 @@ Similarly, for the CPU time, about 75\% of the roughly 20 MHS06\footnote{A HS06 
 \section{Trigger}
 \label{sec:ATLAS:trigger}
 The trigger system lies somewhere between the hardware and software systems.
+Because of the enormous rate of collisions provided by the LHC ($40$ MHz), it is infeasible to store every event.
+Every event takes up $\mathcal{O}($MB$)$~\cite{Buckley:2014150} on disk, so storing every event would be equivalent to $\mathcal{O}(100$ TB$)$ per second rate of writing, or about $10^6$ PB for a full year's worth of data-taking\footnote{As a piece of trivia, this amount of data is called a \textit{zetta}byte, or ZB\cite{si-brochure}.}.
+Moreover, it is not desirable to store every event, because even the most common ``interesting'' interactions have a cross section $10^{-5}$ times the overall $pp$ cross section, and many others are far rarer.
+This can be seen, for example, in Figure~\ref{fig:ATLAS:xs} - $\sigma_W$ ($W$+jets) has a cross section about $10^{-5}$ of the total cross section.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{crosssections2012_v5}.pdf}}
+  \caption{Cross sections for $pp$ interactions as a function of $\sqrt{s}$ center-of-mass energy. Figure sourced from~\cite{StirlingXS}.}
+  \label{fig:ATLAS:xs}
+\end{figure}
+This paucity of ``interesting'' physics motivates the choice to set up multiple (in 2018, about $60$~\cite{luminositypublic}) proton-proton interactions per bunch crossing, or pile-up - in order to increase the probability of a such an interaction to occur in any given bunch crossing.
+
+Because of the reasons outlined above, ATLAS institutes a \textit{trigger} system~\cite{TRIG-2016-01} to decide whether or not to store each event, based on whether the reconstructed objects and topology in the event are indicative of some particular physics process.
+The trigger consists of two major subsystems.
+First, the hardware-based \textit{Level 1} trigger, or \textit{L1}, reduces the rate of events from $40$ MHz to about $100$ kHz based on fast but approximate algorithms.
+Then, the software-based \textit{high-level trigger}, or \textit{HLT}, uses offline-like algorithms (Section~\ref{sec:ATLAS:objects}) to further reduce the rate to about $1$ kHz.
+The rates of each of these two trigger levels, along with some of the main individual triggers, can be seen in Figure~\ref{fig:ATLAS:trigger}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{TrigOpsPublicWinter2019_L1_single-item_rates_logscale_ATLASStyle_359872}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{TrigOpsPublicWinter2019_HLT_group_rates_ATLASStyle_359872}.pdf}}
+  \caption{Trigger rates for (a) L1 and (b) HLT or a typical run in September 2018. The overall rate (black dashed lines) is broken down into some main individual triggers. Figures sourced from~\cite{triggerpublic}.}
+  \label{fig:ATLAS:xs}
+\end{figure}
+
+The L1 trigger has two major subsystems, one based on observations in the calorimeter (L1Calo) and one based on observations in the muon system (L1Muon).
+There is also a topological trigger (L1Topo) which combines information from the two subsystems to make trigger decisions on a whole-event basis.
+In particular, there is not enough time at L1 to reconstruct tracks from hits in the tracker.
+L1Calo sets up $0.1\times0.1$ in $\eta\times\phi$ trigger towers in the calorimeter and forms \textit{regions of interest}, or \textit{RoIs}, to identify physics objects.
+The electron/photon and tau triggers use $2\times2$ groupings of trigger towers in the EM calorimeter that are local maxima in energy, with additional isolation requirements in the surrounding towers and in the hadronic calorimeter.
+The jet triggers use $4\times4$ and $8\times8$ groupings of trigger towers in the EM and hadronic calorimeters with the central $2\times2$ grouping a local maximum in energy.
+
 
 \section{Object Reconstruction}
 \label{sec:ATLAS:objects}
