@@ -13,7 +13,7 @@ The ATLAS detector~\cite{PERF-2007-01} is a general-purpose particle physics det
 with nearly $4\pi$ coverage in solid angle around the collision point.\footnote{\AtlasCoordFootnote}
 The physics results that ATLAS produce are enabled not only by the hardware that measures the properties of outgoing particles, but also by software which simulates, stores, and processes this enormous amount of data.
 
-The detector itself is designed to have many concentric layers serving different purposes, in particular to detect and identify all kinds of particles that may be encountered from the collisions at the LHC (Section~\ref{sec:ATLAS:ATLAS})\footnote{This Section is sourced mainly from the description of ATLAS in~\cite{PERF-2007-01}; however, the Author is also grateful for the additional explanations that can be found in previous SLAC ATLAS students' PHD theses, in particular~\cite{Swiatlowski:2040684} and~\cite{Nachman:2016qyc}. The later Sections of this Chapter also benefit from these sources.}.
+The detector itself is designed to have many concentric layers serving different purposes, in particular to detect and identify all kinds of particles that may be encountered from the collisions at the LHC (Section~\ref{sec:ATLAS:ATLAS}).
 
 The physics phenomena that occur in the $pp$ collisions provided by the LHC and their subsequent interactions with the ATLAS detector are simulated using a variety of generators and a detailed detector simulation (Section~\ref{sec:ATLAS:simulation}).
 
@@ -25,7 +25,7 @@ All of these objects are taken together to calculate the missing energy in the e
 
 \section{Hardware}
 \label{sec:ATLAS:ATLAS}
-As mentioned above, the ATLAS detector (A Toroidal LHC ApparatuS) is a general purpose particle physics detector built around the nominal interaction point for $pp$ collisions provided by the LHC.
+As mentioned above, the ATLAS detector (A Toroidal LHC ApparatuS) is a general purpose particle physics detector built around the nominal interaction point for $pp$ collisions provided by the LHC\footnote{This Section is sourced mainly from the description of ATLAS in~\cite{PERF-2007-01}; however, the Author is also grateful for the additional explanations that can be found in previous SLAC ATLAS students' PHD theses, in particular~\cite{Swiatlowski:2040684} and~\cite{Nachman:2016qyc}. The later Sections of this Chapter also benefit from these sources.}.
 It is an enormous instrument, roughly cylindrical with a diameter of about 25 m and a length of about 44 m.
 A cutout of the ATLAS detector with some parts labeled can be seen in Figure~\ref{fig:ATLAS:ATLAS}.
 
@@ -222,7 +222,7 @@ Similarly, for the CPU time, about 75\% of the roughly 20 MHS06\footnote{A HS06 
 
 \section{Trigger}
 \label{sec:ATLAS:trigger}
-The trigger system lies somewhere between the hardware and software systems.
+The trigger system lies somewhere between the hardware and software systems\footnote{This Section is sourced mainly from~\cite{TRIG-2016-01}, with additional most recent information from~\cite{Martinez:2016udm} and~\cite{ATLAS-TRIG-2019-04-001} (which is not yet public at the time of writing).}.
 Because of the enormous rate of collisions provided by the LHC ($40$ MHz), it is infeasible to store every event.
 Every event takes up $\mathcal{O}($MB$)$~\cite{Buckley:2014150} on disk, so storing every event would be equivalent to $\mathcal{O}(100$ TB$)$ per second rate of writing, or about $10^6$ PB for a full year's worth of data-taking\footnote{As a piece of trivia, this amount of data is called a \textit{zetta}byte, or ZB\cite{si-brochure}.}.
 Moreover, it is not desirable to store every event, because even the most common ``interesting'' interactions have a cross section $10^{-5}$ times the overall $pp$ cross section, and many others are far rarer.
