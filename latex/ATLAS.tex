@@ -335,12 +335,49 @@ Finally, there are dedicated triggers with low rates for exotic signatures, e.g.
 
 \section{Object Reconstruction}
 \label{sec:ATLAS:objects}
+Events passing the triggers (Section~\ref{sec:ATLAS:trigger}) are written to disk and the detector observables are \textit{reconstructed} with algorithms into objects intended to correspond to particular physics particles.
+Tracks derived from hits in the inner detector (Section~\ref{sec:ATLAS:tracks}) and topological clusters of cells in the calorimeter (Section~\ref{sec:ATLAS:clusters}) are used to build up objects corresponding to photons and electrons (Section~\ref{sec:ATLAS:EM}) and jets (Section~\ref{sec:ATLAS:jets}).
+Muons are also reconstructed using inormation from the MS (Section~\ref{sec:ATLAS:muons}).
+Finally, these objects are combined together to estimate the missing transverse energy (Section~\ref{sec:ATLAS:met}).
+
 \subsection{Tracks}
 \label{sec:ATLAS:tracks}
-Due to their precise angular resolution, tracks can be well-associated to the hard-scatter vertex - the primary vertex with at least two associated tracks that also has the largest $\sum_\text{tracks in vertex} p_\text{T}^2$ over all such vertices.  As a result of this association, the contribution from pile-up to track-based observables is small.  
+Tracks, corresponding to the paths of charged particles in the inner detector, are reconstructed from hits in the various layers of the tracker~\cite{ATL-PHYS-PUB-2015-018,Aaboud:2017all}.
+An example event display showing hits in the inner detector and the tracks formed from those hits can be seen in Figure~\ref{fig:ATLAS:tracks}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{JiveXML_264034_11475271_2}.png}}
+  \caption{Event display showing hits in the inner detector and the tracks formed from those hits. Figure source~\cite{Collaboration:2014666}.}
+  \label{fig:ATLAS:tracks}
+\end{figure}
+
+Hits in the pixel (including the IBL) and SCT layers are clustered in order to account for a single particle passing through multiple adjacent pixels or multiple particles passing through the same or adjacent pixels; these clusters are then abstracted as three-dimensional \textit{space-points}.
+Track seeds are then formed from sets of three space-points.
+A combinatorial Kalman filter~\cite{Fruhwirth:1987fm} is then used to incorporate additional space-points from other layers of the pixel and SCT detectors which are compatible with the particle trajectory into a track candidate.
+An ambiguity solver is then used to identify clusters with track candidates, using a neural network to identify and predict merged clusters resulting from multiple tracks~\cite{Aad:2014yva}.
+The clusters are identified with the track candidates in order of quality of the track, considering criteria like the number of holes (missing clusters) across the layers and $\chi^2$ of the track fit.
+Track candidates are also rejected if they do not meet basic requirements like $\pt>400$ MeV (in which case the particle's trajectory would curve so much in the magnetic field it would never leave the inner detector).
+Finally, a track fit is performed using all available information (in particular including information from the TRTs) to determine the track momentum and direction, transverse impact parameter off the beamline $d_0$ (i.e., the closest approach of the track trajectory to the beamline), and longitudinal displacement along the beamline $z_0$ (at the point of closest approach).
+The tracking reconstruction is particularly difficult within the dense environments of jets, where there can be large numbers of tracks in a small region.
+
+The resolution of track $q/p$, $d_0$, and $z_0$ as a function of $\pt$ can be seen in Figure~\ref{fig:ATLAS:track_resolution}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{track_p_resolution}.png}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{track_d0_resolution}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{track_z0_resolution}.png}}
+  \caption{Track resolution of (a) $q/p$, (b) $d_0$, and (c) $z_0$ as a function of $\pt$ in cosmic-ray data. The measurements are compared among tracks measured with silicon-only components, full inner detector, and full inner detector in simulation. Figures sourced from~\cite{Aad:2010bx}.}
+  \label{fig:ATLAS:track_resolution}
+\end{figure}
+The momentum resolution is quite good, around $1\% \oplus 0.05\% * \pt/\text{GeV}$ - the momentum resolution gets worse at high momentum as the track has less curvature in the magnetic field.
+The $d_0$ resolution is important for constructing secondary vertices, which is essential for $b$-tagging (Section~\ref{sec:ATLAS:btagging}).
+The $z_0$ resolution is important for constructing primary vertices which correspond to interactions along the beamline.
+
+Due to their precise angular resolution, tracks can be well-associated to the hard-scatter vertex - the primary vertex with at least two associated tracks that also has the largest $\sum_\text{tracks in vertex} p_\text{T}^2$ over all such vertices.
+As a result of this association, the contribution from pile-up to track-based observables is small.  
 \subsection{Clusters}
 \label{sec:ATLAS:clusters}
-\subsection{Photons, Electrons, and Taus}
+\subsection{Photons and Electrons}
 \label{sec:ATLAS:EM}
 
 \subsection{Jets}
@@ -364,6 +401,9 @@ Complete details about the ATLAS jet calibration procedure can be found in~\cite
 
 \subsubsection{$b$-Tagging}
 \label{sec:ATLAS:btagging}
+
+\subsubsection{Taus}
+\label{sec:ATLAS:taus}
 
 \subsection{Muons}
 \label{sec:ATLAS:muons}
