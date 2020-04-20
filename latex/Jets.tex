@@ -124,7 +124,10 @@ Large-$R$ jets have a much larger catchment area and are therefore more suscepti
 Though the soft radiation from underlying event and pile-up does not affect the overall energy that much, especially for jets with high \pt{}, the jet mass can be significantly adversely affected by soft wide-angle radiation.
 Since large-$R$ jets are typically used to identify massively decaying particles, it is therefore important to remove this source of noise.
 
-There have been a variety of grooming techniques proposed for large-$R$ jets~\cite{Aad:2013gja}, but the standard contemporary technique in ATLAS is jet trimming~\cite{Krohn:2009th}.
+There have been a variety of grooming techniques proposed for large-$R$ jets~\cite{Aad:2013gja}.
+For example, one proposed alternative method to form large-$R$ jets is to first find small-$R$ jets, correct for pile-up and calibrate those jets, and then \textit{recluster} them into large-$R$ jets by using the small-$R$ jets as seeds~\cite{Nachman:2014kla}.
+
+The standard contemporary grooming technique in ATLAS is jet trimming~\cite{Krohn:2009th}.
 In trimming, the constituents of a jet are reclustered using a different jet algorithm with smaller distance parameter in order to find distinct subjets.
 These subjets are then removed (`trimmed') if their \pt{} fraction of the whole jet is less than some $f_\text{sub}$; then the only remaining subjets are hard clusters of energy, removing a significant amount of underlying event and pile-up.
 In ATLAS the reclustering uses the \kt{} algorithm with $R$ parameter $0.2$, and $f_\text{sub}=0.05$; the effect of this trimming can be seen in Figure~\ref{fig:jets:trimming}.

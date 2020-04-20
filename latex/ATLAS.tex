@@ -133,14 +133,14 @@ The electromagnetic calorimeter is broken down into the barrel, which covers $|\
 Each of these have three layers in addition to the innermost presampler layer.
 Both of these use lead as the passive material and liquid argon (LAr) as the active material, which measures the energy of particles via ionization.
 The total thickness of the electromagnetic calorimeter is $>22 X_0$ in the barrel and $>24 X_0$ in the endcaps.
-The size of the calorimeter cells vary with $\eta$ and depth, but the smallest cells, which occur in the second layer, are $0.025 \times 0.025$ in $\eta \times \phi$.
+The size of the calorimeter cells vary with $\eta$ and depth, but the smallest cells, which occur in the second layer, are $0.025 \times 0.025$ in $\Delta\eta \times \Delta\phi$.
 
 The hadronic calorimeter consists of the barrel, which covers $|\eta|<1.7$, two end-caps which cover $1.5<|\eta|<3.2$, and two forward calorimeters which cover $3.1<|\eta|<4.9$.
 These three components consist of 3, 4, and 3 independent layers respectively.
 The barrel uses steel as the passive material and scintillating tiles as the active material; however, the end-caps and forward calorimeters use ionizing LAr as the active material, with copper (in the end-caps and the first layer of the forward calorimeter) and tungsten (in the second and third layers of the forward calorimeter) as the passive materials.
 The total thickness of the hadronic calorimeter is $\gtrsim 10\lambda$ over the entire detector.
-The smallest calorimeter cells in the barrel and end-caps are $0.1 \times 0.1$ in $\eta \times \phi$.
-In the forward calorimeters, $\eta$ increases rapidly with $\theta$, so the sizes are simply measured on an absolute scale, with the smallest cells $3.0 \times 2.6$ $\text{cm}^2$ in $x \times y$.
+The smallest calorimeter cells in the barrel and end-caps are $0.1 \times 0.1$ in $\Delta\eta \times \Delta\phi$.
+In the forward calorimeters, $\eta$ increases rapidly with $\theta$, so the sizes are simply measured on an absolute scale, with the smallest cells $3.0 \times 2.6$ $\text{cm}^2$ in $\Delta x \times \Delta y$.
 
 \subsection{Muon System}
 \label{sec:ATLAS:MS}
@@ -233,9 +233,11 @@ This can be seen, for example, in Figure~\ref{fig:ATLAS:xs} - $\sigma_W$ ($W$+je
   \caption{Cross sections for $pp$ interactions as a function of $\sqrt{s}$ center-of-mass energy. Figure sourced from~\cite{StirlingXS}.}
   \label{fig:ATLAS:xs}
 \end{figure}
-This paucity of ``interesting'' physics motivates the choice to set up multiple (in 2018, about $60$~\cite{luminositypublic}) proton-proton interactions per bunch crossing, or pile-up - in order to increase the probability of a such an interaction to occur in any given bunch crossing.
+This paucity of ``interesting'' physics motivates the choice to set up multiple (in 2018, about $60$~\cite{luminositypublic}) proton-proton interactions per bunch crossing, or \textit{pile-up} - in order to increase the probability of a such an interaction to occur in any given bunch crossing.
 
 Because of the reasons outlined above, ATLAS institutes a \textit{trigger} system~\cite{TRIG-2016-01} to decide whether or not to store each event, based on whether the reconstructed objects and topology in the event are indicative of some particular physics process.
+The reconstruction algorithms in use in ATLAS are distinguished by whether they are \textit{online}, meaning they are in use in the trigger and are subject to the relevant time and space constraints, or if they are \textit{offline}, meaning they are used on events passing the trigger and can be optimized for performance using the full detector information and (basically) no time constraints\footnote{Subject to the CPU resources available to the offline analyzer.}.
+
 The trigger consists of two major subsystems.
 First, the hardware-based \textit{Level 1} trigger, or \textit{L1}, reduces the rate of events from $40$ MHz to about $100$ kHz based on fast but approximate algorithms.
 Then, the software-based \textit{high-level trigger}, or \textit{HLT}, uses offline-like algorithms (Section~\ref{sec:ATLAS:objects}) to further reduce the rate to about $1$ kHz.
@@ -246,16 +248,90 @@ The rates of each of these two trigger levels, along with some of the main indiv
   \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{TrigOpsPublicWinter2019_L1_single-item_rates_logscale_ATLASStyle_359872}.pdf}}
   \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{TrigOpsPublicWinter2019_HLT_group_rates_ATLASStyle_359872}.pdf}}
   \caption{Trigger rates for (a) L1 and (b) HLT or a typical run in September 2018. The overall rate (black dashed lines) is broken down into some main individual triggers. Figures sourced from~\cite{triggerpublic}.}
-  \label{fig:ATLAS:xs}
+  \label{fig:ATLAS:trigger}
 \end{figure}
+
+The trigger broadly works by identifying detector objects that are likely to correspond to individual particles and thus indicate a hard scatter $pp$ interaction.
+The rate of the trigger is controlled by specifying some energy threshold the detector object has to meet in order to be passed to the next trigger in the case of L1 or written to disk in the case of HLT.
+The collection of trigger object definitions and corresponding energy thresholds is called the \textit{trigger menu}, and is set every year of data taking (with some minor changes between periods in the same year)~\cite{ATL-DAQ-PUB-2016-001,ATL-DAQ-PUB-2017-001,ATL-DAQ-PUB-2018-002,ATL-DAQ-PUB-2019-001} according to the instantaneous luminosity and pile-up conditions and physics objectives.
+
+Trigger considerations are vital for any analysis, because if the physics being targeted by an analysis does not pass any trigger then the data are simply not stored and the analysis cannot be done.
+For example, the low-mass extension of the search in Chapter~\ref{ch:HBSM} discussed in Appendix~\ref{ch:HBSM_lowmass_app} spends considerable effort on finding a suitable trigger for the new signature in that search; luckily, there is an existing trigger (intended for other uses) which does have efficiency on those new signals.
+However, there are a few different kinds of triggers on the trigger menu which can enable analyses in light of the trigger limitations other than the \textit{primary} triggers, which store the entire event every time the trigger is fired.
+Triggers can be \textit{prescaled}, meaning there is some probability $<1$ that the trigger fires, which allows for lower energy thresholds - these can be used for background or efficiency studies or simply for monitoring the beam, detector, or trigger systems.
+Also, there are situations where the energy threshold is lowered but only small fraction of the total information in the event is stored - these can be used for detector calibration or to directly conduct \textit{trigger-level} analyses (e.g.~\cite{Aaboud:2018fzt}) to be sensitive to kinematic regions that would otherwise be inaccessible with the primary triggers.
+
+There are also special runs with entirely different trigger menus than the regular physics menu.
+For example, a \textit{minimum-bias} trigger is run as the only item on the trigger menu for a short period of time (i.e., trigger on every event with some minimum quality controls with some high prescale).
+These minimum-bias events are used, among other things, for measuring online trigger efficiencies offline and for overlaying pile-up events on top of simulations (Section~\ref{sec:ATLAS:simulation}).
+
+\subsection{Level 1 Trigger}
+\label{sec:ATLAS:L1}
 
 The L1 trigger has two major subsystems, one based on observations in the calorimeter (L1Calo) and one based on observations in the muon system (L1Muon).
 There is also a topological trigger (L1Topo) which combines information from the two subsystems to make trigger decisions on a whole-event basis.
 In particular, there is not enough time at L1 to reconstruct tracks from hits in the tracker.
-L1Calo sets up $0.1\times0.1$ in $\eta\times\phi$ trigger towers in the calorimeter and forms \textit{regions of interest}, or \textit{RoIs}, to identify physics objects.
-The electron/photon and tau triggers use $2\times2$ groupings of trigger towers in the EM calorimeter that are local maxima in energy, with additional isolation requirements in the surrounding towers and in the hadronic calorimeter.
-The jet triggers use $4\times4$ and $8\times8$ groupings of trigger towers in the EM and hadronic calorimeters with the central $2\times2$ grouping a local maximum in energy.
 
+L1Calo sets up $0.1\times0.1$ in $\Delta\eta \times \Delta\phi$ trigger towers in the calorimeter and forms \textit{regions of interest}, or \textit{RoIs}, to identify physics objects.
+The electron/photon and tau triggers use $2\times2$ groupings of trigger towers in the EM calorimeter that are local maxima in energy, with additional isolation requirements in the surrounding towers and in the hadronic calorimeter.
+The isolation requirements are intended to distinguish between isolated photons and collimated $\pi^0\rightarrow \gamma\gamma$ decays.
+The jet triggers use $4\times4$ and $8\times8$ groupings of trigger towers in the EM and hadronic calorimeters with the central $2\times2$ grouping a local maximum in energy.
+A schematic of the L1Calo trigger towers and RoIs can be seen in Figure~\ref{fig:ATLAS:L1Calo}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{L1Calo}.pdf}}
+  \caption{Schematic view of the trigger towers used as input to the L1Calo trigger algorithms. Figure sourced from~\cite{TRIG-2016-01}.}
+  \label{fig:ATLAS:L1Calo}
+\end{figure}
+
+The L1Muon system uses the information from the RPCs and TGCs (Section~\ref{sec:ATLAS:MS}) to identify muon candidates in time to pass on to the HLT.
+
+There is finally an L1Topo system which combines information from L1Calo and L1Muon to evaluate event-wide information, in particular the \textit{missing transverse energy} or \Etmiss{}, which corresponds to inbalances of momentum in the transverse plane (Section~\ref{sec:ATLAS:met}).
+
+\subsection{High Level Trigger}
+\label{sec:ATLAS:HLT}
+
+As mentioned above, the HLT uses offline-like reconstruction algorithms to target a wide range of more specific physics goals than the L1.
+In particular, tracking information from hits in the tracker, finer-granularity information in the calorimeter, and more precise measurements in the MS allow more precise reconstruction than is available at L1.
+
+The tracking algorithms first run a fast tracking algorithm with rough pattern recognition\footnote{Not to be confused with the similarly-named but ultimately shuttered \textit{Fast TracKer}~\cite{Shochet:1552953}, or FTK, which was a project to implement tracking directly into the hardware in order to speed up performance.} within RoIs identified at L1.
+These fast tracks are then used as seeds for an offline-like (Section~\ref{sec:ATLAS:tracks}) track reconstruction algorithm.
+
+Calorimeter reconstruction algorithms are used to identify electrons, photons, taus, and jet candidates and finally \etmiss{} global reconstruction.
+The first step is to construct clusters of energy in the calorimeter based on RoI seeds from L1, for which there are two different algorithms.
+
+The electron and photon reconstruction algorithms use a sliding-window approach by finding a window of size $0.075 \times 0.175$ in $\Delta\eta \times \Delta\phi$ that is a local maximum of energy in projective towers.
+The shower shape is then found by determining layer-by-layer in the calorimeter the center of energy of the cells behind the sliding window and summing up a fixed size window around that.
+This shower shape is then used to positively identify electrons and photons, e.g. using the ratio of energy deposited in the hadronic calorimeter to the electromagnetic calorimeter.
+
+The tau, jet, and \etmiss{} reconstruction algorithms use a global topo-clustering algorithm~\cite{Aad:2016upy} very similar to the offline reconstruction algorithm (Section~\ref{sec:ATLAS:clusters}), which are built up iteratively from high-energy cell seeds.
+Jets are then reconstructed using the \antikt{} algorithm with $R=0.4$ or $R=1.0$ (Section~\ref{sec:jets:def}) using these clusters as seeds.
+The jets are calibrated in a similar manner to the offline procedure (Section~\ref{sec:ATLAS:jet_calibration}).
+Small-$R$ jets are calibrated in particular incorporating a pile-up subtraction step, an overall MC-based \pt{} correction (the exploration of which is the subject of Chapter~\ref{ch:NI}), and the global sequential calibration (GSC) (the improvement of which is the subject of Chapter~\ref{ch:GenNI}).
+Large-$R$ jets in 2017 and 2018 are trimmed and have a mass cut, but do not use any other jet substructure techniques (Section~\ref{sec:jets:tagging}) for identifying boosted massive objects.
+
+Tau identification uses similar principles to the offline selection (Section~\ref{sec:ATLAS:EM}), looking for small-$R$ jets with narrow calorimeter energy deposits and low numbers of associated tracks.
+
+Jets originating from $b$-quarks can also be tagged (Section~\ref{sec:ATLAS:btagging}), by identifying secondary vertices off the beamline that are characteristic of such jets.
+In order to judge if a secondary vertex is significantly far enough from the beamline, it is essential to have a precise measurement of the \textit{beamspot}, which is the 3-dimensional ellipsoidal region in which $pp$ collisions can occur\footnote{With roughly a multivariate Gaussian probability distribution.}~\cite{ATLAS-CONF-2010-027}.
+The Author has contributed to a project intended to more precisely measure the online beamspot using Bayesian inference~\cite{beamspot}, which could improve the $b$-tagging at HLT.
+
+As jets with no such tagging are the most generic detector objects formed in ATLAS, the rate of jet production is very high - e.g., the cross section of producing a jet with $\Et>100$ GeV is at least a factor of $10$ higher than any other ``interesting'' electroweak process (Figure~\ref{fig:ATLAS:xs}).
+Therefore, the energy thresholds for jets in the trigger are the highest of any other object, and analyses using only jet triggers are therefore limited to very high energies.
+For example, the search in Chapter~\ref{ch:CWoLa} uses a single jet trigger, corresponding to offline $\pt>500$ GeV; this limits the minimum dijet invariant mass $m_{JJ}>1.1$ TeV just to meet the trigger requirements.
+Because of these high requirements, there have been concerted efforts for trigger-level analyses using lower \pt{} jets~\cite{Aaboud:2018fzt}.
+
+There are a variety of different trigger algorithms for \etmiss{}, but the most basic algorithm sums up the $\vec{\pt}$ (including the direction in the transverse plane) of all cells in the calorimeter to find any imbalance.
+Other algorithms build on this by adding pile-up corrections or jet-based or topo-cluster-based associations.
+
+The muon reconstruction algorithm first runs a fast algorithm which then seeds RoIs to be used in a precision step similar to the offline algorithm (Section~\ref{sec:ATLAS:muons}).
+The fast algorithm matches the RoIs identified at L1Muon to data from the MDT chambers (Section~\ref{sec:ATLAS:MS}) to form tracks in the MS.
+These tracks are then back-extrapolated back to the interaction point and combined with tracks in the inner detector.
+The precision step basically repeats this process with a refined track-finding and \pt{} measurement, with an additional step of extrapolating tracks from the inner detector to hits in the MS in case the back-extrapolation fails.
+Dimuon triggers (with dimuon mass requirements) are also used for tagging $b$-hadrons, e.g. $\Upsilon(1S)\rightarrow \mu\mu$ and intermediate decays involving $J/\psi\rightarrow \mu\mu$.
+
+Finally, there are dedicated triggers with low rates for exotic signatures, e.g. long-lived particles~\cite{Aad:2013txa}.
 
 \section{Object Reconstruction}
 \label{sec:ATLAS:objects}
@@ -285,6 +361,9 @@ After this calibration is applied, the GSC corrects the dependence of the jet $p
 This reduced dependence makes the response more similar for quark and gluon jets, reduces the uncertainty due to jet fragmentation modeling for a given jet type, and improves the jet energy resolution.
 The final step of the jet calibration procedure applied only to data is an in-situ correction that accounts for the residual difference in $R$ between data and simulation.
 Complete details about the ATLAS jet calibration procedure can be found in~\cite{PERF-2016-04,Aad:2011he}.  
+
+\subsubsection{$b$-Tagging}
+\label{sec:ATLAS:btagging}
 
 \subsection{Muons}
 \label{sec:ATLAS:muons}
