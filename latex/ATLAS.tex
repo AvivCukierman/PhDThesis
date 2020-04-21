@@ -405,8 +405,59 @@ Also, tracks with large impact parameters, but within some small distance of the
 
 \subsection{Clusters}
 \label{sec:ATLAS:clusters}
+Energy deposits in calorimeter cells are combined together using a topological clustering algorithm~\cite{Aad:2016upy}, which are then used as seeds in jet-finding.
+The expected amount of noise in a given cell $\sigma_\text{noise,cell}$ is estimated in order to define an energy significance $\zeta_\text{cell} = E_\text{cell}/\sigma_\text{noise,cell}$.
+The noise in a given cell is due both to electronic noise and to soft energy deposits from the pile-up interactions in the event; thus, the cell noise is estimated as a function of the position in the detector (layer of the calorimeter and $\eta$) and the amount of pile-up $\mu$.
+This estimate can be seen in Figure~\ref{fig:ATLAS:cell_noise}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{noise_tot_plot_OFLCOND-MC12-HPS-19-80-25}.png}}
+  \caption{Expected total noise per cell (in simulation) as a function of position in the detector (layer and $\eta$) at $\mu=80$, corresponding to conditions similar to those in 2018 data-taking. Figure sourced from~\cite{LArCaloPublicResultsUpgrade}.}
+  \label{fig:ATLAS:cell_noise}
+\end{figure}
 
+The algorithm for topological clustering proceeds as follows.
+First, seeds are formed as cells with energy deposits $\zeta_\text{cell}>4$.
+The cluster then grows from the seed to all neighboring cells (either adjacent if in the same layer or close in $\eta,\phi$ if in different layers) with energy deposits $\zeta_\text{cell}>2$; this growth continues iteratively until there are no more cells passing the threshold to spread to.
+Finally, the cluster spread to all immediately neighboring cells with $\zeta_\text{cell}>0$\footnote{Note that the significance can be $<0$ due to pulse-shape calibrations in the cell.}.
+Clusters can then be split if there are local maxima of energy within the cluster.
+The result of the clustering algorithm is a set of 3-dimensional irregularly-shaped but topologically-connected clusters.
+The progression of this algorithm can be seen in Figure~\ref{fig:ATLAS:topoclustering}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{topoclustering_step1}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{topoclustering_step2}.png}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{topoclustering_step3}.png}}
+  \caption{Progression of the topological cell clustering algorithm in a single layer of the calorimeter. (a) Cell seeds passing $\zeta_\text{cell}>4$. (b) Growth of clusters to cells passing $\zeta_\text{cell}>2$. (c) Final clusters including cells with $\zeta_\text{cell}>0$ and cluster splitting. Figures sourced from~\cite{Aad:2016upy}.}
+  \label{fig:ATLAS:topoclustering}
+\end{figure}
 
+Each cluster is assigned an ($\eta,\phi$) position based on the barycenter of the constituent cells, and a total energy $E$.
+Clusters are assumed to be massless when forming their four-momentum.
+
+The electromagnetic showers (due to electrons and photons) have a different response in the calorimeter than hadronic showers due to the different kinds of interactions with the detector at play.
+Because of this, there is a desire to calibrate individual clusters to a consistent scale.
+This calibration does not have to be applied - in the case that it is not applied, the clusters and the jets formed from them are considered to be at the \textit{EM scale}.
+For example, the small-$R$ jets used in the search presented in Chapter~\ref{ch:HBSM} use jets at the EM scale.
+However, large-$R$ jets usually do use calibrated clusters, as they often take advantage of substructure information in their constituent clusters, which benefits from the clusters being at a consistent energy scale.
+The large-$R$ jets used in the search presened in Chapter~\ref{ch:CWoLa} use jets formed from these calibrated clusters.
+
+The calibration is a \textit{local cluster weighting}, or \textit{LCW}.
+First, the entire cluster is classified according to the likelihood it comes from an electromagnetic or hadronic shower based on its position in the detector and various cluster moments.
+Then, each cell in the cluster is corrected as a weighted average between a hadronic correction and an electromagnetic correction according to this likelihood.
+The hadronic corrections are derived from simulations of single-particle charged pions interacting with the detector, and the electromagnetic corrections are derived from simulations of single-particle neutral pions ($\rightarrow \gamma\gamma$).
+The per-cell hadronic correction consists of three components: a correction for the difference between hadronic and electromagnetic sources; a correction for out-of-cluster cells; and a correction accounting for dead material in front of the calorimeters.
+The per-cell electromagnetic correction consists of the second two components in the hadronic correction (out-of-cluster and dead material effects).
+The entire cluster four-momentum is then recalculated using the weighted cells.
+This calibration process is outlined in Figure~\ref{fig:ATLAS:LCW}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.9\textwidth]{figures/{LCW_diagram}.png}}
+  \caption{Steps in LCW cluster calibration scheme. After the topo-clustering formation and splitting, clusters are classified based on the likelihood of coming from a hadronic or electromagnetic shower. This likelihood is used as the weighting between a hadronic and electromagnetic correction. The correction includes a correction for differences between hadronic and electromagnetic showers (for which the electromagnetic correction is $1$), out-of-cluster effects, and dead material. Figure sourced from~\cite{Aad:2016upy}.}
+  \label{fig:ATLAS:LCW}
+\end{figure}
+
+Even though the cluster constituents of jets formed from LCW-calibrated clusters are in principle themselves calibrated, there is still a need to calibrate those jets to further account for pile-up, out-of-cone, and nonlinearity effects.
 
 \subsection{Photons and Electrons}
 \label{sec:ATLAS:EM}
