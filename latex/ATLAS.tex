@@ -357,7 +357,7 @@ A combinatorial Kalman filter~\cite{Fruhwirth:1987fm} is then used to incorporat
 An ambiguity solver is then used to identify clusters with track candidates, using a neural network to identify and predict merged clusters resulting from multiple tracks~\cite{Aad:2014yva}.
 The clusters are identified with the track candidates in order of quality of the track, considering criteria like the number of holes (missing clusters) across the layers and $\chi^2$ of the track fit.
 Track candidates are also rejected if they do not meet basic requirements like $\pt>400$ MeV (in which case the particle's trajectory would curve so much in the magnetic field it would never leave the inner detector).
-Finally, a track fit is performed using all available information (in particular including information from the TRTs) to determine the track momentum and direction, transverse impact parameter off the beamline $d_0$ (i.e., the closest approach of the track trajectory to the beamline), and longitudinal displacement along the beamline $z_0$ (at the point of closest approach).
+Finally, a track fit is performed using all available information (in particular including information from the TRTs) to determine the track momentum (measured directly as the charge to momentum ratio $q/p$) and direction, transverse impact parameter off the beamline $d_0$ (i.e., the closest approach of the track trajectory to the beamline), and longitudinal displacement along the beamline $z_0$ (at the point of closest approach).
 The tracking reconstruction is particularly difficult within the dense environments of jets, where there can be large numbers of tracks in a small region.
 
 The resolution of track $q/p$, $d_0$, and $z_0$ as a function of $\pt$ can be seen in Figure~\ref{fig:ATLAS:track_resolution}.
@@ -373,10 +373,41 @@ The momentum resolution is quite good, around $1\% \oplus 0.05\% * \pt/\text{GeV
 The $d_0$ resolution is important for constructing secondary vertices, which is essential for $b$-tagging (Section~\ref{sec:ATLAS:btagging}).
 The $z_0$ resolution is important for constructing primary vertices which correspond to interactions along the beamline.
 
-Due to their precise angular resolution, tracks can be well-associated to the hard-scatter vertex - the primary vertex with at least two associated tracks that also has the largest $\sum_\text{tracks in vertex} p_\text{T}^2$ over all such vertices.
-As a result of this association, the contribution from pile-up to track-based observables is small.  
+\subsubsection{Primary Vertices}
+Primary vertices~\cite{Aaboud:2016rmg,ATL-PHYS-PUB-2015-026,Meloni:2016sag} are collections of tracks emanating from a single point indicating a $pp$ interaction at that point.
+The average number of interactions per bunch crossing $\mu$ is $>1$, which is directly related to the instantaneous luminosity; $\mu>1$ is the cause of pile-up interactions in the event other than the \textit{hard-scatter} interaction or (roughly) the one that caused the event to pass the trigger.
+In the ideal case the expected number of reconstructed primary vertices would scale linearly with $\mu$; however, the dominant cause of nonlinearity is vertex merging due to the high density of interactions in the luminous region.
+There can also be vertex splitting, vertex fakes, and inefficiencies in vertex reconstruction.
+
+The vertex reconstruction algorithm proceeds iteratively - after choosing a vertex seed, the algorithm alternates between finding tracks compatible with coming that vertex (subject to their $z_0$ and $d_0$ resolutions) and re-fitting the vertex position with the associated tracks until some stopping condition is met (vertices must have at least $2$ associated tracks).
+The found vertex and its associated tracks are then removed from consideration and the process is repeated until all tracks are associated to a vertex or no more vertices can be found.
+The output of this algorithm is a set of vertex positions and the covariance matrix of their resolutions.
+
+The efficiency of vertex reconstruction as a function of number of associated tracks can be seen in Figure~\ref{fig:ATLAS:vertexa}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{ATLAS_vertex_efficiency}.png}\label{fig:ATLAS:vertexa}}
+  %\subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ATLAS_vertex_x_resolution}.png}\label{fig:ATLAS:vertexb}}
+  %\subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ATLAS_vertex_y_resolution}.png}\label{fig:ATLAS:vertexc}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{ATLAS_vertex_z_resolution}.png}\label{fig:ATLAS:vertexd}}
+  \caption{(a) Efficiency of vertex reconstruction as a function of number of associated tracks. Also, resolution of vertices in (b) $x$, (c) $y$, and (d) $z$. Measured in low-$\mu$ ($\mu\sim 0.01$) data and in MC. Figures sourced from~\cite{ATL-PHYS-PUB-2015-026}.}
+  \label{fig:ATLAS:vertex}
+\end{figure}
+The vertex reconstruction efficiency is basically $1$ when the vertex has $5$ or more associated tracks.
+Figure~\ref{fig:ATLAS:vertexd} shows the $z$ resolution of the primary vertices.
+The $z$ resolution is important for distinguishing between different interactions along the beamline.
+
+The primary vertex with the highest $\sum \pt^2$ over the associated tracks is designated as the \textit{hard-scatter} vertex (and the associated tracks are considered to be the hard-scatter tracks), as it corresponds to the hardest interaction in the event and therefore the most likely to be ``interesting''.
+The remaining vertices and their associated tracks are labeled \textit{pile-up}.
+For most reconstruction algorithms considered below, if they use tracks, only the hard-scatter tracks are considered.
+However, the pile-up tracks are used for the removal of calorimeter jets originating from pile-up interactions, as the calorimeter by itself does not have nearly good enough angular information to distinguish between energy clusters due to hard-scatter and pile-up interactions.
+Also, tracks with large impact parameters, but within some small distance of the hard-scatter primary vertex, are used to reconstruct secondary vertices for $b$-tagging.
+
 \subsection{Clusters}
 \label{sec:ATLAS:clusters}
+
+
+
 \subsection{Photons and Electrons}
 \label{sec:ATLAS:EM}
 
