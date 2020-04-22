@@ -457,8 +457,6 @@ This calibration process is outlined in Figure~\ref{fig:ATLAS:LCW}.
   \label{fig:ATLAS:LCW}
 \end{figure}
 
-Even though the cluster constituents of jets formed from LCW-calibrated clusters are in principle themselves calibrated, there is still a need to calibrate those jets to further account for pile-up, out-of-cone, and nonlinearity effects.
-
 \subsection{Photons and Electrons}
 \label{sec:ATLAS:EM}
 The reconstruction of photons and of electrons~\cite{Aad:2019tso} are quite similar to each other.
@@ -514,22 +512,49 @@ The uncertainties on these corrections are applied as systematic uncertainties o
 
 \subsection{Jets}
 \label{sec:ATLAS:jets}
-Detector-level (`reco') jets are formed from topologically connected, noise-suppressed calorimeter cell-clusters~\cite{Aad:2016upy} at the electromagnetic scale using the FastJet~\cite{Cacciari:2011ma} implementation of the \antikt jet algorithm~\cite{Cacciari:2008gp} with distance parameter $R = 0.4$.   The angular coordinates of the cell-clusters are corrected to point to the location of the $pp$ collision instead of the geometric center of the detector.  
+There are a variety of jet collections in use in ATLAS.
+The most common are those formed using topoclusters (Section~\ref{sec:ATLAS:clusters}) as seeds, with $R=0.4$ (small-$R$ jets) using topoclusters at the EM scale and $R=1.0$ (large-$R$ jets) using topoclusters at the LCW scale.
+Large-$R$ jets are typically trimmed as described in Section~\ref{sec:jets:grooming}.
+
+Jets can also be formed using particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker; Track-CaloClusters~\cite{ATL-PHYS-PUB-2017-015} which similarly combine information from the calorimeter and tracker; or reclustering from smaller-radius jets~\cite{Nachman:2014kla}.
+Topoclusters themselves can also be corrected other than the LCW calibration - the Author has contributed to a project~\cite{ATLAS-CONF-2017-065} with the idea of subtracting pile-up from topoclusters before running the jet algorithm.
+
+However, even if the seeds are in principle themselves corrected or calibrated, there is still a need to calibrate the jets formed from those seeds to further account for pile-up, out-of-cone, and nonlinearity effects.
 
 \subsubsection{Jet Calibration}
 \label{sec:ATLAS:jet_calibration}
-Hadron-level (`truth') jets are formed from detector-stable simulated particles ($c\tau > 10$ mm), excluding muons and neutrinos.  Reco jets are geometrically matched to truth jets using the $\Delta R$ distance metric; all jets with a reco-truth match are considered.  Truth jets are matched to partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label. 
+The jet energy and momentum calibration procedure~\cite{PERF-2016-04,Aad:2011he,Aaboud:2018kfi} is achieved through a series of steps.
 
-The goal of jet calibration is to ensure that the average calibrated detector-level momentum is the same as the corresponding particle-level quantity on average: $f(x)\equiv\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x\rangle\approx x$.  In practice, since $p_\text{T}^\text{reco}|p_\text{T}^\text{true}$ is not exactly normal, a Gaussian function is fit to the core of the probability distribution and the mean and standard deviation of the fit are used to quantify the bias and spread.  A related quantity to $f(x)$ is the average response $R(x)=f(x)/x$.  The closure of the jet calibration procedure is often quantified by the deviation of $R(x)$ from unity.
+The steps for the calibration of small-$R$ jets are shown in Figure~\ref{fig:ATLAS:smallR_calibration}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{smallR_calibration}.png}}
+  \caption{Steps in the small-$R$ jet calibration. Figure sourced from~\cite{PERF-2016-04}.}
+  \label{fig:ATLAS:smallR_calibration}
+\end{figure}
+Following jet reconstruction from the calorimeter cell-clusters, there is a minor correction to the jet direction to point to the hard-scatter primary vertex rather than the nominal detector center.
+The impact of pile-up is corrected for using a jet area-based~\cite{Cacciari:2007fd,Cacciari:2008gn} approach followed by a residual correction sensitive to both in-time and out-of-time pile-up~\cite{Aad:2015ina}.
+Following the pile-up correction, an absolute \pt{} scale correction is derived in simulation, which also corrects the jet direction.
+There is then a sequence of corrections, called the \textit{global sequential calibration} or \textit{GSC}, to further correct the residual depdendence of the jet \pT{} on various jet quantities using information from the tracker, calorimeter, and MS.
+The final step of the jet calibration procedure applied only to data is an in-situ correction that accounts for the residual differences between data and simulation.
 
-The calibration procedure is achieved through a series of steps.
-Following jet reconstruction from the calorimeter cell-clusters, the impact of multiple nearly simultaneous $pp$ collisions (pile-up) is corrected for using a jet area-based~\cite{Cacciari:2007fd,Cacciari:2008gn} approach with a residual correction sensitive to both in-time and out-of-time pile-up~\cite{Aad:2015ina}.
-Following the pile-up correction, a calibration for the jet energy brings $E^\text{reco,calibrated}\approx E^\text{true}$.
-This absolute MC-based calibration also corrects the jet direction.
-After this calibration is applied, the GSC corrects the dependence of the jet $p_\text{T}$ on various jet quantities using information from the tracker, calorimeter, and MS (see Section $5.3$ in~\cite{PERF-2016-04} for the detailed list).
-This reduced dependence makes the response more similar for quark and gluon jets, reduces the uncertainty due to jet fragmentation modeling for a given jet type, and improves the jet energy resolution.
-The final step of the jet calibration procedure applied only to data is an in-situ correction that accounts for the residual difference in $R$ between data and simulation.
-Complete details about the ATLAS jet calibration procedure can be found in~\cite{PERF-2016-04,Aad:2011he}.  
+
+The steps for the calibration of large-$R$ jets are shown in Figure~\ref{fig:ATLAS:largeR_calibration}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{largeR_calibration}.png}}
+  \caption{Steps in the large-$R$ jet calibration. Figure sourced from~\cite{Aaboud:2018kfi}.}
+  \label{fig:ATLAS:largeR_calibration}
+\end{figure}
+After jet reconstruction with LCW topoclusters and grooming with trimming, the jet energy, mass, and $\eta$ are corrected using an absolute MC-based correction.
+There is finally an in-situ correction applied only to data to correct for differences in the energy scale between data and simulation.
+
+%This reduced dependence makes the response more similar for quark and gluon jets, reduces the uncertainty due to jet fragmentation modeling for a given jet type, and improves the jet energy resolution.
+
+%Hadron-level (`truth') jets are formed from detector-stable simulated particles ($c\tau > 10$ mm), excluding muons and neutrinos.  Reco jets are geometrically matched to truth jets using the $\Delta R$ distance metric; all jets with a reco-truth match are considered.  Truth jets are matched to partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label. 
+
+%The goal of jet calibration is to ensure that the average calibrated detector-level momentum is the same as the corresponding particle-level quantity on average: $f(x)\equiv\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x\rangle\approx x$.  In practice, since $p_\text{T}^\text{reco}|p_\text{T}^\text{true}$ is not exactly normal, a Gaussian function is fit to the core of the probability distribution and the mean and standard deviation of the fit are used to quantify the bias and spread.  A related quantity to $f(x)$ is the average response $R(x)=f(x)/x$.  The closure of the jet calibration procedure is often quantified by the deviation of $R(x)$ from unity.
+
 
 \subsubsection{$b$-Tagging}
 \label{sec:ATLAS:btagging}
