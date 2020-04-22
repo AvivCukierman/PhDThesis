@@ -461,6 +461,56 @@ Even though the cluster constituents of jets formed from LCW-calibrated clusters
 
 \subsection{Photons and Electrons}
 \label{sec:ATLAS:EM}
+The reconstruction of photons and of electrons~\cite{Aad:2019tso} are quite similar to each other.
+This is due to the fact that, as mentioned in Section~\ref{sec:ATLAS:calorimeter}, electrons and positrons radiate bremsstrahlung photons when interacting with the detector, and photons in turn often \textit{convert} into electron/positron pairs - so the electromagnetic showers produced by electrons and photons in the calorimeter are very similar.
+A schematic of an electron passing through the detector can be seen in Figure~\ref{fig:ATLAS:ATLAS_trackpath}, showing in addition a radiated bremmstrahlung photon\footnote{Without the dashed line, this is also just a generic path of a charged particle through the detector.}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{ATLAS_trackpath}.png}}
+  \caption{Schematic of the path of an electron through the ATLAS detector. The red solid line can be reconstructed as a track in the inner detector, and the red dashed line shows the path of a radiated bremsstrahlung photon due to material interactions in the inner detector. Figure sourced from~\cite{Aaboud:2019ynx}.}
+  \label{fig:ATLAS:ATLAS_trackpath}
+\end{figure}
+
+Electrons and photons are distinguished mostly by tracking information - electrons have a matched track emanating from the primary vertex, while photons either have no associated tracks (if unconverted) or a set of paired tracks emanating from a secondary conversion vertex (if converted).
+
+The reconstruction begins with topoclusters (Section~\ref{sec:ATLAS:clusters}), with a preselection that $>50\%$ of the topocluster energy is in the electromagnetic calorimeter.
+Tracks are then extrapolated from the tracker into the calorimeter and matched to topoclusters in $\eta,\phi$.
+As mentioned above, matched tracks are then determined to come from the primary vertex or combined with other nearby tracks to find secondary vertices indicating a converted photon.
+The topoclusters are then used as seeds to expand into \textit{superclusters} intended to capture the full electromagnetic shower.
+Topoclusters with $\ET>1$ GeV and a matched track, or topoclusters with $\ET>1.5$ GeV and no requirement on matched tracks are used as superclusters seeds.
+In order of seed $\ET$, the seeds are expanded to all neighboring topoclusters within $\Delta\eta \times \Delta\phi = 0.075\times 0.125$.
+If there is a matched primary vertex track to the seed then any other neighboring clusters matched to the same track are also added; and if there is a matched conversion vertex to the seed then any other neighboring clusters with tracks matching the conversion vertex are added.
+Finally, tracks are refit to the superclusters, and they are labeled unambiguous electrons if there is a matched primary vertex track, unambiguous photons if there are no matched tracks or a set of matched tracks forming a conversion vertex, or ambiguous if both are true.
+
+A variety of features related to the shower shape are used for electron and photon identification and discrimination from hadronic showers.
+For example, the fraction of energy of the supercluster in the electromagnetic calorimeter is used as a discriminatory variable; the distribution of this feature and discrimination power in electrons and in pile-up clusters (mostly hadronic) can be seen in Figure~\ref{fig:ATLAS:EMfrac}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{EMfrac_electrons_pileup_dist}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{EMfrac_electrons_pileup_ROC}.png}}
+  \caption{Fraction of supercluster energy in electromagnetic calorimeter, compared between true electrons and pile-up, in simulation. (a) Distribution; (b) Efficiency of cut. Figure sourced from~\cite{Aad:2019tso}.}
+  \label{fig:ATLAS:EMfrac}
+\end{figure}
+These features (formed separately for electrons and photons) are combined together into a multivariate likelihood in bins of \ET{} and $\eta$ to be used in the final identification.
+More information about the electron identification can be found in~\cite{Aaboud:2019ynx}.
+The shower shape variables are particularly useful for distinguishing between prompt photons and neutral pions decaying to collimated $\gamma\gamma$.
+Both photons and electrons have working points at \texttt{Loose}, \texttt{Medium}, or \texttt{Tight}, which can be chosen at the analysis level based on the signal efficiency - background rejection tradeoff.
+
+In addition, a set of isolation variables are defined based on calorimeter and tracking activity outside the supercluster but inside a cone of $\Delta R = 0.2$.
+The isolation is intended to discriminate between prompt electrons and electrons from heavy flavor decays or light hadrons misidentified as electrons, and further between prompt photons and neutral pions decaying to collimbated $\gamma\gamma$.
+Isolation working points are defined at \texttt{Loose}, \texttt{Tight}, and \texttt{CaloOnly} which uses only calorimeter information.
+
+The efficiency of the identification and isolation working points are evaluated in data using high-fidelity $Z\rightarrow ee$ and $J/\psi \rightarrow ee$ events for electrons~\cite{ATLAS-CONF-2016-024} and $Z\rightarrow ee\gamma$ and $Z\rightarrow \mu\mu\gamma$ events for photons~\cite{PERF-2013-04,Aaboud:2018yqu}.
+The differences between the simulation and data are corrected, and the uncertainties on these corrections are applied as systematic uncertainties on simulated events.
+
+The energy of electrons and photons are calibrated~\cite{Aaboud:2018ugz,PERF-2013-05} to account for energy lost in the material upstream of the calorimeter, for energy deposited in the cells neighbouring the cluster, and for energy lost beyond the electromagnetic calorimeter.
+The corrections are first derived in simulation using a boosted decision tree (BDT) incorporating multiple shower shape variables in bins of $\eta$ and $Et$.
+The photon and energy calibrations do not use numerical inversion (Chapter~\ref{ch:NI}), meaning the calibrations can be biased by the prior used to calibrate.
+However, as the energy resolution is small ($\mathcal{O}(5\%)$ for electrons and photons with $5<Et<10$ GeV, and better for higher energies), this effect is not as important as it would be for jets, which have much worse resolutions (Section~\ref{sec:ATLAS:jet_calibration}).
+
+The calibrated energies are evaluated in data using the above-mentioned high-fidelity samples.
+A data-simulation, or \textit{in situ}, correction is applied based on any observed differences.
+The uncertainties on these corrections are applied as systematic uncertainties on simulated events.
 
 \subsection{Jets}
 \label{sec:ATLAS:jets}
