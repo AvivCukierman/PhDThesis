@@ -528,33 +528,139 @@ The jet energy and momentum calibration procedure~\cite{PERF-2016-04,Aad:2011he,
 The steps for the calibration of small-$R$ jets are shown in Figure~\ref{fig:ATLAS:smallR_calibration}.
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{smallR_calibration}.png}}
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{smallR_calibration}.png}}
   \caption{Steps in the small-$R$ jet calibration. Figure sourced from~\cite{PERF-2016-04}.}
   \label{fig:ATLAS:smallR_calibration}
 \end{figure}
 Following jet reconstruction from the calorimeter cell-clusters, there is a minor correction to the jet direction to point to the hard-scatter primary vertex rather than the nominal detector center.
 The impact of pile-up is corrected for using a jet area-based~\cite{Cacciari:2007fd,Cacciari:2008gn} approach followed by a residual correction sensitive to both in-time and out-of-time pile-up~\cite{Aad:2015ina}.
 Following the pile-up correction, an absolute \pt{} scale correction is derived in simulation, which also corrects the jet direction.
-There is then a sequence of corrections, called the \textit{global sequential calibration} or \textit{GSC}, to further correct the residual depdendence of the jet \pT{} on various jet quantities using information from the tracker, calorimeter, and MS.
+There is then a sequence of corrections, called the \textit{global sequential calibration} or \textit{GSC}, to further correct the residual dependence of the jet \pT{} on various jet quantities using information from the tracker, calorimeter, and MS.
 The final step of the jet calibration procedure applied only to data is an in-situ correction that accounts for the residual differences between data and simulation.
 
 
 The steps for the calibration of large-$R$ jets are shown in Figure~\ref{fig:ATLAS:largeR_calibration}.
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{largeR_calibration}.png}}
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{largeR_calibration}.png}}
   \caption{Steps in the large-$R$ jet calibration. Figure sourced from~\cite{Aaboud:2018kfi}.}
   \label{fig:ATLAS:largeR_calibration}
 \end{figure}
 After jet reconstruction with LCW topoclusters and grooming with trimming, the jet energy, mass, and $\eta$ are corrected using an absolute MC-based correction.
 There is finally an in-situ correction applied only to data to correct for differences in the energy scale between data and simulation.
 
-%This reduced dependence makes the response more similar for quark and gluon jets, reduces the uncertainty due to jet fragmentation modeling for a given jet type, and improves the jet energy resolution.
+Each of the above steps, other than the pile-up correction for small-$R$ jets, operate under the principle of \textit{numerical inversion} (Chapter~\ref{ch:NI}) in order to be independent of the underlying prior distribution of the reference energy or momentum.
 
-%Hadron-level (`truth') jets are formed from detector-stable simulated particles ($c\tau > 10$ mm), excluding muons and neutrinos.  Reco jets are geometrically matched to truth jets using the $\Delta R$ distance metric; all jets with a reco-truth match are considered.  Truth jets are matched to partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label. 
+In the simulation-based corrections, the reference object is ``truth'' jets formed from detector-stable simulated particles ($c\tau > 10$ mm) other than muons and neutrinos, absent the detector simulation (Section~\ref{sec:ATLAS:simulation}).
+Reconstructed jets are geometrically matched to truth jets with $\Delta R = \sqrt{\Delta\eta^2+\Delta\phi^2}$.
+Truth jets are matched to truth partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label.
 
-%The goal of jet calibration is to ensure that the average calibrated detector-level momentum is the same as the corresponding particle-level quantity on average: $f(x)\equiv\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x\rangle\approx x$.  In practice, since $p_\text{T}^\text{reco}|p_\text{T}^\text{true}$ is not exactly normal, a Gaussian function is fit to the core of the probability distribution and the mean and standard deviation of the fit are used to quantify the bias and spread.  A related quantity to $f(x)$ is the average response $R(x)=f(x)/x$.  The closure of the jet calibration procedure is often quantified by the deviation of $R(x)$ from unity.
+In the in situ corrections, the reference object is some better measured object in the event, taking advantage of conservation of momentum in the entire event.
+For lower \pt{} jets, the in situ corrections use $Z\rightarrow ee/\mu\mu$ or $\gamma$ as the reference object to balance the momentum.
+For higher \pt{} jets, systems of multiple lower \pt{} small-$R$ jets are used to balance the momentum.
 
+The first step of the small-$R$ jet correction is simply a geometric correction to account for the fact that $\eta$ is measured as an angle from the center of the detector, but jet angle should instead be measured from the interaction point or the hard-scatter primary vertex.
+
+The pile-up correction for small-$R$ jets~\cite{Cacciari:2007fd} first estimates the average extra \pt{} density due to pile-up in the event $\rho$, and the catchment area of the jet $A$; then $\rho A$ is subtracted from the jet \pt{} as the expectation of pile-up contribution in the jet.
+The areas of jets~\cite{Cacciari:2008gn} are estimated using \textit{ghost association}.
+The whole event is blanketed uniformly in $\eta,\phi$ with zero-momentum \textit{ghosts}, and the jet finding process is repeated.
+The set of output jets is not affected by the presence of ghosts, since the algorithm is IRC safe (Section~\ref{sec:jets:def}), but the set of ghosts associated with each jet gives a definition of the jet area.
+$\rho$ is calculated by rerunning the jet finding using the $\kt$ algorithm with $R=0.4$ (most of which will be due to pile-up interactions), calculating the jet momentum density $\pt/A$, and taking the median over all jets.
+The distribution of $\rho$ at different values of the number of primary vertices (NPV), an estimate of the pile-up contribution in the event, can be seen in Figure~\ref{fig:ATLAS:jet_calibration_pileup}.
+It can be seen that the peak of the $\rho$ distribution increases roughly linearly with NPV.
+
+The Author has been involved in a project~\cite{ATLAS-CONF-2017-065} to subtract pile-up from topoclusters in the first place rather than from the entire jet.
+In this project, $\rho$ is calculated in the same way, but the area of each topocluster is estimated using a Voronoi tessellation~\cite{LejeuneDirichlet1850,Voronoi1908,10.1145/10515.10549} of the calorimeter in $\eta,\phi$ with the topoclusters as seeds.
+
+After the $\rho A$ correction, there is still some residual dependence on NPV and $\mu$, particularly at high $\eta$.
+The dependence of the jet \pt{} on these two parameters is estimated with a linear fit and subtracted; the effect of this correction can be seen in Figure~\ref{fig:ATLAS:jet_calibration_pileup}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{jet_calibration_rho}.png}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{jet_calibration_residNPV}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{jet_calibration_residmu}.png}}
+  \caption{(a) Distribution of pile-up density $\rho$ for different values of NPV at fixed $\mu$. (b) Effect of residual correction for NPV. (c) Effect of residual correction for $\mu$. Figures sourced from~\cite{Aaboud:2018kfi}.}
+  \label{fig:ATLAS:jet_calibration_pileup}
+\end{figure}
+
+Following the pile-up correction, a correction is derived in simulation for the ratio between the overall reconstructed jet energy and the truth jet energy.
+In bins of $\eta$, the mode of the $E^\text{reco}/E^\text{true}$ distribution (the energy \textit{response}) in each $E^\text{true}$ bin is found by fitting a Gaussian to the central peak of the distribution and taking the mean of the fitted Gaussian.
+As mentioned above, this process proceeds via numerical inversion (Chapter~\ref{ch:NI}), by inverting this response function and applying it to the reconstructed energies.
+The dependence of the energy response on $E^\text{true}$ and $\eta$ can be seen in Figure~\ref{fig:ATLAS:jet_calibration_NI}.
+
+Following the absolute scale correction, a sequence of residual corrections on various features are applied to correct the jet \pt{}.
+The sequence of corrections, called the \textit{global sequential calibration} or \textit{GSC}, corrects the dependence of \pt{} on each feature sequentially; since the dependence of the \pt{} response changes with \pt{}, these steps also proceed via numerical inversion.
+The features include those sensitive to the provenance of the jet (quark- or gluon-initiated) like the number of tracks in the jet and the width of tracks in the jet (the average \pt-weighted distance of tracks from the jet axis); removing this dependence makes the response more similar for quark and gluon jets and reduces the uncertainty due to jet fragmentation modeling for a given jet type.
+There are also two features to account for the differences between electromagnetic and hadronic showers (based on the fraction of jet energy in various layers of the electromagnetic and hadronic calorimeters), and finally there is a feature to account for hadronic showers that punch through to the MS.
+The dependence of the \pt{} on some of the features that go into the GSC can be seen in Figure~\ref{fig:ATLAS:jet_calibration_NI}.
+
+Chapter~\ref{ch:GenNI} proposes a new method of accounting for the dependence of the jet \pt{} on each of these auxiliary variables by deriving the correction simultaneously rather than sequentially.
+The new method is enabled by the use of neural networks to estimate the response dependence in the high-dimensional space formed by all the features, but retains the key properties of numerical inversion.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{jet_calibration_NI}.png}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{jet_calibration_GSC_wtrk}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{jet_calibration_GSC_ntrk}.png}}
+  \caption{Small-$R$ jet calibration. (a) Energy response in bins of $E^\text{true}$ and $\eta$ for the absolute energy scale correction. (b) Dependence of \pt{} on track width for the GSC. (c) Dependence of \pt{} on number of tracks in jet for the GSC. Figures sourced from~\cite{Aaboud:2018kfi}.}
+  \label{fig:ATLAS:jet_calibration_NI}
+\end{figure}
+
+The above corrections are applied to all jets, both in simulation and data.
+There is a final step which compares the ratio of the jet response to a reference object in simulation and in data, and if there is a difference then the jets in data are corrected; this is called the \textit{in situ} correction.
+As mentioned above, the reference objects include well-reconstructed $Z \rightarrow ee/\mu/mu$, $\gamma$, or multijet systems, taking advantage of conservation of momentum in the event.
+The correction using $Z$ as the reference object cover the low $\pt$ range $20 < \pt < 500$ GeV; the correction using $\gamma$ as the reference object cover the medium $\pt$ range $36 < \pt < 950$ GeV; and the multijet balance is used to extend the calibration up to $2$ TeV.
+There is also an in situ $\eta$-intercalibration comparing jets at high $\eta$ to more central jets.
+This correction also proceeds via numerical inversion.
+There can be uncertainties in the value of this correction due to mismodeling of physics effects; uncertainties in the kinematics of the reference object; and uncertainties in the \pt{} balance due to the event topology.
+These uncertainties are propagated at systematic uncertainties on the jet energy correction.
+The total systematic uncertainty on the jet energy is around 2\%, rising up to around 5\% for low-$\pt$ jets.
+
+The calibration of large-$R$ jets~\cite{Aaboud:2018kfi} does not include a pile-up subtraction step, as large-$R$ jets are trimmed (Section~\ref{sec:jets:grooming}) and are intended for high \pt{} massive objects for which pile-up has a small effect on the jet \pt{}.
+The energy correction for large-$R$ jets in bins of $\eta$ is derived in simulation similarly to that for small-$R$ jets, again using numerical inversion.
+After the energy correction the large-$R$ jet mass is also calibrated in bins of $E$ and $\eta$, again using numerical inversion to prevent being biased by the distribution of the truth mass.
+The energy and mass response before calibration can be seen in Figure~\ref{fig:ATLAS:largeR_jet_calibration_response}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{largeR_jet_calibration_E}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{largeR_jet_calibration_M}.png}}
+  \caption{Large-$R$ jet calibration. (a) Energy response in bins of $E^\text{true}$ and $\eta$ for the absolute energy scale correction. (b) Mass response in bins of $\pt^\text{true}$ and $\eta$ for jets with truth mass around $m_W \approx 80$ GeV. Figures sourced from~\cite{Aaboud:2018kfi}.}
+  \label{fig:ATLAS:largeR_jet_calibration_response}
+\end{figure}
+
+The Author has been involved in a project~\cite{ATL-PHYS-PUB-2020-001} intended to calibrate the jet energy and mass simultaneously rather than the sequential process outlined above.
+This project uses the simultaneous techniques enabled by neural networks introdued in Chapter~\ref{ch:GenNI}.
+
+There are two linearly independent definitions of the jet mass~\cite{ATLAS-CONF-2016-035}.
+The first is directly from summing together the four momenta of the constituent topoclusters (which are themselves assumed to be massless) and is called $m^\text{calo}$, or \textit{calorimeter} mass.
+The second, called the \textit{track} mass or $m^\text{track}$, is measured from tracks ghost-associated to the jet.
+This measurement can be more accurate than the calorimeter mass due to the improved angular resolution of tracks compared to topoclusters; however, the tracks only comprise the charged particle component of the hadronic shower, so the overal scale of the mass will be off, even as the angular distribution is relatively accurate.
+To account for the absence of neutral particles in the track mass which are measured in the calorimeter, the track mass is scaled up by the ratio of the calorimeter and track \pt{}, forming the \textit{track-assisted} mass~\cite{Elder:2018mcr} or $m^\text{TA}=m^\text{track}\frac{\pt^\text{calo}}{\pt^\text{calo}}$.
+Each of these two mass definitions are calibrated separately.
+The \textit{combined} mass or $m^\text{comb}$ is defined as a weighted sum between $m^\text{track}$ and $m^\text{TA}$ based on the (inverse) resolution of the truth jet mass under each definition.
+Since the sum of the weights is $1$, $m^\text{comb}$ is itself calibrated.
+
+As with small-$R$ jets, an in situ correction is applied to the large-$R$ jet \pt{} in data, using as reference objects well-reconstructed $Z \rightarrow ee/\mu/mu$, $\gamma$, or multijet systems.
+The correction using $Z$ as the reference object cover the low $\pt$ range $200 < \pt < 500$ GeV; the correction using $\gamma$ as the reference object cover the medium $\pt$ range $500 < \pt < 1000$ GeV; and the multijet balance is used to extend the calibration up to $2.5$ TeV.
+There is also an in situ $\eta$-intercalibration comparing jets at high $\eta$ to more central jets.
+The in situ correction or large-$R$ jets also proceeds via numerical inversion.
+The total systematic uncertainty on the jet energy rises from around 2\% at low \pt{} to around 6\% for high-$\pt$ jets.
+
+An in situ correction for the jet mass is also derived, though this correction cannot take advantage of \pt{} balance with a reference object.
+Two methods are employed to derive this correction.
+The first method compares the ratio of $m^\text{calo}$ to $m^\text{track}$ in data and simulation and provides a correction based on any differencs, and uncertainties on this correction are applied as systematic uncertainties.
+The second method is called \textit{forward folding}~\cite{ATLAS-CONF-2016-008}.
+Both data and simulation are subjected to an event selection targeting $t\bar{t}$ events with high fidelity.
+This event selection takes advantage of events where one of the top quarks decays semileptonically ($t\rightarrow Wb \rightarrow l\nu b$) to unambiguously identify the top quark and the other decays hadronically ($t\rightarrow Wb \rightarrow qqb$), using the hadronic decay to calibrate the jet mass.
+In these events a correction to the mean and resolution of the mass response is derived by matching the entire distribution seen in simulation to that seen in data (for the given choice of mass definition); this correction is taken as the in situ correction and uncertainties related to the measurement are taken as systematic uncertainties.
+A jet-topology dependence and uncertainty can also be derived from forward folding by requiring the tagged $b$-jet (Section~\ref{sec:ATLAS:btagging}) to be inside (for top jets) or outside (for $W$ jets) the large-$R$ jet.
+The jet mass response uncertainty depends on the jet \pt{}, but is generally less than $5\%$.
+
+
+\subsubsection{Pile-up Jet Tagging}
+\label{sec:ATLAS:JVT}
 
 \subsubsection{$b$-Tagging}
 \label{sec:ATLAS:btagging}
