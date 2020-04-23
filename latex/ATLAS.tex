@@ -658,9 +658,91 @@ In these events a correction to the mean and resolution of the mass response is 
 A jet-topology dependence and uncertainty can also be derived from forward folding by requiring the tagged $b$-jet (Section~\ref{sec:ATLAS:btagging}) to be inside (for top jets) or outside (for $W$ jets) the large-$R$ jet.
 The jet mass response uncertainty depends on the jet \pt{}, but is generally less than $5\%$.
 
+The tagging of jets based on their substructure is covered in Section~\ref{sec:jets:tagging}.
+Briefly, small-$R$ jets can be tagged as originating from quarks or gluons based on the distribution of tracks within the jet (gluons are wider than quarks).
+Large-$R$ jets can be tagged as fully hadronic decays originating from $W/Z$ bosons (with two hard subprongs), from top quarks (with a $W$ and a $b$-tagged subjet (Section~\ref{sec:ATLAS:btagging})), or from Higgs bosons (with two $b$-tagged subjets).
+There are also decays involving leptons that can be used to tag large-$R$ jets, e.g. $Z\rightarrow ee/\mu\mu$.
+
+The following three Sections cover jet tagging not based strictly on the angular distribution of the tracks, topoclusters, and subjets within the jet: pile-up jet tagging (Section~\ref{sec:ATLAS:JVT}), $b$-tagging (Section~\ref{sec:ATLAS:btagging}), and $\tau$-tagging (Section~\ref{sec:ATLAS:taus}).
 
 \subsubsection{Pile-up Jet Tagging}
 \label{sec:ATLAS:JVT}
+While the pile-up contribution within small-$R$ jets is subtracted out in the calibration process, there can be jets with low transverse momentum that originate entirely from pile-up.
+These jets can either be stochastic, meaning local fluctuations in the soft particle noise level from the sum of the other interactions in the event, or they can result from hard partons that originate from a single interaction other than the hard-scatter vertex (which presumably produced even harder objects to fire the trigger and have the highest $\sum \pt^2$.).
+
+The dependence of the number of jets in the event on the average number of interactions per bunch crossing $\mu$ is shown in Figure~\ref{fig:ATLAS:JVT}.
+It can be seen that there is a linear component of the dependence on pile-up, corresponding to hard partons from a single interaction, and a superlinear component, corresponding to stochastic fluctuations.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{pileup_JVT}.pdf}}
+  \caption{Dependence of number of jets ($\pt>20$ GeV) per event on the average number of interactions per bunch crossing. In blue, all jets. In red, after applying a selection of JVT$>0.59$. Events from 2017 data-taking with a dimuon trigger and $81<M_{\mu\mu}<101$ GeV, correponding to an event topology of $Z+$jets. Figure sourced from~\cite{JETM-2017-009}.}
+  \label{fig:ATLAS:JVT}
+\end{figure}
+
+It is desirable to remove these pile-up jets from the event, since they are unrelated to the hard-scatter topology and would otherwise be a major source of noise in event selections.
+Jets are identified as \textit{pile-up jets}~\cite{Aad:2015ina,ATLAS-CONF-2014-018} (rather than \textit{hard-scatter jets}) based on tracks ghost-associated with the jet and identified as originating from the hard-scatter vertex or a pile-up vertex. 
+
+The \textit{jet-vertex-fraction}, or \textit{JVF}, is defined as the fraction of the scalar sum of associated track \pt{} coming from the hard-scatter primary vertex.
+While hard-scatter jets tend to have higher values of JVF than pile-up jets, the efficiency of a fixed cut on JVF degrades as the number of primary vertices increases.
+A \textit{corrected JVF}, or \textit{corrJVF}, variable is defined to account for this effect which compares the scalar sum of the associated track \pt{} coming from the hard-scatter primary vertex to the average (as opposed to total in the case of JVF) scalar sum of track \pt{} coming from pile-up vertices.
+Because of this correction, the efficiency of a fixed cut on corrJVF does not degrade with the number of primary vertices.
+
+An additional variable, $R_{p\text{T}}$, is defined as the ratio of the scalar sum of associated track \pT{} coming from the hard-scatter primary vertex to the total \pt{} of the jet measured in the calorimeter, including the calibration with the pile-up subtraction step.
+This variable accounts for false positives with corrJVF in the case that a stray soft track from the hard-scatter vertex happens to land in a pile-up jet with no associated tracks.
+Hard-scatter jets tend to have a broad distribution in $R_{p\text{T}}$ depending on the charged fraction of the shower, while pile-up jets have a sharp distribution near $0$.
+As $R_{p\text{T}}$ is defined in terms of only the hard-scatter vertex, it is to first order independent of the number of primary vertices.
+
+A final variable, \textit{jet-vertex-tagger} or \textit{JVT}, is defined as a combination of these two variables.
+The two-dimensional likelihood distribution in hard-scatter jets and pile-up jets is formed using simulated dijet events.
+JVT is defined as the likelihood ratio between these two samples, estimated using a $k$-nearest neighbor algorithm~\cite{hoecker2007tmva} in $(\text{corrJVF},R_{p\text{T}})$ space with a Euclidean metric and $k=100$.
+
+The curve for the rate of pile-up jets vs the efficiency on hard-scatter jets passing a selection on JVF, corrJVF, $R_{p\text{T}}$, and JVT is shown in Figure~\ref{fig:ATLAS:pileuprejection}.
+It can be seen that JVT performs the best over all algorithms, and in particular that while JVT and corrJVF perform similarly at high efficiency, JVT removes some false positives at lower efficiency due to the incorporation of $R_{p\text{T}}$.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{pileuprejection}.pdf}}
+  \caption{Fake rate (average number of pile-up jets per event) vs efficiency on hard-scatter jets as the selection on JVF, corrJVF, $R_{p\text{T}}$, and JVT is varied, in simulation. Figure sourced from~\cite{ATLAS-CONF-2014-018}.}
+  \label{fig:ATLAS:pileuprejection}
+\end{figure}
+
+A typical selection for jets in use in an analysis is $\text{JVT}>0.59$, which has about a 90\% efficiency on hard-scatter jets and a $0.02$ pile-up jet rate.
+This selection is applied only to jets with $\pt<60$ GeV, as the prior distribution of pile-up jets falls off rapidly with \pt{} and so a pile-up jet suppression is unnecessary (and would remove some high \pt{} hard-scatter jets).
+Pile-up jet suppression is not applied to large-$R$ jets, as they are only calibrated down to $200$ \GeV{} and the rate of pile-up jets at that scale is negligible.
+
+JVT of course relies on tracks and track-to-vertex association for pile-up identification, and so can only be applied to jets with $|\eta|<2.4$ (\textit{central jets}), the angular extent of the tracker (Section~\ref{sec:ATLAS:tracker}).
+For jets outside this range, or \textit{forward jets}, a different pile-up tagger can be used~\cite{Aaboud:2017pou}.
+The rate of forward pile-up jets is less than that for central pile-up jets, as can be seen in Figure~\ref{fig:ATLAS:forwardpileup}.
+However, it is important to remove these forward pile-up jets for analyses that expect forward jets as part of their signal selection - for example, the search presented in Chapter~\ref{ch:HBSM} targets Higgs bosons produced in the vector-boson-fusion mode, which tends to produce forward quark-initiated jets.
+
+In contrast to central jets, forward pile-up jets are more likely to come from hard partons from a single pile-up interaction (\textit{QCD pile-up jets}) than from stochastic fluctuations from multiple interactions (\textit{stochastic pile-up jets}), as can be seen in Figure~\ref{fig:ATLAS:forwardpileup}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{forward_pileup_rate}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{stochastic_pileup_rate}.pdf}}
+  \caption{(a) Average number of events with at least one forward jet ($\pt>20$ GeV) as a function of the average number of interactions per bunch crossing $\mu$. (b) QCD pile-up jet fraction as a function of \pt{} for central and forward jets. Figures sourced from~\cite{Aaboud:2017pou}.}
+  \label{fig:ATLAS:forwardpileup}
+\end{figure}
+
+Stochastic pile-up jets are identified using the spatial width $\gamma$ and temporal width of calorimeter towers in the catchment area of the jet, as hard-scatter jets tend to have a well-defined small core and stochastic pile-up jets tend to be diffuse.
+
+QCD pile-up jets are identified taking advantage of the fact that the total momentum from each pile-up interaction must be conserved in the event.
+Therefore, events with forward QCD pile-up jets tend to have pile-up vertices with some missing vectorial transverse momentum in their associated tracks and jets, which matches the vectorial transverse momentum present in the forward jet.
+Forward QCD pile-up jets can be identified taking advantage of this event topology; this algorithm is called \textit{forward JVT} or \textit{fJVT}.
+
+The taggers based on $\gamma$ and fJVT are combined together in a forward pile-up jet tagger called fJVT$_\gamma$, and the final tagger uses both fJVT$_\gamma$ and timing information to suppress forward stochastic and QCD pile-up jets.
+The performance of these taggers can be seen in Figure~\ref{fig:ATLAS:fJVT}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{fJVT_2030}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{fJVT_3050}.pdf}}
+  \caption{Efficiency on pile-up jets vs efficiency on hard-scatter jets for taggers based on $\gamma$+timing information, fJVT, and fJVT$_\gamma$+timing information. (a) Jets with $20<\pt<30$ GeV; (b) jets with $30<\pt<50$ GeV. Figures sourced from~\cite{Aaboud:2017pou}.}
+  \label{fig:ATLAS:fJVT}
+\end{figure}
+
+The efficiencies of both JVT and the forward pile-up tagger are measured in data using $Z\rightarrow \mu\mu$+jets events and corrected for any data-simulation differences; the uncertainties on these corrections are applied as systematic uncertainties.
 
 \subsubsection{$b$-Tagging}
 \label{sec:ATLAS:btagging}
