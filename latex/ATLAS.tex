@@ -744,11 +744,36 @@ The performance of these taggers can be seen in Figure~\ref{fig:ATLAS:fJVT}.
 
 The efficiencies of both JVT and the forward pile-up tagger are measured in data using $Z\rightarrow \mu\mu$+jets events and corrected for any data-simulation differences; the uncertainties on these corrections are applied as systematic uncertainties.
 
-\subsubsection{$b$-Tagging}
+\subsubsection{$b$-tagging}
 \label{sec:ATLAS:btagging}
+Jets originating from $b$-quarks (\textit{$b$-jets}) can be identified taking advantage of the lifetime of $B$-hadrons , which is long enough for the decay to be measurably distant from the primary vertex but short enough that the decay occurs in the inner detector ($\mathcal{O(\text{mm})}$)\footnote{$b$-jets contain electrons or muons (+neutrinos) about 10\% of the time each; in those cases the leptons are used to identify the $b$-jet. This Section focuses on fully hadronic decays.}.
+While the main background is jets originating from light quarks (\textit{light-flavor jets}), jets originating from $c$-quarks (\textit{$c$-jets}) also present a confounding background source, as hadrons containing $c$-quarks also tend to have a relatively long lifetime.
+
+There are a variety of $b$-tagging algorithms~\cite{Aad:2015ydr,Aaboud:2018xwy,Aad:2019aic}, which combine low-level features related to the $B$-hadron decay into high-level multivariate taggers.
+The low level features fall into a few different categories: using the impact parameter of tracks matched to the jet directly (\textit{IP2D} or \textit{IP3D})~\cite{ATL-PHYS-PUB-2017-013}; constructing secondary vertices using matched tracks (\textit{SV1})~\cite{ATL-PHYS-PUB-2017-011}; or fitting the entire $B$-hadron decay (\textit{JetFitter})~\cite{ATL-PHYS-PUB-2018-025}.
+These features are combined into two high-level multivariate tagging algorithms: \textit{MV2}, which is trained using a boosted decision tree in TMVA~\cite{hoecker2007tmva}, and \textit{DL1}, which is trained using a deep feed-forward neural network in Keras~\cite{chollet2015keras}.
+The distributions of the scores from these high-level taggers can be seen in Figure~\ref{fig:ATLAS:btagging}.
+The background rejection rate, for light-flavor jets or for $c$-jets, as a function of the $b$-jet efficiency, for each of the above low-level and high-level taggers, can also be seen in Figure~\ref{fig:ATLAS:btagging}.
+DL1 does slightly better than MV2, with a rejection rate of light-flavor jets of about $10$ at $70\%$ efficiency on $b$-jets.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{MV2_dist}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{DL1_dist}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{btagging_ROC}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{btagging_ROC_cjets}.pdf}}
+  \caption{Distribution of scores from high-level $b$-taggers for light-flavor jets, $c$-jets, and $b$-jets: (a) MV2; (b) DL1. Background rejection rate of various $b$-taggers vs efficiency on $b$-jets: (c) light-flavor jets; (d) $c$-jets. Figures sourced from~\cite{Aad:2019aic}.}
+  \label{fig:ATLAS:btagging}
+\end{figure}
+
+Typically analyses will use working points at the $60\%$, $70\%$, $77\%$, or $85\%$ efficiency levels, depending on the needs of the analysis.
+
+The efficiency of the $b$-taggers is measured in data in high-fidelity $t\bar{t}$ events, where both of the top quarks decays leptonically $t\rightarrow Wb\rightarrow l\nu b$.
+Any differences between data and simulation are corrected, and any uncertainties in this correction are applied as systematic uncertainties on the taggers.
 
 \subsubsection{Taus}
 \label{sec:ATLAS:taus}
+Tau leptons decay hadronically about 65\% of the time, in which case they are reconstructed as jets (\textit{$\tau$-jets})\footnote{Taus decay to electrons or muons (+neutrinos) about 17\% of the time each; in those cases the (lighter) leptons are used to identify the $\tau$. This Section focuses on fully hadronic decays.}.
 
 \subsection{Muons}
 \label{sec:ATLAS:muons}
