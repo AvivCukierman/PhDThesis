@@ -798,6 +798,35 @@ Any differences between data and simulation are corrected, and uncertanties on t
 
 \subsection{Muons}
 \label{sec:ATLAS:muons}
+Muons are reconstructed~\cite{Aad:2014rra,Aad:2016jkr} as charged particle tracks in the muon system.
+As almost all particles other than muons and neutrinos decay or shower in the calorimeter, muon identification has a very low background and events with muons in them can be used to identify specific physics topologies with high fidelity.
+Figure~\ref{fig:ATLAS:VBFHmumu} shows an event display of an event likely corresponding to a Higgs boson (produced in the vector-boson-fusion mode) decaying to two muons.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{VBFHmumu}.png}}
+  \caption{Event display showing candidate Higgs boson produced in the vector-boson-fusion mode decaying to two muons. Figure sourced from~\cite{EventDisplayRun2Physics}, related to~\cite{Aaboud:2017ojs}.}
+  \label{fig:ATLAS:VBFHmumu}
+\end{figure}
+
+Muons are reconstructed from hits in the inner detector just like any other charged particle.
+They are also reconstructed from hits in the various subsystems in the MS, using a Hough transform~\cite{ILLINGWORTH198887} to search for hits aligned along curved trajectories.
+Track segments are formed in each layer of the MS and combined to form track candidates, fitting the segments and tracks with a $\chi^2$ fit to the hits.
+Tracks in the MS and in the inner detector are combined and fit again to form full muon candidates.
+Most muon candidates are formed outside-in (back-extrapolating MS tracks to inner detector tracks), but an inside-out method (extrapolating inner detector tracks to MS tracks) is used as a complementary approach.
+In regions that the MS covers but the inner detector does not ($2.5<|\eta|<2.7$), muon candidates can be formed from information only in the MS.
+
+Fake muons can come from a variety of sources: from charged hadrons, primarily pions and kaons, decaying to muons, which produces a kink in the track in the inner detector; from charged hadrons punching through to the MS, which lose significant energy in the calorimeter relative to the track momentum; and from cosmic muons, which do not originate from the primary vertex.
+Each of these sources of background can be distinguished from prompt muons by testing the quality of the track in the inner detector and its compatibility with the track in the MS, especially the charge to momentum ratio.
+A few different working points are defined by selecting on these features - the \texttt{Medium} working point, which is the default for analyses, has about a 95\% efficiency on prompt photons with $4<\pt<100$ GeV and $<0.5\%$ efficiency on charged pions decaying midflight to muons.
+
+Muons can also be required to be isolated using similar variables as for photons and electrons (Section~\ref{sec:ATLAS:EM}), depending on the signal topology targeted in an analysis.
+
+The efficiency on muons for the identification and isolation is measured in simulation and in data in high-fidelity $Z\rightarrow \mu\mu$ events, where one muon and the invariant mass $M_{\mu\mu}$ are used to tag the event, and the efficiency on the other muon is tested.
+Differences in the efficiency between simulation and data are corrected, and uncertainties in this correction are applied as systematic uncertainties.
+
+As muons are reconstructed as tracks in the MS, the charge-to-momentum ratio is measured very precisely.
+The muon momentum is also compared between simulation and high-fidelity $Z\rightarrow \mu\mu$ events in data.
+The differences between simulation and data in the momentum measurement are applied as corrections in the simulations and the uncertainties on this correction are applied as systematic uncertainties.
 
 \subsection{Missing Energy}
 \label{sec:ATLAS:met}
