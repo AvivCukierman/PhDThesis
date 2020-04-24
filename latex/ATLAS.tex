@@ -830,3 +830,9 @@ The differences between simulation and data in the momentum measurement are appl
 
 \subsection{Missing Energy}
 \label{sec:ATLAS:met}
+Because of momentum conservation, the vectorial transverse momentum of all objects in the event should sum to $0$\footnote{This statement is not necessarily true for the longitudinal momentum, as the colliding protons could have a momentum imbalance with each other.}.
+Any missing transverse momentum in the event, or $\Etmiss$, could be due to invisible particles like neutrinos or new particles beyond the standard model.
+
+$\Etmiss$ is calculated~\cite{Aad:2016nrq,Aaboud:2018tkc,ATLAS-CONF-2018-023} as the (opposite of the) vectorial sum of the transverse momentum from all other objects in the event - muons (Section~\ref{sec:ATLAS:muons}), electrons and photons (Section~\ref{sec:ATLAS:EM}), hadronically decaying tau jets (Section~\ref{sec:ATLAS:taus}), and all other jets (Section~\ref{sec:ATLAS:jets}) form the \textit{hard term}, and all other topoclusters in the calorimeter not matched to jets (Section~\ref{sec:ATLAS:clusters}) form the \textit{soft term}.
+Some proposed methods for measuring $\Etmiss$ are to incorporate the \pt{} resolution of the individual objects to get an $\Etmiss$ significance~\cite{ATLAS-CONF-2018-038}, or to use a convolutional neural network, treating the entire event as an image~\cite{ATL-PHYS-PUB-2019-028}.
+
