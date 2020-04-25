@@ -833,6 +833,33 @@ The differences between simulation and data in the momentum measurement are appl
 Because of momentum conservation, the vectorial transverse momentum of all objects in the event should sum to $0$\footnote{This statement is not necessarily true for the longitudinal momentum, as the colliding protons could have a momentum imbalance with each other.}.
 Any missing transverse momentum in the event, or $\Etmiss$, could be due to invisible particles like neutrinos or new particles beyond the standard model.
 
-$\Etmiss$ is calculated~\cite{Aad:2016nrq,Aaboud:2018tkc,ATLAS-CONF-2018-023} as the (opposite of the) vectorial sum of the transverse momentum from all other objects in the event - muons (Section~\ref{sec:ATLAS:muons}), electrons and photons (Section~\ref{sec:ATLAS:EM}), hadronically decaying tau jets (Section~\ref{sec:ATLAS:taus}), and all other jets (Section~\ref{sec:ATLAS:jets}) form the \textit{hard term}, and all other topoclusters in the calorimeter not matched to jets (Section~\ref{sec:ATLAS:clusters}) form the \textit{soft term}.
-Some proposed methods for measuring $\Etmiss$ are to incorporate the \pt{} resolution of the individual objects to get an $\Etmiss$ significance~\cite{ATLAS-CONF-2018-038}, or to use a convolutional neural network, treating the entire event as an image~\cite{ATL-PHYS-PUB-2019-028}.
+$\Etmiss$ is calculated~\cite{Aad:2016nrq,Aaboud:2018tkc,ATLAS-CONF-2018-023} as the (opposite of the) vectorial sum of the transverse momentum from all other objects in the event - muons (Section~\ref{sec:ATLAS:muons}), electrons and photons (Section~\ref{sec:ATLAS:EM}), hadronically decaying tau jets (Section~\ref{sec:ATLAS:taus}), and all other jets (Section~\ref{sec:ATLAS:jets}) form the \textit{hard term}, and all energy deposits in the event not matched to jets (Section~\ref{sec:ATLAS:clusters}) form the \textit{soft term}.
+
+For the hard term, objects are removed if they overlap with some better-measured object in order to avoid double counting; e.g., jets are removed if they overlap with a photon (which are reconstructed as jets), and only small-$R$ jets are used in the jet term (as large-$R$ jets are also reconstructed as small-$R$ jets).
+Pile-up suppression in the central and forward region~\ref{sec:ATLAS:JVT} has a major effect on the resolution of \Etmiss{}, as pile-up jets are unrelated to the hard-scatter event and only add an additional source of noise due to mismeasurements of their energies or incomplete event reconstruction (even though in principle pile-up interactions should be \pt{} balanced themselves).
+The jet term can use either calorimeter topoclusters as defined in Section~\ref{sec:ATLAS:clusters} or particle flow objects~\cite{Aaboud:2017aca}, which have been shown to improve the \Etmiss{} resolution.
+
+The soft term is the hardest term to measure, as it accounts for energy deposits not reconstructed in other detector objects, which benefit from calibrations and pile-up suppression.
+Because of this, the standard definition of the soft term is the track-based soft term (though different definitions have been used in the past~\cite{Aad:2012re,Aad:2016nrq}), which only uses all tracks with $\pt>400$ MeV associated to the hard scatter primary vertex and not associated to any other object in the event, via $\Delta R$ matching or ghost association for jets.
+The gain in performance from excluding pile-up activity when using only tracks to measure the soft term makes up for the loss in performance due to not including neutral soft activity.
+
+Despite this definition of the soft term, the $\Etmiss$ resolution gets worse as the number of primary vertices (NPV) increases.
+Two working points are defined - a \texttt{Loose} working point using all jets with $\pt>20$ GeV, requiring central jets to pass JVT, and a \texttt{Tight} working point which in addition removes all forward jets with $20<\pt<30$ GeV.
+There is in addition a middle working point that applies fJVT to forward jets.
+The resolution of \Etmiss{} in $Z\rightarrow \mu\mu$ events (which in the dominant Drell-Yan production mode has no true missing energy) as a function of NPV can be seen in Figure~\ref{fig:ATLAS:etmiss}.
+The resolution clearly gets worse with increasing pile-up, but the dependence gets less as the tightness of the forward pile-up cut gets tighter.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{etmiss_NPV}.pdf}}
+  \caption{The dependence of the \Etmiss{} resolution on the number of primary vertices (NPV). The red circles correspond to the \texttt{Loose} working point; green boxes correspond to the \texttt{Tight} working point; and blue triangles correspond to the middle working point of \texttt{Loose}+fJVT. Figure sourced from~\cite{ATLAS-CONF-2018-023}.}
+  \label{fig:ATLAS:etmiss}
+\end{figure}
+
+As all the underlying objects that go into \Etmiss{} are themselves calibrated and have associated systematic uncertainties, the \Etmiss{} itself is in principle calibrated (given the same definition in simulation and data), and the underlying object systematic uncertainties as propagated up as uncertainties on \Etmiss{}.
+In addition, the \Etmiss{} distribution is compared between simulation and data in $Z\rightarrow ee/\mu\mu$ events, which can be identified with high fidelity, and any differences that exist are applied as systematic uncertainties.
+
+There have been a variety of alternate definitions proposed for calculating \Etmiss.
+One proposed method is to incorporate the \pt{} resolution of the individual objects to get an $\Etmiss$ significance~\cite{ATLAS-CONF-2018-038}.
+An exciting alternative is to use a convolutional neural network to predict \Etmiss, treating the entire event as an image in $(\eta,\phi)$~\cite{ATL-PHYS-PUB-2019-028}.
 
