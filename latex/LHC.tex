@@ -1,5 +1,5 @@
 \section{Introduction}
-The \textit{Large Hadron Collider}~\cite{CERN-Brochure-2017-002-Eng,Pettersson:291782}, or \textit{LHC}, is a high energy particle accelerator and collider located at \textit{CERN} near Geneva, Switzerland.
+The \textit{Large Hadron Collider}~\cite{CERN-Brochure-2017-002-Eng,Pettersson:291782,Evans:313675,Evans:2008zzb}, or \textit{LHC}, is a high energy particle accelerator and collider located at \textit{CERN} near Geneva, Switzerland.
 The LHC is the largest machine ever built, with a circumference of $27$ km, running $100$ m underground and straddling the border between Switzerland and France.
 The purpose of the LHC is to produce the highest energy particle collisions ever, with a design center-of-mass energy of $\sqrt{s}=14$ TeV.
 A view of the LHC superimposed on an aerial view of Geneva and the surrounding areas can be seen in Figure~\ref{fig:LHC:aerial}, including the four main LHC experiments: ATLAS~\cite{PERF-2007-01}, CMS~\cite{CMS-TDR-08-001}, LHCb~\cite{Alves:2008zz}, and ALICE~\cite{Aamodt:2008zz}.
@@ -26,25 +26,73 @@ The entire CERN accelerator complex can be seen in Figure~\ref{fig:LHC:LHC}.
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.6\textwidth]{figures/{AccComplex0700829}.gif}}
+  \subfloat[]{\includegraphics[width=0.6\textwidth]{figures/{AccComplex0700829}.png}}
   \caption{The CERN accelerator complex. Figure sourced from~\cite{accelerator-complex}.}
   \label{fig:LHC:LHC}
 \end{figure}
 
-Protons start as ordinary ionized hydrogen, which are accelerated in the \textit{Linear Accelerator 2} (Linac 2) to an energy of $50$ MeV~\cite{CERN-Brochure-2017-002-Eng}.
+Protons start as ordinary ionized hydrogen, which are accelerated~\cite{CERN-Brochure-2017-002-Eng} in the \textit{Linear Accelerator 2} (Linac 2) to an energy of $50$ MeV.
 They are then passed through the \textit{Proton Synchrotron Booster} (PS Booster) and the \textit{Proton Synchrotron} (PS) to final energies of $1.4$ GeV and $25$ GeV, respectively.
 The final intermediate stage before the LHC is the \textit{Super Proton Synchrotron} (SPS), which accerates the protons an injection energy of $450$ GeV.
-The LHC itself then accelerates the protons to an energy of up to $7$ TeV, though operating histories have been less than this - $3.5$ TeV in 2010, $4$ TeV in 2011-2012, and $6.5$ TeV in 2015-2018 data taking (Section~\ref{sec:ATLAS:datataking}).
+The LHC itself then accelerates the protons to an energy of up to $7$ TeV, though operating histories have been less than this - $3.5$ TeV in 2010, $4$ TeV in 2011-2012, and $6.5$ TeV in 2015-2018 data taking (Section~\ref{sec:LHC:datataking}).
 
 The LHC is also used to accelerate and collide lead ions, which reach energies of up to $2.56$ TeV.
 
-The particles are accelerated using radiofrequency cavities~\cite{cern-accelerators,humphries_1986} .
+The particles are accelerated using radiofrequency cavities~\cite{cern-accelerators,humphries_1986} which in the LHC operate at $400$ MHz - every tenth wave is filled with a \textit{bunch} of about $10^{11}$ protons, for a bunch rate of $40$ MHz, and $2808$ bunches circulating the LHC per proton beam.
+Accelerating charged particles radiate according to the Larmor formula~\cite{jackson_1999}, so that the accelerators have to constantly input energy in order to maintain constant beam energy.
 
-%Charged particle in magnetic field
-%Octants
+The particles are kept along a circular trajectory with a perpendicular magnetic field produced by dipole magnets\footnote{There are also quadrupole, sextupole, etc. magnets to provide second-order effects like stabilization and beam focusing.}.
+The radius of curvature $R$, magnetic field $B$, and momentum $p$\footnote{Note that, as the particles are highly relativistic, $p=\gamma mv$. Also, since $m_p\approx 1~\GeV{} \ll ~\mathcal{O}(\TeV{})=$ beam energy, $p\approx E$.} are related~\cite{humphries_1986} via
+\begin{align}
+  BR = \frac{p}{|q|},
+  \label{eqn:LHC:chargedparticle}
+\end{align}
+where $q$ is the charge (for protons, $q=+1$ elementary charges).
+As the protons are accelerated around the ring the magnetic field increases proportionally in order to keep the radius fixed.
+A given magnet can only support a magnetic field range of $\mathcal{O}(100)$, which is why the energy increases by a factor of $20-25$ in each stage of the accelerator complex before moving to the next stage with a larger $R$.
+
+In the final stage, in the LHC, $1232$ dipole magnets provide a magnetic field of up to $8.3$ T (there are almost $10000$ total magnets, including those with higher orders)~\cite{CERN-Brochure-2017-002-Eng}.
+The magnets are made of superconducting NbTi cables cooled down to $1.9$ K with superfluid helium.
+
+The LHC consumes about $750$ GWh per year~\cite{cern-facts-and-figures}, most of which is for the cryogenics system, and CERN in general consumes about $1300$ GWh per year; in comparison, the entire Geneva canton consumes about $3000$ GWh per year\footnote{CERN is actually connected to the French electrical grid, not the Swiss~\cite{cern-powering}.}.
+
+The LHC is split into eight \textit{octants}, each of which supports its own cryostat.
+As can be seen in Figure~\ref{fig:LHC:octants}, each octant has some special feature, like the two injection sites (for the two beams that circulate in opposite directions in adjacent beam pipes), beam dump, beam cleaning, and of course the four collision points.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.6\textwidth]{figures/{LHC_octants}.png}}
+  \caption{Schematic of the LHC showing the two circulating beams, the four main experiments, and the eight octants with some of their special features. Figure sourced from~\cite{Evans:2008zzb}.}
+  \label{fig:LHC:octants}
+\end{figure}
+ATLAS, in the center of Octant 1, has the distinction of being located at ``Point 1'', which is also near where (on surface level) the main CERN Meyrin campus is, and the easiest to access from downtown Geneva; CMS on the other hand is at ``Point 5'', at the CERN Pr{\'e}vessin campus in the middle of the French countryside. 
 
 \section{Luminosity and Pile-up}
 \label{sec:LHC:luminosity}
+The rate of collisions is called the \textit{luminosity} $\mathcal{L}$~\cite{griffiths_particles}, and has units of inverse area per unit time.
+The expected number of events $N$ per unit time of a particular process with cross-section $\sigma$ is therefore just
+\begin{align}
+  \frac{dN}{dt} = \mathcal{L}\sigma.
+\end{align}
+
+In particle physics a commonly used unit of area is the \textit{barn}, which is equal to $10^{-24}$ cm$^2$~\cite{si-brochure}.
+The LHC has a peak luminosity of about $10^{34}~\text{cm}^{-2}\text{s}^{-1} = 10~\text{nb}^{-1}\text{s}^{-1}$~\cite{Evans:2008zzb}\footnote{Just to be clear, $1$ nb$^{-1}$ = $10^{+9}$ b$^{-1}$, etc.}.
+As a point of comparison, the total proton-proton cross section at $13$ TeV is about $10^8$ nb, as can be seen in Figure~\ref{fig:LHC:xs}.
+However, the cross section for the most common ``interesting'' electroweak process ($W$+jets) is a factor of $10^{-5}$ less, and many others (like production of the Higgs boson) are much rarer; therefore in order to produce enough events to claim discovery of a new particle with statistical significance, increasing luminosity is critical.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{crosssections2012_v5}.pdf}}
+  \caption{Cross sections for $pp$ interactions as a function of $\sqrt{s}$ center-of-mass energy. Figure sourced from~\cite{StirlingXS}.}
+  \label{fig:LHC:xs}
+\end{figure}
+
+The luminosity at the LHC is given by the formula
+\begin{align}
+  \mathcal{L} = \frac{N^2 n f \gamma}{4 \pi \epsilon \beta^*}F,
+\end{align}
+where $N$ is the number of particles per bunch, $n$ the number of bunches per beam, $f$ the revolution frequency, $\gamma$ the relativistic factor, $\epsilon$ the \textit{normalized emittance}, $\beta^*$ the \textit{beta function} at the collision point, and $F$ a geometric factor based on the angle of the beam crossing.
+
+The emittance 
+
 %Emittance, Louisville's theorem
 %Luminosity formula
 %Pile-up
