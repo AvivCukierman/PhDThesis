@@ -2,7 +2,7 @@
 At a hadron collider like the LHC, quarks and gluons are produced copiously.
 These quarks and gluons are not observed directly - because of color confinement, these \textit{partons} fragment and hadronize almost immediately, leading to a collimated spray of hadronic particles which are ultimately observed in the calorimeter.
 Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ leptons, are also produced and play vital roles in searches and measurements at the LHC; the hadronic decays of these particles either are the primary way or an extremely important way of identifying their production in an event.
-Jets are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
+\textit{Jets} are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
 
 There are a variety of jet algorithms, the most common one being used at the LHC today being the \antikt{} algorithm, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
 These algorithms act on any set of seeds, which in the context of ATLAS correspond to individual clusters of energy observed in the calorimeter.
@@ -87,14 +87,14 @@ The calculation of the size of this spread is in general very complicated, but j
 Gluons are slightly wider than quarks due to the difference in their color charge, and for $R=0.4$ roughly 89\% of the originating particle \pt{} for gluons and 95\% for quarks ends up within the catchment area of the jet~\cite{Salam:2009jx}.
 
 Photons and electrons decay primarily in the electromagnetic calorimeter, but as the seeds are formed from clusters in the electromagnetic and hadronic calorimeters, and the typical size of photon and electron decays is $\sim 0.2$~\cite{Aad:2019tso}, these are also reconstructed as small-$R$ jets.
-However jets originating from photons and electrons can be identified with high discrimination power based on the three-dimensional energy shower shape~\cite{Aad:2019tso}, and typically jets that overlap with these are identified and removed from consideration of the hadronic activity in the event (``overlap-removed'').
-In addition, jets originating from bottom quarks take advantage of the relatively long lifetime of hadrons containing bottom quarks and the resulting presence of a secondary vertex~\cite{ref:TODO}.
+However jets originating from photons and electrons can be identified with high discrimination power based on the three-dimensional energy shower shape~\cite{Aad:2019tso} (Section~\ref{sec:ATLAS:EM}), and typically jets that overlap with these are identified and removed from consideration of the hadronic activity in the event (``overlap-removed'').
+In addition, jets originating from bottom quarks take advantage of the relatively long lifetime of hadrons containing bottom quarks and the resulting presence of tracks with large impact parameters and/or a secondary vertex~\cite{Aad:2015ydr,Aaboud:2018xwy,Aad:2019aic} (Section~\ref{sec:ATLAS:btagging}).
 
 For massive particles, the opening angle of the decay products is generically roughly $\Delta R \sim \frac{2m}{\pt}$~\cite{Shelton:2013an}.
 With $\pt\gtrsim 2m$, the opening angle is therefore $\Delta R \lesssim 1.0$, and the particle can be reconstructed as a single large-$R$ jet.
 When the decay products of a massive particle can be reconstructed as a single jet, it is called \textit{boosted}, while for lower \pt{} it is called \textit{resolved}.
-$\tau$ leptons decay hadronically roughly 65\% of the time~\cite{ref:TODO}, although due to their light mass they are reconstructed as small-$R$ jets.
-Again, there are dedicated tagging algorithms with high discrimination power that can identify hadronically-decaying $\tau$ leptons.
+$\tau$ leptons decay hadronically roughly 65\% of the time~\cite{PDG}, although due to their light mass they are reconstructed as small-$R$ jets.
+Again, there are dedicated tagging algorithms with high discrimination power that can identify hadronically-decaying $\tau$ leptons~\cite{ATLAS-CONF-2017-029} (Section~\ref{sec:ATLAS:taus}).
 Large-$R$ jets are used for particles on the electroweak scale, like $W/Z$ bosons, top quarks, and even boosted Higgs bosons, for $\pt\gtrsim 200$ GeV, which are typical scales for these particles at the LHC.
 The opening angle $\Delta R$ for the decay products of $W$ bosons and top quarks can be seen for example in Figure~\ref{fig:jets:deltaR}.
 These large-$R$ jets have substructure that can be used to tag the provenance of the jet; these techniques are discussed further in Section~\ref{sec:jets:tagging}.
@@ -110,7 +110,7 @@ These large-$R$ jets have substructure that can be used to tag the provenance of
 \section{Grooming}
 \label{sec:jets:grooming}
 A typical $pp$ collision at the LHC produces many radiative particles other than the hard-scatter interaction just from the interactions of all the constituent quarks and internal gluons in the protons; this is referred to as \textit{underlying event}.
-In addition, as will be mentioned in~\ref{sec:LHC:luminosity}, the collisions occur in whole bunches of $10^{11}$ protons, so that there are multiple simultaneous interactions in single bunch crossing; this is referred to as \textit{in-time pile-up}.
+In addition, as will be mentioned in Section~\ref{sec:LHC:luminosity}, the collisions occur in whole bunches of $10^{11}$ protons, so that there are multiple simultaneous interactions in a single bunch crossing; this is referred to as \textit{in-time pile-up}.
 There is also \textit{out-of-time pile-up}, which are leftover energy deposits from previous bunch crosses.
 Taken together these effects form a layer of soft particles spread diffusely over the entire event, which can end up in the catchment area of jets and add noise to the jet measurements.
 
@@ -155,7 +155,7 @@ The discrimination typically focuses on the fact that gluon-initiated jets are s
 Jet substructure has also been used to discriminate between small-$R$ jets that arise from a single particle and those that arise stochastically from multiple pile-up interactions~\cite{Aaboud:2017pou}.
 
 For large-$R$ jets a variety of techniques are employed to tag those jets originating from $W/Z$ bosons~\cite{ATL-PHYS-PUB-2014-004,Aad:2015rpa,Aaboud:2018psm}, top quarks~\cite{Aad:2016pux,Aaboud:2018psm} and boosted Higgs~\cite{Aad:2019uoz} decaying to two bottom quarks.
-The fully hadronic decays that these taggers target are $W/Z\rightarrow q\bar{q}$, $H\rightarrow b\bar{b}$, $t\rightarrow Wb \rightarrow q\bar{q} b$ (there are also decays involving leptons or photons which as mentioned have their own dedicated taggers).
+The fully hadronic decays that these taggers target are $W/Z\rightarrow q\bar{q}$, $t\rightarrow Wb \rightarrow q\bar{q} b$, and $H\rightarrow b\bar{b}$, respectively (there are also decays involving leptons or photons which as mentioned have their own dedicated taggers).
 Of course, in addition to the substructure itself the decays involving $b$ quarks can use the dedicated $b$-tagging algorithms mentioned above to further discriminate.
 The intention of these taggers is primarily to discriminate these jets from those originating from quark and gluons; though as mentioned above small-$R$ jets are sufficient to capture these particle showers, expanding the $R$ parameter in the jet algorithm still finds these, albeit with a small hard core.
 The most obvious substructure variable is the mass of the jet itself~\cite{ATLAS-CONF-2016-035}; but in addition, each of the above taggers rely on the fact that the decays of these objects will have multiple hard cores.

@@ -11,7 +11,7 @@ Angular distance is measured in units of $\Delta R \equiv \sqrt{(\Delta\eta)^{2}
 \section{Introduction}
 The ATLAS detector~\cite{PERF-2007-01} is a general-purpose particle physics detector 
 with nearly $4\pi$ coverage in solid angle around the collision point.\footnote{\AtlasCoordFootnote}
-The physics results that ATLAS produce are enabled not only by the hardware that measures the properties of outgoing particles, but also by software which simulates, stores, and processes this enormous amount of data.
+The physics results that ATLAS produces are enabled not only by the hardware that measures the properties of outgoing particles, but also by software which simulates, stores, and processes this enormous amount of data.
 
 The detector itself is designed to have many concentric layers serving different purposes, in particular to detect and identify all kinds of particles that may be encountered from the collisions at the LHC (Section~\ref{sec:ATLAS:ATLAS}).
 
@@ -222,21 +222,14 @@ Similarly, for the CPU time, about 75\% of the roughly 20 MHS06\footnote{A HS06 
 
 \section{Trigger}
 \label{sec:ATLAS:trigger}
-The trigger system lies somewhere between the hardware and software systems\footnote{This Section is sourced mainly from~\cite{TRIG-2016-01}, with additional most recent information from~\cite{Martinez:2016udm} and~\cite{ATLAS-TRIG-2019-04-001} (which is not yet public at the time of writing).}.
+The trigger system lies somewhere between the hardware and software systems\footnote{This Section is sourced mainly from~\cite{TRIG-2016-01}, with additional more recent information from~\cite{Martinez:2016udm} and~\cite{ATLAS-TRIG-2019-04-001} (which is not yet public at the time of writing).}.
 Because of the enormous rate of collisions provided by the LHC ($40$ MHz), it is infeasible to store every event.
 Every event takes up $\mathcal{O}($MB$)$~\cite{Buckley:2014150} on disk, so storing every event would be equivalent to $\mathcal{O}(100$ TB$)$ per second rate of writing, or about $10^6$ PB for a full year's worth of data-taking\footnote{As a piece of trivia, this amount of data is called a \textit{zetta}byte, or ZB\cite{si-brochure}.}.
-Moreover, it is not desirable to store every event, because even the most common ``interesting'' interactions have a cross section $10^{-5}$ times the overall $pp$ cross section, and many others are far rarer.
-This can be seen, for example, in Figure~\ref{fig:ATLAS:xs} - $\sigma_W$ ($W$+jets) has a cross section about $10^{-5}$ of the total cross section.
-\begin{figure}[htbp]
-  \centering 
-  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{crosssections2012_v5}.pdf}}
-  \caption{Cross sections for $pp$ interactions as a function of $\sqrt{s}$ center-of-mass energy. Figure sourced from~\cite{StirlingXS}.}
-  \label{fig:ATLAS:xs}
-\end{figure}
-This paucity of ``interesting'' physics motivates the choice to set up multiple (in 2018, about $60$~\cite{luminositypublic}) proton-proton interactions per bunch crossing, or \textit{pile-up} - in order to increase the probability of a such an interaction to occur in any given bunch crossing.
+Moreover, as discussed in Section~\ref{sec:LHC:luminosity} it is not desirable to store every event, because the vast majority of events are ``uninteresting'' and one of the main Physics goals of the LHC and ATLAS is to observe or discover extremely rare processes.
+%This paucity of ``interesting'' physics motivates the choice to set up multiple (in 2018, about $60$~\cite{luminositypublic}) proton-proton interactions per bunch crossing, or \textit{pile-up} - in order to increase the probability of a such an interaction to occur in any given bunch crossing.
 
 Because of the reasons outlined above, ATLAS institutes a \textit{trigger} system~\cite{TRIG-2016-01} to decide whether or not to store each event, based on whether the reconstructed objects and topology in the event are indicative of some particular physics process.
-The reconstruction algorithms in use in ATLAS are distinguished by whether they are \textit{online}, meaning they are in use in the trigger and are subject to the relevant time and space constraints, or if they are \textit{offline}, meaning they are used on events passing the trigger and can be optimized for performance using the full detector information and (basically) no time constraints\footnote{Subject to the CPU resources available to the offline analyzer.}.
+The reconstruction algorithms in use in ATLAS are distinguished by whether they are \textit{online}, meaning they are in use in the trigger and are subject to the relevant time and space constraints, or if they are \textit{offline}, meaning they are used on events passing the trigger and can be optimized for performance using the full detector information and much looser time constraints\footnote{Subject to the CPU resources available to the offline analyzer.}.
 
 The trigger consists of two major subsystems.
 First, the hardware-based \textit{Level 1} trigger, or \textit{L1}, reduces the rate of events from $40$ MHz to about $100$ kHz based on fast but approximate algorithms.
@@ -251,9 +244,9 @@ The rates of each of these two trigger levels, along with some of the main indiv
   \label{fig:ATLAS:trigger}
 \end{figure}
 
-The trigger broadly works by identifying detector objects that are likely to correspond to individual particles and thus indicate a hard scatter $pp$ interaction.
+The trigger broadly works by identifying detector objects that are likely to correspond to individual particles and thus indicate a hard-scatter $pp$ interaction.
 The rate of the trigger is controlled by specifying some energy threshold the detector object has to meet in order to be passed to the next trigger in the case of L1 or written to disk in the case of HLT.
-The collection of trigger object definitions and corresponding energy thresholds is called the \textit{trigger menu}, and is set every year of data taking (with some minor changes between periods in the same year)~\cite{ATL-DAQ-PUB-2016-001,ATL-DAQ-PUB-2017-001,ATL-DAQ-PUB-2018-002,ATL-DAQ-PUB-2019-001} according to the instantaneous luminosity and pile-up conditions and physics objectives.
+The collection of trigger object definitions and corresponding energy thresholds is called the \textit{trigger menu}, and is set every year of data taking (with some minor changes between periods in the same year)~\cite{ATL-DAQ-PUB-2016-001,ATL-DAQ-PUB-2017-001,ATL-DAQ-PUB-2018-002,ATL-DAQ-PUB-2019-001} according to the instantaneous luminosity and pile-up conditions and Physics objectives.
 
 Trigger considerations are vital for any analysis, because if the physics being targeted by an analysis does not pass any trigger then the data are simply not stored and the analysis cannot be done.
 For example, the low-mass extension of the search in Chapter~\ref{ch:HBSM} discussed in Appendix~\ref{ch:HBSM_lowmass_app} spends considerable effort on finding a suitable trigger for the new signature in that search; luckily, there is an existing trigger (intended for other uses) which does have efficiency on those new signals.
@@ -773,7 +766,7 @@ Any differences between data and simulation are corrected, and any uncertainties
 
 \subsubsection{Taus}
 \label{sec:ATLAS:taus}
-Tau leptons decay hadronically about 65\% of the time, in which case they are reconstructed as small-$R$ jets (\textit{tau-jets})\footnote{Taus decay to electrons or muons (+neutrinos) about 17\% of the time each. Those cases are almost indistinguishable from prompt production of the (lighter) leptons, as the only other produced particles are neutrinos. This Section focuses on fully hadronic decays.}.
+Tau leptons decay hadronically about 65\% of the time~\cite{PDG}, in which case they are reconstructed as small-$R$ jets (\textit{tau-jets})\footnote{Taus decay to electrons or muons (+neutrinos) about 17\% of the time each~\cite{PDG}. Those cases are almost indistinguishable from prompt production of the (lighter) leptons, as the only other produced particles are neutrinos. This Section focuses on fully hadronic decays.}.
 Of the hadronic decays, over 90\% involve exactly $1$ or $3$ charged pions, up to two neutral pions, and a neutrino.
 
 Tau-jets are identified~\cite{Aad:2014rga,ATL-PHYS-PUB-2015-045,Aad:2015unr,ATLAS-CONF-2017-029} given the number of tracks ($1$ or $3$), taking advantage of the narrow shower shape relative to quark- and gluon-initiated jets.

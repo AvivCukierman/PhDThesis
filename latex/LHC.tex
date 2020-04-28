@@ -1,7 +1,7 @@
 \section{Introduction}
 The \textit{Large Hadron Collider}~\cite{CERN-Brochure-2017-002-Eng,Pettersson:291782,Evans:313675,Evans:2008zzb}, or \textit{LHC}, is a high energy particle accelerator and collider located at \textit{CERN} near Geneva, Switzerland.
 The LHC is the largest machine ever built, with a circumference of $27$ km, running $100$ m underground and straddling the border between Switzerland and France.
-The purpose of the LHC is to produce the highest energy particle collisions ever, with a design center-of-mass energy of $\sqrt{s}=14$ TeV.
+The purpose of the LHC is to produce the highest energy particle collisions ever, with a design center-of-mass energy of $\sqrt{s}=14$ TeV\footnote{The \textit{center-of-mass energy} of two colliding beams is $\sqrt{s}$, where $s$ is the Mandelstam variable $s = (p_1+p_2)^2$, and $p_1$ and $p_2$ are the four-momenta of the two beams. In the case that the beams collide head-on, with $E_1 = E_2 \equiv E \gg m_1 = m_2$, $\sqrt{s} = 2\sqrt{E_1E_2} = 2E$ (which is the case in the LHC). I.e., the protons in each beam have energy $7$ TeV, and they collide basically head-on, so $\sqrt{s}=14$ TeV.}.
 A view of the LHC superimposed on an aerial view of Geneva and the surrounding areas can be seen in Figure~\ref{fig:LHC:aerial}, including the four main LHC experiments: ATLAS~\cite{PERF-2007-01}, CMS~\cite{CMS-TDR-08-001}, LHCb~\cite{Alves:2008zz}, and ALICE~\cite{Aamodt:2008zz}.
 It was built at a cost of about $4.5$ billion USD over the course of almost $20$ years~\cite{CERN-Brochure-2017-002-Eng}, in addition making it one of the most expensive scientific experiments ever built.
 
@@ -34,11 +34,13 @@ The entire CERN accelerator complex can be seen in Figure~\ref{fig:LHC:LHC}.
 Protons start as ordinary ionized hydrogen, which are accelerated~\cite{CERN-Brochure-2017-002-Eng} in the \textit{Linear Accelerator 2} (Linac 2) to an energy of $50$ MeV.
 They are then passed through the \textit{Proton Synchrotron Booster} (PS Booster) and the \textit{Proton Synchrotron} (PS) to final energies of $1.4$ GeV and $25$ GeV, respectively.
 The final intermediate stage before the LHC is the \textit{Super Proton Synchrotron} (SPS), which accerates the protons an injection energy of $450$ GeV.
-The LHC itself then accelerates the protons to an energy of up to $7$ TeV, though operating histories have been less than this - $3.5$ TeV in 2010, $4$ TeV in 2011-2012, and $6.5$ TeV in 2015-2018 data taking (Section~\ref{sec:LHC:datataking}).
+The LHC itself then accelerates the protons to an energy of up to $7$ TeV, though operating histories have been less than this - $3.5$ TeV in 2010, $4$ TeV in 2011-2012, and $6.5$ TeV in 2015-2018 data taking (Section~\ref{sec:LHC:data}).
 
 The LHC is also used to accelerate and collide lead ions, which reach energies of up to $2.56$ TeV.
 
 The particles are accelerated using radiofrequency cavities~\cite{cern-accelerators,humphries_1986} which in the LHC operate at $400$ MHz - every tenth wave is filled with a \textit{bunch} of about $10^{11}$ protons, for a bunch rate of $40$ MHz, and $2808$ bunches circulating the LHC per proton beam.
+There are two beams circulating in opposite directions in adjacent beam pipes, which come together at a few collision points around the ring, with a \textit{bunch crossing} every $25$ ns; the detectors are built around these collision points.
+
 Accelerating charged particles radiate~\cite{jackson_1999}, so that the accelerators have to constantly input energy in order to maintain constant beam energy.
 However, the radiation from charged particles moving in circular motion, called \textit{synchrotron radiation}, goes as $\frac{E^2}{m^{4}}$, so this radiation is strongly suppressed for protons relative to electrons and positrons at the same energy.
 As a historical note, the LHC reuses the tunnel built for the \textit{Large Electron-Positron Collider}~\cite{LEP-design,Myers:226776,cern-lep}, or \textit{LEP}, which collided electrons and protons at a maximum center-of-mass energy of $209$ GeV.
@@ -60,7 +62,7 @@ The magnets are made of superconducting NbTi cables cooled down to $1.9$ K with 
 The LHC consumes about $750$ GWh per year~\cite{cern-facts-and-figures}, most of which is for the cryogenics system, and CERN in general consumes about $1300$ GWh per year; in comparison, the entire Geneva canton consumes about $3000$ GWh per year\footnote{CERN is actually connected to the French electrical grid, not the Swiss~\cite{cern-powering}.}.
 
 The LHC is split into eight \textit{octants}, each of which supports its own cryostat.
-As can be seen in Figure~\ref{fig:LHC:octants}, each octant has some special feature, like the two injection sites (for the two beams that circulate in opposite directions in adjacent beam pipes), beam dump, beam cleaning, and of course the four collision points.
+As can be seen in Figure~\ref{fig:LHC:octants}, each octant has some special feature, like the two injection sites, beam dump, beam cleaning, and of course the four collision points.
 \begin{figure}[htbp]
   \centering 
   \subfloat[]{\includegraphics[width=0.6\textwidth]{figures/{LHC_octants}.png}}
@@ -71,7 +73,7 @@ ATLAS, in the center of Octant 1, has the distinction of being located at ``Poin
 
 \section{Luminosity and Pile-up}
 \label{sec:LHC:luminosity}
-The rate of collisions is called the \textit{luminosity} $\mathcal{L}$~\cite{griffiths_particles}, and has units of inverse area per unit time.
+The rate of collisions is called the \textit{luminosity} $\mathcal{L}$~\cite{griffiths_particles} (or \textit{instantaneous luminosity}), and has units of inverse area per unit time.
 The expected number of events $N$ per unit time of a particular process with cross-section $\sigma$ is
 \begin{align}
   \frac{dN}{dt} = \mathcal{L}\sigma.
