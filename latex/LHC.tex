@@ -39,7 +39,10 @@ The LHC itself then accelerates the protons to an energy of up to $7$ TeV, thoug
 The LHC is also used to accelerate and collide lead ions, which reach energies of up to $2.56$ TeV.
 
 The particles are accelerated using radiofrequency cavities~\cite{cern-accelerators,humphries_1986} which in the LHC operate at $400$ MHz - every tenth wave is filled with a \textit{bunch} of about $10^{11}$ protons, for a bunch rate of $40$ MHz, and $2808$ bunches circulating the LHC per proton beam.
-Accelerating charged particles radiate according to the Larmor formula~\cite{jackson_1999}, so that the accelerators have to constantly input energy in order to maintain constant beam energy.
+Accelerating charged particles radiate~\cite{jackson_1999}, so that the accelerators have to constantly input energy in order to maintain constant beam energy.
+However, the radiation from charged particles moving in circular motion, called \textit{synchrotron radiation}, goes as $\frac{E^2}{m^{4}}$, so this radiation is strongly suppressed for protons relative to electrons and positrons at the same energy.
+As a historical note, the LHC reuses the tunnel built for the \textit{Large Electron-Positron Collider}~\cite{LEP-design,Myers:226776,cern-lep}, or \textit{LEP}, which collided electrons and protons at a maximum center-of-mass energy of $209$ GeV.
+However, when increasing the energy of the beams for the LHC, it was decided to switch to proton-proton collisions which suppresses the synchrotron radiation.
 
 The particles are kept along a circular trajectory with a perpendicular magnetic field produced by dipole magnets\footnote{There are also quadrupole, sextupole, etc. magnets to provide second-order effects like stabilization and beam focusing.}.
 The radius of curvature $R$, magnetic field $B$, and momentum $p$\footnote{Note that, as the particles are highly relativistic, $p=\gamma mv$. Also, since $m_p\approx 1~\GeV{} \ll ~\mathcal{O}(\TeV{})=$ beam energy, $p\approx E$.} are related~\cite{humphries_1986} via
@@ -69,7 +72,7 @@ ATLAS, in the center of Octant 1, has the distinction of being located at ``Poin
 \section{Luminosity and Pile-up}
 \label{sec:LHC:luminosity}
 The rate of collisions is called the \textit{luminosity} $\mathcal{L}$~\cite{griffiths_particles}, and has units of inverse area per unit time.
-The expected number of events $N$ per unit time of a particular process with cross-section $\sigma$ is therefore just
+The expected number of events $N$ per unit time of a particular process with cross-section $\sigma$ is
 \begin{align}
   \frac{dN}{dt} = \mathcal{L}\sigma.
 \end{align}
@@ -77,7 +80,8 @@ The expected number of events $N$ per unit time of a particular process with cro
 In particle physics a commonly used unit of area is the \textit{barn}, which is equal to $10^{-24}$ cm$^2$~\cite{si-brochure}.
 The LHC has a peak luminosity of about $10^{34}~\text{cm}^{-2}\text{s}^{-1} = 10~\text{nb}^{-1}\text{s}^{-1}$~\cite{Evans:2008zzb}\footnote{Just to be clear, $1$ nb$^{-1}$ = $10^{+9}$ b$^{-1}$, etc.}.
 As a point of comparison, the total proton-proton cross section at $13$ TeV is about $10^8$ nb, as can be seen in Figure~\ref{fig:LHC:xs}.
-However, the cross section for the most common ``interesting'' electroweak process ($W$+jets) is a factor of $10^{-5}$ less, and many others (like production of the Higgs boson) are much rarer; therefore in order to produce enough events to claim discovery of a new particle with statistical significance, increasing luminosity is critical.
+While at the LHC the total proton-proton cross section is measured (e.g. in ATLAS, broken down into total elastic cross section~\cite{Aaboud:2016ijx} and total inelastic cross section~\cite{Aaboud:2016mmw}), one primary Physics goal of the LHC is to provide inelastic scattering of the proton constituents (partons) at the electroweak scale ($\mathcal{O}(100)$ GeV), e.g. in particular the production of a Higgs boson.
+The cross section for these ``interesting'' processes are at least a factor of $10^{-5}$ less than the total cross section, and many (like production of the Higgs boson) are much rarer; therefore in order to produce enough events to claim discovery of a new particle with statistical significance, increasing luminosity is critical.
 \begin{figure}[htbp]
   \centering 
   \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{crosssections2012_v5}.pdf}}
@@ -87,17 +91,89 @@ However, the cross section for the most common ``interesting'' electroweak proce
 
 The luminosity at the LHC is given by the formula
 \begin{align}
-  \mathcal{L} = \frac{N^2 n f \gamma}{4 \pi \epsilon \beta^*}F,
+  \mathcal{L} = \frac{N^2 n f \gamma}{4 \pi \epsilon^* \beta^*}F,
 \end{align}
-where $N$ is the number of particles per bunch, $n$ the number of bunches per beam, $f$ the revolution frequency, $\gamma$ the relativistic factor, $\epsilon$ the \textit{normalized emittance}, $\beta^*$ the \textit{beta function} at the collision point, and $F$ a geometric factor based on the angle of the beam crossing.
+where $N$ is the number of particles per bunch, $n$ the number of bunches per beam, $f$ the revolution frequency, $\gamma$ the relativistic factor, $\epsilon^*$ the \textit{normalized emittance}, $\beta^*$ the \textit{beta function} at the collision point, and $F$ a geometric factor based on the angle of the beam crossing.
 
-The emittance 
+The \textit{emittance} $\epsilon$~\cite{wilson_accelerators,Holzer:2203629} is a quantity that measures the area or spread in phase space (position-momentum space $x-p$) taken up by the beam - the locus of points in phase space usually forms an ellipse, and the emittance is the area of this ellipse\footnote{More precisely, the set of points in the beam can be considered to be drawn from a two-dimensional Gaussian distribution in phase space, for which the contours of constant probability density are ellipses. The area is appropriately defined according to some integral over this probability density.}.
+An example locus of points in phase space can be seen in Figure~\ref{fig:LHC:emittance}.
+According to Liouville's theorem, the emittance is an invariant for a beam at constant energy being acted on by external magnetic fields (disregarding synchrotron radiation).
+As the beams are accelerated to increase the energy and longitudinal momentum, the emittance shrinks as $\frac{1}{p}$, a phenomenon known as \textit{adiabatic damping}.
+The \textit{normalized emittance} $\epsilon^* = \frac{p}{m}\epsilon$ takes into this into account and is an invariant for the beam the whole time is it being accelerated.
 
-%Emittance, Louisville's theorem
-%Luminosity formula
-%Pile-up
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{emittance}.png}}
+  \caption{Example locus of points in a beam in phase space, showing the distributions in $x$ and $p_x$. The red ellipse corresponds to a contour of constant probability density, and the area of the ellipse is (up to a constant factor) the emittance $\epsilon$. Given $\epsilon$, the spread in $x$ is given by $\beta$, and the spread in $p_x$ is given by $\gamma$. Figure sourced from~\cite{beam-dynamics}.}
+  \label{fig:LHC:emittance}
+\end{figure}
 
-\section{Data Taking History}
+Though the (normalized) emittance is an invariant, there is still flexibility to control the shape of the beam locus in phase space.
+The parameter that controls the spread along the position axis is called $\beta$ and the spread along the momentum axis $\gamma$\footnote{These, along with a cross-term parameter $\alpha$, are called the \textit{Twiss parameters} in Hamiltonian mechanics. Not to be confused with the relativistic $\beta=v$ (with $c$=1) and $\gamma = \frac{1}{\sqrt{1-\beta^2}}$ - there are unfortunately too few Greek letters for all the uses Physics has for them.}.
+This is illustrated in Figure~\ref{fig:LHC:emittance}.
+In order to maximize the luminosity, $\beta$ is desired to be as small as possible in order to reduce the size of the beam in the transverse plane\footnote{There is an emittance corresponding to each of the longitudinal direction and the two transverse directions. For the colliding beams the relevant quantity is the size in the transverse directions - the two transverse directions are treated symmetrically, assumed to have an equal $\epsilon^*$ and $\beta^*$.}, at the expense of increasing the spread in momentum space.
+The minimum $\beta$ reached at the interaction point is called $\beta^*$.
+
+As mentioned above, the rate of proton-proton interactions is roughly $\mathcal{L}\sigma_{pp} \approx 10^9~\text{s}^{-1}$, and the rate of bunch crossings, or \textit{events}\footnote{Since the bunch crossing occurs in a short span of time (much less than the time between bunch crossings), the products of all interactions in a single bunch crossing are recorded in the detector at once and so the bunch crossing is the natural discretization unit.}, is $40$ MHz ($=25$ ns between bunch crossings).
+This means that there is more than one proton-proton interaction per bunch crossing, a phenomenon known as \textit{pile-up}.
+The average number of interactions per bunch crossing $\mu$ is a direct measurement of the luminosity and amount of pile-up.
+Also as mentioned above, almost all proton-proton interactions are ``uninteresting'', so that even with $\mu>1$ most events need to be thrown away due to disk writing and space requirements; in ATLAS there is a trigger (Section~\ref{sec:ATLAS:trigger}) that decides in real-time whether or not to store an event based on whether at least one of the interactions was ``interesting''.
+In addition, even if an event is triggered, it is almost certain that there is at most one ``interesting'' interaction in the event; however, the remaining interactions cover the detector with a mostly uniform soft layer of particles, introducing a major source of noise in the energy measurements of physics objects in the detector.
+In particular, jets (Chapter~\ref{ch:Jets}) can include energy deposits from pile-up interactions, requiring this contribution to be subtracted and calibrated, which is the focus of Chapters~\ref{ch:NI} and~\ref{ch:GenNI}.
+
+In ATLAS, the luminosity is measured and monitored~\cite{LUCID2} using detectors downstream from the interaction point, almost along the beam line, and using the well-measured total differential inelastic proton-proton cross section.
+
+The luminosity gives the rate of proton-proton collisions per unit time.
+The \textit{integrated luminosity} $\int\mathcal{L}dt$ is the integral of the luminosity over the data-taking run, and has units of inverse area.
+The total number of events produced over a data-taking run for a process with cross section $\sigma$ is $N = \sigma\int\mathcal{L}dt$, and so the integrated luminosity is a key quantity for understanding the statistical power of a dataset.
+
+\section{Data Taking History and Future}
 \label{sec:LHC:data}
-%Luminosity
-%Future plans
+The LHC turned on for the first time on 10 September 2008~\cite{the-lhc}, though due to ``the incident'' on 19 September 2008~\cite{Bajko:1168025}, it did not turn back on again until 20 November 2009, and did not start recording collisions at its target (less than design) center-of-mass energy of $7$ TeV until 30 March 2010.
+In 2010 and 2011 the LHC ran successfully at $\sqrt{s}=7$ TeV and in 2012 this was bumped up to $\sqrt{s}=8$ TeV.
+The data-taking run consisting of 2010-2012 is called \textit{Run 1}, and was particularly important as ATLAS and CMS jointly announced the discovery of the Higgs boson~\cite{HIGG-2012-27,CMS-HIG-12-028} based on this dataset.
+Figure~\ref{fig:LHC:data_run1} shows the luminosity, $\mu$ distributions, and integrated luminosity over time in Run 1\footnote{What is being shown is the ATLAS recorded luminosity, which is slightly less than the LHC delivered luminosity.}.
+The luminosity was gradually ramped up over the course of the Run to a maximum of almost $8\times10^{33}~\text{cm}^{-2}\text{s}^{-1}$.
+This was achieved in part by increasing $\mu$ from $5-15$ in 2010 and 2011 to $10-30$ in 2012.
+The total integrated luminosity delivered was $48.1~\text{pb}^{-1}$ in 2010 and $5.46~\ifb$ in 2011 at $\sqrt{s}=7~\TeV$ and $22.8~\ifb$ in 2012 at $\sqrt{s}=8~\TeV$~\cite{luminositypublic_run1}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=1.0\textwidth]{figures/{lumivstime_2010_2012}.eps}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{mu_2010_2012}.eps}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{intlumivsyear_2010_2012}.eps}}
+  \caption{(a) Luminosity vs time in Run 1. (b) $\mu$ distributions in 2010-2011 at $\sqrt{s}=7$ TeV and in 2012 at $\sqrt{s}=8$ TeV. (c) Integrated luminosity vs time in Run 1. Figure sourced from~\cite{luminositypublic_run1}.}
+  \label{fig:LHC:data_run1}
+\end{figure}
+
+After Run 1 the LHC was shut down for \textit{Long Shutdown 1} until resuming collisions at $\sqrt{s}=13$ TeV in June 2015.
+The center-of-mass energy remained at $13$ TeV for data-taking in 2015, 2016, 2017, and 2018, a period known as \textit{Run 2}.
+The searches in this Thesis use data taken during Run 2 - the search in Chapter~\ref{ch:HBSM} uses data from 2015-2016, while the search in Chapter~\ref{ch:CWoLa} uses the entire Run 2 dataset 2015-2018.
+Figure~\ref{fig:LHC:data_run2} shows the luminosity, $\mu$ distributions, and integrated luminosity over time in Run 2\footnote{Again, what is being shown is the ATLAS recorded luminosity, which is slightly less than the LHC delivered luminosity.}.
+The luminosity was gradually ramped up over time and reached a maximum of $21\times10^{33}~\text{cm}^{-2}\text{s}^{-1}$ in 2018.
+The $\mu$ distribution was higher than in Run 1, broadly ranging from $10-60$ with a mode at around $\langle \mu \rangle \approx 30$.
+The total integrated luminosity delivered was $4.2~\ifb$ in 2015, $38.5~\ifb$ in 2016, $50.2~\ifb$ in 2017, and $63.3~\ifb$ in 2018, for a total of $156~\ifb$~\cite{luminositypublic}.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{lumivstime_2015}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{lumivstime_2016}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{lumivstime_2017}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{lumivstime_2018}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{mu_2015_2018}.pdf}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{intlumivsyear_2015_2018}.pdf}}
+  \caption{(a,b,c,d) Luminosity vs time in 2015, 2016, 2017, 2018, respectively. (b) $\mu$ distributions in Run 2. (c) Integrated luminosity vs time in Runs 1 and 2. Figure sourced from~\cite{luminositypublic}.}
+  \label{fig:LHC:data_run2}
+\end{figure}
+
+At time of writing, the LHC is currently in \textit{Long Shutdown 2}, which is projected to last until 2021.
+Data taking in \textit{Run 3} will last from 2021 to 2024~\cite{lhc-commissioning} at the design center-of-mass energy of $14$ TeV and a peak luminosity of $2.0\times10^{34}~\text{cm}^{-2}\text{s}^{-1}$~\cite{Boyd:2020qox}, with $\langle \mu \rangle\approx 55$, similar to data-taking in 2018.
+Run 3 is targeted to provide about $100~\ifb$ per year, and a total of $300-400~\ifb$ total~\cite{lhc-commissioning-run3}.
+
+The LHC will then be shut down again for \textit{Long Shutdown 3} until 2027.
+From 2027 to 2030 the LHC will be running in \textit{Run 4}, then shutting down for \textit{Long Shutdown 4} until \textit{Run 5} from 2032 to 2034~\cite{lhc-commissioning}.
+Runs 4 and 5 are also known as \textit{high-luminosity LHC} or \textit{HL-LHC}~\cite{hl-lhc}, as the luminosity will be significantly increased.
+The target peak luminosity is $5.0\times10^{34}~\text{cm}^{-2}\text{s}^{-1}$~\cite{Boyd:2020qox}, achieved mostly by decreasing $\beta^*$ by a factor of almost $2$, and increasing the number of protons per bunch also by a factor of almost $2$ relative to Run 2.
+The pile-up in HL-LHC will be at $\langle \mu \rangle$ between $150$ and $200$, presenting a significant challenge to suppress this amount of noise, especially in low energy jets.
+Due to this increased luminosity, HL-LHC is expected to deliver almost $3000~\ifb$ over the course of the two Runs.
+
