@@ -135,12 +135,17 @@ Both of these use lead as the passive material and liquid argon (LAr) as the act
 The total thickness of the electromagnetic calorimeter is $>22 X_0$ in the barrel and $>24 X_0$ in the endcaps.
 The size of the calorimeter cells vary with $\eta$ and depth, but the smallest cells, which occur in the second layer, are $0.025 \times 0.025$ in $\Delta\eta \times \Delta\phi$.
 
+The liquid argon cells take a long time to collect the ionization energy, on the order of $450$ ns~\cite{Abreu:2010zzc}, which is significantly longer than the time between bunch crossings ($25$ ns).
+Luckily, the ionization pulse shape can be fit in order to determine the bunch crossing the energy deposit corresponds to.
+However, there is some uncertainty on this assignment, leading to energy deposits from neighboring bunch crossings adding a source of noise to the set of energy deposits corresponding to a single event; this noise is called \textit{out-of-time} pile-up, to contrast it with the other interactions in the same bunch crossing (Section~\ref{sec:LHC:luminosity}), which is called \textit{in-time} pile-up\footnote{When not clear, \textit{pile-up} refers to the contribution from both of these sources.}.
+
 The hadronic calorimeter consists of the barrel, which covers $|\eta|<1.7$, two end-caps which cover $1.5<|\eta|<3.2$, and two forward calorimeters which cover $3.1<|\eta|<4.9$.
 These three components consist of 3, 4, and 3 independent layers respectively.
 The barrel uses steel as the passive material and scintillating tiles as the active material; however, the end-caps and forward calorimeters use ionizing LAr as the active material, with copper (in the end-caps and the first layer of the forward calorimeter) and tungsten (in the second and third layers of the forward calorimeter) as the passive materials.
 The total thickness of the hadronic calorimeter is $\gtrsim 10\lambda$ over the entire detector.
 The smallest calorimeter cells in the barrel and end-caps are $0.1 \times 0.1$ in $\Delta\eta \times \Delta\phi$.
 In the forward calorimeters, $\eta$ increases rapidly with $\theta$, so the sizes are simply measured on an absolute scale, with the smallest cells $3.0 \times 2.6$ $\text{cm}^2$ in $\Delta x \times \Delta y$.
+In contrast to the electromagnetic calorimeter, the readout time for the tile cells is quite fast, and there is basically no contribution of out-of-time pile-up in the hadronic calorimeter~\cite{Solodkov:2114824}.
 
 \subsection{Muon System}
 \label{sec:ATLAS:MS}
@@ -310,12 +315,12 @@ Jets originating from $b$-quarks can also be tagged (Section~\ref{sec:ATLAS:btag
 In order to judge if a secondary vertex is significantly far enough from the beamline, it is essential to have a precise measurement of the \textit{beamspot}, which is the 3-dimensional ellipsoidal region in which $pp$ collisions can occur\footnote{With roughly a multivariate Gaussian probability distribution.}~\cite{ATLAS-CONF-2010-027}.
 The Author has contributed to a project intended to more precisely measure the online beamspot using Bayesian inference~\cite{beamspot}, which could improve the $b$-tagging at HLT.
 
-As jets with no such tagging are the most generic detector objects formed in ATLAS, the rate of jet production is very high - e.g., the cross section of producing a jet with $\Et>100$ GeV is at least a factor of $10$ higher than any other ``interesting'' electroweak process (Figure~\ref{fig:ATLAS:xs}).
+As jets with no such tagging are the most generic detector objects formed in ATLAS, the rate of jet production is very high - e.g., the cross section of producing a jet with $\Et>100$ GeV is at least a factor of $10$ higher than any other ``interesting'' electroweak process (see Figure~\ref{fig:LHC:xs}).
 Therefore, the energy thresholds for jets in the trigger are the highest of any other object, and analyses using only jet triggers are therefore limited to very high energies.
 For example, the search in Chapter~\ref{ch:CWoLa} uses a single jet trigger, corresponding to offline $\pt>500$ GeV; this limits the minimum dijet invariant mass $m_{JJ}>1.1$ TeV just to meet the trigger requirements.
 Because of these high requirements, there have been concerted efforts for trigger-level analyses using lower \pt{} jets~\cite{Aaboud:2018fzt}.
 
-There are a variety of different trigger algorithms for \etmiss{}, but the most basic algorithm sums up the $\vec{\pt}$ (including the direction in the transverse plane) of all cells in the calorimeter to find any imbalance.
+There are a variety of different trigger algorithms for \etmiss{}, but the most basic algorithm sums up the vectorial $\vec{\pt}$ of all cells in the calorimeter to find any imbalance.
 Other algorithms build on this by adding pile-up corrections or jet-based or topo-cluster-based associations.
 
 The muon reconstruction algorithm first runs a fast algorithm which then seeds RoIs to be used in a precision step similar to the offline algorithm (Section~\ref{sec:ATLAS:muons}).
@@ -350,7 +355,9 @@ A combinatorial Kalman filter~\cite{Fruhwirth:1987fm} is then used to incorporat
 An ambiguity solver is then used to identify clusters with track candidates, using a neural network to identify and predict merged clusters resulting from multiple tracks~\cite{Aad:2014yva}.
 The clusters are identified with the track candidates in order of quality of the track, considering criteria like the number of holes (missing clusters) across the layers and $\chi^2$ of the track fit.
 Track candidates are also rejected if they do not meet basic requirements like $\pt>400$ MeV (in which case the particle's trajectory would curve so much in the magnetic field it would never leave the inner detector).
-Finally, a track fit is performed using all available information (in particular including information from the TRTs) to determine the track momentum (measured directly as the charge to momentum ratio $q/p$) and direction, transverse impact parameter off the beamline $d_0$ (i.e., the closest approach of the track trajectory to the beamline), and longitudinal displacement along the beamline $z_0$ (at the point of closest approach).
+Finally, a track fit is performed using all available information (in particular including information from the TRTs) to determine the track parameters.
+The radius of curvature of the track, when combined with the known magnetic field, gives the charge to momentum ratio $q/p$ (Equation~\ref{eqn:LHC:chargedparticle}), and the direction of curvature gives the sign of the charge.
+The other relevant track parameters are the direction in $\eta,\phi$ after exiting the tracker (after which the expected trajectory of the charged particle is straight), transverse impact parameter off the beamline $d_0$ (i.e., the closest approach of the track trajectory to the beamline), and longitudinal displacement along the beamline $z_0$ (at the point of closest approach).
 The tracking reconstruction is particularly difficult within the dense environments of jets, where there can be large numbers of tracks in a small region.
 
 The resolution of track $q/p$, $d_0$, and $z_0$ as a function of $\pt$ can be seen in Figure~\ref{fig:ATLAS:track_resolution}.
@@ -363,10 +370,11 @@ The resolution of track $q/p$, $d_0$, and $z_0$ as a function of $\pt$ can be se
   \label{fig:ATLAS:track_resolution}
 \end{figure}
 The momentum resolution is quite good, around $1\% \oplus 0.05\% * \pt/\text{GeV}$ - the momentum resolution gets worse at high momentum as the track has less curvature in the magnetic field.
-The $d_0$ resolution is important for constructing secondary vertices, which is essential for $b$-tagging (Section~\ref{sec:ATLAS:btagging}).
-The $z_0$ resolution is important for constructing primary vertices which correspond to interactions along the beamline.
+The $d_0$ resolution is important for constructing decays off the beamline, which is essential for $b$-tagging (Section~\ref{sec:ATLAS:btagging}).
+The $z_0$ resolution is important for constructing primary vertices which correspond to interactions along the beamline (Section~\ref{sec:ATLAS:PV}).
 
 \subsubsection{Primary Vertices}
+\label{sec:ATLAS:PV}
 Primary vertices~\cite{Aaboud:2016rmg,ATL-PHYS-PUB-2015-026,Meloni:2016sag} are collections of tracks emanating from a single point indicating a $pp$ interaction at that point.
 The average number of interactions per bunch crossing $\mu$ is $>1$, which is directly related to the instantaneous luminosity; $\mu>1$ is the cause of pile-up interactions in the event other than the \textit{hard-scatter} interaction or (roughly) the one that caused the event to pass the trigger.
 In the ideal case the expected number of reconstructed primary vertices would scale linearly with $\mu$; however, the dominant cause of nonlinearity is vertex merging due to the high density of interactions in the luminous region.
@@ -393,8 +401,8 @@ The $z$ resolution is important for distinguishing between different interaction
 The primary vertex with the highest $\sum \pt^2$ over the associated tracks is designated as the \textit{hard-scatter} vertex (and the associated tracks are considered to be the hard-scatter tracks), as it corresponds to the hardest interaction in the event and therefore the most likely to be ``interesting''.
 The remaining vertices and their associated tracks are labeled \textit{pile-up}.
 For most reconstruction algorithms considered below, if they use tracks, only the hard-scatter tracks are considered.
-However, the pile-up tracks are used for the removal of calorimeter jets originating from pile-up interactions, as the calorimeter by itself does not have nearly good enough angular information to distinguish between energy clusters due to hard-scatter and pile-up interactions.
-Also, tracks with large impact parameters, but within some small distance of the hard-scatter primary vertex, are used to reconstruct secondary vertices for $b$-tagging.
+However, the pile-up tracks are used for the removal of calorimeter jets originating from pile-up interactions (Section~\ref{sec:ATLAS:JVT}), as the calorimeter by itself does not have nearly good enough angular information to distinguish between energy clusters due to hard-scatter and pile-up interactions.
+Also, tracks with large impact parameters, but within some small distance of the hard-scatter primary vertex, are used to reconstruct secondary vertices for $b$-tagging (Section~\ref{sec:ATLAS:btagging}).
 
 \subsection{Clusters}
 \label{sec:ATLAS:clusters}
@@ -433,7 +441,7 @@ Because of this, there is a desire to calibrate individual clusters to a consist
 This calibration does not have to be applied - in the case that it is not applied, the clusters and the jets formed from them are considered to be at the \textit{EM scale}.
 For example, the small-$R$ jets used in the search presented in Chapter~\ref{ch:HBSM} use jets at the EM scale.
 However, large-$R$ jets usually do use calibrated clusters, as they often take advantage of substructure information in their constituent clusters, which benefits from the clusters being at a consistent energy scale.
-The large-$R$ jets used in the search presened in Chapter~\ref{ch:CWoLa} use jets formed from these calibrated clusters.
+The large-$R$ jets used in the search presented in Chapter~\ref{ch:CWoLa} use jets formed from these calibrated clusters.
 
 The calibration is a \textit{local cluster weighting}, or \textit{LCW}.
 First, the entire cluster is classified according to the likelihood it comes from an electromagnetic or hadronic shower based on its position in the detector and various cluster moments.
@@ -656,7 +664,7 @@ Briefly, small-$R$ jets can be tagged as originating from quarks or gluons based
 Large-$R$ jets can be tagged as fully hadronic decays originating from $W/Z$ bosons (with two hard subprongs), from top quarks (with a $W$ and a $b$-tagged subjet (Section~\ref{sec:ATLAS:btagging})), or from Higgs bosons (with two $b$-tagged subjets).
 There are also decays involving leptons that can be used to tag large-$R$ jets, e.g. $Z\rightarrow ee/\mu\mu$.
 
-The following three Sections cover jet tagging not based strictly on the angular distribution of the tracks, topoclusters, and subjets within the jet: pile-up jet tagging (Section~\ref{sec:ATLAS:JVT}), $b$-tagging (Section~\ref{sec:ATLAS:btagging}), and $\tau$-tagging (Section~\ref{sec:ATLAS:taus}).
+The following three Sections cover jet tagging not based strictly on the $\pt$ and angular distribution of the tracks, topoclusters, and subjets within the jet: pile-up jet tagging (Section~\ref{sec:ATLAS:JVT}), $b$-tagging (Section~\ref{sec:ATLAS:btagging}), and $\tau$-tagging (Section~\ref{sec:ATLAS:taus}).
 
 \subsubsection{Pile-up Jet Tagging}
 \label{sec:ATLAS:JVT}
@@ -739,7 +747,7 @@ The efficiencies of both JVT and the forward pile-up tagger are measured in data
 
 \subsubsection{$b$-tagging}
 \label{sec:ATLAS:btagging}
-Jets originating from $b$-quarks (\textit{$b$-jets}) can be identified taking advantage of the lifetime of $B$-hadrons , which is long enough for the decay to be measurably distant from the primary vertex but short enough that the decay occurs in the inner detector ($\mathcal{O(\text{mm})}$)\footnote{$b$-jets contain electrons or muons (+neutrinos) about 10\% of the time each; in those cases the leptons are used to identify the $b$-jet. This Section focuses on fully hadronic decays.}.
+Jets originating from $b$-quarks (\textit{$b$-jets}) can be identified taking advantage of the lifetime of $B$-hadrons, which is long enough for the decay to be measurably distant from the primary vertex but short enough that the decay occurs in the inner detector ($\mathcal{O(\text{mm})}$)\footnote{$b$-jets contain electrons or muons (+neutrinos) about 10\% of the time each~\cite{PDG}; in those cases the leptons are used to identify the $b$-jet. This Section focuses on fully hadronic decays.}.
 While the main background is jets originating from light quarks (\textit{light-flavor jets}), jets originating from $c$-quarks (\textit{$c$-jets}) also present a confounding background source, as hadrons containing $c$-quarks also tend to have a relatively long lifetime.
 
 There are a variety of $b$-tagging algorithms~\cite{Aad:2015ydr,Aaboud:2018xwy,Aad:2019aic}, which combine low-level features related to the $B$-hadron decay into high-level multivariate taggers.
@@ -810,7 +818,7 @@ In regions that the MS covers but the inner detector does not ($2.5<|\eta|<2.7$)
 
 Fake muons can come from a variety of sources: from charged hadrons, primarily pions and kaons, decaying to muons, which produces a kink in the track in the inner detector; from charged hadrons punching through to the MS, which lose significant energy in the calorimeter relative to the track momentum; and from cosmic muons, which do not originate from the primary vertex.
 Each of these sources of background can be distinguished from prompt muons by testing the quality of the track in the inner detector and its compatibility with the track in the MS, especially the charge to momentum ratio.
-A few different working points are defined by selecting on these features - the \texttt{Medium} working point, which is the default for analyses, has about a 95\% efficiency on prompt photons with $4<\pt<100$ GeV and $<0.5\%$ efficiency on charged pions decaying midflight to muons.
+A few different working points are defined by selecting on these features - the \texttt{Medium} working point, which is the default for analyses, has about a 95\% efficiency on prompt muons with $4<\pt<100$ GeV and $<0.5\%$ efficiency on charged pions decaying midflight to muons.
 
 Muons can also be required to be isolated using similar variables as for photons and electrons (Section~\ref{sec:ATLAS:EM}), depending on the signal topology targeted in an analysis.
 
