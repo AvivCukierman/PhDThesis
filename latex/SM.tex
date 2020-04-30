@@ -1,8 +1,44 @@
-\section{Fields and Particles}
-\section{The Electroweak Force}
+\section{Introduction}
+The \textit{Standard Model of Particle Physics}, or \textit{SM}, is the overarching theory that describes Physics at the most fundamental level.
+In the SM, \textit{particles} are localizations of \textit{quantum fields}, and these particle-fields account for both matter and all known forces or interactions other than gravity.
+The SM is a remarkably well-measured and well-tested theory.
+%For example, the anomalous magnetic moment of the muon, $g_\mu-2$, has been calculated~\cite{Aoyama:2012wk} using the SM out to $10$ decimal places and measured~\cite{Bennett:2006fi} to an uncertainty of $0.54$ parts per million\footnote{This is perhaps not the best example, since there is actually a tension ($\sim 2.9\sigma$) between the theoretical prediction and the experimental value. However, this example shows how well-measured the SM is and how precise the predictions are.}.
+Figure~\ref{fig:SM:tests} shows the cross sections of a variety of Physics processes measured with the ATLAS detector (Chapter~\ref{ch:ATLAS}) and their theoretical predictions using the SM.
+Every single measurement agrees with the theoretical prediction within the uncertainties.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{SM_tests}.pdf}}
+  \caption{Summary of several cross section measurements at ATLAS, compared to their theoretical predictions using the SM. Figure sourced from~\cite{ATL-PHYS-PUB-2019-024}.}
+  \label{fig:SM:tests}
+\end{figure}
+
+The SM describes three fundamental forces, each with a corresponding gauge symmetry group.
+The electromagnetic and weak forces are combined into a single \textit{electroweak} interaction under SU(2)$\times$U(1) (Section~\ref{sec:SM:EW}). 
+The SU(2) symmetry is spontaneously broken by the Higgs boson, giving rise to massive bosons and to the mass of quarks.
+The strong force is described by \textit{quantum chromodynamics}, with symmetry group SU(3) (Section~\ref{sec:SM:QCD}).
+The strong force is unique in that it gets weaker at higher energy scales, a phenomenon called \textit{asymptotic freedom}, which cause quarks to \textit{confine} into multi-quark \textit{hadrons} like protons and neutrons.
+The specific matter content - the quarks, massive leptons, and neutrinos - of the SM is further described in Section~\ref{sec:SM:matter}.
+Despite the successes of the SM, there are still unexplained phenomena like dark matter and dark energy and other curious features (which, if left unexplained, are at least unsatisfying) like the quark mass hierarchy (Section~\ref{sec:SM:BSM}).
+There are many theories \textit{beyond the SM}, or \textit{BSM}, which attempt to answer these questions, many of which predict new particles that may be produced at the LHC (Chapter~\ref{ch:LHC}).
+The two searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) are both looking for evidence of any BSM particles.
+The analysis in Chapter~\ref{ch:HBSM} is searching for BSM decays of the Higgs boson, while the analysis in Chapter~\ref{ch:CWoLa} is searching for generic new massive particles decaying hadronically.
+
+This Chapter serves as a brief overview of the SM; there are a variety of textbooks and other sources which provide much more detailed and complete information.
+Some textbooks in particular are~\cite{Schwartz:2013pla,Peskin:1995ev,Weinberg:1995mt,griffiths_particles}, which are the textbooks the Author used to learn about quantum field theory and the SM as a student.
+In addition to serving as the primary sources for most of this Chapter, these textbooks were the catalysts which (in part) spurred the interest in Particle Physics ultimately resulting in the work presented in this Thesis.
+
+\section{Electroweak Sector}
+\label{sec:SM:EW}
+%And SSB
+%Yukawa couplings
 \section{Quantum Chromodynamics}
-\section{The Higgs Mechanism}
+\label{sec:SM:QCD}
+%Asymptotic Freedom
+%Confinement/Hadronization
+%PDFs
 \section{Matter}
-\subsection{Quarks}
-\subsection{Leptons}
+\label{sec:SM:matter}
+%Specific Yukawa couplings
 \section{Beyond the Standard Model}
+\label{sec:SM:BSM}
+%Gravity, dark matter, neutrino masses/hierarchy problem, strong CP problem, Higgs boson mass
