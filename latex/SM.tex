@@ -17,7 +17,7 @@ The electromagnetic and weak forces are combined into a single \textit{electrowe
 The SU(2) symmetry is spontaneously broken by the Higgs boson, giving rise to massive bosons and to the mass of quarks.
 The strong force is described by \textit{quantum chromodynamics}, with symmetry group SU(3) (Section~\ref{sec:SM:QCD}).
 The strong force is unique in that it gets weaker at higher energy scales, a phenomenon called \textit{asymptotic freedom}, which cause quarks to \textit{confine} into multi-quark \textit{hadrons} like protons and neutrons.
-The specific matter content - the quarks, massive leptons, and neutrinos - of the SM is further described in Section~\ref{sec:SM:matter}.
+The specific matter content - the quarks, charged leptons, and neutrinos - of the SM is further described in Section~\ref{sec:SM:matter}.
 Despite the successes of the SM, there are still unexplained phenomena like dark matter and dark energy and other curious features (which, if left unexplained, are at least unsatisfying) like the quark mass hierarchy (Section~\ref{sec:SM:BSM}).
 There are many theories \textit{beyond the SM}, or \textit{BSM}, which attempt to answer these questions, many of which predict new particles that may be produced at the LHC (Chapter~\ref{ch:LHC}).
 The two searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) are both looking for evidence of any BSM particles.
@@ -29,16 +29,212 @@ In addition to serving as the primary sources for most of this Chapter, these te
 
 \section{Electroweak Sector}
 \label{sec:SM:EW}
-%And SSB
-%Yukawa couplings
+The Standard Model is described by Yang-Mills or non-Abelian gauge theories, with interactions mediated by vector bosons between fermionic matter particles with spin $\frac{1}{2}$.
+The electromagnetic and weak forces are unified using the Glashow-Weinberg-Salam model for electroweak unification, with gauge symmetry SU(2)$\times$U(1).
+The gauge bosons corresponding to these symmetries are $W_\mu^a$, with $a$ running over the $3$ generators of SU(2), and $B_\mu$, respectively.
+The U(1) symmetry does not correspond to the familiar electromagnetic charge, but rather corresponds to a hypercharge $Y$; we will see that the photon corresponds to a linear combination of $B_\mu$ and one of the $W_\mu^a$.
+There is in addition a complex doublet $H$ with hypercharge $\frac{1}{2}$ called the Higgs multiplet.
+Altogether, the kinetic term for these fields is
+\begin{align}
+  \mathcal{L}_\text{kin} &= -\frac{1}{4}(W_{\mu\nu}^a)^2 -\frac{1}{4}B_{\mu\nu}^2\nonumber\\
+              &+(D_\mu H)^\dagger(D_\mu H) + m^2 H^\dagger H - \lambda (H^\dagger H)^2,\\
+              D_\mu H &= \partial_\mu H - igW_\mu^a\tau^aH - \frac{1}{2}ig'B_\mu H,
+\end{align}
+where $B_{\mu\nu} = \partial_\mu B_\nu - \partial_\nu B_\mu$ is the field strength;
+$W_{\mu\nu}^a = \partial_\mu W_\nu^a - \partial_\nu W_\mu^a + gf^{abc}W_\mu^bW_\nu^c$ is the field strength of the $W$, and $f^{abc} = \epsilon^{abc} \ne 0$ the totally anti-symmetric tensor as SU(2) is non-Abelian;
+$m$ and $\lambda$ are free parameters of the theory;
+$D_\mu$ is the covariant derivative, with corresponding couplings $g$, $g'$ which are free parameters of the theory;
+$\tau^a = \frac{1}{2}\sigma^a$ are the canonically normalized generators of SU(2), with $\sigma^a$ the Pauli matrices;
+and the factor of $\frac{1}{2}$ in front of $B_\mu H$ is due to the hypercharge $\frac{1}{2}$ of the $H$.
+
+The gauge bosons are all massless, and in fact terms corresponding to the mass of these fields (e.g., $B^\mu B_\mu$) would violate gauge invariance.
+These bosons (or rather, linear combinations of them) gain mass by the SU(2) symmetry being spontaneously broken by the Higgs.
+The Higgs potential term, $V(H) = m^2 |H|^2 - \lambda |H|^4$, has a minimum away from $H=0$, inducing a vacuum expectation value (vev).
+Without loss of generality we let the vev be real, $v=\frac{m}{\sqrt{\lambda}}$, and in the lower component, so that expanding about the minimum we have
+\begin{align}
+H = \exp\left(2i\frac{\pi^a\tau^a}{v}\right) \begin{pmatrix}0\\\frac{v}{\sqrt{2}}+\frac{h}{\sqrt{2}}\end{pmatrix},
+\end{align}
+where we have introduced a new scalar field $h$ which corresponds to motion about the minimum at $v$; and the $\pi^a$ are the explicit SU(2) gauges.
+
+We choose $\pi^a=0$ to simplify the calculations.
+Then expanding the covariant derivative terms, we get:
+\begin{align}
+  |D_\mu H|^2 &= g^2\frac{v^2}{8}\left[ (W_\mu^1)^2+(W_\mu^2)^2+\left(\frac{g'}{g}B_\mu-W_\mu^3\right)^2\right]\nonumber\\
+  &+\text{terms involving $h$}
+\end{align}
+
+The terms not involving $h$ correspond to mass terms for the gauge bosons, while the terms that do involve $h$ correspond to interactions between $h$ and the gauge bosons and itself.
+
+We identify a massless and a massive boson with
+\begin{align}
+Z_\mu = \cos\theta_w W_\mu^3 - \sin\theta_w B_\mu,\\
+A_\mu = \sin\theta_w W_\mu^3 + \cos\theta_w B_\mu,
+\end{align}
+with $\tan \theta_w = \frac{g'}{g}$; $\theta_w$ is called the Weinberg angle.
+$A_\mu$ corresponds to the familiar photon, with mass $0$, and $Z_\mu$ is the $Z$ boson, which has mass $m_Z = \frac{1}{2\cos\theta_w}gv$.
+
+The coupling to $A$ and therefore the normal electromagnetic charge of the gauge bosons is determined by $g[A_\mu,W_\mu^a\tau^a] = g\sin\theta_w W^3W^a[\tau^3,\tau^a]$, with the electromagnetic coupling strength
+\begin{align}
+e = g\sin\theta_w = g'\cos\theta_w
+\end{align}
+Clearly, with $a=3$, the charge is $0$ - the $Z$ boson is neutral.
+$W_1$ and $W_2$ do not have definite charges, so we define instead $\tau^\pm = \frac{1}{\sqrt{2}}\left(\tau^1\pm i\tau^2\right)$, so that $[\tau^3,\tau^\pm] = \pm \tau^\pm$, and the (linear combination of the) $W$ bosons coupling to $\tau^\pm$ have charge $\pm$, which turn out to be $W^\pm = \frac{1}{\sqrt{2}}\left(W^1 \mp iW^2\right)$.
+In addition to $W\pm$ having electric charge $\pm$, their mass is $m_W = \frac{gv}{2}$.
+In particular, one immediate prediction is that $m_W<m_Z$.
+
+The Higgs boson itself is a scalar, and uncharged under either hypercharge or SU(2).
+However, it does interact via $3$-point interactions with the $W^\pm$ and $Z$ bosons; the search in Chapter~\ref{ch:HBSM} targets Higgs bosons produced via this interaction in the vector-boson-fusion mode.
+The mass of the Higgs is $m_h = \sqrt{2}m$, which again is a free parameter of the theory.
+
+The four original free parameters $m,\lambda,g,g'$ are therefore related to experimentally observable quantities: $\alpha_e = \frac{e^2}{4\pi} = \frac{1}{137}$ is the fine structure constant; $m_Z = 91.2~\GeV$; $m_W = 80.4~\GeV$; and $m_h = 125~\GeV$.
+In particular, $\sin^2\theta_w=0.22$ and $v=246~\GeV$.
+
+\subsection{Fermions}
+\label{sec:SM:EW_matter}
+The coupling of the weak interaction to fermions is chiral, meaning the interactions are different between left- and right-hand components of the fermion fields.
+In fact, the weak interaction couples only to left-handed fermions, and the SU(2) symmetry is often written as SU(2)$_L$ because of this.
+There are $3$ generations each of the leptons and the quarks, whose left-handed components are doublets under SU(2):
+\begin{align}
+L^i = \begin{pmatrix}\nu_{eL}\\e_L\end{pmatrix},\begin{pmatrix}\nu_{\mu L}\\\mu_L\end{pmatrix},\begin{pmatrix}\nu_{\tau L}\\\tau_L\end{pmatrix}\\
+Q^i = \begin{pmatrix}u_{L}\\d_L\end{pmatrix},\begin{pmatrix}c_{L}\\s_L\end{pmatrix},\begin{pmatrix}t_{L}\\b_L\end{pmatrix},
+\end{align}
+where $i$ goes over the $3$ generations; and their corresponding right-handed components, which are singlets:
+\begin{align}
+e^i_R = e_R,\mu_R,\tau_R\\
+\nu^i_R = \nu_{eR},\nu_{\mu R},\nu_{\tau R}\\
+u^i_R = u_R,c_R,t_R\\
+d^i_R = d_R,s_R,b_R
+\end{align}
+
+The fields are appropriately named to correspond to the familiar fermions - the electron $e$, the muon $\mu$, and the tau particle $\tau$; the neutrinos; the up type quarks up, charm, and top; and the down type quarks down, strange, and bottom.
+It should be noted that the right-handed neutrinos, which are not charged under U(1) and are singlets under SU(2), do not interact via the electroweak force; they are also color neutral (Section~\ref{sec:SM:QCD}), therefore the only force they could feel is gravity, and they have never been experimentally observed.
+However, they are included for completeness.
+
+Furthermore, the quark fields listed above are in the interaction eigenstate basis, which is different from the mass eigenstate basis, as will be described below.
+
+The charges of these fields under hypercharge and SU(2) are given in Table~\ref{tab:SM:charges} (as well as the charge under SU(3) (Section~\ref{sec:SM:QCD}).
+\begin{table}[]
+\centering
+\caption{Charges of Standard Model fields under U(1) hypercharge, SU(2), and SU(3). - means the field does not transform under the symmetry group, i.e. a singlet. $\Box$ means the field transforms in the fundamental representation of the group, i.e. a doublet for SU(2) and a triplet for SU(3).}
+\label{tab:SM:charges}
+\begin{tabular}{l c c c c c c c}
+\hline
+Field  & $L = \begin{pmatrix}\nu_L\\e_L\end{pmatrix}$  & $e_R$  & $\nu_R$ & $Q = \begin{pmatrix}u_L\\d_L\end{pmatrix}$ & $u_R$ & $d_R$ & $H$ \\
+SU(3) & - & - & - & $\Box$ & $\Box$ & $\Box$ & - \\
+SU(2) & $\Box$ & - & - & $\Box$ & - & - & $\Box$ \\
+U(1)  & $-\frac{1}{2}$ & $-1$ & $0$ & $\frac{1}{6}$ & $\frac{2}{3}$ & $-\frac{1}{3}$ & $\frac{1}{2}$
+\end{tabular}
+\end{table}
+
+The interaction terms between the fermions and the gauge bosons are:
+\begin{align}
+\mathcal{L}_\text{int} &= i\bar{L}_i\left(\cancel{\partial}-ig\cancel{W}^a\tau^a-ig'Y_L\cancel{B}\right)L_i\nonumber\\
+            &+ i\bar{Q}_i\left(\cancel{\partial}-ig\cancel{W}^a\tau^a-ig'Y_Q\cancel{B}\right)Q_i\nonumber\\
+              &+ i\bar{e}_R^i\left(\cancel{\partial}-ig'Y_e\cancel{B}\right)e_R^i\nonumber\\
+              &+ i\bar{\nu}_R^i\left(\cancel{\partial}-ig'Y_\nu\cancel{B}\right)\nu_R^i\nonumber\\
+              &+ i\bar{u}_R^i\left(\cancel{\partial}-ig'Y_u\cancel{B}\right)u_R^i\nonumber\\
+              &+ i\bar{d}_R^i\left(\cancel{\partial}-ig'Y_d\cancel{B}\right)d_R^i,
+\end{align}
+where, e.g., $\cancel{A} = \gamma^\mu A_\mu$, with $\gamma^\mu$ the Dirac $\gamma$ matrices;
+$Y$ are the hypercharges corresponding to the given set of fields (Table~\ref{tab:SM:charges});
+and there are implicit projection operators $P_L = \frac{1}{2}(1-\gamma_5)$, $P_R = \frac{1}{2}(1+\gamma_5)$.
+
+The familiar elementary charge corresponds to the coefficient of coupling of the fields with $A_\mu$.
+Expanding out in terms of $W$ and $B$, we have (for the electron and neutrino fields, and the same, \textit{mutatis mutandis}, for the up and down quark fields):
+\begin{align}
+  \mathcal{L}_\text{int} &= \bar{e}_L^i\left(-\frac{1}{2}g\cancel{W}^3+g'Y_L\cancel{B}\right)e_L^i\nonumber\\
+              &+ \bar{\nu}_L^i\left(\frac{1}{2}g\cancel{W}^3+g'Y_L\cancel{B}\right)\nu_L^i\nonumber\\
+              &+ g' Y_e \bar{e}_R^i\cancel{B}e_R^i +g' Y_\nu \bar{\nu}_R^i\cancel{B}\nu_R^i\nonumber\\
+              &+ \text{off-diagonal terms}
+\end{align}
+The off-diagonal terms contain terms like, e.g., $\bar{e_L^i}g(\cancel{W}^1-\cancel{i}W^2)\nu_L = \bar{e_L^i}g\cancel{W^+}\nu_L$.
+These are the flavor-changing charged current interactions with the $W$ boson - e.g., $e$ to $\nu_e$ or $c$ to $s$.
+
+Changing basis to the $A$ and $Z$ bosons, we then have:
+\begin{align}
+  \mathcal{L}_\text{int} &= e\left(\left(-\frac{1}{2}+Y_L\right)\bar{e}^i_L\cancel{A}e^i_L
+              + \left(\frac{1}{2}+Y_L\right)\bar{\nu}^i_L\cancel{A}\nu^i_L
+              + Y_e \bar{e}^i_R\cancel{A}e^i_R + Y_\nu \bar{\nu}^i_R\cancel{A}\nu^i_R\right)\nonumber \\
+              &+ \text{$Z$ terms}
+\end{align}
+Just to be clear, $e=g\sin\theta_w$ is a constant.
+Reading off Table~\ref{tab:SM:charges}, we therefore have that the electromagnetic charges of the left- and right-handed charged leptons $e$ are $-1$ and that the electromagnetic charges of the left- and right-handed neutrinos $\nu$ are $0$.
+Examining the same terms involving the left- and right-handed $u$ and $d$ fields yields electromagnetic charges of $+\frac{2}{3}$ for the up-type quarks $u$ and $-\frac{1}{3}$ for the down-type quarks $d$.
+
+As with the gauge bosons, mass terms like $\bar{e}_L e_R$ break the gauge invariance, and mass terms arise due to couplings with the Higgs boson.
+These terms are called Yukawa couplings, e.g. for the electron
+\begin{align}
+  \mathcal{L}_\text{mass} = -y_e\bar{L}He_R + \text{h.c.}
+\end{align}
+will generate a mass term $-m_e (\bar{e}_Le_R+\bar{e}_Re_L)$ with $m_e = \frac{y_e}{\sqrt{2}}v $ after the symmetry is spontaneously broken and the Higgs boson gets a vev.
+These terms only give mass to the charged leptons and the down-type quarks.
+For the up quarks, we use a slightly different term for gauge invariance:
+\begin{align}
+  \mathcal{L}_\text{mass} = -Y^d_{ij}\bar{Q}^i H d_R^j - iY_{ij}^u\bar{Q}^i\sigma_2H^*u_R^j + \text{h.c.}
+\end{align}
+where $i,j$ run over the quark generations, and $Y^d$ and $Y^u$ are general mixing matrices between the generations.
+After symmetry breaking we then have
+\begin{align}
+  \mathcal{L}_\text{mass} = -\frac{v}{\sqrt{2}}\left(Y_{ij}^d\bar{d}_L^id_R^j + Y_{ij}^u\bar{u}_L^iu_R^j\right) + \text{h.c.}
+\end{align}
+We diagonalize $Y^d$ and $Y^u$ separately,
+\begin{align}
+  Y^d &= U_dM_dK_d^\dagger\\
+  Y^u &= U_uM_uK_u^\dagger
+\end{align}
+with $U$ and $K$ unitary matrices and $M$ diagonal matrices with real positive eigenvalues.
+With the transformations $u_L\rightarrow U_u u_L$, $d_L\rightarrow U_d d_L$, $u_R\rightarrow K_u u_R$, $d_R\rightarrow K_d d_R$ the $U$ and $K$ terms disappear, and we have
+\begin{align}
+  \mathcal{L}_\text{mass} = -m_j^d \bar{d}_L^jd_R^j - -m_j^u \bar{u}_L^ju_R^j +\text{h.c.}
+\end{align}
+where $m_j^d$ and $m_j^u$ are the quark masses - the diagonal elements of $\frac{v}{\sqrt{s}}M^d$ and $\frac{v}{\sqrt{s}}M^u$, respectively.
+
+In diagonalizing the $U$ matrices come up only in the interactions with $W\pm$, via terms like
+\begin{align}
+  W^+_\mu\bar{u}_L^i\gamma^\mu\left(U_u^\dagger U_d\right)^{ij} d_L^j + W^-_\mu\bar{d}_L^i\gamma^\mu\left(U_d^\dagger U_u\right)^{ij} u_L^j
+\end{align}
+So mixing occurs between the quark generations via interactions with the $W^\pm$ bosons subject to the matrix $V=\left(U_u^\dagger U_d\right)$, known as the Cabibbo-Kobayashi-Maskawa (CKM) matrix.
+There are $3$ free angles corresponding to mixing in $i,j$ space, and $1$ free complex phase corresponding to CP violation:
+\begin{align}
+V = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos\theta_{23} & \sin\theta_{23} \\ 0 & -\sin\theta_{23} & \cos\theta_{23} \end{pmatrix}\times
+\begin{pmatrix} \cos\theta_{13} & 0 & \sin\theta_{13}e^{i\delta} \\ 0 & 1 & 0 \\-\sin\theta_{13}e^{i\delta} & 0 & \cos\theta_{13} \end{pmatrix}\times
+\begin{pmatrix} \cos\theta_{12} & \sin\theta_{12} & 0 \\ -\sin\theta_{12} & \cos\theta_{12} & 0 \\ 0 & 0 & 1 \end{pmatrix}
+\end{align}
+The empirical values are $\theta_{12}=13.04\pm0.05^\circ$, $\theta_{13}=0.201\pm0.011^\circ$, $\theta_{23}=2.38\pm0.06^\circ$, and $\delta=68.8\pm4.6^\circ$.
+In particular, the CKM matrix is mostly diagonal, since all the $\theta$ angles are small; the largest is $\theta_{12}$ (mixing between the first and second generation).
+
+The leptons also have Yukawa couplings, generating their masses.
+However, the neutrinos are (almost) massless, allowing a (nearly) simultaneous diagonalization of $Y^\nu$ and $Y^e$.
+This implies any mixing between the lepton generations is not allowed (heavily suppressed), and lepton number for each lepton generation is conserved.
+
+As mentioned above, while Yukawa interactions explain how lepton and quark masses are possible, the actual values are free parameters of the theory.
+The experimental values are summarized in Table~\ref{tab:SM:masses}.
+Both the quark masses and the charged lepton masses span many orders of magnitude, raising a potential hierarchy problem.
+The neutrino masses are drastically different, raising the possibility that their masses are not due to the mechanism described above but rather something completely different~\cite{ref:TODO}.
+%Majorana neutrinos, Seesaw mechanism
+
+\begin{table}[]
+\centering
+\caption{Lepton and quark masses.}
+\label{tab:SM:masses}
+\begin{tabular}{c c c c c c c c}
+\hline
+Quark & $d$ & $s$ & $b$ & $u$ & $c$ & $t$ & \\
+Mass [MeV] & $4.7$ & $96$ & $4.18\times10^3$ & $2.2$ & $1.28\times10^3$ & $173.1\times10^3$\\
+\hline
+Lepton & $e$ & $\mu$ & $\tau$ & $\nu_e$ & $\nu_e$ & $\nu_\tau$ & \\
+Mass [MeV] & $0.511$ & $105.7$ & $1777$ & $<1.0\times10^{-6}$ & $<0.17$ & $<18.2$
+\end{tabular}
+\end{table}
+
 \section{Quantum Chromodynamics}
 \label{sec:SM:QCD}
 %Asymptotic Freedom
 %Confinement/Hadronization
 %PDFs
-\section{Matter}
-\label{sec:SM:matter}
-%Specific Yukawa couplings
+\section{Summary}
+\label{sec:SM:summary}
+
 \section{Beyond the Standard Model}
 \label{sec:SM:BSM}
 %Gravity, dark matter, neutrino masses/hierarchy problem, strong CP problem, Higgs boson mass
