@@ -210,7 +210,7 @@ This implies any mixing between the lepton generations is not allowed (heavily s
 As mentioned above, while Yukawa interactions explain how lepton and quark masses are possible, the actual values are free parameters of the theory.
 The experimental values are summarized in Table~\ref{tab:SM:masses}.
 Both the quark masses and the charged lepton masses span many orders of magnitude, raising a potential hierarchy problem.
-The neutrino masses are drastically different, raising the possibility that their masses are not due to the mechanism described above but rather something completely different~\cite{ref:TODO}.
+The neutrino masses are drastically different, raising the possibility that their masses are not due to the mechanism described above, but something different - e.g., with a Majorana mass term~\cite{ref:TODO}.
 %Majorana neutrinos, Seesaw mechanism
 
 \begin{table}[]
@@ -229,11 +229,94 @@ Mass [MeV] & $0.511$ & $105.7$ & $1777$ & $<1.0\times10^{-6}$ & $<0.17$ & $<18.2
 
 \section{Quantum Chromodynamics}
 \label{sec:SM:QCD}
-%Asymptotic Freedom
-%Confinement/Hadronization
-%PDFs
+The strong force is described by a symmetry group under SU(3).
+The $3$ dimensions are referred to as colors (red, green, and blue when names are required\footnote{Totally unrelated to colors in the visual spectrum that we are used to. However, the analogy does work a little, as a state with all three color charges is has $0$ net color charge, i.e. ``white'' or colorless.}), and so the strong force is referred to as Quantum Chromodynamics, or QCD.
+The gauge boson associated with the theory is the gluon, and of the fermionic fields only the quarks are charged under this interaction.
+The quarks (here denoted by $\psi_f$, labeled by the quark flavor $f$) transform under the fundamental representation of SU(3), meaning each of the $6$ flavors are in fact length $3$ column vectors, or triplets.
+The gluons $G_\mu^a$ transform in the adjoint representation as $3\times 3$ matrices, with $1$ color singlet state and $8$ color-anticolor states (the octet).
+
+The Lagrangian of QCD is:
+\begin{align}
+  \mathcal{L}_\text{QCD} = i\bar{\psi_f}\cancel{D}_\mu\psi_f-\frac{1}{4}(G_{\mu\nu}^a)^2
+\end{align}
+where $\cancel{D}=\gamma^\mu D_\mu$; $D_\mu = \partial_\mu - ig_sG_\mu^aT^a$ is the covariant derivative; $T^a=\frac{\lambda^a}{2}$ are the generators of SU(3) ($\lambda^a$ are the Gell-Mann matrices); $G_{\mu\nu}^a = \partial_\mu G_\nu^a-\partial_\nu G_\mu^a + g_s f^{abc} G_\mu^b G_\nu^c$, with $f_{abc}$ the structure constants of SU(3), which are totally anti-symmetric.
+
+We see immediately that the set of fundamental interactions are: $2$ quarks + $1$ gluon, either with a color exchange or no color exchange; $3$ gluons; and $4$ gluons.
+
+In contrast to the electroweak theory (Section~\ref{sec:SM:EW}), there is no Higgs boson to break the symmetry, and so in some sense the model is much simpler.
+However, phenomenologically and empirically QCD is much more complicated, due to the running of the coupling $g_s$.
+
+In every theory scattering cross sections and other observables are calculated perturbatively in the interaction constant.
+Formally some of these terms, which correspond to loops in Feynman diagrams, are infinite; in order to account for these infinities calculations can instead be carried out by comparing calculations between two finite scales, so that the infinities cancel, a technique called renormalization.
+One consequence of renormalization (which is necessary to make finite predictions) is that the effective strength of the coupling $g$ in the theory changes depending on the scale bring probed.
+This running of the coupling is encoded in the beta function:
+\begin{align}
+  \frac{\partial}{\partial \ln \mu}g = \mu\frac{\partial}{\partial\mu}g = \beta(g),
+\end{align}
+where $\mu$ is the energy scale being probed.
+
+In QCD\footnote{Like everything else, $\beta$ is calculated perturbatively in $g$. Given here is the one-loop contribution.} $\beta(g) = -\frac{g^3}{(4\pi)^2}\beta_0$, with $\beta_0=(\frac{11}{3}n_\text{c} - \frac{2}{3} n_\text{f})$; $n_\text{c}=3$ is the number of colors, and $n_\text{f}=6$ is the number of flavors, so $\beta_0=7>0$.
+This implies that in QCD the coupling strength gets weaker at higher energies, and stronger at lower energies, a phenomenon known as \textit{asymptotic freedom}\footnote{The couplings for the electroweak theory, $g$ and $g'$, also run but much less, and stay perturbative at all energy scales.}.
+Said another way, at low energy scales $g_s$ grows so large that perturbative calculations are impossible and the theory breaks down; at high energy scales $g_s<1$ and perturbative calculations can be performed.
+The running of the coupling (expressed in terms of $\alpha_s = \frac{g_s^2}{4\pi}$) can be seen in Figure~\ref{fig:SM:alphas}.
+It can be seen that the coupling gets too strong and the theory becomes non-perturbative around $\mathcal{O}(\GeV)$.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{atlas_alphas}.pdf}}
+  \caption{Strong coupling $\alpha_s$ as a function of energy scale $Q$, theoretical predictions and experimental measurements. Figure sourced from~\cite{Aaboud:2017fml}.}
+  \label{fig:SM:alphas}
+\end{figure}
+
+Because of the increasing strength of the strong force at low energies, quarks and gluons are \textit{confined} into color-neutral composite particles, or \textit{hadrons}.
+In order to pull apart two quarks that compose a hadron, the larger the distance between them the greater the strength of the interaction (low energies correspond to large distances), and it becomes energy favorable to pull quark-antiquark pairs out of the vacuum to create new hadrons, a process called \textit{hadronization}.
+
+A lone quark or gluon produced in a hard-scatter process will first \textit{fragment}, radiating gluons which in turn convert into quark-antiquark pairs, etc., and then hadronize once low enough energy scales are reached.
+This collimated hadronic shower leads to \textit{jets} observed in the detector (Chapter~\ref{ch:Jets}).
+
+Hadrons composed of $2$ quarks are called \textit{mesons}, and those composed of $3$ quarks are called \textit{baryons}; hadrons with four or more constituent quarks (\textit{tetraquarks}, \textit{pentaquarks}) have been observed~\cite{Aaij:2016iza,Aaij:2016nsc} but are very rare.
+The familiar protons are baryons composed of two up quarks and one down quark.
+
+When protons collide in the LHC (Chapter~\ref{ch:LHC}), the energy scales are high enough such that the individual constituent quarks and gluons do interact rather than the entire hadron.
+The QCD factorization theorem allows the cross section calculation to be factorized between the hard-scatter and perturbative $2\rightarrow N$ process and the non-perturbative hadronic structure.
+However, even with this simplification, the interaction between the constituent partons has to be averaged over the distribution of momenta each could be carrying, at the energy scale of the interaction.
+This information is contained in the \textit{parton distribution function}~\cite{Amoroso:2020lgh,DelDebbio:2018siw}, or \textit{PDF}, $f_q(x,\mu^2)$, which is the probability distribution function for a parton $q$ to be carrying momentum fraction $x$ at energy scale $\mu^2$.
+The hard-scatter interactions can either occur via the \textit{valence partons}, which are the constituent up and down quarks, or via \textit{sea partons}, which are virtual quarks of any flavor or gluons in the interior of the proton.
+A calculation of the PDFs at two energy scales can be seen in Figure~\ref{fig:SM:PDF}.
+At high $x$, the valence quarks dominate, but at lower $x$ the sea partons, especially the gluons, become more prominent.
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.8\textwidth]{figures/{nnpdf}.png}}
+  \caption{Proton PDFs at (left) $\mu^2=10~\GeV^2$ and (right) $\mu^2=10^4~\GeV^2$ calculated with NNPDF3.1 at next-to-next-to leading order (NNLO). Figure sourced from~\cite{Ball:2017nwa}.}
+  \label{fig:SM:PDF}
+\end{figure}
+
 \section{Summary}
 \label{sec:SM:summary}
+A summary of the SM (after electroweak symmetry breaking) can be seen in Figure~\ref{fig:SM:SM_summary}.
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{SM_particles}.png}}
+  \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{SM_interactions}.png}}
+  \caption{Summary of SM. (a) Particle content. (b) Interactions. Figures sourced from~\cite{SM_wiki}.}
+  \label{fig:SM:SM_summary}
+\end{figure}
+Among the spin $\frac{1}{2}$ fermions, there are $3$ generations each of quarks and leptons, split into up-type and down-type.
+The $6$ quarks are the (up-type) up, charm, top, and (down-type) down, strange, bottom; the $6$ leptons are the (charged) electron, muon, and tau, and their respective neutral neutrino partners.
+There are also $4$ vector gauge bosons - the photon, with mediates the electromagnetic force; the $W^\pm/Z$ bosons, which mediate the weak interaction; and the gluon, which mediates the strong force.
+Finally there is the Higgs boson, which spontaneously breaks the SU(2) electroweak symmetry and acquires a vacuum expectation value, which has spin $0$.
+
+The up-type quarks each have electric charge $+\frac{2}{3}$; the down-type quarks each have charge $-\frac{1}{3}$; the charged leptons each have charge $-1$; enabling interactions with the photon; the neutrinos each have charge $0$ and do not interact via the electromagnetic force.
+Each of these fermions can interact with the $W$ and $Z$ bosons; the quarks can have flavor-changing interactions according to the CKM matrix; the leptons do not mix generations via the weak force.
+Only the quarks are colored and interact with the gluon via the strong force.
+
+The phenomenology of the strong force implies color confinement, which leads to hadrons like the proton and neutron, which are the constituents of the nuclei of atoms, and the rest of the particle zoo like pions, kaons, etc.
+
+The Higgs boson gives mass via Yukawa couplings to the charged leptons and the quarks.
+It also gives mass to the $W^\pm$ and $Z$ bosons.
+The $W^\pm$ bosons are charged under electromagnetism and therefore interact with the photon.
+Finally, each of the gauge bosons other than the photon has self-interactions.
 
 \section{Beyond the Standard Model}
 \label{sec:SM:BSM}
