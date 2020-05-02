@@ -17,23 +17,23 @@ The electromagnetic and weak forces are combined into a single \textit{electrowe
 The SU(2) symmetry is spontaneously broken by the Higgs boson, giving rise to massive bosons and to the mass of quarks.
 The strong force is described by \textit{quantum chromodynamics}, with symmetry group SU(3) (Section~\ref{sec:SM:QCD}).
 The strong force is unique in that it gets weaker at higher energy scales, a phenomenon called \textit{asymptotic freedom}, which cause quarks to \textit{confine} into multi-quark \textit{hadrons} like protons and neutrons.
-The specific matter content - the quarks, charged leptons, and neutrinos - of the SM is further described in Section~\ref{sec:SM:matter}.
+The SM is summarized in Section~\ref{sec:SM:summary}.
 Despite the successes of the SM, there are still unexplained phenomena like dark matter and dark energy and other curious features (which, if left unexplained, are at least unsatisfying) like the quark mass hierarchy (Section~\ref{sec:SM:BSM}).
 There are many theories \textit{beyond the SM}, or \textit{BSM}, which attempt to answer these questions, many of which predict new particles that may be produced at the LHC (Chapter~\ref{ch:LHC}).
 The two searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) are both looking for evidence of any BSM particles.
 The analysis in Chapter~\ref{ch:HBSM} is searching for BSM decays of the Higgs boson, while the analysis in Chapter~\ref{ch:CWoLa} is searching for generic new massive particles decaying hadronically.
 
-This Chapter serves as a brief overview of the SM; there are a variety of textbooks and other sources which provide much more detailed and complete information.
+This Chapter serves as a brief overview of the SM on a technical level; there are a variety of textbooks and other sources which provide much more detailed and complete information.
 Some textbooks in particular are~\cite{Schwartz:2013pla,Peskin:1995ev,Weinberg:1995mt,griffiths_particles}, which are the textbooks the Author used to learn about quantum field theory and the SM as a student.
 In addition to serving as the primary sources for most of this Chapter, these textbooks were the catalysts which (in part) spurred the interest in Particle Physics ultimately resulting in the work presented in this Thesis.
 
 \section{Electroweak Sector}
 \label{sec:SM:EW}
-The Standard Model is described by Yang-Mills or non-Abelian gauge theories, with interactions mediated by vector bosons between fermionic matter particles with spin $\frac{1}{2}$.
-The electromagnetic and weak forces are unified using the Glashow-Weinberg-Salam model for electroweak unification, with gauge symmetry SU(2)$\times$U(1).
+The Standard Model is described by \textit{Yang-Mills} or \textit{non-Abelian} gauge theories, with interactions mediated by vector bosons between fermionic matter particles with spin $\frac{1}{2}$.
+The electromagnetic and weak forces are unified using the \textit{Glashow-Weinberg-Salam} model for electroweak unification, with gauge symmetry SU(2)$\times$U(1).
 The gauge bosons corresponding to these symmetries are $W_\mu^a$, with $a$ running over the $3$ generators of SU(2), and $B_\mu$, respectively.
-The U(1) symmetry does not correspond to the familiar electromagnetic charge, but rather corresponds to a hypercharge $Y$; we will see that the photon corresponds to a linear combination of $B_\mu$ and one of the $W_\mu^a$.
-There is in addition a complex doublet $H$ with hypercharge $\frac{1}{2}$ called the Higgs multiplet.
+The U(1) symmetry does not correspond to the familiar electromagnetic charge, but rather corresponds to a \textit{hypercharge} $Y$; we will see that the photon corresponds to a linear combination of $B_\mu$ and one of the $W_\mu^a$.
+There is in addition a complex doublet $H$ with hypercharge $\frac{1}{2}$ called the \textit{Higgs multiplet}.
 Altogether, the kinetic term for these fields is
 \begin{align}
   \mathcal{L}_\text{kin} &= -\frac{1}{4}(W_{\mu\nu}^a)^2 -\frac{1}{4}B_{\mu\nu}^2\nonumber\\
@@ -41,7 +41,7 @@ Altogether, the kinetic term for these fields is
               D_\mu H &= \partial_\mu H - igW_\mu^a\tau^aH - \frac{1}{2}ig'B_\mu H,
 \end{align}
 where $B_{\mu\nu} = \partial_\mu B_\nu - \partial_\nu B_\mu$ is the field strength;
-$W_{\mu\nu}^a = \partial_\mu W_\nu^a - \partial_\nu W_\mu^a + gf^{abc}W_\mu^bW_\nu^c$ is the field strength of the $W$, and $f^{abc} = \epsilon^{abc} \ne 0$ the totally anti-symmetric tensor as SU(2) is non-Abelian;
+$W_{\mu\nu}^a = \partial_\mu W_\nu^a - \partial_\nu W_\mu^a + gf^{abc}W_\mu^bW_\nu^c$ is the field strength of the $W$, and $f^{abc} = \epsilon^{abc} \ne 0$ the totally anti-symmetric tensor are the structure constants of SU(2);
 $m$ and $\lambda$ are free parameters of the theory;
 $D_\mu$ is the covariant derivative, with corresponding couplings $g$, $g'$ which are free parameters of the theory;
 $\tau^a = \frac{1}{2}\sigma^a$ are the canonically normalized generators of SU(2), with $\sigma^a$ the Pauli matrices;
@@ -49,8 +49,8 @@ and the factor of $\frac{1}{2}$ in front of $B_\mu H$ is due to the hypercharge 
 
 The gauge bosons are all massless, and in fact terms corresponding to the mass of these fields (e.g., $B^\mu B_\mu$) would violate gauge invariance.
 These bosons (or rather, linear combinations of them) gain mass by the SU(2) symmetry being spontaneously broken by the Higgs.
-The Higgs potential term, $V(H) = m^2 |H|^2 - \lambda |H|^4$, has a minimum away from $H=0$, inducing a vacuum expectation value (vev).
-Without loss of generality we let the vev be real, $v=\frac{m}{\sqrt{\lambda}}$, and in the lower component, so that expanding about the minimum we have
+The Higgs potential term, $V(H) = m^2 |H|^2 - \lambda |H|^4$, has a minimum away from $H=0$, inducing a vacuum expectation value (VEV).
+Without loss of generality we let the VEV be real, $v=\frac{m}{\sqrt{\lambda}}$, and in the lower component, so that expanding about the minimum we have
 \begin{align}
 H = \exp\left(2i\frac{\pi^a\tau^a}{v}\right) \begin{pmatrix}0\\\frac{v}{\sqrt{2}}+\frac{h}{\sqrt{2}}\end{pmatrix},
 \end{align}
@@ -83,7 +83,8 @@ In addition to $W\pm$ having electric charge $\pm$, their mass is $m_W = \frac{g
 In particular, one immediate prediction is that $m_W<m_Z$.
 
 The Higgs boson itself is a scalar, and uncharged under either hypercharge or SU(2).
-However, it does interact via $3$-point interactions with the $W^\pm$ and $Z$ bosons; the search in Chapter~\ref{ch:HBSM} targets Higgs bosons produced via this interaction in the vector-boson-fusion mode.
+However, it does interact via $3$- and $4$-point interactions with the $W^\pm$ and $Z$ bosons; the search in Chapter~\ref{ch:HBSM} targets Higgs bosons produced via this interaction in the vector-boson-fusion mode.
+There are also $3$- and $4$-point self-interactions of the Higgs.
 The mass of the Higgs is $m_h = \sqrt{2}m$, which again is a free parameter of the theory.
 
 The four original free parameters $m,\lambda,g,g'$ are therefore related to experimentally observable quantities: $\alpha_e = \frac{e^2}{4\pi} = \frac{1}{137}$ is the fine structure constant; $m_Z = 91.2~\GeV$; $m_W = 80.4~\GeV$; and $m_h = 125~\GeV$.
@@ -91,9 +92,9 @@ In particular, $\sin^2\theta_w=0.22$ and $v=246~\GeV$.
 
 \subsection{Fermions}
 \label{sec:SM:EW_matter}
-The coupling of the weak interaction to fermions is chiral, meaning the interactions are different between left- and right-hand components of the fermion fields.
+The coupling of the weak interaction to fermions is \textit{chiral}, meaning the interactions are different between left- and right-hand components of the fermion fields.
 In fact, the weak interaction couples only to left-handed fermions, and the SU(2) symmetry is often written as SU(2)$_L$ because of this.
-There are $3$ generations each of the leptons and the quarks, whose left-handed components are doublets under SU(2):
+There are $3$ generations each of the \textit{leptons} and the \textit{quarks}, whose left-handed components are doublets under SU(2):
 \begin{align}
 L^i = \begin{pmatrix}\nu_{eL}\\e_L\end{pmatrix},\begin{pmatrix}\nu_{\mu L}\\\mu_L\end{pmatrix},\begin{pmatrix}\nu_{\tau L}\\\tau_L\end{pmatrix}\\
 Q^i = \begin{pmatrix}u_{L}\\d_L\end{pmatrix},\begin{pmatrix}c_{L}\\s_L\end{pmatrix},\begin{pmatrix}t_{L}\\b_L\end{pmatrix},
@@ -106,9 +107,8 @@ u^i_R = u_R,c_R,t_R\\
 d^i_R = d_R,s_R,b_R
 \end{align}
 
-The fields are appropriately named to correspond to the familiar fermions - the electron $e$, the muon $\mu$, and the tau particle $\tau$; the neutrinos; the up type quarks up, charm, and top; and the down type quarks down, strange, and bottom.
-It should be noted that the right-handed neutrinos, which are not charged under U(1) and are singlets under SU(2), do not interact via the electroweak force; they are also color neutral (Section~\ref{sec:SM:QCD}), therefore the only force they could feel is gravity, and they have never been experimentally observed.
-However, they are included for completeness.
+The fields are appropriately named to correspond to the familiar leptons and quarks - the electron $e$, the muon $\mu$, and the tau particle $\tau$; the neutrinos; the up type quarks up, charm, and top; and the down type quarks down, strange, and bottom.
+It should be noted that the right-handed neutrinos, which are not charged under U(1) and are singlets under SU(2), do not interact via the electroweak force; they are also color neutral (Section~\ref{sec:SM:QCD}), so they are called \textit{sterile neutrinos}.
 
 Furthermore, the quark fields listed above are in the interaction eigenstate basis, which is different from the mass eigenstate basis, as will be described below.
 
@@ -162,11 +162,11 @@ Reading off Table~\ref{tab:SM:charges}, we therefore have that the electromagnet
 Examining the same terms involving the left- and right-handed $u$ and $d$ fields yields electromagnetic charges of $+\frac{2}{3}$ for the up-type quarks $u$ and $-\frac{1}{3}$ for the down-type quarks $d$.
 
 As with the gauge bosons, mass terms like $\bar{e}_L e_R$ break the gauge invariance, and mass terms arise due to couplings with the Higgs boson.
-These terms are called Yukawa couplings, e.g. for the electron
+These terms are called \textit{Yukawa couplings}, e.g. for the electron
 \begin{align}
   \mathcal{L}_\text{mass} = -y_e\bar{L}He_R + \text{h.c.}
 \end{align}
-will generate a mass term $-m_e (\bar{e}_Le_R+\bar{e}_Re_L)$ with $m_e = \frac{y_e}{\sqrt{2}}v $ after the symmetry is spontaneously broken and the Higgs boson gets a vev.
+will generate a mass term $-m_e (\bar{e}_Le_R+\bar{e}_Re_L)$ with $m_e = \frac{y_e}{\sqrt{2}}v $ after the symmetry is spontaneously broken and the Higgs boson gets a VEV.
 These terms only give mass to the charged leptons and the down-type quarks.
 For the up quarks, we use a slightly different term for gauge invariance:
 \begin{align}
@@ -189,11 +189,11 @@ With the transformations $u_L\rightarrow U_u u_L$, $d_L\rightarrow U_d d_L$, $u_
 \end{align}
 where $m_j^d$ and $m_j^u$ are the quark masses - the diagonal elements of $\frac{v}{\sqrt{s}}M^d$ and $\frac{v}{\sqrt{s}}M^u$, respectively.
 
-In diagonalizing the $U$ matrices come up only in the interactions with $W\pm$, via terms like
+In diagonalizing, the $U$ matrices come up only in the interactions with $W\pm$, via terms like
 \begin{align}
   W^+_\mu\bar{u}_L^i\gamma^\mu\left(U_u^\dagger U_d\right)^{ij} d_L^j + W^-_\mu\bar{d}_L^i\gamma^\mu\left(U_d^\dagger U_u\right)^{ij} u_L^j
 \end{align}
-So mixing occurs between the quark generations via interactions with the $W^\pm$ bosons subject to the matrix $V=\left(U_u^\dagger U_d\right)$, known as the Cabibbo-Kobayashi-Maskawa (CKM) matrix.
+So mixing occurs between the quark generations via interactions with the $W^\pm$ bosons subject to the matrix $V=\left(U_u^\dagger U_d\right)$, known as the \textit{Cabibbo-Kobayashi-Maskawa}, or \textit{CKM} matrix.
 There are $3$ free angles corresponding to mixing in $i,j$ space, and $1$ free complex phase corresponding to CP violation:
 \begin{align}
 V = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos\theta_{23} & \sin\theta_{23} \\ 0 & -\sin\theta_{23} & \cos\theta_{23} \end{pmatrix}\times
@@ -230,9 +230,9 @@ Mass [MeV] & $0.511$ & $105.7$ & $1777$ & $<1.0\times10^{-6}$ & $<0.17$ & $<18.2
 \section{Quantum Chromodynamics}
 \label{sec:SM:QCD}
 The strong force is described by a symmetry group under SU(3).
-The $3$ dimensions are referred to as colors (red, green, and blue when names are required\footnote{Totally unrelated to colors in the visual spectrum that we are used to. However, the analogy does work a little, as a state with all three color charges is has $0$ net color charge, i.e. ``white'' or colorless.}), and so the strong force is referred to as Quantum Chromodynamics, or QCD.
+The $3$ dimensions are referred to as \textit{color charges} (red, green, and blue when names are required\footnote{Totally unrelated to colors in the visual spectrum that we are used to. However, the analogy does work a little, as a state with all three color charges is has $0$ net color charge, i.e. ``white'' or colorless.}), and so the strong force is referred to as \textit{Quantum Chromodynamics}, or \textit{QCD}.
 The gauge boson associated with the theory is the gluon, and of the fermionic fields only the quarks are charged under this interaction.
-The quarks (here denoted by $\psi_f$, labeled by the quark flavor $f$) transform under the fundamental representation of SU(3), meaning each of the $6$ flavors are in fact length $3$ column vectors, or triplets.
+The quarks (here denoted by $\psi_f$, labeled by the quark flavor $f$) transform under the fundamental representation of SU(3), meaning each of the $6$ flavors are length $3$ column vectors, or triplets.
 The gluons $G_\mu^a$ transform in the adjoint representation as $3\times 3$ matrices, with $1$ color singlet state and $8$ color-anticolor states (the octet).
 
 The Lagrangian of QCD is:
@@ -247,9 +247,9 @@ In contrast to the electroweak theory (Section~\ref{sec:SM:EW}), there is no Hig
 However, phenomenologically and empirically QCD is much more complicated, due to the running of the coupling $g_s$.
 
 In every theory scattering cross sections and other observables are calculated perturbatively in the interaction constant.
-Formally some of these terms, which correspond to loops in Feynman diagrams, are infinite; in order to account for these infinities calculations can instead be carried out by comparing calculations between two finite scales, so that the infinities cancel, a technique called renormalization.
-One consequence of renormalization (which is necessary to make finite predictions) is that the effective strength of the coupling $g$ in the theory changes depending on the scale bring probed.
-This running of the coupling is encoded in the beta function:
+Formally some of these terms, which correspond to loops in Feynman diagrams, are infinite; in order to account for these infinities calculations can instead be carried out by comparing calculations between two finite scales, so that the infinities cancel, a technique called \textit{renormalization}.
+One consequence of renormalization (which is necessary to make finite predictions) is that the effective strength of the coupling $g$ in the theory changes, or \textit{runs} depending on the scale being probed.
+This running of the coupling is encoded in the \textit{beta function}:
 \begin{align}
   \frac{\partial}{\partial \ln \mu}g = \mu\frac{\partial}{\partial\mu}g = \beta(g),
 \end{align}
@@ -257,7 +257,7 @@ where $\mu$ is the energy scale being probed.
 
 In QCD\footnote{Like everything else, $\beta$ is calculated perturbatively in $g$. Given here is the one-loop contribution.} $\beta(g) = -\frac{g^3}{(4\pi)^2}\beta_0$, with $\beta_0=(\frac{11}{3}n_\text{c} - \frac{2}{3} n_\text{f})$; $n_\text{c}=3$ is the number of colors, and $n_\text{f}=6$ is the number of flavors, so $\beta_0=7>0$.
 This implies that in QCD the coupling strength gets weaker at higher energies, and stronger at lower energies, a phenomenon known as \textit{asymptotic freedom}\footnote{The couplings for the electroweak theory, $g$ and $g'$, also run but much less, and stay perturbative at all energy scales.}.
-Said another way, at low energy scales $g_s$ grows so large that perturbative calculations are impossible and the theory breaks down; at high energy scales $g_s<1$ and perturbative calculations can be performed.
+Said another way, at low energy scales $g_s$ grows so large that perturbative calculations are impossible and the theory breaks down; at high energy scales $g_s$ is small and perturbative calculations can be performed.
 The running of the coupling (expressed in terms of $\alpha_s = \frac{g_s^2}{4\pi}$) can be seen in Figure~\ref{fig:SM:alphas}.
 It can be seen that the coupling gets too strong and the theory becomes non-perturbative around $\mathcal{O}(\GeV)$.
 
@@ -269,7 +269,7 @@ It can be seen that the coupling gets too strong and the theory becomes non-pert
 \end{figure}
 
 Because of the increasing strength of the strong force at low energies, quarks and gluons are \textit{confined} into color-neutral composite particles, or \textit{hadrons}.
-In order to pull apart two quarks that compose a hadron, the larger the distance between them the greater the strength of the interaction (low energies correspond to large distances), and it becomes energy favorable to pull quark-antiquark pairs out of the vacuum to create new hadrons, a process called \textit{hadronization}.
+In order to pull apart two quarks that compose a hadron, the larger the distance between them the greater the strength of the interaction, and it becomes energy favorable to pull quark-antiquark pairs out of the vacuum to create new hadrons, a process called \textit{hadronization}.
 
 A lone quark or gluon produced in a hard-scatter process will first \textit{fragment}, radiating gluons which in turn convert into quark-antiquark pairs, etc., and then hadronize once low enough energy scales are reached.
 This collimated hadronic shower leads to \textit{jets} observed in the detector (Chapter~\ref{ch:Jets}).
@@ -294,14 +294,16 @@ At high $x$, the valence quarks dominate, but at lower $x$ the sea partons, espe
 
 \section{Summary}
 \label{sec:SM:summary}
-A summary of the SM (after electroweak symmetry breaking) can be seen in Figure~\ref{fig:SM:SM_summary}.
+A summary of the SM can be seen in Figure~\ref{fig:SM:SM_summary}, before and after spontaneous symmetry breaking of SU(2).
 \begin{figure}[htbp]
   \centering 
+  \subfloat[]{\includegraphics[width=1.0\textwidth]{figures/{SM_complete}.jpg}}\\
   \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{SM_particles}.png}}
   \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{SM_interactions}.png}}
-  \caption{Summary of SM. (a) Particle content. (b) Interactions. Figures sourced from~\cite{SM_wiki}.}
+  \caption{Summary of SM. (a) Fields before and after electroweak symmetry breaking. (b) After electroweak symmetry breaking - particle content. (b) After electroweak symmetry breaking - interactions. Figures sourced from~\cite{SM_wiki}.}
   \label{fig:SM:SM_summary}
 \end{figure}
+
 Among the spin $\frac{1}{2}$ fermions, there are $3$ generations each of quarks and leptons, split into up-type and down-type.
 The $6$ quarks are the (up-type) up, charm, top, and (down-type) down, strange, bottom; the $6$ leptons are the (charged) electron, muon, and tau, and their respective neutral neutrino partners.
 There are also $4$ vector gauge bosons - the photon, with mediates the electromagnetic force; the $W^\pm/Z$ bosons, which mediate the weak interaction; and the gluon, which mediates the strong force.
