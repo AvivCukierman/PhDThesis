@@ -1,8 +1,8 @@
 \section{Introduction}
+\label{sec:SM:intro}
 The \textit{Standard Model of Particle Physics}, or \textit{SM}, is the overarching theory that describes Physics at the most fundamental level.
 In the SM, \textit{particles} are localizations of \textit{quantum fields}, and these particle-fields account for both matter and all known forces or interactions other than gravity.
 The SM is a remarkably well-measured and well-tested theory.
-%For example, the anomalous magnetic moment of the muon, $g_\mu-2$, has been calculated~\cite{Aoyama:2012wk} using the SM out to $10$ decimal places and measured~\cite{Bennett:2006fi} to an uncertainty of $0.54$ parts per million\footnote{This is perhaps not the best example, since there is actually a tension ($\sim 2.9\sigma$) between the theoretical prediction and the experimental value. However, this example shows how well-measured the SM is and how precise the predictions are.}.
 Figure~\ref{fig:SM:tests} shows the cross sections of a variety of Physics processes measured with the ATLAS detector (Chapter~\ref{ch:ATLAS}) and their theoretical predictions using the SM.
 Every single measurement agrees with the theoretical prediction within the uncertainties.
 \begin{figure}[htbp]
@@ -204,18 +204,16 @@ The empirical values are $\theta_{12}=13.04\pm0.05^\circ$, $\theta_{13}=0.201\pm
 In particular, the CKM matrix is mostly diagonal, since all the $\theta$ angles are small; the largest is $\theta_{12}$ (mixing between the first and second generation).
 
 The leptons also have Yukawa couplings, generating their masses.
-However, the neutrinos are (almost) massless, allowing a (nearly) simultaneous diagonalization of $Y^\nu$ and $Y^e$.
-This implies any mixing between the lepton generations is not allowed (heavily suppressed), and lepton number for each lepton generation is conserved.
+However, the neutrinos are massless\footnote{Actually, neutrinos are known to have very small but positive masses. More on this in Section~\ref{sec:SM:BSM}.}, allowing a simultaneous diagonalization of $Y^\nu$ and $Y^e$.
+This implies any mixing between the lepton generations is not allowed, and lepton number for each lepton generation is conserved under the weak interaction.
 
 As mentioned above, while Yukawa interactions explain how lepton and quark masses are possible, the actual values are free parameters of the theory.
 The experimental values are summarized in Table~\ref{tab:SM:masses}.
-Both the quark masses and the charged lepton masses span many orders of magnitude, raising a potential hierarchy problem.
-The neutrino masses are drastically different, raising the possibility that their masses are not due to the mechanism described above, but something different - e.g., with a Majorana mass term~\cite{ref:TODO}.
-%Majorana neutrinos, Seesaw mechanism
+Both the quark masses and the charged lepton masses span many orders of magnitude, raising a potential hierarchy problem (more on this in Section~\ref{sec:SM:BSM}).
 
 \begin{table}[]
 \centering
-\caption{Lepton and quark masses.}
+\caption{Lepton and quark masses~\cite{PDG}.}
 \label{tab:SM:masses}
 \begin{tabular}{c c c c c c c c}
 \hline
@@ -223,7 +221,7 @@ Quark & $d$ & $s$ & $b$ & $u$ & $c$ & $t$ & \\
 Mass [MeV] & $4.7$ & $96$ & $4.18\times10^3$ & $2.2$ & $1.28\times10^3$ & $173.1\times10^3$\\
 \hline
 Lepton & $e$ & $\mu$ & $\tau$ & $\nu_e$ & $\nu_e$ & $\nu_\tau$ & \\
-Mass [MeV] & $0.511$ & $105.7$ & $1777$ & $<1.0\times10^{-6}$ & $<0.17$ & $<18.2$
+Mass [MeV] & $0.511$ & $105.7$ & $1777$ & $<\mathcal{O}(10^{-6})$ & $<\mathcal{O}(10^{-6})$ & $<\mathcal{O}(10^{-6})$
 \end{tabular}
 \end{table}
 
@@ -233,7 +231,7 @@ The strong force is described by a symmetry group under SU(3).
 The $3$ dimensions are referred to as \textit{color charges} (red, green, and blue when names are required\footnote{Totally unrelated to colors in the visual spectrum that we are used to. However, the analogy does work a little, as a state with all three color charges is has $0$ net color charge, i.e. ``white'' or colorless.}), and so the strong force is referred to as \textit{Quantum Chromodynamics}, or \textit{QCD}.
 The gauge boson associated with the theory is the gluon, and of the fermionic fields only the quarks are charged under this interaction.
 The quarks (here denoted by $\psi_f$, labeled by the quark flavor $f$) transform under the fundamental representation of SU(3), meaning each of the $6$ flavors are length $3$ column vectors, or triplets.
-The gluons $G_\mu^a$ transform in the adjoint representation as $3\times 3$ matrices, with $1$ color singlet state and $8$ color-anticolor states (the octet).
+The gluons $G_\mu^a$ transform in the adjoint representation as $3\times 3$ matrices, with $8$ color-anticolor states (the \textit{octet}) corresponding to the $8$ Gell-Mann matrices.
 
 The Lagrangian of QCD is:
 \begin{align}
@@ -322,4 +320,57 @@ Finally, each of the gauge bosons other than the photon has self-interactions.
 
 \section{Beyond the Standard Model}
 \label{sec:SM:BSM}
-%Gravity, dark matter, neutrino masses/hierarchy problem, strong CP problem, Higgs boson mass
+Despite the successes of the SM, there are still underexplained or unexplained natural phenomena.
+``Underexplained'' phenomena refer to features within the SM that are either aesthetically displeasing (also called ``unnatural''), or where there is a discrepancy between the SM prediction and the observed value.
+``Unexplained'' phenomena refer to observations of effects that have no corresponding elements in the SM outlined above.
+
+As the SM attempts to describe Physics on the most fundamental level, any unsatisfying or missing pieces indicate that the theory is not complete, implying there must exist a theory of new Physics, or \textit{beyond the SM} (\textit{BSM}).
+
+Some of these problems with the SM are outlined below, in (subjective) order of increasing weakness of the SM.
+There are many BSM models~\cite{Lykken:2010mc,Lee:2019zbu,Ellis:2009pz,Ellis:2012zz,Virdee:2016,Halkiadakis:2014qda}, and some of these models account for some of the problems with the SM listed below.
+Some of the more popular models are included with the problem they account for.
+
+%QCD non-perturbative
+As mentioned in Section~\ref{sec:SM:QCD}, below a certain energy scale QCD becomes non-perturbative, and the theory cannot make predictions.
+In particular, there is no fundamental theory describing hadrons, and descriptions have to rely on phenomenological models, e.g. to describe the hadron PDFs.
+While not necessarily a failure of the theory itself, this does indicate there may exist a different formulation of the SM which would be able to calculate quantities and make predictions about hadrons from a fundamental level.
+One alternative formulation is lattice QCD~\cite{Gupta:1997nd}, which analyzes QCD on a lattice in spacetime, to some but limited success.
+
+%Muon g-2
+As mentioned in Section~\ref{sec:SM:intro}, the SM makes predictions that can be calculated very precisely, and these predictions have been remarkably well-tested.
+There are only a couple of precision measurements that are in tension with the SM predictions, of the tens or hundreds of precision SM tests.
+The muon anomalous magnetic moment~\cite{Blum:2013xva}, or muon $g-2$, has been calculated~\cite{Aoyama:2012wk} up to $10$th order, including weak and hadronic effects in addition to the primary quantum electromagnetic effects, yielding a precision of $10$ decimal places.
+This quantity has also been measured~\cite{Bennett:2006fi} to an uncertainty of $0.54$ parts per million.
+There is a tension of almost $3\sigma$ (with $\sigma$ equal to the experimental uncertainty) between the experimental and theoretical values, which may be an indication of new physics or may be a statistical fluctuation.
+A new experiment~\cite{Chapelain:2017syu} at Fermilab will reduce the experimental uncertainty by a factor of around $4$, which can elucidate whether this is a real tension or not.
+
+There is also evidence from LHCb~\cite{Alves:2008zz} of tension with the SM in $B$-hadron decays~\cite{Capdevila:2017bsm}, at the level of $3-4\sigma$.
+This also remains to be seen whether it is a true tension indicative of new physics or a statistical fluctuation (or unaccounted-for experimental bias).
+
+%Quark hierarchy | 
+As mentioned in Section~\ref{sec:SM:EW}, the quark and charged lepton masses are allowed in the SM via Yukawa couplings with the Higgs boson.
+However, there is a large \textit{hierarchy}, meaning many orders of magnitude difference in free parameters of the model.
+This is especially apparent for the quarks, where the top quark mass and the up quark mass differ by a factor of $10^5$. 
+This indicates that there may be some theory at higher energies that explains this observed difference~\cite{Xing:2014sja}.
+
+%Neutrino masses | Majorana, Seesaw
+%Majorana neutrinos, Seesaw mechanism
+The hierarchy problem gets drastically worse when considering the neutrino masses.
+As discussed in Section~\ref{sec:SM:EW}, in the vanilla SM neutrinos are massless, and cosmological constraints~\cite{Ade:2013zuv} place limits on the sum of the neutrino masses at $<1$ eV.
+However, observations of neutrinos oscillating between flavors~\cite{Fukuda:1998mi} indicate that neutrinos must have finite masses, which is consistent with cosmological models~\cite{Battye:2013xqa}.
+The neutrino oscillation observations measure only differences between neutrino masses of different generations, with measurements of~\cite{Araki:2004mb,Evans:2013pka,PDG} $\Delta m_{12}^2=7.5\times10^{-5}~\text{eV}^2$ and $\Delta m_{23}^2=2.5\times10^{-3}~\text{eV}^2$, where the subscripts label the neutrinos in the mass basis (which is different from the interaction basis, similar to quarks).
+These are only mass differences, but the implication is that there must necessarily exist some neutrino with mass $>0.05~\text{eV}$.
+
+The neutrino masses can be generated via Yukawa couplings in the same manner as the charged leptons and the quarks, which is called \textit{Dirac masses}.
+However, there is an even larger hierarchy between the neutrinos and the lepton masses (a factor of $10^9$ between the tau and the tau neutrino), indicating these masses may come from a different mechanism~\cite{King:2003jb}.
+For example, the neutrinoless double beta decay process (two neutrinos decaying to two protons with no associated missing energy corresponding to neutrinos), which has not yet been observed and would violate the SM~\cite{Schwingenheuer:2012zs}, would imply that neutrinos are their own anti-particles, allowing a \textit{Majorana mass} term in the electroweak Lagrangian.
+
+%Strong CP problem | Axions
+
+%Higgs boson mass | SUSY
+
+%Matter-antimatter symmetry
+
+%Dark matter | WIMPs
+%Gravity | String theory
+%Dark energy | 
