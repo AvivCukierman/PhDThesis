@@ -29,11 +29,11 @@ In addition to serving as the primary sources for most of this Chapter, these te
 
 \section{Electroweak Sector}
 \label{sec:SM:EW}
-The Standard Model is described by \textit{Yang-Mills} or \textit{non-Abelian} gauge theories, with interactions mediated by vector bosons between fermionic matter particles with spin $\frac{1}{2}$.
-The electromagnetic and weak forces are unified using the \textit{Glashow-Weinberg-Salam} model for electroweak unification, with gauge symmetry SU(2)$\times$U(1).
+The Standard Model is described by \textit{Yang-Mills} or \textit{non-Abelian} gauge theories~\cite{Yang:1954,Nobel1957}, with interactions mediated by vector bosons between fermionic matter particles with spin $\frac{1}{2}$.
+The electromagnetic and weak forces are unified using the \textit{Glashow-Weinberg-Salam} model~\cite{Glashow:1959wxa,Salam:1968rm,Weinberg:1967tq,Nobel1979} for electroweak unification, with gauge symmetry SU(2)$\times$U(1).
 The gauge bosons corresponding to these symmetries are $W_\mu^a$, with $a$ running over the $3$ generators of SU(2), and $B_\mu$, respectively.
 The U(1) symmetry does not correspond to the familiar electromagnetic charge, but rather corresponds to a \textit{hypercharge} $Y$; we will see that the photon corresponds to a linear combination of $B_\mu$ and one of the $W_\mu^a$.
-There is in addition a complex doublet $H$ with hypercharge $\frac{1}{2}$ called the \textit{Higgs multiplet}.
+There is in addition a complex doublet $H$ with hypercharge $\frac{1}{2}$ called the \textit{Higgs multiplet}~\cite{Englert:1964et,Higgs:1964pj,Higgs:1964ia,Guralnik:1964eu,Nobel2013}\footnote{Before data-taking at the LHC, the Higgs field was only theoretical. In 2012 the existence of this particle was confirmed~\cite{HIGG-2012-27,CMS-HIG-12-028}.}.
 Altogether, the kinetic term for these fields is
 \begin{align}
   \mathcal{L}_\text{kin} &= -\frac{1}{4}(W_{\mu\nu}^a)^2 -\frac{1}{4}B_{\mu\nu}^2\nonumber\\
@@ -87,7 +87,7 @@ However, it does interact via $3$- and $4$-point interactions with the $W^\pm$ a
 There are also $3$- and $4$-point self-interactions of the Higgs.
 The mass of the Higgs is $m_h = \sqrt{2}m$, which again is a free parameter of the theory.
 
-The four original free parameters $m,\lambda,g,g'$ are therefore related to experimentally observable quantities: $\alpha_e = \frac{e^2}{4\pi} = \frac{1}{137}$ is the fine structure constant; $m_Z = 91.2~\GeV$; $m_W = 80.4~\GeV$; and $m_h = 125~\GeV$.
+The four original free parameters $m,\lambda,g,g'$ are therefore related to experimentally observable quantities~\cite{PDG}: $\alpha_e = \frac{e^2}{4\pi} = \frac{1}{137}$ is the fine structure constant; $m_Z = 91.2~\GeV$; $m_W = 80.4~\GeV$; and $m_h = 125~\GeV$.
 In particular, $\sin^2\theta_w=0.22$ and $v=246~\GeV$.
 
 \subsection{Fermions}
@@ -115,13 +115,13 @@ Furthermore, the quark fields listed above are in the interaction eigenstate bas
 The charges of these fields under hypercharge and SU(2) are given in Table~\ref{tab:SM:charges} (as well as the charge under SU(3) (Section~\ref{sec:SM:QCD}).
 \begin{table}[]
 \centering
-\caption{Charges of Standard Model fields under U(1) hypercharge, SU(2), and SU(3). - means the field does not transform under the symmetry group, i.e. a singlet. $\Box$ means the field transforms in the fundamental representation of the group, i.e. a doublet for SU(2) and a triplet for SU(3).}
+\caption{Charges of Standard Model fields under U(1) hypercharge, SU(2), and SU(3). - means the field does not transform under the symmetry group, i.e. a singlet. $\mathbf{2},\mathbf{3}$ mean the field transforms in the fundamental representation of the group, i.e. a doublet for SU(2) and a triplet for SU(3), respectively.}
 \label{tab:SM:charges}
 \begin{tabular}{l c c c c c c c}
 \hline
 Field  & $L = \begin{pmatrix}\nu_L\\e_L\end{pmatrix}$  & $e_R$  & $\nu_R$ & $Q = \begin{pmatrix}u_L\\d_L\end{pmatrix}$ & $u_R$ & $d_R$ & $H$ \\
-SU(3) & - & - & - & $\Box$ & $\Box$ & $\Box$ & - \\
-SU(2) & $\Box$ & - & - & $\Box$ & - & - & $\Box$ \\
+SU(3) & - & - & - & $\mathbf{3}$ & $\mathbf{3}$ & $\mathbf{3}$ & - \\
+SU(2) & $\mathbf{2}$ & - & - & $\mathbf{2}$ & - & - & $\mathbf{2}$ \\
 U(1)  & $-\frac{1}{2}$ & $-1$ & $0$ & $\frac{1}{6}$ & $\frac{2}{3}$ & $-\frac{1}{3}$ & $\frac{1}{2}$
 \end{tabular}
 \end{table}
@@ -200,7 +200,7 @@ V = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos\theta_{23} & \sin\theta_{23} \\ 0 & -\
 \begin{pmatrix} \cos\theta_{13} & 0 & \sin\theta_{13}e^{i\delta} \\ 0 & 1 & 0 \\-\sin\theta_{13}e^{i\delta} & 0 & \cos\theta_{13} \end{pmatrix}\times
 \begin{pmatrix} \cos\theta_{12} & \sin\theta_{12} & 0 \\ -\sin\theta_{12} & \cos\theta_{12} & 0 \\ 0 & 0 & 1 \end{pmatrix}
 \end{align}
-The empirical values are $\theta_{12}=13.04\pm0.05^\circ$, $\theta_{13}=0.201\pm0.011^\circ$, $\theta_{23}=2.38\pm0.06^\circ$, and $\delta=68.8\pm4.6^\circ$.
+The empirical values are~\cite{PDG} $\theta_{12}=13.04\pm0.05^\circ$, $\theta_{13}=0.201\pm0.011^\circ$, $\theta_{23}=2.38\pm0.06^\circ$, and $\delta=68.8\pm4.6^\circ$.
 In particular, the CKM matrix is mostly diagonal, since all the $\theta$ angles are small; the largest is $\theta_{12}$ (mixing between the first and second generation).
 
 The leptons also have Yukawa couplings, generating their masses.
@@ -228,7 +228,7 @@ Mass [MeV] & $0.511$ & $105.7$ & $1777$ & $<\mathcal{O}(10^{-6})$ & $<\mathcal{O
 \section{Quantum Chromodynamics}
 \label{sec:SM:QCD}
 The strong force is described by a symmetry group under SU(3).
-The $3$ dimensions are referred to as \textit{color charges} (red, green, and blue when names are required\footnote{Totally unrelated to colors in the visual spectrum that we are used to. However, the analogy does work a little, as a state with all three color charges is has $0$ net color charge, i.e. ``white'' or colorless.}), and so the strong force is referred to as \textit{Quantum Chromodynamics}, or \textit{QCD}.
+The $3$ dimensions are referred to as \textit{color charges} (red, green, and blue when names are required\footnote{Totally unrelated to colors in the visual spectrum that we are used to. However, the analogy does work a little, as a state with all three color charges is has $0$ net color charge, i.e. ``white'' or colorless.}), and so the strong force is referred to as \textit{Quantum Chromodynamics}, or \textit{QCD}~\cite{Gell-Mann:2015noa,Fritzsch:1973pi,Fritzsch:1972jv,Ali:2010tw}.
 The gauge boson associated with the theory is the gluon, and of the fermionic fields only the quarks are charged under this interaction.
 The quarks (here denoted by $\psi_f$, labeled by the quark flavor $f$) transform under the fundamental representation of SU(3), meaning each of the $6$ flavors are length $3$ column vectors, or triplets.
 The gluons $G_\mu^a$ transform in the adjoint representation as $3\times 3$ matrices, with $8$ color-anticolor states (the \textit{octet}) corresponding to the $8$ Gell-Mann matrices.
@@ -254,7 +254,7 @@ This running of the coupling is encoded in the \textit{beta function}:
 where $\mu$ is the energy scale being probed.
 
 In QCD\footnote{Like everything else, $\beta$ is calculated perturbatively in $g$. Given here is the one-loop contribution.} $\beta(g) = -\frac{g^3}{(4\pi)^2}\beta_0$, with $\beta_0=(\frac{11}{3}n_\text{c} - \frac{2}{3} n_\text{f})$; $n_\text{c}=3$ is the number of colors, and $n_\text{f}=6$ is the number of flavors, so $\beta_0=7>0$.
-This implies that in QCD the coupling strength gets weaker at higher energies, and stronger at lower energies, a phenomenon known as \textit{asymptotic freedom}\footnote{The couplings for the electroweak theory, $g$ and $g'$, also run but much less, and stay perturbative at all energy scales.}.
+This implies that in QCD the coupling strength gets weaker at higher energies, and stronger at lower energies, a phenomenon known as \textit{asymptotic freedom}\footnote{The couplings for the electroweak theory, $g$ and $g'$, also run but much less, and stay perturbative at all energy scales.}~\cite{Gross:1973id,Politzer:1973fx,Gross:1974fm}.
 Said another way, at low energy scales $g_s$ grows so large that perturbative calculations are impossible and the theory breaks down; at high energy scales $g_s$ is small and perturbative calculations can be performed.
 The running of the coupling (expressed in terms of $\alpha_s = \frac{g_s^2}{4\pi}$) can be seen in Figure~\ref{fig:SM:alphas}.
 It can be seen that the coupling gets too strong and the theory becomes non-perturbative around $\mathcal{O}(\GeV)$.
@@ -266,16 +266,16 @@ It can be seen that the coupling gets too strong and the theory becomes non-pert
   \label{fig:SM:alphas}
 \end{figure}
 
-Because of the increasing strength of the strong force at low energies, quarks and gluons are \textit{confined} into color-neutral composite particles, or \textit{hadrons}.
+Because of the increasing strength of the strong force at low energies, quarks and gluons are \textit{confined}~\cite{Wilson:1974sk} into color-neutral composite particles, or \textit{hadrons}.
 In order to pull apart two quarks that compose a hadron, the larger the distance between them the greater the strength of the interaction, and it becomes energy favorable to pull quark-antiquark pairs out of the vacuum to create new hadrons, a process called \textit{hadronization}.
 
 A lone quark or gluon produced in a hard-scatter process will first \textit{fragment}, radiating gluons which in turn convert into quark-antiquark pairs, etc., and then hadronize once low enough energy scales are reached.
-This collimated hadronic shower leads to \textit{jets} observed in the detector (Chapter~\ref{ch:Jets}).
+This collimated hadronic shower leads to \textit{jets}~\cite{Drell:1969wb,Politzer:1973fx,Blankenbecler:1972cd,Ali:2010tw} observed in the detector (Chapter~\ref{ch:Jets}).
 
 Hadrons composed of $2$ quarks are called \textit{mesons}, and those composed of $3$ quarks are called \textit{baryons}; hadrons with four or more constituent quarks (\textit{tetraquarks}, \textit{pentaquarks}) have been observed~\cite{Aaij:2016iza,Aaij:2016nsc} but are very rare.
 The familiar protons are baryons composed of two up quarks and one down quark.
 
-When protons collide in the LHC (Chapter~\ref{ch:LHC}), the energy scales are high enough such that the individual constituent quarks and gluons do interact rather than the entire hadron.
+When protons collide in the LHC (Chapter~\ref{ch:LHC}), the energy scales are high enough such that the individual constituent quarks and gluons do interact rather than the entire hadron~\cite{Feynman:1989dd}.
 The QCD factorization theorem allows the cross section calculation to be factorized between the hard-scatter and perturbative $2\rightarrow N$ process and the non-perturbative hadronic structure.
 However, even with this simplification, the interaction between the constituent partons has to be averaged over the distribution of momenta each could be carrying, at the energy scale of the interaction.
 This information is contained in the \textit{parton distribution function}~\cite{Amoroso:2020lgh,DelDebbio:2018siw}, or \textit{PDF}, $f_q(x,\mu^2)$, which is the probability distribution function for a parton $q$ to be carrying momentum fraction $x$ at energy scale $\mu^2$.
@@ -367,11 +367,11 @@ For example, the neutrinoless double beta decay process (two neutrinos decaying 
 
 %Higgs boson mass | SUSY
 All particles have quantum corrections to their mass due to loop terms involving other particles.
-While the quantum corrections to the fermions and gauge bosons are constrained by symmetry in the SM, the Higgs mass specifically is sensitive to physics at higher energy scales~\cite{Csaki:2016kln,deGouvea:2014xba}.
+While the quantum corrections to the fermions and gauge bosons are constrained by symmetry in the SM, the Higgs mass specifically is sensitive to physics at higher energy scales~\cite{Csaki:2016kln,deGouvea:2014xba,Nilles:1982dy}.
 We know there must exist some new physics at the Planck scale ($m_\text{P}\sim10^{19}~\GeV$), incorporating Quantum Gravity (see below), so there is an enormous hierarchy between that scale and the higgs mass, $m_h\sim 10^2~\GeV$, of a factor of $10^{17}$.
 
 It is therefore proposed that there could exist new physics around the TeV scale to protect and constrain the Higgs mass.
-A very popular theory is called \textit{Supersymmetry}, or \textit{SUSY}~\cite{wess_bagger_2009,Wess:1984jr,Lykken:1996xt,Quevedo:2010ui,Strassler:2003qg,Peskin:1997qi,Seiberg:1994pq,Intriligator:2007cp}.
+A very popular theory is called \textit{Supersymmetry}, or \textit{SUSY}~\cite{wess_bagger_2009,Wess:1984jr,Lykken:1996xt,Quevedo:2010ui,Strassler:2003qg,Peskin:1997qi,Seiberg:1994pq,Intriligator:2007cp,Dobrescu:2000yn,Ellwanger:2003jt,Dermisek:2005ar,Chang:2008cw,Morrissey:2008gm}.
 In SUSY every particle has a supersymmetric partner, swapping fermions and bosons.
 The lightest of these supersymmetric particles would be on the TeV scale.
 
@@ -399,7 +399,7 @@ A proposed solution is the presence of light pseudoscalar particles called \text
 These particles would drive the $\theta$ parameter to $0$, explaining the lack of strong CP violation.
 
 %Dark matter | WIMPs
-A significant phenomenon unexplained by the SM is existence of \textit{dark matter}~\cite{Bertone:2010zza,darkmatter}.
+A significant phenomenon unexplained by the SM is existence of \textit{dark matter}~\cite{Trimble:1987ee,Bertone:2010zza,darkmatter}.
 It has been known for a long time~\cite{Zwicky:1937} that the amount of visible matter in galaxy clusters is not enough to keep the galaxies from escaping the cluster's pull.
 However, the idea of missing matter in galaxies was not generally accepted until observations of galaxy rotation curves~\cite{rubin:1970,freeman:1970,vanAlbada:1984js} indicated the existence of additional matter other than what could be seen, i.e. dark matter.
 Since then, observations using weak lensing~\cite{Clowe:2003tk} and galaxy cluster merging~\cite{Markevitch:2003at} have confirmed the existence of dark matter.

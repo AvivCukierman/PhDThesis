@@ -1,10 +1,10 @@
 \section{Introduction}
 At a hadron collider like the LHC, quarks and gluons are produced copiously.
-These quarks and gluons are not observed directly - because of color confinement, these \textit{partons} fragment and hadronize almost immediately, leading to a collimated spray of hadronic particles which are ultimately observed in the calorimeter.
+These quarks and gluons are not observed directly - because of color confinement, these \textit{partons} fragment and hadronize almost immediately, leading to a collimated spray of hadronic particles which are ultimately observed in the detector.
 Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ leptons, are also produced and play vital roles in searches and measurements at the LHC; the hadronic decays of these particles either are the primary way or an extremely important way of identifying their production in an event.
-\textit{Jets} are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
+\textit{Jets}~\cite{Ali:2010tw,Asquith:2018igt,Larkoski:2017jix,Salam:2009jx} are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
 
-There are a variety of jet algorithms, the most common one being used at the LHC today being the \antikt{} algorithm, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
+There are a variety of jet algorithms, the most common one being used at the LHC today being the \antikt{} algorithm~\cite{Cacciari:2008gp}, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
 These algorithms act on any set of seeds, which in the context of ATLAS correspond to individual clusters of energy observed in the calorimeter.
 Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ leptons, photons, and electrons are in addition reconstructed as small-$R$ jets in the calorimeter; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
 Both small- and large-$R$ jets have a variety of \textit{grooming} techniques applied to clean up the substructure in order to remove the effects of the underlying event and of multiple in and out of time simultaneous collisions (\textit{pile-up}).
@@ -31,7 +31,7 @@ For example, Figure~\ref{fig:jets:eventdisplays} shows two events recorded in th
   \label{fig:jets:eventdisplays}
 \end{figure}
 
-In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeter~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; or as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker.
+In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeter~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker; or as the tracks themselves without using the calorimeter.
 From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum (\pt) and some position ($\eta,\phi$) in the calorimeter (in particular, seeds are assumed to have zero mass).
 Figure~\ref{fig:jets:seeds} shows an event display with the seeds in the ($\eta,\phi$) plane.
 
