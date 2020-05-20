@@ -1,12 +1,13 @@
 \section{Introduction}
 At a hadron collider like the LHC, quarks and gluons are produced copiously.
 These quarks and gluons are not observed directly - because of color confinement, these \textit{partons} fragment and hadronize almost immediately, leading to a collimated spray of hadronic particles which are ultimately observed in the detector.
-Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ leptons, are also produced and play vital roles in searches and measurements at the LHC; the hadronic decays of these particles either are the primary way or an extremely important way of identifying their production in an event.
-\textit{Jets}~\cite{Ali:2010tw,Asquith:2018igt,Larkoski:2017jix,Salam:2009jx} are algorithmic objects intended to group together the hadronic decay products of these particles and derive the four-momentum of the originating particle.
+Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\tau$ leptons, are also produced and play vital roles in searches and measurements at the LHC.
+The hadronic decays of these massive particles are the primary way or one extremely important way of identifying their production in an event.
+\textit{Jets}~\cite{Ali:2010tw,Asquith:2018igt,Larkoski:2017jix,Salam:2009jx} are algorithmic objects intended to group together the hadronic decay products of these partons or massive particles and derive the four-momentum of the originating particle.
 
-There are a variety of jet algorithms, the most common one being used at the LHC today being the \antikt{} algorithm~\cite{Cacciari:2008gp}, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
-These algorithms act on any set of seeds, which in the context of ATLAS correspond to individual clusters of energy observed in the calorimeter.
-Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ leptons, photons, and electrons are in addition reconstructed as small-$R$ jets in the calorimeter; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
+There are a variety of jet algorithms; the most common one being used at the LHC today is the \antikt{} algorithm~\cite{Cacciari:2008gp}, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
+These algorithms group together constituent four-vector objects called \textit{seeds}.
+Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ leptons, photons, and electrons are in addition reconstructed as small-$R$ jets in the detector; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
 Both small- and large-$R$ jets have a variety of \textit{grooming} techniques applied to clean up the substructure in order to remove the effects of the underlying event and of multiple in and out of time simultaneous collisions (\textit{pile-up}).
 There is also often a \textit{tagging} step where the substructure of the jet is used to identify the provenance of the jet.
 
@@ -20,7 +21,7 @@ Finally, Section~\ref{sec:jets:conclusion} summarizes the Chapter and puts it in
 
 \section{Jet Definition}
 \label{sec:jets:def}
-Jet algorithms are functions for mapping a set of \textit{seeds} observed in a calorimeter to groupings of those seeds, called jets.
+Jet algorithms are functions for mapping a set of \textit{seeds} observed in a detector to groupings of those seeds, called jets.
 For example, Figure~\ref{fig:jets:eventdisplays} shows two events recorded in the ATLAS detector - one with two hard jets (\textit{dijet}) and one with multiple (\textit{multijet}).
 
 \begin{figure}[htbp]
@@ -31,8 +32,8 @@ For example, Figure~\ref{fig:jets:eventdisplays} shows two events recorded in th
   \label{fig:jets:eventdisplays}
 \end{figure}
 
-In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeter~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker; or as the tracks themselves without using the calorimeter.
-From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum (\pt) and some position ($\eta,\phi$) in the calorimeter (in particular, seeds are assumed to have zero mass).
+In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeters~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker; or as the tracks themselves without using the calorimeter.
+From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum (\pt) and some position ($\eta,\phi$) in the detector (in particular, seeds are assumed to have zero mass).
 Figure~\ref{fig:jets:seeds} shows an event display with the seeds in the ($\eta,\phi$) plane.
 
 Jets have a long history in high energy physics and various definition with different properties have been used~\cite{Salam:2009jx}.
@@ -40,7 +41,7 @@ The Snowmass Accords~\cite{Huth:1990mi} laid out a series of properties jet defi
 In particular, jets should be \textit{IRC} safe, which is a portmanteau of \textit{IR} and \textit{collinear} safety.
 IR safety requires that soft (i.e., infrared) emissions should not affect the set of jets the algorithm produces, as soft emissions can grow without bound in theoretical computations.
 Collinear safety requires that if a single seed splits into multiple collinear seeds sharing the original seed's momentum, this should also not affect the output of the algorithm; again, theoretically there is no difference between a single particle and that same particle split into multiple entities with the same total four-momentum.
-In practice calorimeters tend to be both IR and collinear safe, as noise-suppression removes soft emissions and the finite size of calorimeter cells sum up nearly collinear particles; but it is still desired for the algorithm itself to obey these properties for theoretical calculations.
+In practice detectors tend to be both IR and collinear safe, as noise-suppression removes soft emissions and the finite size of calorimeter cells and tracking pixels sum up nearly collinear particles; but it is still desired for the algorithm itself to obey these properties for theoretical calculations.
 
 The most common contemporary jet algorithms are called \textit{sequential recombination} algorithms, though there is a long history of other types of algorithms which will not covered here~\cite{Salam:2009jx}.
 In these algorithms, every seed is first denoted to be a \textit{proto-jet}, and a distance parameter $d_{ij}$ is defined between every pair of proto-jets $i$ and $j$.
@@ -164,7 +165,7 @@ While all of these taggers now make use of a complicated combination of multiple
 \section{Conclusion}
 \label{sec:jets:conclusion}
 Jets are ubiquitious at a hadronic collider like the LHC.
-As generic groupings of calorimeter seeds, almost every Standard Model particle other than muons and neutrinos are reconstructed as jets.
+As generic groupings of detector seeds, almost every Standard Model particle other than muons and neutrinos are reconstructed as jets.
 The precise definition of the jet algorithm is a choice, governed by the physics requirements and implications of that choice.
 Both small-$R$ and large-$R$ jets are groomed to remove soft additions due to underlying event or pile-up.
 Finally, a suite of taggers has been developed to tag jets originating from each individual particle.
