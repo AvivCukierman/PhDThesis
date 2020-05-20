@@ -178,7 +178,7 @@ One of the key aspects of this technique is a nested cross-validation procedure,
   The background has a smoothly falling spectrum in some feature $m_\text{res}$, while the signal is narrowly peaked (resonant) in that feature.
   A network is trained to distinguish between a narrow region of $m_\text{res}$ in which the signal lies from its neighboring regions.
   Because of the principles of CWoLa, the scores from the resulting network $y$ can distinguish between signal and background events. 
-  Figure adapted from~\cite{ref:TODO}.
+  Figure adapted from~\cite{NPKI_CWoLa_Hunting}.
 }
 \label{fig:CWoLa:cwolahuntingsetup}
 \end{figure}
@@ -697,7 +697,7 @@ However, because of the extensive measures taken to reduce the sensitivity to st
 
 %Briefly about the trials factor in $(m_1,m_2)$: no event is selected with a classifier that was trained using that event.  The nested cross-validation is like dividing the dataset in half, training on one half and testing on the other.  The nested cross-validation extends this to use $(k-1)/k$ events for training each network (all $k$-folds get a different network) and use all events for testing. 
 
-Details about the software used to execute the analysis pipeline up to this point (Sections~\ref{sec:CWoLa:eventselection,sec:CWoLa:binning,sec:CWoLa:features,sec:CWoLa:network}) can be found in Appendix~\ref{app:CWoLa:software}.
+Details about the software used to execute the analysis pipeline up to this point (Sections~\ref{sec:CWoLa:eventselection},~\ref{sec:CWoLa:binning},~\ref{sec:CWoLa:features},~\ref{sec:CWoLa:network}) can be found in Appendix~\ref{app:CWoLa:software}.
 
 \clearpage
 \subsection{Systematic Uncertainties}
