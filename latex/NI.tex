@@ -1,5 +1,5 @@
 %Has been rewritten
-Numerical inversion is a general method used for calibration of objects observed in detectors and in particular is used for the calibration of jets observed in the ATLAS detector.
+Numerical inversion is a general method used for calibrating the properties of objects observed in detectors and in particular is used for the calibration of the jets observed in the ATLAS detector.
 The key property of numerical inversion as a calibration method is that it is independent of the underlying spectrum.
 In this chapter this method is put into a formal framework and its statistical properties are explored rigorously.
 The results in this chapter are published in~\cite{Cukierman:2016dkb}.
@@ -13,24 +13,27 @@ These approximations and corrections are shown to be increasingly important to c
 %-------------------------------------------------------------------------------
 \section{Introduction}
 %-------------------------------------------------------------------------------
+\label{sec:NI:intro}
 Both of the main searches in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) use jets extensively in their final states, and in general the theme of this Thesis is the use of jets in ATLAS to search for new physics.
 As mentioned in their respective chapters, these searches would both benefit from improved kinematic resolution of the jets involved - in Chapter~\ref{ch:HBSM}, the small-R jet energy resolution, and in Chapter~\ref{ch:CWoLa}, the large-R jet energy and mass resolution.
 The detector is not perfect, and so the observed quantities observed from the detector do not match exactly to the pre-detector, or particle-level, quantities;
-this can be confirmed either by using simulations of particles passing through the detector, by using calibration data where the pre-detector quantities are well-known, or by using data with well-defined topologies such that physics principles (e.g., conservation of energy) can give good approximations of the particle-level quantities.
+this can be confirmed either by using simulations of particles passing through the detector or by using calibration or test beam data where the pre-detector quantities are well-known.
 Because of this, all of these jet observables are calibrated from their detector-level quantities in order to both set the scale at the same level as at particle-level and to reduce the spread of the difference between the calibrated and the particle-level quantities (Section~\ref{sec:ATLAS:jet_calibration}).
-These calibration procedures at ATLAS~\cite{Aad:2011he} and also at CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb} involve several steps to correct for multiple nearly simultaneous $pp$ collisions (pile-up), the non-linear detector response, the $\eta$-dependence of the jet response, flavor-dependence of the jet response, and residual data/simulation differences in the jet response;
-at different stages of this process, what is used for the particle-level quantities varies according to the correction being applied.
-All of these calibrations proceed via a process known as \textit{numerical inversion}.
+These calibration procedures at ATLAS~\cite{PERF-2016-04,Aad:2011he} and also at CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb} involve several steps to correct for multiple nearly simultaneous $pp$ collisions (pile-up), the non-linear detector response, the $\eta$-dependence of the jet response, flavor-dependence of the jet response, and residual data/simulation differences in the jet response.
+For all but the last step, simulations are used to determine the particle-level quantity.
+The final step, which is applied only to jets in data (\textit{in-situ} correction), corrects for differences between the detector-level quantities in data and simulation by comparing the relative response to a well-measured reference object in the same event\footnote{This step occurs after the jets in simulation have already been corrected to be on the same scale as at particle-level. Since it is much more expensive to know particle-level quantities at data level (with calibration or test beam data), this relative ratio method is used to correct detector-level jets in data to the detector-level simulation jets, and therefore in turn to the particle-level.}. 
+All of these calibrations, including the in-situ correction, proceed via a process known as \textit{numerical inversion}.
 
 While numerical inversion is essential for the jet calibration at ATLAS and CMS, the documentation is surprisingly sparse.
-The term was first introduced in a non-public ATLAS document~\cite{LopezMateos:1163916} which amusingly is accompanied by the note ``I asked that this note be refereed over 1 month ago and nobody has gotten back to me.'', dated August 2009. 
+The term was first introduced in a non-public ATLAS document~\cite{LopezMateos:1163916} which amusingly is accompanied by the note ``I asked that this note be refereed over 1 month ago and nobody has gotten back to me'', dated August 2009. 
 The motivation behind introducing this method is to ensure that the calibration is independent of the underlying spectrum used to derive the calibration.
 This is important at a general-purpose detector like ATLAS, because the energy spectra corresponding to the searches for different particles can be wildly different; the calibration should perform well regardless of what are the needs at the analysis level.
 This is further explained in Section~\ref{sec:NI:learningprior}.
 
 The purpose of this chapter is to formally document numerical inversion and describe some of its properties. 
-Perhaps due to the sparsity of documentation on the method, there are a few misunderstandings and misconceptions of how numerical inversion works and what it does.
-This chapter, and the paper in which these results are published, are intended to correct these misunderstandings, further shed light on the properties of numerical inversion, and propose corrections and extensions.
+%Perhaps due to the sparsity of documentation on the method, there are a few misunderstandings and misconceptions of how numerical inversion works and what it does.
+This chapter, and the paper in which these results are published, are intended to shed light on the properties of numerical inversion.
+In addition, the insight provided by these studies is used to propose corrections and extensions to numerical inversion.
 In particular, the deep understanding of the method provided by this work led directly to the techniques described in Chapter~\ref{ch:GenNI}, which incorporate machine learning via neural networks into the numerical inversion process, and in doing so improve the jet energy calibration.
 
 \section{Calibrations}
@@ -38,28 +41,45 @@ In particular, the deep understanding of the method provided by this work led di
 Numerical inversion is a method that can be used to calibrate any quantity that is observed in the detector, e.g. the jet transverse momentum $p_\text{T}$ or the jet mass $m$.
 We focus here on the case of calibrating the $E_\text{T}$ for sake of concreteness.
 
-In what follows, $X$ will be a random variable representing the particle-jet $E_\text{T}$ and $Y$ will be a random variable representing the reconstructed jet $E_\text{T}$.\footnote{Capital letters represent random variables and lower case letters represent realizations of those random variables, i.e. $X=x$ means the random variable $X$ takes on the (non-random) value $x$.}
+In what follows, $X$ will be a random variable representing the particle-jet $E_\text{T}$ and $Y$ will be a random variable representing the reconstructed jet $E_\text{T}$
+\footnote{Capital letters represent random variables and lower case letters represent realizations of those random variables, i.e. $X=x$ means the random variable $X$ takes on the (non-random) value $x$. Functions that take random variables as arguments use square brackets $[\cdot]$ while functions that take real variables as arguments use curved brackets $(\cdot)$.}
+\footnote{As mentioned in Section~\ref{sec:NI:intro}, $X$ and $Y$ can be known simultaneously in simulation or using calibration or test beam data. For the in-situ correction, $X^\text{data}$ and $X^\text{MC}$ represent the $\pt$ of the reference object in data and in simulation, while $Y^\text{data}$ and $Y^\text{MC}$ represent the $\pt$ of the reconstructed jet, respectively. Then $c(x)\equiv R^\text{data}(x)/R^\text{MC}(x)$ is defined and $Y^\text{data}$ is corrected using $c(x)$ as the analogue of the response function $R(x)$ in numerical inversion as described in Section~\ref{sec:NI:numinversion}. In order to prevent confusion and remain concrete, the simpler case where $Y$ is being corrected to $X$ directly is focused on.}
+.
+As mentioned in Section~\ref{sec:NI:intro}, there is a spread in $Y$ given $X$, and furthermore $Y$ is not equal to $X$ even on average, due to various effects including the non-compensating and non-linear response of the ATLAS calorimeter, pile-up effects, and out-of-cone effects.
 
 Define
 \begin{align}
 \label{eq:fedef}
-f_\text{me}(x)&=\mathbb{E}[Y|X=x]\\\label{eq:fedef2}
-R_\text{me}(x) &= \mathbb{E}\left[\frac{Y}{x}\middle| X=x\right] = \frac{f_\text{me}(x)}{x}. 
+f_\text{me}(x)&\equiv\mathbb{E}[Y|X=x]\\\label{eq:fedef2}
+R_\text{me}(x) &\equiv \mathbb{E}\left[\frac{Y}{x}\middle| X=x\right] = \frac{f_\text{me}(x)}{x}. 
 \end{align}
 
-Where the subscript indicates that we are taking the mean of the stated distribution and `$\mathbb{E}$' stands for {\it expected value} ($=$ average). In practice, sometimes the core of the distribution of $Y|X=x$ is fit with a Gaussian and so the effective measure of central tendency is the mode of the distribution.  Therefore in analogy to Equations~\ref{eq:fedef} and~\ref{eq:fedef2}, we define
+Where $\mathbb{E}[\cdot]$ is defined as taking the expected value (mean) of its argument, and the subscript indicates that the mean is being used to define $f$ and $R$.
+In practice, sometimes the core of the distribution of $Y|X=x$ is fit with a Gaussian and so the effective measure of central tendency is the mode of the distribution.
+Therefore in analogy to Equations~\ref{eq:fedef} and~\ref{eq:fedef2}, we define
 \begin{align}
-f_\text{mo}(x)&=\text{mode}[Y|X=x]\\
-R_\text{mo}(x) &= \text{mode}\left[\frac{Y}{x}\middle| X=x\right] = \frac{f_\text{mo}(x)}{x}. 
+f_\text{mo}(x)&\equiv\text{mode}[Y|X=x]\\
+R_\text{mo}(x) &\equiv \text{mode}\left[\frac{Y}{x}\middle| X=x\right] = \frac{f_\text{mo}(x)}{x}. 
 \end{align}
-We will often drop the subscript of $f$ and $R$ for brevity in the text, when it is clear which definition we are referring to. If not specified, $f$ and $R$ will refer to a definition using a generic definition of central tendency.  For all sensible notions of central tendency, we still have that $R(x) = \frac{f(x)}{x}$.
+Similarly, $\text{mode}[\cdot]$ is defined as taking the mode of its argument, and the subscript indicates the definition of $f$ and $R$.
+We will often drop the subscript of $f$ and $R$ for brevity in the text, when it is clear which definition we are referring to.
+If not specified, $f$ and $R$ will refer to a definition using a generic definition of central tendency.
+For all sensible notions of central tendency, we still have that $R(x) = \frac{f(x)}{x}$.
+The function $R(x)$ is called the {\it response function}.
 
-We will often think of $Y|X=x\sim \mathcal{N}(f(x),\sigma(x))$, where this notation means `$Y$ given $X=x$ is normally distributed with mean $f(x)$ and standard deviation $\sigma(x)$'; however, we will remain general unless stated otherwise.  The function $R(x)$ is called the {\it response function}.
+The \textit{resolution} $\sigma(x)$ measures the spread of $Y$ given $X$ and is defined to be
+\begin{align}
+  \sigma(x)^2 \equiv \sigma[Y|X=x]^2 = \mathbb{E}[Y^2|X=x]-\mathbb{E}[Y|X=x]^2
+\end{align}
+where $\sigma[\cdot]$ is defined as taking the standard deviation of its argument.
 
-The functions $f$ and $R$ should be thought of as parameterizing the response of the detector to jets with known energies $X$.
-In particular, $f$ and $R$ are independent of the underlying spectrum of $X$ - if two samples are examined, one with more jets produced at a lower energy, for example, the values of $f$ and $R$ derived from these two samples should be the same (to within statistical fluctuations).
+It is often useful to think of $Y|X=x\sim \mathcal{N}(f(x),\sigma(x))$; however, the discussion in this Chapter remains general unless stated otherwise.
+Just to be clear, in this case we have that $\mathbb{E}[Y|X=x]=\text{mode}[Y|X=x]=f(x)$, and that $\sigma[Y|X=x] = \sigma(x)$, so the definitions are consistent.
 
-In the calibration we are given a list of ordered pairs $(X,Y)$, from which we can derive $f$ and $R$, and we need to correct $Y$ to be on the same scale as $X$ for each jet in the sample.
+The functions $f$ and $R$ should be thought of as parameterizing the average response of the detector to jets with known energies $X$, and $\sigma$ as parameterizing the spread of the response.
+In particular, $f$, $R$, and $\sigma$ are independent of the underlying spectrum of $X$ - if two samples are examined, one with more jets produced at a lower energy, for example, the values of $f$, $R$, and $\sigma$ derived from these two samples should be the same (to within statistical fluctuations).
+
+In the calibration we are given a list of ordered pairs $(X,Y)$, from which we can derive $f$ and $R$, and we need to correct $Y$ to be on the same scale as $X$ when averaged over the jets in the sample.
 The goal of the calibration therefore is to devise a calibration function $c: Y\mapsto Z=c(Y)$ such that after the calibration, the scale of $Z$ is the same as the scale of $X$.
 There are two ways one might judge that.
 
@@ -84,7 +104,7 @@ On the other hand, the closure $C$ is independent of the prior distribution of $
 Therefore, this is the agreed-upon figure of merit for the calibration.
 We say that the calibration has {\it achieved closure} or simply {\it closes} if, for all $x$,
 \begin{align}
-C = 1.
+  C(x) = 1.
 \end{align}
 
 \subsection{Learning the Prior}
@@ -92,7 +112,7 @@ C = 1.
 One way to define $c$ is to learn a function $M(Y)$ that predicts $X$ given $Y$ directly.
 I.e., define
 \begin{align}
-M_\text{me}(y)&=\mathbb{E}[X|Y=y]
+M_\text{me}(y)&\equiv\mathbb{E}[X|Y=y]
 \end{align}
 and then let $c=M$ so that $Z=M(Y)$.
 
@@ -104,9 +124,9 @@ That being said, $c$ is just some function, even if its definition is prior-depe
 One might think that one could define $c$ on a representative sample, e.g. with a uniform prior, and then apply the calibration function across various samples, achieving closure (Equation~\ref{eqn:NI:closure}).
 
 However, even if the underlying distribution of $X$ is uniform across some range, this method does not necessarily lead to closure.
-In particular, if $f(x)$ is nonlinear or if the resolution $\sigma(Y|X=x)$ is nonconstant, then even with a uniform prior distribution of $X$ there can be large non-closures.
+In particular, if $f(x)$ is nonlinear or if the resolution $\sigma(x)$ is nonconstant, then even with a uniform prior distribution of $X$ there can be large non-closures.
 Since both of these effects are present in the ATLAS jet calibration~\cite{Aad:2011he}, it is expected that these nonclosures will be present if this method were attempted in the ATLAS jet calibration.
-This effect can be seen in Fig.~\ref{fig:NI:learningprior}, using a toy model that approximates the ATLAS nonlinear $f(x)$ (Appendix~\ref{sec:NI:toy_model}) with a constant resolution and another toy model with a linear $f$ but the ATLAS nonconstant resolution $\sigma(Y|X=x)$.
+This effect can be seen in Fig.~\ref{fig:NI:learningprior}, using a toy model that approximates the ATLAS nonlinear $f(x)$ (Appendix~\ref{sec:NI:toy_model}) with a constant resolution and another toy model with a linear $f$ but with a nonconstant resolution $\sigma(x)$ that approximates the resolution in ATLAS.
 
 \begin{figure}[h!]
   \centering 
@@ -118,11 +138,13 @@ This effect can be seen in Fig.~\ref{fig:NI:learningprior}, using a toy model th
   \caption{
     The effects of learning a function $M(Y)$ that predicts $X$ directly given $Y$, with a uniform underlying distribution of $X$ (e).  
     (a,b) A nonlinear $f(x)$ intended to model the ATLAS nonlinear response function, with a constant resolution.
-    (c,d) A nonconstant $\sigma(Y|X=x)$ intended to model the ATLAS nonconstant resolution, with a linear $f(x)$.
+    (c,d) A nonconstant $\sigma(x)$ intended to model the ATLAS nonconstant resolution, with a linear $f(x)$.
     In this figure only $X$ and $Y$ correspond to the truth and reconstructed jet $\pt$, respectively, rather than the $\et$, as will be the case for the remainder of this chapter; however, the principle is exactly the same.
     }
   \label{fig:NI:learningprior}
 \end{figure}
+
+\clearpage
 
 \subsection{Numerical Inversion}
 \label{sec:NI:numinversion}
@@ -147,7 +169,7 @@ Second, we will find that the non-closures can be approximated and understood in
 Third, this is the method used in ATLAS and CMS for jet calibrations, and therefore the method deserves to be studied and its shortcomings understood.
 Finally, later in this chapter (Section~\ref{sec:NI:corrected_numerical_inversion_text}) we will propose a calibration function different from both $f^{-1}$ and $M$ which attempts to achieve better closure than either in a prior-independent way.
 
-We can see now our first result, which will be useful for the rest of this chapter:
+We can see now the first result, which will be useful for the rest of this chapter:
 \vspace{6mm}
 
 \noindent{\it The correction derived from numerical inversion is $Y \mapsto Z = f^{-1}(Y)$.}
@@ -183,7 +205,8 @@ In particular, we expect these approximations to hold in cases with properties s
 \footnote{Note that we do not require that $Y|X=x$ is exactly Gaussian, only that it is approximately Gaussian, which is true for a wide range of energies and jet reconstruction algorithms at ATLAS and CMS. In particular, there are non-negligible (but still often small) asymmetries at low and high $E_\text{T}$ at ATLAS and CMS~\cite{Aad:2011he,Chatrchyan:2011ds,Khachatryan:2016kdb}. In any case, even if $Y|X=x$ {\it is} Gaussian, $Z|X=x$ is in general {\it not} Gaussian, for non-linear response functions (Appendix~\ref{sec:NI:lemma}).}
 Some of the derivations are illustrative and are included in the main body of the text; however, some derivations are moved to the Appendix (\ref{ch:NI_app}) in order to make the text more readable and highlight the main results.
 
-Finally, in the rest of this chapter, we write $\rho_{Y|X}(y|x)$ to represent the probability distribution of $Y$ given $X=x$, and $\rho_{Z|X}(z|x)$ to be the probability distribution of $Z$ given $X=x$. A standard fact about the probability distribution from changing variables is that
+Finally, in the rest of this chapter, we write $\rho_P(p)$ to represent the probability distribution of a random variable $P$, so that $\rho_{Y|X}(y|x)$ represents the probability distribution of $Y$ given $X=x$, and $\rho_{Z|X}(z|x)$ is the probability distribution of $Z$ given $X=x$.
+A standard fact about the probability distribution from changing variables is that
 
 \begin{align}
 \rho_{Z|X}(z|x) = f'(z)\rho_{Y|X}(f(z)|x).
@@ -206,7 +229,7 @@ In the following section only, for brevity, we will let $f$ be $f_\text{me}$ and
 We can write the closure (Equation~\ref{eqn:NI:closure}) as
 
 \begin{align}
-C = \mathbb{E}\left[\frac{Z}{x}\middle| X=x\right] &=\frac{1}{x} \int dy \rho_{Y|X}(y|x) f^{-1}(y).
+  C(x) = \mathbb{E}\left[\frac{Z}{x}\middle| X=x\right] &=\frac{1}{x} \int dy \rho_{Y|X}(y|x) f^{-1}(y).
 \label{eqn:NI:closuredef}
 \end{align}
 
@@ -221,7 +244,7 @@ We find that for many functions $f$, numerical inversion does not close. This is
 \noindent {\bf Proof.}
 Let $f$ be linear, $f(x) = a(x+b)$. Then\footnote{We have $a>0$ from the assumption that $f'(x)>0$.} $f^{-1}(y) = \frac{y}{a}-b$. We can see that we necessarily have closure as Equation~\ref{eqn:NI:closuredef} can be written
 \begin{align}
-C &=\frac{1}{x} \int dy \rho_{Y|X}(y|x) \left(\frac{y}{a}-b\right)\nonumber\\
+  C(x) &=\frac{1}{x} \int dy \rho_{Y|X}(y|x) \left(\frac{y}{a}-b\right)\nonumber\\
 &=\frac{1}{x} \left(\frac{1}{a}\mathbb{E}\left[Y\middle| X=x\right]-b\right)\nonumber\\
 &=\frac{1}{x} \left(\frac{1}{a}f(x)-b\right)\nonumber\\
 &=1.
@@ -236,7 +259,7 @@ Now let $f$ be nonlinear, and so therefore $f^{-1}$ is also nonlinear. We note t
 \end{align}
 We specify the weak conditions that $\sigma(x) >0$ (which is always true as long as $\rho_{Y|X}$ is not a delta function), and that $\gamma_1(x)=0$ (which is true if $\rho_{Y|X}$ is symmetric).  Then, the closure (Equation~\ref{eqn:NI:closuredef}) can be written
 \begin{align}
-C &=\frac{1}{x} \int dy \rho_{Y|X}(y|x) \left(cy^3\right)\nonumber\\
+  C(x) &=\frac{1}{x} \int dy \rho_{Y|X}(y|x) \left(cy^3\right)\nonumber\\
 &=\frac{c}{x} \left(\mathbb{E}\left[Y^3\middle| X=x\right]\right).
 \end{align}
 With $\gamma_1(x)=0$, we have that
@@ -247,14 +270,14 @@ With $\gamma_1(x)=0$, we have that
 \end{align}
 Then we see we do not have closure, as
 \begin{align}
-C &=\frac{c}{x} \left(\mathbb{E}\left[Y^3\middle| X=x\right]\right)\nonumber\\
+  C(x) &=\frac{c}{x} \left(\mathbb{E}\left[Y^3\middle| X=x\right]\right)\nonumber\\
 &=\frac{c}{x} \left(3\sigma(x)^2\left(\frac{x}{c}\right)^{\frac{1}{3}}+\frac{x}{c}\right)\nonumber\\
 &= 1 + 3\sigma(x)^2\left(\frac{x}{c}\right)^{-\frac{2}{3}}\nonumber\\
 &>1. \hspace{1 cm}\Box
 \end{align}
 Although the counterexample provided here only applies to a specific choice of $f(x)$ and $\rho_{Y|X}(y|x)$, we have reason to believe that closure is not achieved for non-linear $f$ in the vast majority of cases, as can be seen in more detail in Appendix~\ref{sec:NI:mean_nonclosure}. In addition, we can Taylor expand the closure $C$ to derive an equation for the first non-closure term:
 \begin{align}
-C \approx 1-\frac{1}{2}\frac{f''(x)}{f'(x)^3}\frac{\sigma(x)^2}{x},
+  C(x) \approx 1-\frac{1}{2}\frac{f''(x)}{f'(x)^3}\frac{\sigma(x)^2}{x},
 \label{eqn:NI:closureseries_text}
 \end{align}
 the derivation of which can be found in Appendix~\ref{sec:NI:mean_nonclosure}.
@@ -269,16 +292,18 @@ Figure~\ref{fig:NI:mean_closure} shows the inherent non-closure in numerical inv
 \label{fig:NI:mean_closure}
 \end{figure}
 
+\clearpage
+
 \subsubsection{Calibrated Resolution}
 We often care about how well we have resolved the transverse energy of the jets, which we quantify by examining the width of the calibrated resolution $Z$.
 
-The final calibrated resolution of the reconstructed jets is defined to be the standard deviation of the $Z$ distribution, with $X=x$, which is given by
+The calibrated resolution of the reconstructed jets is defined to be the standard deviation of the $Z$ distribution, with $X=x$, which is given by
 \begin{align}
-\hat{\sigma}(x)^2\equiv\sigma\left(Z|X=x\right)^2 \equiv \mathbb{E}\left[Z^2\middle| X=x\right]-\mathbb{E}\left[Z\middle| X=x\right]^2,
+\hat{\sigma}(x)^2\equiv\sigma\left[Z|X=x\right]^2 = \mathbb{E}\left[Z^2\middle| X=x\right]-\mathbb{E}\left[Z\middle| X=x\right]^2,
 \end{align}
-and the fractional resolution is just given by $\sigma\left(\frac{Z}{x}|X=x\right)$.  The fractional resolution, to first order in the Taylor series, is given by
+and the fractional resolution is just given by $\sigma\left[\frac{Z}{x}|X=x\right]$.  The fractional resolution, to first order in the Taylor series, is given by
 \begin{align}
-\sigma\left(\frac{Z}{x}|X=x\right)=\frac{1}{x}\hat{\sigma}(x) \approx \frac{1}{x}\frac{\sigma(x)}{f'(x)},
+\sigma\left[\frac{Z}{x}|X=x\right]=\frac{1}{x}\hat{\sigma}(x) \approx \frac{1}{x}\frac{\sigma(x)}{f'(x)},
 \label{eqn:NI:resolutionseries_text}
 \end{align}
 the derivation of which can be found in Appendix~\ref{sec:NI:calibrated_resolution_calculation}.  Note that $f'(x)$ is \emph{not} the response $R(x)=\frac{f(x)}{x}$. In particular, $f'(x)=R(x)+R'(x)x$, so $f'(x)\ne R(x)$ unless $R'(x)=0$, or equivalently $f(x)= kx$ for some constant $k$ (which is not the case at ATLAS nor at CMS). Figure~\ref{fig:NI:mean_resolution} verifies Equation~\ref{eqn:NI:resolutionseries_text} and compares it to the method of dividing the width of the distribution by $R$, which is a standard diagnostic technique when a full calibration is not applied.
@@ -291,15 +316,17 @@ the derivation of which can be found in Appendix~\ref{sec:NI:calibrated_resoluti
 \label{fig:NI:mean_resolution}
 \end{figure}
 
+\clearpage
+
 \subsection{Mode}
 \label{sec:NI:mode}
 In the following section only, for brevity, we will let $f$ be $f_\text{mo}$ and $C$ be $C_\text{mo}$.  The distribution $\rho_{Y|X}(y|x)$ is usually unimodal and Gaussian fits to the ``core'' of this distribution are essentially picking out the mode of the distribution.  Therefore, the results of this section are a good approximation to what is often used in practice. We note that in the case that the underlying distribution is multimodal, it is not clear how to unambiguously define the mode of the distribution, and so the results of this section cannot be applied naively.
 
 \subsubsection{Closure}
 \label{sec:NI:modeclosuresection}
-Assuming that the probability distribution function is unimodal, the mode is the point at which the first derivative of the probability distribution function is 0:
+Assuming that the probability distribution function of a random variable $P$ is unimodal, the mode is the point at which the first derivative of the probability distribution function is 0:
 \begin{align}
-f(x) = y^* \text{ s.t. } \rho'_Y(y^*) = 0.
+  \text{mode}[P] \equiv p^* \text{ s.t. } \rho'_P(p^*) = 0.
 \label{eqn:NI:modedef}
 \end{align}
 Then we can write the closure condition (Equation~\ref{eqn:NI:closure}) as
@@ -338,7 +365,7 @@ where $\rho_Y(y^*)>0$ since $y^*$ is the mode of the distribution $\rho_Y$. Then
 
 \noindent The closure when using the mode to calibrate, to first order in the Taylor series, is given by
 \begin{align}
-C \approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x},
+  C(x) \approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x},
 \label{eqn:NI:closure_mode_text}
 \end{align}
 where $\tilde{\sigma}(x)$ is the width of a Gaussian fitted to just the area near the peak of the function $\rho_{Y|X}(y|x)$ (defined precisely in the next section). The derivation of Equation~\ref{eqn:NI:closure_mode_text} can be found in Appendix~\ref{sec:NI:calibrated_mode_calculation}.
@@ -353,23 +380,28 @@ Figure~\ref{fig:NI:mode_closure} shows the inherent non-closure in numerical inv
 \label{fig:NI:mode_closure}
 \end{figure}
 
+\clearpage
+
 \subsubsection{Resolution}
-Let $z^*(x)$ be the mode of the distribution $Z|X=x$, which is not necessarily equal to $x$ given the above result. It is often the case at ATLAS and CMS that a Gaussian is fit to the distributions $\rho_{Y|X}(y|x)$ and $\rho_{Z|X}(z|x)$ only in the vicinity of the modes $f(x)$ and $z^*(x)$, respectively, since it is assumed that the distributions have a Gaussian core but non-Gaussian tails. The width of the Gaussian core found in this fit is then used as a measure of the resolution of the distribution.  We thus define a ``trimmed resolution'' for a distribution $P$ with probability distribution function $\rho_P(p)$ about its mode $m$, which is valid if $P\sim\mathcal{N}(m,\tilde{\sigma})$ for $p$ near $m$:
+Let $z^*(x)$ be the mode of the distribution $Z|X=x$, which is not necessarily equal to $x$ given the above result.
+It is often the case at ATLAS and CMS that a Gaussian is fit to the distributions $\rho_{Y|X}(y|x)$ and $\rho_{Z|X}(z|x)$ only in the vicinity of the modes $f(x)$ and $z^*(x)$, respectively, since it is assumed that the distributions have a Gaussian core but non-Gaussian tails.
+The width of the Gaussian core found in this fit is then used as a measure of the resolution of the distribution.
+We thus define a ``trimmed resolution'' for a distribution $P$ about its mode $m$, which is valid if $P\sim\mathcal{N}(m,\tilde{\sigma})$ for $p$ near $m$:
 \begin{align}
 \label{eq:tildesigma}
-\tilde{\sigma}(P)^2 \equiv -\frac{\rho_P(m)}{\rho_P''(m)}.
+\tilde{\sigma}[P]^2 \equiv -\frac{\rho_P(m)}{\rho_P''(m)}.
 \end{align}
 
 \noindent The definition in Equation~\ref{eq:tildesigma} is chosen because it reduces to the usual variance for a Gaussian distribution.  For the distributions $\rho_{Y|X}(y|x)$ and $\rho_{Z|X}(z|x)$, we thus have the trimmed resolutions
 \begin{align}
-\tilde{\sigma}(x)^2\equiv\tilde{\sigma}\left(Y|X=x\right)^2 = -\frac{\rho_Y(f(x))}{\rho_Y''(f(x))} \\
-\hat{\tilde{\sigma}}(x)^2\equiv\tilde{\sigma}\left(Z|X=x\right)^2 = -\frac{\rho_Z(z^*(x))}{\rho_Z''(z^*(x))}.
+\tilde{\sigma}(x)^2\equiv\tilde{\sigma}\left[Y|X=x\right]^2 = -\frac{\rho_Y(f(x))}{\rho_Y''(f(x))} \\
+\hat{\tilde{\sigma}}(x)^2\equiv\tilde{\sigma}\left[Z|X=x\right]^2 = -\frac{\rho_Z(z^*(x))}{\rho_Z''(z^*(x))}.
 \label{mode_resolution_def}
 \end{align}
 
-\noindent The calibrated fractional trimmed resolution $\tilde{\sigma}\left(\frac{Z}{x}|X=x\right)$, to first order in the Taylor series, is given by
+\noindent The calibrated fractional trimmed resolution $\tilde{\sigma}\left[\frac{Z}{x}|X=x\right]$, to first order in the Taylor series, is given by
 \begin{align}
-\tilde{\sigma}\left(\frac{Z}{x}|X=x\right) = \frac{1}{x}\hat{\tilde{\sigma}}(x) \approx \frac{1}{x}\frac{\tilde{\sigma}(x)}{f'(x)},
+\tilde{\sigma}\left[\frac{Z}{x}|X=x\right] = \frac{1}{x}\hat{\tilde{\sigma}}(x) \approx \frac{1}{x}\frac{\tilde{\sigma}(x)}{f'(x)},
 \label{eqn:NI:resolutionmode_text}
 \end{align}
 the derivation of which can be found in Appendix~\ref{sec:NI:mode_resolution_calculation}.
@@ -382,12 +414,14 @@ f_\text{med}(x)&=\text{median}[Y|X=x]\\
 R_\text{med}(x) &= \text{median}\left[\frac{Y}{x}\middle| X=x\right] = \frac{f_\text{med}(x)}{x}. 
 \end{align}
 And define $C_\text{med}$ analogously.  In the following section only, for brevity, we will let $f$ be $f_\text{med}$ and $C$ be $C_\text{med}$.
+
 \subsubsection{Closure}
 \label{sec:NI:medianclosuresection}
-The median of the distribution is the point at which 50\% of the distribution is above and 50\% is below:
+The median of the distribution of a random variable $P$ is the point at which 50\% of the distribution is above and 50\% is below:
 \begin{align}
-f(x) = y^* \text{ s.t. } \int_{-\infty}^{y^*} \rho_Y(y) dy = 0.5.
+  \text{median}[P] \equiv p^* \text{ s.t. } \int_{-\infty}^{p^*} \rho_P(p) dp = 0.5.
 \end{align}
+
 Then the closure condition (Equation~\ref{eqn:NI:closure}) can be written
 \begin{align}
 \text{median}\left[\frac{Z}{x}\middle| X=x\right] = 1\nonumber\\
@@ -420,7 +454,7 @@ Then with $u = f(z), du = f'(z) dz$ we have
 \end{align}
 
 \subsubsection{Resolution}
-A natural definition of resolution when using the median to calibrate jets is the 68\% interquantile range, defined as follows for a distribution $P$ with probability density function $\rho_P(p)$:
+A natural definition of resolution when using the median to calibrate jets is the 68\% interquantile range, defined as follows for a random variable $P$:
 
 \noindent With $I_P^-$ and $I_P^+$ defined by
 \begin{align}
@@ -429,20 +463,20 @@ A natural definition of resolution when using the median to calibrate jets is th
 \end{align}
 the 68\% interquantile range is defined as
 \begin{align}
-\sigma_\text{IQR}(P) \equiv \frac{1}{2}\left(I_P^+-I_P^-\right).
+\sigma_\text{IQR}[P] \equiv \frac{1}{2}\left(I_P^+-I_P^-\right).
 \end{align}
-Where $\Phi(x)=\frac{1}{2}\text{erfc}\left(\frac{-x}{\sqrt{2}}\right)$ is the cumulative distribution function of the normal distribution. The definition is designed so that if $P\sim\mathcal{N}(\mu,\sigma)$ then $\sigma_\text{IQR}(P)=\sigma$. The quantity $\sigma_\text{IQR}$ is called the ``68\% interquantile range'' because $\Phi(+1)-\Phi(-1) \approx 0.68$.  For the distributions $Y|X=x$ and $Z|X=x$, define:
+Where $\Phi(x)=\frac{1}{2}\text{erfc}\left(\frac{-x}{\sqrt{2}}\right)$ is the cumulative distribution function of the normal distribution. The definition is designed so that if $P\sim\mathcal{N}(\mu,\sigma)$ then $\sigma_\text{IQR}[P]=\sigma$. The quantity $\sigma_\text{IQR}$ is called the ``68\% interquantile range'' because $\Phi(+1)-\Phi(-1) \approx 0.68$.  For the distributions $Y|X=x$ and $Z|X=x$, define:
 
 \begin{align}
-\sigma_\text{IQR}(x) = \sigma_\text{IQR}(Y|X=x)\\
-\hat{\sigma}_\text{IQR}(x) = \sigma_\text{IQR}(Z|X=x).
+\sigma_\text{IQR}(x) \equiv \sigma_\text{IQR}[Y|X=x]\\
+\hat{\sigma}_\text{IQR}(x) \equiv \sigma_\text{IQR}[Z|X=x].
 \end{align}
 
-\noindent Then we can see the following result for the calibrated resolution $\sigma_\text{IQR}(\frac{Z}{x}|X=x)$:
+\noindent Then we can see the following result for the calibrated resolution $\sigma_\text{IQR}[\frac{Z}{x}|X=x]$:
 
 \vspace{5mm}
 
-\noindent {\it The 68\% IQR of the calibrated response distribution is given by $\sigma_\text{IQR}(\frac{Z}{x}|X=x) = \frac{1}{2x}\left(f^{-1}(I_Y^+)-f^{-1}(I_Y^-)\right)$.}
+\noindent {\it The 68\% IQR of the calibrated response distribution is given by $\sigma_\text{IQR}[\frac{Z}{x}|X=x] = \frac{1}{2x}\left(f^{-1}(I_Y^+)-f^{-1}(I_Y^-)\right)$.}
 
 \vspace{5mm}
 
@@ -467,12 +501,12 @@ so that
 \end{align}
 Therefore,
 \begin{align}
-\sigma_\text{IQR}(Z|X=x) &= \frac{1}{2}\left(I_Z^+-I_Z^-\right)\nonumber\\
+\sigma_\text{IQR}[Z|X=x] &= \frac{1}{2}\left(I_Z^+-I_Z^-\right)\nonumber\\
 &=\frac{1}{2}\left(f^{-1}(I_Y^+)-f^{-1}(I_Y^-)\right),
 \end{align}
 and
 \begin{align}
-\sigma_\text{IQR}\left(\frac{Z}{x}|X=x\right)=\frac{1}{2x}\left(f^{-1}(I_Y^+)-f^{-1}(I_Y^-)\right).\hspace{1 cm}\Box
+\sigma_\text{IQR}\left[\frac{Z}{x}|X=x\right]=\frac{1}{2x}\left(f^{-1}(I_Y^+)-f^{-1}(I_Y^-)\right).\hspace{1 cm}\Box
 \label{eqn:NI:resolutionmedian_text}
 \end{align}
 %-------------------------------------------------------------------------------
@@ -563,15 +597,7 @@ Then the parameters $a_1,...,a_n$ can be chosen such that the closure is as clos
 \label{fig:NI:mode_closure_bigs}
 \end{figure}
 
-%-------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
+\clearpage
 
 %-------------------------------------------------------------------------------
 \section{Conclusion}
@@ -594,7 +620,7 @@ However, there are good reasons to use the mode instead of the median, and we do
 
 An approximation for the the calibrated jet resolution is provided which can be used to estimate the resolution before actually doing the calibration.
 Previously, a common approach to do this estimation was to divide the uncalibrated resolution by the uncalibrated response, but this approach is shown to be inaccurate.
-Instead, our approximation uses the derivative of the uncalibrated response, and is shown to be more accurate.
+Instead, the approximation derived here uses the derivative of the uncalibrated response, and is shown to be more accurate.
 
 Given the inherent nonclosure present in numerical inversion, the question of whether numerical inversion can be improved is answered in a couple different ways. 
 First, simply iterating numerical inversion is shown for the first time to not always help.

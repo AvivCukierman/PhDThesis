@@ -43,7 +43,7 @@ f^{-1}(y) &= \sum_{n=0}^\infty \frac{1}{n!}\left(f^{-1}\right)^{(n)}\left(f(x)\r
 \end{align}
 where $g_n(x) \equiv (f^{-1})^{(n)}(f(x))$ means the $n$th derivative of $f^{-1}(y)$, evaluated at $y=f(x)$. Plugging this into Equation~\ref{eqn:NI:closuredef}, we have
 \begin{align}
-C &= \frac{1}{x}\int dy \rho_{Y|X}(y|x) f^{-1}(y)\nonumber\\
+  C(x) &= \frac{1}{x}\int dy \rho_{Y|X}(y|x) f^{-1}(y)\nonumber\\
 &=\sum_{n=0}^\infty \frac{1}{n!}\frac{g_n(x)}{x}\int dy \rho_{Y|X}(y|x) \left(y-f(x)\right)^n\nonumber\\
 &=\sum_{n=0}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x),
 \end{align}
@@ -51,36 +51,36 @@ where $\mu_n(x)$ are the standard central moments $\mu_n(x) = \mathbb{E}\left[\l
 
 The first few central moments are independent of the distribution $\rho_{Y|X}$.  In particular, $\mu_0 = 1$ is the normalization, and $\mu_1 = 0$. Writing these terms out, we have
 \begin{align}
-C =\frac{g_0(x)}{x}+\sum_{n=2}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).
+  C(x) =\frac{g_0(x)}{x}+\sum_{n=2}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).
 \end{align}
 Noting that $g_0(x) = f^{-1}(f(x)) = x$,
 \begin{align}
-C &=1+\sum_{n=2}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).\label{eqn:NI:closureseries}
+  C(x) &=1+\sum_{n=2}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).\label{eqn:NI:closureseries}
 \end{align}
 
 \noindent We see that, if $f$ is linear, then so is $f^{-1}$, and so $g_n = 0$ for all $n\ge 2$. Then Equation~\ref{eqn:NI:closureseries} reduces to $C=1$, and numerical inversion closes, as was found in Equation~\ref{eqn:NI:closure_linear_proof}.
 
 It will be instructive to expand out the first few terms of Equation~\ref{eqn:NI:closureseries}. We note that, by definition, $\mu_2(x) = \sigma(x)^2$ is the variance, and $\mu_3(x) = \sigma(x)^3\gamma_1$ defines the skew $\gamma_1$. Then we have
 \begin{align}
-C &=1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2+\frac{1}{6}\frac{g_3(x)}{x}\sigma(x)^3\gamma_1+\sum_{n=4}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).\label{eqn:NI:closureseriesexpand}
+  C(x) &=1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2+\frac{1}{6}\frac{g_3(x)}{x}\sigma(x)^3\gamma_1+\sum_{n=4}^\infty \frac{1}{n!}\frac{g_n(x)}{x} \mu_n(x).\label{eqn:NI:closureseriesexpand}
 \end{align}
 
 Suppose we are given an arbitrary distribution specified by its moments $\mu_n(x)$. Then the requirement that closure is satisfied in the form of the right hand side of Equation~\ref{eqn:NI:closureseries} converging to $1$ exactly imposes strict constraints on the function $g(x)$, so that only for a highly specific choice of $g$ and therefore $f$ is closure achieved. Thus in general we do not expect closure to be satisfied for an arbitrary initial distribution $\rho_{Y|X}$.
 
 We note that, since we expect the derivatives $g_n(x)$ and the moments $\mu_n(x)$ to grow considerably slower than $n!$ for functions $f$ and distributions $\rho_{Y|X}$ encountered at the LHC, we expect Equation~\ref{eqn:NI:closureseries} to converge, and Equation~\ref{eqn:NI:closureseriesexpand} gives the dominant contributions to the non-closure, i.e.
 \begin{align}
-C \approx 1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2+\frac{1}{6}\frac{g_3(x)}{x}\sigma(x)^3\gamma_1.
+  C(x) \approx 1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2+\frac{1}{6}\frac{g_3(x)}{x}\sigma(x)^3\gamma_1.
 \end{align}
 
 If $\rho_{Y|X}$ is symmetric or near-symmetric, or if the third derivative of $g$ is small, such that $g_3(x)\sigma(x)\gamma_1 \ll g_2(x)$, then the dominant contribution to the non-closure is just
 \begin{align}
-C \approx 1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2.
+  C(x) \approx 1+\frac{1}{2}\frac{g_2(x)}{x}\sigma(x)^2.
 \end{align}
 
 \noindent We further note that
 \begin{align}
 g_2(x) &= (f^{-1})^{(2)}(f(x)) = -\frac{f''(x)}{f'(x)^3}\nonumber\\
-\rightarrow C &\approx 1-\frac{1}{2}\frac{f''(x)}{f'(x)^3}\frac{\sigma(x)^2}{x}.\hspace{1 cm}\Box
+  \rightarrow C(x) &\approx 1-\frac{1}{2}\frac{f''(x)}{f'(x)^3}\frac{\sigma(x)^2}{x}.\hspace{1 cm}\Box
 \label{eqn:NI:closureseriesgaussian}
 \end{align}
 
@@ -106,14 +106,14 @@ so that
 Out to one derivative we also have that (as derived in the previous section)
 \begin{align}
 \mathbb{E}\left[Z\middle| X=x\right]^2 &\approx g_0(x)^2\nonumber\\
-\rightarrow \sigma\left(Z|X=x\right)^2 &= \mathbb{E}\left[Z^2\middle| X=x\right]-\mathbb{E}\left[Z\middle| X=x\right]^2\nonumber\\
+\rightarrow \sigma\left[Z|X=x\right]^2 &= \mathbb{E}\left[Z^2\middle| X=x\right]-\mathbb{E}\left[Z\middle| X=x\right]^2\nonumber\\
 &\approx g_1(x)^2\sigma(x)^2.
 \end{align}
 Then,
 \begin{align}
 g_1(x) = (f^{-1})'(f(x)) &= \frac{1}{f'(x)}\nonumber\\
-\rightarrow \sigma\left(Z|X=x\right)^2 &\approx \frac{\sigma(x)^2}{f'(x)^2}\nonumber\\
-\rightarrow \hat{\sigma}(x)=\sigma\left(Z|X=x\right) &\approx \frac{\sigma(x)}{f'(x)}. \hspace{1 cm} \Box \label{eqn:NI:resolution}
+\rightarrow \sigma\left[Z|X=x\right]^2 &\approx \frac{\sigma(x)^2}{f'(x)^2}\nonumber\\
+\rightarrow \hat{\sigma}(x)=\sigma\left[Z|X=x\right] &\approx \frac{\sigma(x)}{f'(x)}. \hspace{1 cm} \Box \label{eqn:NI:resolution}
 \end{align}
 
 \newpage
@@ -151,7 +151,7 @@ Then the closure condition Equation~\ref{eqn:NI:modeclosuredef} gives
 \end{align}
 i.e. the mode of $\rho_Z(z)$ occurs at $z=z^*$.  Then the closure is
 \begin{align}
-C &= \frac{z^*}{x}\nonumber\\
+  C(x) &= \frac{z^*}{x}\nonumber\\
 &\approx 1-\frac{1}{x}\frac{f''(x)\rho_Y(f(x))}{f'''(x)\rho_Y(f(x))+f'(x)^3\rho_Y''(f(x))}\nonumber\\
 &=1-\frac{1}{x}\frac{f''(x)\frac{\rho_Y(f(x))}{\rho_Y''(f(x))}}{f'''(x)\frac{\rho_Y(f(x))}{\rho_Y''(f(x))}+f'(x)^3}\nonumber\\
 &=1+\frac{f''(x)}{f'(x)^3-\tilde{\sigma}(x)^2f'''(x)}\frac{\tilde{\sigma}(x)^2}{x}.
@@ -160,7 +160,7 @@ C &= \frac{z^*}{x}\nonumber\\
 
 In practice we find that for typical response functions, higher derivatives of $f$ tend to vanish. A comparison between the two terms in the denominator of Equation~\ref{eqn:NI:mode_closure_df3} can be found in Figure~\ref{fig:NI:d_comp} for the toy model considered in Appendix~\ref{sec:NI:toy_model}; we find that $f'(x)^3 \gg \tilde{\sigma}(x)^2f'''(x)$. Thus, in practice we recommend the approximation
 \begin{align}
-C\approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}.\hspace{1 cm} \Box
+  C(x)\approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}.\hspace{1 cm} \Box
 \label{eqn:NI:mode_closure_simple}
 \end{align}
 The agreement between the actual and estimated closure in Figure~\ref{fig:NI:mode_closure} also confirms this approximation. Thus, in the body of this text Equation~\ref{eqn:NI:mode_closure_simple} is presented as the result, even though Equation~\ref{eqn:NI:mode_closure_df3} is technically more precise.
