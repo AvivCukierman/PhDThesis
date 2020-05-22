@@ -18,7 +18,7 @@ Both of the main searches in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref
 As mentioned in their respective chapters, these searches would both benefit from improved kinematic resolution of the jets involved - in Chapter~\ref{ch:HBSM}, the small-R jet energy resolution, and in Chapter~\ref{ch:CWoLa}, the large-R jet energy and mass resolution.
 The detector is not perfect, and so the observed quantities observed from the detector do not match exactly to the pre-detector, or particle-level, quantities;
 this can be confirmed either by using simulations of particles passing through the detector or by using calibration or test beam data where the pre-detector quantities are well-known.
-Because of this, all of these jet observables are calibrated from their detector-level quantities in order to both set the scale at the same level as at particle-level and to reduce the spread of the difference between the calibrated and the particle-level quantities (Section~\ref{sec:ATLAS:jet_calibration}).
+Because of this, all of these jet observables are calibrated from their detector-level quantities in order to both set the scale at the same level as at particle-level and to reduce the spread of the difference between the calibrated and the particle-level quantities~\cite{Schwartzman:2015ada} (Section~\ref{sec:ATLAS:jet_calibration}).
 These calibration procedures at ATLAS~\cite{PERF-2016-04,Aad:2011he} and also at CMS~\cite{Chatrchyan:2011ds,Khachatryan:2016kdb} involve several steps to correct for multiple nearly simultaneous $pp$ collisions (pile-up), the non-linear detector response, the $\eta$-dependence of the jet response, flavor-dependence of the jet response, and residual data/simulation differences in the jet response.
 For all but the last step, simulations are used to determine the particle-level quantity.
 The final step, which is applied only to jets in data (\textit{in-situ} correction), corrects for differences between the detector-level quantities in data and simulation by comparing the relative response to a well-measured reference object in the same event\footnote{This step occurs after the jets in simulation have already been corrected to be on the same scale as at particle-level. Since it is much more expensive to know particle-level quantities at data level (with calibration or test beam data), this relative ratio method is used to correct detector-level jets in data to the detector-level simulation jets, and therefore in turn to the particle-level.}. 
@@ -73,8 +73,21 @@ The \textit{resolution} $\sigma(x)$ measures the spread of $Y$ given $X$ and is 
 \end{align}
 where $\sigma[\cdot]$ is defined as taking the standard deviation of its argument.
 
+The resolution is sometimes broken up into terms based on the dependence on $x$~\cite{PERF-2011-04,Aaboud:2019ibw}\footnote{Actually, this breakdown is usually applied to the resolution after calibration, but the intuition is the same for the uncalibrated resolution.}:
+\begin{align}
+  \sigma(x) \sim N \oplus S\cdot\sqrt{x} \oplus C\cdot x
+\end{align}
+where $N$ is the \textit{noise term}, $S$ is the \textit{stochastic term}, and $C$ is the \textit{constant term}.
+The noise term corresponds to sources of variance independent of the jet energy; for example, pile-up is a source of noise independent of the true jet energy\footnote{Since the detector response is non-linear, this is only true to first order.}.
+The stochastic term corresponds to Poisson sources of noise; in particular, the number of particles produced by a jet passing the noise thresholds is roughly Poisson distributed with mean scaling with $x$.    
+The constant term corresponds to sources of noise that are a constant fraction of $x$, e.g. energy lost in passive material in the detector.
+As the scalings suggest, the $N$ term dominates for lower energy jets, the $C$ term dominates for higher energy jets, and the $S$ term dominates in the intermediate regions; however, in practice it is difficult to unequivocally disentangle their contributions.
+The results presented in this Chapter are general and do not depend on this breakdown.
+However, the toy model used to present results (Appendix~\ref{sec:NI:toy_model}) focuses on lower energy jets and high pile-up conditions, as might be expected at the high-luminosity LHC (Section~\ref{sec:LHC:data}), where the $N$ term dominates, with $\sigma'(x)=0$.
+
 It is often useful to think of $Y|X=x\sim \mathcal{N}(f(x),\sigma(x))$; however, the discussion in this Chapter remains general unless stated otherwise.
 Just to be clear, in this case we have that $\mathbb{E}[Y|X=x]=\text{mode}[Y|X=x]=f(x)$, and that $\sigma[Y|X=x] = \sigma(x)$, so the definitions are consistent.
+
 
 The functions $f$ and $R$ should be thought of as parameterizing the average response of the detector to jets with known energies $X$, and $\sigma$ as parameterizing the spread of the response.
 In particular, $f$, $R$, and $\sigma$ are independent of the underlying spectrum of $X$ - if two samples are examined, one with more jets produced at a lower energy, for example, the values of $f$, $R$, and $\sigma$ derived from these two samples should be the same (to within statistical fluctuations).
@@ -97,7 +110,7 @@ with $C_\text{mo}$ and $C^p_\text{mo}(z)$ defined analogously.
 The symbols $C$ and $C^p$ will denote the closure for a generic notion of central tendency.
 
 As the name suggests, the prior-dependent closure depends on the prior distribution of $X$ in the sample.
-A sample with more jets produced at lower energies, for example, will necessarily have a lower prior-dependent closure than another sample with more jets produced at higher energies.
+A sample with more jets produced at lower energies, for example, will tend to be biased towards a lower prior-dependent closure than another sample with more jets produced at higher energies.
 As mentioned in the motivation, at ATLAS there are samples targeting different physics regimes with wildly different prior distributions of true energies, so the prior-dependent closure cannot be relied on to be useful in physics analysis.
 
 On the other hand, the closure $C$ is independent of the prior distribution of $X$, given $c$.
@@ -157,17 +170,17 @@ Instead, the ATLAS calibration uses numerical inversion. Formally, numerical inv
 \end{enumerate}
 
 The intuition for step 2 is that for a given value $y$ drawn from the distribution $Y|X=x$, $f^{-1}(y)$ is an estimate for $x$ and then $R(f^{-1}(y))$ is an estimate for the response at the value of $x$ that gives rise to $Y$.
-Let $p(x)$ be the prior probability density function of $X=E_\text{T}$.
-Since $f$ is defined conditioning on a given value of $X$, $f$ is by construction independent of $p(x)$.
-Therefore, this calibration is independent of $p(x)$, since $f$ and thus $f^{-1}$ do not depend on $p(x)$.
-This is what we mean when we say that numerical inversion is independent of the underlying spectrum.
+Let $\rho_X(x)$ be the prior probability density function of $X=E_\text{T}$.
+Since $f$ is defined conditioning on a given value of $X$, $f$ is by construction independent of $\rho_X(x)$.
+Therefore, this calibration is independent of $\rho_X(x)$, since $f$ and thus $f^{-1}$ do not depend on $\rho_X(x)$.
+This is what is meant when it is said that numerical inversion is independent of the underlying spectrum.
 
 The question of whether numerical inversion achieves closure will be discussed in detail in the following sections; in particular, under certain conditions it is found that numerical inversion does \emph{not} achieve closure.
-This raises the question of whether using $f^{-1}$ instead of $M$ is indeed a better method of calibration.
+This raises the question of whether using $f^{-1}$ instead of $M$ is indeed a better method of calibration, under the criterion of achieving closure in a prior-independent way.
 The first thing to note is that at least the definition of the calibration function is independent of the prior distribution of $X$, unlike the definition of $M$.
-Second, we will find that the non-closures can be approximated and understood in terms of properties of the distributions of $Y|X$, whereas the non-closures present when using $M$ to calibrate would depend necessarily on the prior distribution $p(x)$ used to learn $M$.
+Second, it will be found that the non-closures can be approximated and understood in terms of properties of the distributions of $Y|X$, whereas the non-closures present when using $M$ to calibrate would depend necessarily on the prior distribution $\rho_X(x)$ used to learn $M$.
 Third, this is the method used in ATLAS and CMS for jet calibrations, and therefore the method deserves to be studied and its shortcomings understood.
-Finally, later in this chapter (Section~\ref{sec:NI:corrected_numerical_inversion_text}) we will propose a calibration function different from both $f^{-1}$ and $M$ which attempts to achieve better closure than either in a prior-independent way.
+Finally, later in this chapter (Section~\ref{sec:NI:corrected_numerical_inversion_text}) a calibration function will be proposed different from both $f^{-1}$ and $M$ which attempts to achieve better closure than either in a prior-independent way.
 
 We can see now the first result, which will be useful for the rest of this chapter:
 \vspace{6mm}
@@ -187,21 +200,26 @@ I.e., the calibration function is simply $c=f^{-1}$.
 \subsection{Assumptions and Definitions}
 \label{sec:NI:assumptions}
 
-The general results presented in the following sections are based on three assumptions listed below.  These requirements should be satisfied by real detectors using calorimeters and trackers to reconstruct jets, given that the detector-level reconstruction is of sufficiently high quality.
+The general results presented in the following sections are based on three assumptions listed below.
+These requirements should be satisfied by real detectors using calorimeters and trackers to reconstruct jets, given that the detector-level reconstruction is of sufficiently high quality.
 
 \begin{enumerate}
-\item $f^{-1}(y)$ exists for all $y$ in the support of $Y$, and $f^{-1}$ is single-valued.  These may seem like obvious statements, but are not vacuous, even for a real detector.  For example, pile-up corrections can result in non-zero probability that $Y<0$, so the function $f$ must be computed for all possible values of $Y$, even if the transverse energy is negative.  At the high-luminosity LHC (HL-LHC), the level of pile-up will be so high that the jet energy resolution may be effectively infinite at low transverse energies (no correlation between particle-level and detector-level jet energy).  In that case, $f^{-1}$ may not be single valued and numerical inversion cannot be strictly applied as described in Section~\ref{sec:NI:numinversion}.
-\item $f(x)$ is monotonically increasing: $f'(x)>0$ for all $x$.  This condition should trivially hold for any reasonable detector: detector-level jets resulting from particle-level jets with a higher $E_\text{T}$ should on average have a higher $E_\text{T}$ than those originating from a lower $E_\text{T}$ particle-level jet.  Note that this is only true for a fixed $\eta$.  Detector technologies depend significantly on $\eta$ and therefore the $\eta$-dependence of $f$ (for a fixed $x$) need not be monotonic. We note also that Assumption 1 implies that $f'(x)\ge 0$ or $f'(x) \le 0$ for all $x$; so Assumption 2 is equivalent to the additional assumptions that $f'(x)\ne 0$ for any $x$, and that $f'(x)>0$ (as opposed to $f'(x)<0$).
-\item $f$ is twice-differentiable. The first derivative of $f$ has already been assumed to exist in Assumption 2, and the second derivative will also be required to exist for some of the later results. In practice we expect $f$ to be differentiable out to any desired order.
+  \item $f^{-1}(y)$ exists for all $y$ in the support of $Y$, and $f^{-1}$ is single-valued.  These may seem like obvious statements, but are not vacuous, even for a real detector.  For example, pile-up corrections can result in non-zero probability that $Y<0$, so the function $f$ must be computed for all possible values of $Y$, even if the transverse energy is negative.  At the high-luminosity LHC (Section~\ref{sec:LHC:data}), the level of pile-up will be so high that the jet energy resolution may be effectively infinite at low transverse energies (no correlation between particle-level and detector-level jet energy).  In that case, $f^{-1}$ may not be single valued and numerical inversion cannot be strictly applied as described in Section~\ref{sec:NI:numinversion}.
+    \label{NI:ass1}
+  \item $f(x)$ is monotonically increasing: $f'(x)>0$ for all $x$.  This condition should trivially hold: detector-level jets resulting from particle-level jets with a higher $E_\text{T}$ should on average have a higher $E_\text{T}$ than those originating from a lower $E_\text{T}$ particle-level jet\footnote{Note that this is only true for fixed $\eta$. Detector technologies can depend significantly on $\eta$ (Section~\ref{sec:ATLAS:ATLAS}) and the the $\eta$-dependence of $f$ (for a fixed $x$) can be non-monotonic. When calibrating $\eta$ itself, though, it should still be the case that as the truth-level $\eta$ increases the detector-level $\eta$ also increases, satisfying this Assumption.}. We note also that Assumption 1 implies that $f'(x)\ge 0$ or $f'(x) \le 0$ for all $x$; so Assumption 2 is equivalent to the additional assumptions that $f'(x)\ne 0$ for any $x$, and that $f'(x)>0$ (as opposed to $f'(x)<0$).
+    \label{NI:ass2}
+\item $f$ is twice-differentiable. The first derivative of $f$ has already been assumed to exist in Assumption 2, and the second derivative will also be required to exist for some of the later results. In practice it is expected that $f$ is differentiable out to any desired order.
+    \label{NI:ass3}
 \end{enumerate}
 
 We note that as long as the above three assumptions hold, the theorems stated in the remainder of this chapter are valid.
 In particular, this implies that $x$ could be any calibrated quantity that satisfies the above constraints.
+Assumption~\ref{NI:ass1} is necessary for numerical inversion to be performed, while Assumptions~\ref{NI:ass2} and~\ref{ass3} are necessary for deriving the analytical results given in this Chapter.
 
-We have separated the results in this chapter into ``Proofs'' and ``Derivations''.
+The results in this chapter have been divided into ``Proofs'' and ``Derivations''.
 The ``Proofs'' require only the three assumptions stated above, and in particular do not assume anything about the shape of the underlying distributions, e.g. that the distributions $Y|X=x$ are Gaussian or approximately Gaussian.
 The ``Derivations'' are useful approximations that apply in the toy model described in Appendix~\ref{sec:NI:toy_model}; we expect them to apply in a wide variety of cases relevant to LHC jet physics.
-In particular, we expect these approximations to hold in cases with properties similar to the toy model presented here - e.g., good approximation of $f$ by its truncated Taylor series about each point and approximately Gaussian underlying distributions of $Y|X=x$.
+In particular, it is expected that these approximations hold in cases with properties similar to the toy model presented here - e.g., good approximation of $f$ by its truncated Taylor series about each point and approximately Gaussian underlying distributions of $Y|X=x$.
 \footnote{Note that we do not require that $Y|X=x$ is exactly Gaussian, only that it is approximately Gaussian, which is true for a wide range of energies and jet reconstruction algorithms at ATLAS and CMS. In particular, there are non-negligible (but still often small) asymmetries at low and high $E_\text{T}$ at ATLAS and CMS~\cite{Aad:2011he,Chatrchyan:2011ds,Khachatryan:2016kdb}. In any case, even if $Y|X=x$ {\it is} Gaussian, $Z|X=x$ is in general {\it not} Gaussian, for non-linear response functions (Appendix~\ref{sec:NI:lemma}).}
 Some of the derivations are illustrative and are included in the main body of the text; however, some derivations are moved to the Appendix (\ref{ch:NI_app}) in order to make the text more readable and highlight the main results.
 
@@ -295,7 +313,7 @@ Figure~\ref{fig:NI:mean_closure} shows the inherent non-closure in numerical inv
 \clearpage
 
 \subsubsection{Calibrated Resolution}
-We often care about how well we have resolved the transverse energy of the jets, which we quantify by examining the width of the calibrated resolution $Z$.
+We often care about how precise the reconstructed transverse energy of the jets is relative to the detector-level quantity, which is quantified by examining the standard deviation of the calibrated resolution $Z$.
 
 The calibrated resolution of the reconstructed jets is defined to be the standard deviation of the $Z$ distribution, with $X=x$, which is given by
 \begin{align}
@@ -306,13 +324,23 @@ and the fractional resolution is just given by $\sigma\left[\frac{Z}{x}|X=x\righ
 \sigma\left[\frac{Z}{x}|X=x\right]=\frac{1}{x}\hat{\sigma}(x) \approx \frac{1}{x}\frac{\sigma(x)}{f'(x)},
 \label{eqn:NI:resolutionseries_text}
 \end{align}
-the derivation of which can be found in Appendix~\ref{sec:NI:calibrated_resolution_calculation}.  Note that $f'(x)$ is \emph{not} the response $R(x)=\frac{f(x)}{x}$. In particular, $f'(x)=R(x)+R'(x)x$, so $f'(x)\ne R(x)$ unless $R'(x)=0$, or equivalently $f(x)= kx$ for some constant $k$ (which is not the case at ATLAS nor at CMS). Figure~\ref{fig:NI:mean_resolution} verifies Equation~\ref{eqn:NI:resolutionseries_text} and compares it to the method of dividing the width of the distribution by $R$, which is a standard diagnostic technique when a full calibration is not applied.
+the derivation of which can be found in Appendix~\ref{sec:NI:calibrated_resolution_calculation}.
+
+A standard diagnostic technique when a full calibration is not applied is to examine the quantity $\frac{\sigma(x)}{R(x)}$.
+This diagnostic is also often used~\cite{Aaboud:2019ibw,Aaboud:2017aca,ATLAS-CONF-2017-065} when there are some remaining non-closures after the calibration (which is expected, as shown above) by examining $\frac{\hat{\sigma}(x)}{C(X)}$ as a proxy for the case where there are no non-closures.
+In fact technically there is no distinction between these two cases, as after the calibration one could imagine defining a new response $R_\text{new}(x)=C(x)$ and new resolution $\sigma_\text{new}(x) = \hat{\sigma}(x)$ and performing numerical inversion a second time in order to remove the remaining non-closures (Section~\ref{sec:NI:iterated_text}).
+
+It should be noted that $f'(x)$ is \emph{not} the response $R(x)=\frac{f(x)}{x}$.
+In particular, $f'(x)=R(x)+R'(x)x$, so $f'(x)\ne R(x)$ unless $R'(x)=0$, or equivalently $f(x)= kx$ for some constant $k$ (which is not the case at ATLAS nor at CMS).
+Figure~\ref{fig:NI:mean_resolution} verifies Equation~\ref{eqn:NI:resolutionseries_text} and compares it to the method of dividing the width of the distribution by $R$
+\footnote{Taking $\frac{\sigma(x)}{R(x)}$ to estimate the calibrated resolution, and taking $\frac{\hat{\sigma}(x)}{C(x)}$ to estimate the resolution with no non-closures, are technically equivalent. $C(x)$ is close to $1$, while $R(x)$ can be very different from $1$, so the difference between $f'(x)$ and $R(x)$ is larger than the difference between $(C(x)x)'$ and $C(x)$. Figure~\ref{fig:NI:mean_resolution} emphasizes the difference between the two estimates in the former case.}
+.
 
 \begin{figure}
 \begin{center}
   \includegraphics[width=0.9\textwidth]{figures/{mean_resolution}.pdf}
 \end{center}
-\caption{The resolution of the $E_\text{T}$ distribution following numerical inversion when using the mean to calibrate, using a toy model similar to conditions in ATLAS or CMS. In blue, the exact calculated resolution. In red, the estimate of the closure using the first term of the higher-order correction in Equation~\ref{eqn:NI:resolutionseries_text}. In green, the uncalibrated resolution. In orange, the resolution when dividing by the response $R(x)$. For details of the model, see Appendix~\ref{sec:NI:toy_model}.}
+\caption{The resolution of the $E_\text{T}$ distribution following numerical inversion when using the mean to calibrate, using a toy model similar to conditions in ATLAS or CMS. In blue, the exact calculated resolution. In red, the estimate of the resolution using the first term of the higher-order correction in Equation~\ref{eqn:NI:resolutionseries_text}. In green, the uncalibrated resolution. In orange, the resolution when dividing by the response $R(x)$. For details of the model, see Appendix~\ref{sec:NI:toy_model}.}
 \label{fig:NI:mean_resolution}
 \end{figure}
 
@@ -371,6 +399,7 @@ where $\rho_Y(y^*)>0$ since $y^*$ is the mode of the distribution $\rho_Y$. Then
 where $\tilde{\sigma}(x)$ is the width of a Gaussian fitted to just the area near the peak of the function $\rho_{Y|X}(y|x)$ (defined precisely in the next section). The derivation of Equation~\ref{eqn:NI:closure_mode_text} can be found in Appendix~\ref{sec:NI:calibrated_mode_calculation}.
 
 Figure~\ref{fig:NI:mode_closure} shows the inherent non-closure in numerical inversion for a toy calculation using a response function $R(x)$ that is typical for ATLAS or CMS, and the first term of the higher-order correction given in Equation~\ref{eqn:NI:closureseries_text}, when using the mode for calibration.
+This non-closure agrees with ATLAS published results, e.g.~\cite{Aaboud:2019ibw} (Figure 5).
 
 \begin{figure}[]
 \begin{center}
@@ -518,15 +547,22 @@ After a quick summary in Section~\ref{sec:NI:summary} of the results presented s
 
 \subsection{Summary of Results}
 \label{sec:NI:summary}
-In Section~\ref{sec:NI:introclosure} we defined the concept of closure in the process of calibrating the $E_\text{T}$ of jets.  We found in Sections~\ref{sec:NI:meanclosuresection} and~\ref{sec:NI:modeclosuresection} that when using the mean or mode, respectively, of the distribution $Y|X=x$ to calibrate, closure is not necessarily achieved; with the response functions found at ATLAS or CMS, it is expected that numerical inversion will not close. We also provided estimates for the non-closure for the mean (Equation~\ref{eqn:NI:closureseries_text}) and for the mode (Equation~\ref{eqn:NI:closure_mode_text}). In those estimates we find that as the underlying resolution $\sigma(x)$ or $\tilde{\sigma}(x)$ of the uncalibrated jet distribution $Y|X=x$ increases, the non-closure gets worse. This indicates that the non-closure issues raised in this chapter will become more important as the LHC moves to conditions with higher pile-up in the future.
+In Section~\ref{sec:NI:introclosure} the concept of closure was defined in the process of calibrating the $E_\text{T}$ of jets.
+It was found in Sections~\ref{sec:NI:meanclosuresection} and~\ref{sec:NI:modeclosuresection} that when using the mean or mode, respectively, of the distribution $Y|X=x$ to calibrate, closure is not necessarily achieved; with the response functions found at ATLAS or CMS, it is expected that numerical inversion will not close.
+Estimates were also provided for the non-closure for the mean (Equation~\ref{eqn:NI:closureseries_text}) and for the mode (Equation~\ref{eqn:NI:closure_mode_text}).
+In those estimates it is found that as the underlying resolution $\sigma(x)$ or $\tilde{\sigma}(x)$ of the uncalibrated jet distribution $Y|X=x$ increases, the non-closure gets worse.
+This indicates that the non-closure issues raised in this chapter will become more important as the LHC moves to conditions with higher pile-up in the future.
 
 \vspace{2mm}
 
-A new calibration scheme based on the median of $Y|X=x$ is proposed in Section~\ref{sec:NI:medianclosuresection}.  With this method of calibration, closure is always achieved.
+A new calibration scheme based on the median of $Y|X=x$ is proposed in Section~\ref{sec:NI:medianclosuresection}.
+With this method of calibration, closure is always achieved.
 
 \vspace{2mm}
 
-Each section also explored various definitions of the resolution of the fractional calibrated jet distribution $\frac{Z}{x}|X=x$, where the most natural definition depends on the manner in which calibration has been performed (i.e., whether using the mean, mode, or median to calibrate). We provided useful estimates for the standard deviation (Equation~\ref{eqn:NI:resolutionseries_text}), the trimmed Gaussian width (Equation~\ref{eqn:NI:resolutionmode_text}), and an exact formula for the 68\% IQR (Equation~\ref{eqn:NI:resolutionmedian_text}). These expressions can be used to quickly estimate the final resolution of a jet algorithm without having to actually apply the calibration jet-by-jet.
+Each section also explored various definitions of the resolution of the fractional calibrated jet distribution $\frac{Z}{x}|X=x$, where the most natural definition depends on the manner in which calibration has been performed (i.e., whether using the mean, mode, or median to calibrate).
+Useful estimates were provided for the standard deviation (Equation~\ref{eqn:NI:resolutionseries_text}), the trimmed Gaussian width (Equation~\ref{eqn:NI:resolutionmode_text}), and an exact formula for the 68\% IQR (Equation~\ref{eqn:NI:resolutionmedian_text}).
+These expressions can be used to quickly estimate the final resolution of a jet algorithm without having to actually apply the calibration jet-by-jet.
 
 \subsection{Recommendation for Method of Calibration}
 \label{sec:NI:recommendations}
@@ -616,11 +652,10 @@ It is firmly established that numerical inversion does achieve its key property,
 However, numerical inversion is established to be inherently biased: when using the mean or mode of the reconstructed kinematic distributions to calibrate, the calibrated response function does not close, if the uncalibrated response function is nonlinear.
 The size of this nonclosure is approximated for the first time and is shown to get worse as the resolution of jets gets worse, in particular as is expected as the LHC moves to higher instantaneous luminosity and pile-up conditions in the future.
 When using the median as the notion of central tendency, the method is guaranteed to close.
-However, there are good reasons to use the mode instead of the median, and we do not recommend one method over the other because of these respective drawbacks.
+However, there are good reasons to use the mode instead of the median, and one method is not recommended over the other because of these respective drawbacks.
 
 An approximation for the the calibrated jet resolution is provided which can be used to estimate the resolution before actually doing the calibration.
-Previously, a common approach to do this estimation was to divide the uncalibrated resolution by the uncalibrated response, but this approach is shown to be inaccurate.
-Instead, the approximation derived here uses the derivative of the uncalibrated response, and is shown to be more accurate.
+Previous approaches to do this estimation were shown to be inaccurate; the approximation derived here uses the derivative of the uncalibrated response, and is shown to be more accurate.
 
 Given the inherent nonclosure present in numerical inversion, the question of whether numerical inversion can be improved is answered in a couple different ways. 
 First, simply iterating numerical inversion is shown for the first time to not always help.
