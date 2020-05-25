@@ -293,8 +293,8 @@ For the simulation, the effective statistics is defined as the inverse of the su
 For the central dataset, the MC statistics are relatively uniform in $m_{JJ}$ and there are only more effective events past the third bin, with boundaries at $1.90 \le m_{JJ} < 2.28$ TeV.
 Even in the fourth bin ($2.28 \le m_{JJ} < 2.74$ TeV), there are events with a large weight, which makes the training and fitting unrealistic.
 
-For the inverted dataset, the problem is much more severe because for a fixed $m_{JJ}$, lower $p_T$ jets can contribute than for the central dataset.
-For the full Run 2 statistics, the MC has the same number of weighted events only by the eighth bin($4.73 \le m_{JJ} < 5.68$ TeV).
+For the inverted dataset, the problem is much more severe because for a fixed $m_{JJ}$, lower $p_T$ jets can contribute compared to the central dataset.
+For the full Run 2 statistics, the MC has the same number of weighted events only by the eighth bin ($4.73 \le m_{JJ} < 5.68$ TeV).
 
 \begin{figure}[h!]
 \centering
@@ -343,7 +343,7 @@ The \textit{combined mass} measurement is used, which combines measurements from
 The offline selection that is made on top of the selection from the derivation is intended to be as fully inclusive as possible to prospective signal models, while remaining on the plateau of the turn-on for the trigger.
 
 Each event is required to have at least two large-$R$ jets with calibrated $\pt>200$ GeV
-\footnote{Jet calibrations for large-radius jets only go to 200 GeV.
+\footnote{Jet calibrations for large-radius jets are only derived for $\pt>200$ GeV.
 %In any case, the number of jets with $\pt$ between 100 and 200 GeV is negligible: 0.1\% for $m_{JJ} > 1.8$ TeV.
 %The simulation and validation analyses do not remove these as they are already done and nothing noticeable will change by removing them (at the expense of a lot of additional work).  They are removed for the unblinded nominal data analysis.
 }
@@ -351,14 +351,17 @@ and $|\eta|<2.0$, and with at least one such jet with calibrated $\pt>500$ GeV.
 This offline threshold has been shown to be fully efficient with respect to the trigger selection~\cite{Adorni:2647394}.
 There is no explicit lepton overlap removal or veto.
 
-Only the two jets with highest $\pt$ in the event are used in this analysis, and the remaining jets are discarded.
-For each jet $j=1,2$, the four-momentum $p^\mu_j$ recorded, in particular the jet mass $m_j^2 = (p^\mu_j)^2$.
+Only the two jets with highest $\pt$ in the event are used in this analysis, and the remaining jets are ignored.
+For each jet $j=1,2$, the four-momentum $p^\mu_j$ is recorded, in particular the jet mass $m_j^2 = (p^\mu_j)^2$.
 As mentioned in Section~\ref{sec:CWoLa:blinding}, a selection is placed on the rapidity difference, $|y_1-y_2|<1.2$.
 %The distribution of the rapidity difference in the background simulation can be seen in Figure~\ref{fig:CWoLa:bkg_rapdiff}, and the distributions in various signal models can be seen in Figure~\ref{fig:CWoLa:sig_rapdiff}.
 
 The jets are ordered by their mass, so that $m_1 \ge m_2$.
-In order to suppress background and therefore increase sensitivity to massive signal objects, a minimum cut $m_1$, $m_2 > 30$ \GeV{} is applied.
-Also, in order to make the kinematic region in which the learning is applied definite, as discussed in Section~\ref{sec:CWoLa:features}, a maximum cut $m_1$, $m_2 < 500$ \GeV{} is applied.
+In order to suppress background and therefore increase sensitivity to massive signal objects, a minimum cut $m_1$, $m_2 > 30$ \GeV{} is applied
+\footnote{In addition, jet calibrations for large-radius jets are only derived for $m>30$ GeV.}
+.
+Also, in order to make the kinematic region in which the learning is applied definite, a maximum selection $m_1$, $m_2 < 500$ \GeV{} is applied.
+The reasoning behind this selection is explained in more detail in Section~\ref{sec:CWoLa:features}.
 
 Typically the dijet invariant mass $m_{JJ}$ would be defined as in terms of the sum of the four-momenta of the two jets, $m_{JJ}^2 = (p^\mu_1+p^\mu_2)^2 = m_1^2+m_2^2+2\left(E_1E_2-\vec{p}_1\cdot\vec{p}_2\right)$, with $E^2 = |\vec{p}|^2+m^2$ and $|\vec{p}| = p_T\cosh(\eta)$.
 In this analysis the dijet invariant mass is defined slightly differently: in order to reduce correlations between the features used in the neural network ($m_1,m_2$) and the final $m_{JJ}$ value, the dijet invariant mass is formed by setting all $m_i$ to zero: $m_{JJ}^2 \equiv 2\left(|\vec{p}_1||\vec{p_2}|-\vec{p}_1\cdot\vec{p}_2\right)$.
@@ -445,7 +448,7 @@ The bin definitions are given in Table~\ref{tab:mjj_bins}.
   \end{tabular}
 \end{table}
 
-The distribution of $m_{JJ}$ in the background with these bin definitions can be seen in Figure~\ref{fig:CWoLa:bkg_mjj}.
+The distribution of $m_{JJ}$ in the background with these bin definitions is shown in Figure~\ref{fig:CWoLa:bkg_mjj}.
 It can be seen that the distribution of $m_{JJ}$ in the background before any cuts is smooth, with no bumps indicating possible discoveries.
 \begin{figure}[htbp]
   \centering 
@@ -454,7 +457,7 @@ It can be seen that the distribution of $m_{JJ}$ in the background before any cu
 \label{fig:CWoLa:bkg_mjj}
 \end{figure}
 
-The distributions of $m_{JJ}$ in a variety of signal models are plotted in Figure~\ref{fig:CWoLa:sig_mjj}.
+The distributions of $m_{JJ}$ in a variety of signal models are shown in Figure~\ref{fig:CWoLa:sig_mjj}.
 It can be seen that the mass of the signal object, $m_A$, is well-reconstructed as $m_{JJ}$, with significant tails at lower $m_{JJ}$ values.
 The resolution of $m_A$ with $m_{JJ}$ is roughly 20\%, which guides the sizing of the binning, as mentioned above.
 
@@ -489,7 +492,7 @@ The resolution of $m_A$ with $m_{JJ}$ is roughly 20\%, which guides the sizing o
 \label{fig:CWoLa:sig_mjj}
 \end{figure}
 
-One thing to note about this analysis is that the binnings are fixed.
+One thing to note about this analysis is that the binning is fixed.
 A possible issue with this is that for a signal that is found close to the edge of a bin, the NN may not learn to tag that signal because it has presence in both that bin and its sideband.
 This effect is mitigated somewhat due to two factors: (1) Because the background is steeply falling, there is only a small region of $m_A$ in which the signal fraction in both a signal bin and its sideband are comparable; and (2) the NN is trained on both sidebands simultaneously, so that the signal should still be tagged when distinguishing between the signal region and the combined sidebands even if it lies on the edge.
 A study of this effect is presented in Appendix~\ref{app:CWoLa:binoffset}.
@@ -535,7 +538,7 @@ It can be seen that the masses of the signal objects, $m_B$ and $m_C$, are well-
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m200_1.14.20}.pdf}}
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m200_m400_1.14.20}.pdf}}
   \subfloat[]{\includegraphics[width=0.3\textwidth]{figures_CWoLa/{jet1_m_jet2_m_Wprime_WZqqqq_M5000_m400_m400_1.14.20}.pdf}}\\
-  \caption{Distribution of $m_1$ and $m_2$ in for a signal model with:\\
+  \caption{Distribution of $m_1$ and $m_2$ for a signal model with:\\
     (a) ($m_A,m_B,m_C=3000,80,80$ GeV);
     (b) ($m_A,m_B,m_C=3000,200,80$ GeV);\\
     (c) ($m_A,m_B,m_C=3000,400,80$ GeV);
@@ -546,7 +549,7 @@ It can be seen that the masses of the signal objects, $m_B$ and $m_C$, are well-
     (h) ($m_A,m_B,m_C=5000,200,80$ GeV);\\
     (i) ($m_A,m_B,m_C=5000,400,80$ GeV);
     (j) ($m_A,m_B,m_C=5000,200,200$ GeV);\\
-    (k) ($m_A,m_B,m_C=5000,400,20$ GeV);
+    (k) ($m_A,m_B,m_C=5000,400,200$ GeV);
     (l) ($m_A,m_B,m_C=5000,400,400$ GeV).
   }
 \label{fig:CWoLa:sig_m1_m2}
@@ -577,7 +580,7 @@ Then, for a given signal segion $s$, the masses of all jets in the sideband segi
     m \rightarrow \Phi^{-1}_s\left(\Phi_{s+1}\left(m\right)\right) & m \in \text{region } s+1
   \end{cases}
 \end{align}
-This insures that the 1-dimensional distributions of $m$ in the sideband regions are exactly the same, by construction, as in the signal region.
+This ensures that the 1-dimensional distributions of $m$ in the sideband regions are exactly the same, by construction, as in the signal region.
 Note that, if there is a signal present in the signal region, that the scaling will be slightly biased by the presence of this signal, depending on the signal fraction in that region.
 This scaling is demonstrated for an example signal and sideband regions in Figure~\ref{fig:CWoLa:m_scaling}, including an example with an injected signal.
 \begin{figure}[t!]
@@ -619,7 +622,7 @@ Therefore, even though the scaling can be biased by the presence of a signal in 
 \FloatBarrier
 \subsection{Neural Network Architecture}
 \label{sec:CWoLa:network}
-The network which determines the final score for each event, indicating more or less signal-like, is derived in multiple stages.
+The neural network which determines the final score for each event, indicating more or less signal-like, is derived in multiple stages.
 These stages are intended to maximize the sensitivity to new potential signals, while remaining robust to statistical fluctuations and true correlations in the background.
 
 In Analysis Step~\ref{step3} (Section~\ref{sec:CWoLa:Analysis:Overview}), some signal bin $s$ is designated. The process below can then be considered an enumeration of the steps in Analysis Step~\ref{step4} (Section~\ref{sec:CWoLa:Analysis:Overview}).
@@ -634,7 +637,7 @@ See also Figure~\ref{fig:CWoLa:flowchart} for an overview.
   \label{NNstep3}
   \item Designate a different cross-validation set $i_v \ne i_t$ as the \textit{validation set}. The remaining 3 cross-validation sets are designated as the \textit{training set}.
   \label{NNstep5}
-  \item A network is trained using just the training set, with features $X = \{m_1,m_2\}$, rescaled as described in Section~\ref{sec:CWoLa:decorrelation}. The events are labeled with $Y \in [0,1]$, with $1$ indicating an event in the signal region, and $0$ indicating an event in the sidebands. The events in each of the sideband regions are weighted uniformly in the training so that the sum of weights in each of the sideband regions is equal.
+  \item A neural network is trained using only the training set, with features $X = \{m_1,m_2\}$, rescaled as described in Section~\ref{sec:CWoLa:decorrelation}. The events are labeled with $Y \in [0,1]$, with $1$ indicating an event in the signal region, and $0$ indicating an event in the sidebands. The events in each of the sideband regions are weighted uniformly in the training so that the sum of weights in each of the sideband regions is equal.
 
   The network is a Sequential Neural Network with 4 hidden layers of size 64,32,8,1, and activation functions \texttt{ReLu},\texttt{ReLu},\texttt{ReLu},sigmoid, respectively, as implemented in \texttt{Keras}~\cite{chollet2015keras}.
   The loss used is the binary cross-entropy, and the training loss is minimized using the \texttt{Adam}~\cite{kingma2014adam} optimizer.
@@ -668,7 +671,7 @@ See also Figure~\ref{fig:CWoLa:flowchart} for an overview.
 Ultimately, there are $3\times4\times5 = 60$ neural networks trained for each signal region $s$. A flowchart of the process described above is given in Figure~\ref{fig:CWoLa:flowchart}, and the neural network outputs are shown at each step in the process for a sample with injected signal.
 
 The events are separated into training, validation, and test sets as described above in order to reduce the effect of statistical fluctuations in the training.
-Since the validation set is statistically independent from the training set, choosing the network with the lowest validation loss, as described in Step~\ref{NNstep7}, insures that the network which learns true correlations the best is chosen.
+Since the validation set is statistically independent from the training set, choosing the network with the lowest validation loss, as described in Step~\ref{NNstep7}, ensures that the network which learns true correlations the best is chosen.
 Since the test set is statistically independent from both the training and validation sets, the network cannot do artificially better by being biased by statistical fluctuations in the training or validation set.
 This is actually a crucially important point for removing the look-elsewhere effect in this analysis.
 If the network were trained and tested on the same dataset, one would expect a high rate of false positives in terms of being able to separate the signal region from the sidebands due to correlated (actually, the same) statistical fluctuations between the train and test sets, which results directly in a bump in the $m_{JJ}$ spectrum.
@@ -910,7 +913,7 @@ An uncertainty on this correction is derived in the validation dataset and appli
 \subsubsection{Background Compatibility}
 The background compatibility is presented in two ways, depending on the precision of the result required.
 
-For the simulation analysis and data validation analysis, The simplest is simply the (Data-Fit)/Uncertainty, i.e. the (signed) $\chi$ in the respective $\chi^2$ calculation.
+For the simulation analysis and data validation analysis, the background compatibility is quantified as the (Data-Fit)/Uncertainty, i.e. the (signed) $\chi$ in the respective $\chi^2$ calculation.
 
 For the final fit results, a more precise $p$-value calculation is included.
 Where indicated, the \textit{significance} of the data with respect to the background fit is shown.
@@ -1820,4 +1823,4 @@ This is the first search to that completely covers the space of $\{m_A,m_B,m_C\}
 No significant evidence for a localized excess is found in the dijet spectrum between $1.8$ and $8.2$ TeV.
 The search significantly improves the limits for certain specific signal models relative to the incusive dijet search, especially at high $m_B,m_C$.
 As the first analysis to use this new technique, a reduced feature set is used to tag the jets corresponding to the $B$ and $C$ particles, but there is great potential to extend this analysis to include additional features and therefore be more sensitive to specific final states.
-This analysis and these possible extensions extend the coverage of the ATLAS search program and provide an essential means for ensuring ATLAS is sensitive to unanticipated scenarios.
+This analysis and these possible extensions enhance the coverage of the ATLAS search program and provide an essential means for ensuring ATLAS is sensitive to unanticipated scenarios.
