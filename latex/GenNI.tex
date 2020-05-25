@@ -99,15 +99,16 @@ As mentioned in Chapter~\ref{ch:NI}, after the inclusive correction it is approx
 The reason to follow this with the GSC is that even though the overall response closes, $f(x)$ may have a residual dependence on auxiliary information available from the detector.
 
 The GSC uses $5$ auxiliary features which can be grouped into $3$ categories based on the effect being corrected for.
-The first two features are the number of tracks in the jet and the width of tracks in the jet (the average \pt-weighted distance of tracks from the jet axis).
+The first two features are the number of tracks in the jet (associated via ghost association~\cite{Cacciari:2008gn}) and the width of tracks in the jet (the average \pt-weighted distance of tracks from the jet axis).
 Since the calorimeter-cell response is non-linear due to noise suppression, a jet with more particles (and therefore softer on average for fixed total \pt{}) will tend to have a lower measured energy than a jet with a few hard particles.
-In addition, a jet with a wider radiation pattern will tend to have more unmeasured energy due to out-of-cone effects.
-The second two features are the fraction of jet energy in the final layer of the electromagnetic calorimeter and in the first layer of the hadronic calorimeters; these features account for energy loss in the dead material between the electromagnetic and hadronic calorimeters.
-The final feature counts the number of muon segments behind the jet that register hits; this feature accounts for energy not measured in the calorimeter due to showers that punch through to the MS.
+The number of tracks in the jet is a good but not perfect measure of the number of particles, as tracks are insensitive to pile-up, but only correspond only to charged particles.
+This effect is correlated to the provenance of the jet, as gluon jets tend to have more particles and a wider radiation pattern than quark jets~\cite{Salam:2009jx}.
+The track width is used to further discriminate between gluon and quark jets, and therefore gain more information about the number of particles produced in the jet.
+The correction for the first two features has the benefit of making the response more similar between quark- and gluon-initiated jets, which reduces the sample dependence of the jet \pt{} closure.
 
-The first two features are correlated with the provenance of the jet (quark- or gluon-initiated).
-This is due to the fact that gluon jets tend to have more particles and a wider radiation pattern than quark jets~\cite{Salam:2009jx}.
-Therefore, the correction for the first two features has the benefit of making the response more similar between quark- and gluon-initiated jets, which reduces the sample dependence of the jet \pt{} closure.
+The second two features are the fraction of jet energy in the final layer of the electromagnetic calorimeter and in the first layer of the hadronic calorimeters; these features account for energy loss in the dead material between the electromagnetic and hadronic calorimeters.
+
+The final feature counts the number of muon segments behind the jet that register hits; this feature accounts for energy not measured in the calorimeter due to showers that punch through to the MS.
 
 %The goal of the GSC is to correct the jet \pt{} for each of these effects.
 %In doing so, the GSC improves the jet \pt{} closure in all regions of the parameter space, reduces the uncertainty due to jet fragmentation modeling, and reduces the spread of the jet \pt{} inclusively.
@@ -183,7 +184,9 @@ A schematic of the generalized numerical inversion method is shown in Figure~\re
 \label{sec:GenNI:results}
 %-------------------------------------------------------------------------------
 
-To illustrate the potential of generalized numerical inversion, an example is provided using jets simulated with the ATLAS full detector simulation.  Neural network training is performed using scikit-learn~\cite{scikit-learn} with a simple two-layer feed-forward neural network that has 100 hidden nodes in each layer and a rectified linear unit activation function.  To lay the groundwork for application to the full GSC, two key jet features are studied: the number of tracks above 1 GeV associated to the jet ($n_\text{track}$) and the average track radius\footnote{The GSC currently used in ATLAS uses instead the track width, which is the average track radius multiplied by $(n_\text{track}+1)$.  The residual dependence of the $n_\text{track}$-calibrated response on the track width is negligible and is thus not useful for benchmarking generalized numerical inversion as the sequential calibration is nearly the same as the simultaneous calibration. 
+To illustrate the potential of generalized numerical inversion, an example is provided using jets from the ATLAS full detector simulation.
+Neural network training is performed using scikit-learn~\cite{scikit-learn} with a simple two-layer feed-forward neural network that has 100 hidden nodes in each layer and a rectified linear unit activation function.
+To lay the groundwork for application to the full GSC, two key jet features are studied: the number of tracks above 1 GeV associated to the jet ($n_\text{track}$) and the average track radius\footnote{The GSC currently used in ATLAS uses instead the track width, which is the average track radius multiplied by $(n_\text{track}+1)$.  The residual dependence of the $n_\text{track}$-calibrated response on the track width is negligible and is thus not useful for benchmarking generalized numerical inversion as the sequential calibration is nearly the same as the simultaneous calibration. 
   %There are observables which blah.
 }:
 \[
@@ -194,9 +197,9 @@ To illustrate the potential of generalized numerical inversion, an example is pr
 \end{cases}
 \]
 The average track radius is also sometimes denoted more explicitly as $\langle p_\text{T,frac}\times \Delta R \rangle$.
-These observables are useful because the calorimeter response depends on the type of parton that initiated the jet as gluon jets have more particles and have a wider radiation pattern than quark jets.
-These properties lead to a different response because of the non-linear calorimeter-cell response as well as out-of-cone effects.
-Even though it is only sensitive to charged particles, the tracker is insensitive to pile-up and is an excellent detector for measuring these jet radiation properties.
+As mentioned in Section~\ref{sec:GenNI:jetreco}, these observables account are correlated with the type of parton that produced the jet (gluon or quark), and account for effects on the $\pt$ response due to the non-linear calorimeter-cell response.
+%Since gluon jets tend to have more particles and have a wider radiation pattern than quark jets, these observables are also correlated with the type of parton that produced the jet, and therefore there is a difference in response between quark and gluon jets.
+%The entire effect is not accounted for, as the tracker is only sensitive to charged particles; however, associated tracks are used as they are insensitive to pile-up and provide a good measure of these jet radiation properties.
 The underlying distributions of these two variables are given in Figure~\ref{fig:GenNI:distributions}.
 \begin{figure}[h!]
   \centering 
@@ -208,7 +211,9 @@ The underlying distributions of these two variables are given in Figure~\ref{fig
   \label{fig:GenNI:distributions}
 \end{figure}
 
-Figure~\ref{fig:GenNI:R_scan} shows the dependence of the response (following the inclusive energy calibration) on $n_\text{track}$ and $\Rtrack$.  The response depends strongly on these two quantities, varying by about  20-30\% across the accessible range.  The trends are also not uniform in jet $p_\text{T}$ - the response of lower $p_\text{T}$ jets shows a stronger dependence on both $n_\text{track}$ and $\Rtrack$.
+Figure~\ref{fig:GenNI:R_scan} shows the dependence of the response (following the inclusive energy calibration) on $n_\text{track}$ and $\Rtrack$.
+The response depends strongly on these two quantities, varying by about 10-20\% across the accessible range.
+The trends are also not uniform in jet $p_\text{T}$ - the response of lower $p_\text{T}$ jets shows a stronger dependence on both $n_\text{track}$ and $\Rtrack$.
 %While the dependence of the response on $\Rtrack$ is non-linear, the residual dependence as shown in Fig.~\ref{fig:GenNI:R_scan}(a) is approximately linear and so is well-characterized by $dR/dn_\text{track}$.  
 
 %Should describe the NN setup here before presenting results.  Figure~\ref{fig:GenNI:R_scan} shows the dependence of $f(x)$ on $n_\text{track}$ in several bins of true jet $p_\text{T}$.  Continue to describe the results from \href{https://indico.cern.ch/event/718661/contributions/2960406/attachments/1629909/2597628/GenNI_4.10.18.pdf}{This recent JES/JER talk}.
@@ -271,6 +276,11 @@ This residual dependence is monotonic, and so the single value $d\hat{R}/d\ntrac
 The residual dependence on $\ntrack$ in bins of $\Rtrack$ is nearly the same and clearly not zero at all values of $\Rtrack$ if the $\text{n}_\text{track}$ or sequential $\text{n}_\text{track}$, $\Rtrack$ calibrations are applied.
 However, the residual dependence is zero and independent of $\Rtrack$ when the simultaneous calibration is performed.
 Similarly, there is still a residual dependence of $d\hat{R}/d\Rtrack$ on $\ntrack$ if the $\ntrack$ or sequential $\ntrack$, $\Rtrack$ calibrations are applied; this residual dependence goes away with the simultaneous calibration.
+
+For example, in the sequential calibration, $d\hat{R}/d\ntrack \approx -0.02$ for large $\Rtrack$.
+This means that two jets with values of $\ntrack$ differing by $5$ (and the same large values of $\Rtrack$) will have a response difference of $\sim 0.1$.
+Similarly, in the sequential calibration, $d\hat{R}/d\Rtrack \approx -4$ for large $\ntrack$.
+Two jets that differ in $\Rtrack$ by $0.02$ (both with large $\ntrack$) will therefore have a response difference of $\sim 0.08$.
 
 Because of this residual dependence, there can be nonclosures in specific regions of the parameter space, despite the calibration closing inclusively overall.
 Figure~\ref{fig:GenNI:dRdntrack_wTrack_mod:c} shows a selection on $\ntrack$ and $\Rtrack$ which is more efficient on gluons than on quarks, and Figure~\ref{fig:GenNI:dRdntrack_wTrack_mod:d} shows a selection which is more efficient on quarks than on gluons.
