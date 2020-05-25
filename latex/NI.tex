@@ -310,7 +310,7 @@ Figure~\ref{fig:NI:mean_closure} shows the inherent non-closure in numerical inv
 \label{fig:NI:mean_closure}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 
 \subsubsection{Calibrated Resolution}
 We often care about how precise the reconstructed transverse energy of the jets is relative to the detector-level quantity, which is quantified by examining the standard deviation of the calibrated resolution $Z$.
@@ -344,7 +344,7 @@ Figure~\ref{fig:NI:mean_resolution} verifies Equation~\ref{eqn:NI:resolutionseri
 \label{fig:NI:mean_resolution}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 
 \subsection{Mode}
 \label{sec:NI:mode}
@@ -409,7 +409,7 @@ This non-closure agrees with ATLAS published results, e.g.~\cite{Aaboud:2019ibw}
 \label{fig:NI:mode_closure}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 
 \subsubsection{Resolution}
 Let $z^*(x)$ be the mode of the distribution $Z|X=x$, which is not necessarily equal to $x$ given the above result.
@@ -538,8 +538,9 @@ and
 \sigma_\text{IQR}\left[\frac{Z}{x}|X=x\right]=\frac{1}{2x}\left(f^{-1}(I_Y^+)-f^{-1}(I_Y^-)\right).\hspace{1 cm}\Box
 \label{eqn:NI:resolutionmedian_text}
 \end{align}
+
 %-------------------------------------------------------------------------------
-\newpage
+
 \section{Discussion}
 \label{sec:NI:discussion}
 
@@ -633,7 +634,7 @@ Then the parameters $a_1,...,a_n$ can be chosen such that the closure is as clos
 \label{fig:NI:mode_closure_bigs}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 
 %-------------------------------------------------------------------------------
 \section{Conclusion}
@@ -666,6 +667,3 @@ The realization that numerical inversion was defined by a single function (Secti
 
 While this Thesis focuses on the use of jets at the LHC, numerical inversion is in fact a generic detector calibration method that can be applied as long as there is a reliable method for matching the value of an observable before and after passing through the detector (either via simulation or high-fidelity calibration data).
 The results presented here therefore can be applied to objects other than jets at the LHC, or indeed even beyond the realm of high energy physics.
-
-\clearpage
-\newpage

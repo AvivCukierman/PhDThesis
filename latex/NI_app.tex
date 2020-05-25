@@ -84,7 +84,6 @@ g_2(x) &= (f^{-1})^{(2)}(f(x)) = -\frac{f''(x)}{f'(x)^3}\nonumber\\
 \label{eqn:NI:closureseriesgaussian}
 \end{align}
 
-\newpage
 \section{Calibrated Resolution of the Mean}
 \label{sec:NI:calibrated_resolution_calculation}
 {\it The calibrated resolution of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{me}(x)$ is given to first order by $\frac{\sigma(x)}{f'(x)}$.}
@@ -116,7 +115,6 @@ g_1(x) = (f^{-1})'(f(x)) &= \frac{1}{f'(x)}\nonumber\\
 \rightarrow \hat{\sigma}(x)=\sigma\left[Z|X=x\right] &\approx \frac{\sigma(x)}{f'(x)}. \hspace{1 cm} \Box \label{eqn:NI:resolution}
 \end{align}
 
-\newpage
 \section{Closure of the Mode}
 \label{sec:NI:calibrated_mode_calculation}
 {\it The closure of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{mo}(x)$ is given to first order by $C\approx 1+\frac{f''(x)}{f'(x)^3}\frac{\tilde{\sigma}(x)^2}{x}$.}
@@ -172,7 +170,6 @@ The agreement between the actual and estimated closure in Figure~\ref{fig:NI:mod
 \label{fig:NI:d_comp}
 \end{figure}
 
-\newpage
 \section{Resolution of the Mode}
 \label{sec:NI:mode_resolution_calculation}
 {\it The resolution of jets reconstructed from truth jets with $E_\text{T} = x$ and $f(x)=f_{mo}(x)$ is given to first order by $\hat{\tilde{\sigma}}(x)\approx \frac{\tilde{\sigma}(x)}{f'(x)}.$}
@@ -274,8 +271,7 @@ In the model considered here, and for the response functions at the LHC, the clo
 
 In practice, there is some smallest value $x=x'$ which is being studied, and which per the discussion in the above paragraph tends to have the largest non-closure. The value $x'=20$ GeV is used in this chapter, which is the lowest calibrated $E_\text{T}$ at current conditions at the LHC. For the corrected calibration curve shown in Figure~\ref{fig:NI:mode_closure_bigs}, the parameters $a_1,a_2,a_3$ are scanned over to minimize the non-closure at this value $x'$. For the corrected calibration curve shown in Figure~\ref{fig:NI:mode_closure_bigs}, the values $a_2=a_3=x'=20$ GeV and $a_1 = 5$ GeV were used.
 
-\clearpage
-\newpage
+\FloatBarrier
 \section{Toy Model of the ATLAS/CMS Response Function}
 \label{sec:NI:toy_model}
 All the ``Proofs'' quoted in Chapter~\ref{ch:NI} are valid in general, regardless of the response function $R(x)$ and the underlying distributions $Y|X=x$ (within the assumptions outlined in Section~\ref{sec:NI:assumptions}). We also expect that the ``Derivations'', which are all approximate formulas, to apply in a wide variety of cases. In order to visualize some of the results, and verify the approximations, a particular model was needed in order to get numerical values. All figures made in this chapter were derived from a simple model of the ATLAS or CMS jet $E_\text{T}$ response function\footnote{Energies are measured with calorimeters and momenta are measured with tracking detectors.  In-situ corrections using momentum balance techniques constrain the momentum.  For small-radius QCD jets, the $E_\text{T}$ and $p_\text{T}$ are nearly identical.  Since the simulation-based correction of calorimeter jets is used here as a model, the $E_\text{T}$ is used throughout. }. After specifying $f(x)$ and the distributions $Y|X=x$, the calibrated distributions were constructed using the analytic form of the calibrated distributions Equation~\ref{eqn:NI:newdist}. Then the various moments were found numerically for the calibrated distribution at each value $x$.

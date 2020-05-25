@@ -106,7 +106,7 @@ The distribution of the average number of pile-up interactions in simulation is 
 
 %Lists of the specific MC samples used for this analysis are provided in Appendix~\ref{sec:CWoLa:app:CWoLa:samples}.
 
-\clearpage
+\FloatBarrier
 %-------------------------------------------------------------------------------
 \section{Analysis Overview}
 \label{sec:CWoLa:analysis}
@@ -185,7 +185,7 @@ One of the key aspects of this technique is a nested cross-validation procedure,
 
 This and other key aspects are discussed in the following Section, which lays out the assumptions and specifics of this analysis based on the above ideas with $m_\text{res}=m_{JJ}$.
 
-\clearpage
+\FloatBarrier
 \subsection{Analysis Strategy}
 \label{sec:CWoLa:Analysis:Overview}
 This analysis utilizes the concept of Classification Without Labels (CWoLa) described in Section~\ref{sec:CWoLa:schematic} in order to be sensitive to a broad class of non-SM models of the form $A\rightarrow BC$, with $A$ massive and on-shell, and the decay products of $B$ and $C$ reconstructed as large-$R$ jets in the ATLAS calorimeter.
@@ -233,7 +233,7 @@ Since the network learns what features distinguish the signal from the backgroun
 
 Furthermore, since the network learns the features that distinguish the signal from the background directly from data, the tagger does not need to be calibrated to account for differences between simulation and background; this removes a source of uncertainty relative to a dedicated search with a tagger trained to distinguish between signal and background in simulation.
 
-\clearpage
+\FloatBarrier
 \subsection{Blinding and Validation Procedure}
 \label{sec:CWoLa:blinding}
 Validating the analysis in a blinded region of the data is a challenge for this analysis.
@@ -322,7 +322,7 @@ For the data analyses, this cut results mainly from the finding that the fitting
 However, it is also the case that the inverted rapidity selection provides multiple copies of independent datasets to test the analysis when the ratio of efficiencies is $<\frac{1}{2}$;
 in particular, the ratio of efficiencies is $<\frac{1}{3}$ (so $3$ statistically independent copies) for $m_{JJ}>\sim 1.8$ TeV, which was useful for testing the statistical properties of the fitting.
 
-\clearpage
+\FloatBarrier
 \section{Analysis Details}
 \label{sec:CWoLa:analysis_details}
 
@@ -415,7 +415,7 @@ The cutflow of these selections on the signal samples is given in Table~\ref{tab
   \end{adjustwidth}
 \end{table}
 
-\clearpage
+\FloatBarrier
 \subsection{Binning}
 \label{sec:CWoLa:binning}
 As mentioned in Analysis Step~\ref{step2}, the $m_{JJ}$ spectrum is binned in order to derive the signal and sideband regions.
@@ -494,7 +494,7 @@ A possible issue with this is that for a signal that is found close to the edge 
 This effect is mitigated somewhat due to two factors: (1) Because the background is steeply falling, there is only a small region of $m_A$ in which the signal fraction in both a signal bin and its sideband are comparable; and (2) the NN is trained on both sidebands simultaneously, so that the signal should still be tagged when distinguishing between the signal region and the combined sidebands even if it lies on the edge.
 A study of this effect is presented in Appendix~\ref{app:CWoLa:binoffset}.
 
-\clearpage
+\FloatBarrier
 \subsection{Features}
 \label{sec:CWoLa:features}
 In Analysis Step~\ref{step4}, some features $X$ are designated which, as per Assumption~\ref{ass1}, can be used to distinguish signals from the background.
@@ -554,7 +554,7 @@ It can be seen that the masses of the signal objects, $m_B$ and $m_C$, are well-
 
 Since $m_1$ and $m_2$ peak around the values of $m_B$ and $m_C$ in the signal, while they have smoothly falling spectra in the background, these features satisfy Assumption~\ref{ass1}, and therefore can be used for the training.
 
-\clearpage
+\FloatBarrier
 \subsubsection{Mass Decorrelation}
 \label{sec:CWoLa:decorrelation}
 In Figure~\ref{fig:CWoLa:bkg_m1_m2}, it can be seen that there are true physical differences in the features in the background between a given signal region and sideband regions (as chosen in Analysis Step~\ref{step3}); in particular, the distribution gets more populated at higher $m_1$,$m_2$ as $m_{JJ}$ increases.
@@ -616,7 +616,7 @@ Therefore, even though the scaling can be biased by the presence of a signal in 
     \label{fig:CWoLa:LR2D}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Neural Network Architecture}
 \label{sec:CWoLa:network}
 The network which determines the final score for each event, indicating more or less signal-like, is derived in multiple stages.
@@ -699,7 +699,7 @@ However, because of the extensive measures taken to reduce the sensitivity to st
 
 Details about the software used to execute the analysis pipeline up to this point (Sections~\ref{sec:CWoLa:eventselection},~\ref{sec:CWoLa:binning},~\ref{sec:CWoLa:features},~\ref{sec:CWoLa:network}) can be found in Appendix~\ref{app:CWoLa:software}.
 
-\clearpage
+\FloatBarrier
 \subsection{Systematic Uncertainties}
 \label{sec:CWoLa:systs}
 
@@ -1018,7 +1018,7 @@ For these signals, the limits at those $\mu$ values are simply not used.
 
 %As mentioned in~\ref{sec:CWoLa:limits}, given the injected signal strength $\mu$, exactly $\mu$ events are chosen from the given signal MC sample, with probability proportional to the MC weight, and injected into the NN training with weight $1$.
 
-\clearpage
+\FloatBarrier
 %-------------------------------------------------------------------------------
 \section{Simulation Analysis}
 \label{sec:CWoLa:simulation_analysis}
@@ -1129,7 +1129,7 @@ As $\mu$ increases, the network becomes more confident about tagging the kinemat
 \label{fig:CWoLa:nS_study}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Fitting Results}
 Example fits in the coarse bins used for training are shown in Figure~\ref{fig:CWoLa:examplefits}.
 \begin{figure}[h!]
@@ -1141,7 +1141,7 @@ Example fits in the coarse bins used for training are shown in Figure~\ref{fig:C
     \label{fig:CWoLa:examplefits}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Limits}
 \label{sec:CWoLa:simulation:statanalysis}
 As described in Section~\ref{sec:CWoLa:limits}, there is a coarse scan of injected $\mu$ values to train the NN, following which, for each injected $\mu$, limits are set following the CL$_s$ procedure by scanning the overall signal strength as the POI while keeping the NN fixed.
@@ -1294,7 +1294,7 @@ Away from the SM dibosons, CWoLa hunting with $\epsilon<1$ outperforms the other
 
 % \FloatBarrier
 
-\clearpage
+\FloatBarrier
 %-------------------------------------------------------------------------------
 \section{Validation Analysis}
 \label{sec:CWoLa:val_analysis}
@@ -1335,7 +1335,7 @@ The jet mass distributions in a few representative signal regions are shown in F
 %The binning for the learning is the same as in Section~\ref{sec:CWoLa:binning}, starting from bin 5 and going up to bin 9.
 %These bins are chosen to have enough statistics on the left and right for fitting.
 
-\clearpage
+\FloatBarrier
 \subsection{Neural Network Output}
 
 The output of the neural network training with no injected signal is presented in Figure~\ref{fig:CWoLa:inverted:NNsensitivity:nosignal}.
@@ -1384,7 +1384,7 @@ The $(80,80)$ GeV point is the hardest to find as it would sit on top of the lar
 \label{fig:CWoLa:inverted:NNsensitivity:signal}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Fitting Results}
 \label{sec:CWoLa:inverted:datafitting}
 
@@ -1444,7 +1444,7 @@ At this cut level, for these mass points, there is a maximum excess of $\ge 5\si
 \label{fig:CWoLa:inverted:fit_sigR5_nS1000}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Limits}
 \label{sec:CWoLa:inverted:statisticalanalysis}
 
@@ -1497,7 +1497,7 @@ Away from the SM dibosons, CWoLa hunting with $\epsilon<1$ outperforms the other
 %Some of the snippets need the \texttt{jetetmiss} option passed to \texttt{atlasphysics}.
 %\input{atlas-snippets}
 
-\clearpage
+\FloatBarrier
 %-------------------------------------------------------------------------------
 \section{Unblinded Analysis}
 \label{sec:CWoLa:unblinded}
@@ -1546,7 +1546,7 @@ $\epsilon$ & [0.1,0.01] \\
   \end{tabular}
 \end{table}
 
-\clearpage
+\FloatBarrier
 \subsection{Binning}
 \label{sec:CWoLa:unblinded:binning}
 
@@ -1567,7 +1567,7 @@ The number of events in each of the bins 3-10 (bins 3 and 10 are used as sideban
 %In particular, the analysis with a cut at $\epsilon=1.0$, which is very similar to the standard dijet search~\cite{ATLAS:2015nsi}, is excluded.
 %The limits from this search are included as a point of comparison on the final limit plots (Section~\ref{sec:CWoLa:unblinded:results}).
 
-\clearpage
+\FloatBarrier
 \subsection{Neural Network Output}
 The output of the neural network training with no injected signal is presented in Figure~\ref{fig:CWoLa:unblinded:NNsensitivity:nosignal}.
 There are some features in this neural network output, corresponding to likely statistical fluctuations, especially at high $(m_1,m_2)$ where the data are poorly populated by events.
@@ -1630,7 +1630,7 @@ The NN output for all $5$ random samplings as a function of $\mu$ is given in Ap
 \label{fig:CWoLa:unblinded:NNsensitivity:signal5000}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Fitting Results}
 \label{sec:CWoLa:unblinded:fitting}
 The fit results for all the signal regions, with no injected signal, are shown in Figure~\ref{fig:CWoLa:unblinded:fit_q90_nosignal} for $\epsilon=0.1$ and Figure~\ref{fig:CWoLa:unblinded:fit_q99_nosignal} for $\epsilon=0.01$.
@@ -1706,7 +1706,7 @@ Note that in signal region 8, after tagging the signal constitutes a noticeable 
 \label{fig:CWoLa:unblinded:stitched_fits}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 \subsection{Limits}
 \label{sec:CWoLa:unblinded:limits}
 %Aside from the modifications to the fit described in the previous section, the statistical analysis is as described in Section~\ref{sec:CWoLa:statanalysis}.
@@ -1763,7 +1763,7 @@ For $m_A=5000$ GeV, CWoLa hunting suffers from low statistics in the training, b
     \label{fig:CWoLa:sigma95}
 \end{figure}
 
-\clearpage
+\FloatBarrier
 %-------------------------------------------------------------------------------
 \section{Discussion}
 \label{sec:CWoLa:discussion}
@@ -1808,7 +1808,7 @@ The formulation of CWoLa and CWoLa hunting (Section~\ref{sec:CWoLa:schematic}) i
 It is also important to mention that there are alternatives to CWoLa hunting which can also be broadly sensitive to new unanticipated signal models in data.
 These alternative techniques are discussed in Appendix~\ref{app:CWoLa:alternatives}.
 
-%\clearpage
+%\FloatBarrier
 %-------------------------------------------------------------------------------
 \section{Conclusion}
 \label{sec:CWoLa:conclusion}
