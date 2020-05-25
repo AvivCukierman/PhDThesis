@@ -556,9 +556,10 @@ In the simulation-based corrections, the reference object is ``truth'' jets form
 Reconstructed jets are geometrically matched to truth jets with $\Delta R = \sqrt{\Delta\eta^2+\Delta\phi^2}$.
 Truth jets are matched to truth partons using ghost association~\cite{Cacciari:2008gn}; the type of the highest energy parton matched to a truth jet is used as the label.
 
-In the in situ corrections, the reference object is some better measured object in the event, taking advantage of conservation of momentum in the entire event.
-For lower \pt{} jets, the in situ corrections use $Z\rightarrow ee/\mu\mu$ or $\gamma$ as the reference object to balance the momentum.
-For higher \pt{} jets, systems of multiple lower \pt{} small-$R$ jets are used to balance the momentum.
+In the in situ corrections, the goal is to correct any differences in the energy scale between data and simulation.
+The relative \pt{} response of the jet to the reference object is compared between data and simulation and this relative ratio is corrected for.
+For lower \pt{} jets, the in situ corrections use $Z\rightarrow ee/\mu\mu$ or $\gamma$ as the reference object.
+For higher \pt{} jets, systems of multiple lower \pt{} small-$R$ jets are used as the reference objects.
 
 The first step of the small-$R$ jet correction is simply a geometric correction to account for the fact that $\eta$ is measured as an angle from the center of the detector, but jet angle should instead be measured from the interaction point or the hard-scatter primary vertex.
 
@@ -590,10 +591,10 @@ In bins of $\eta$, the mode of the $E^\text{reco}/E^\text{true}$ distribution (t
 As mentioned above, this process proceeds via numerical inversion (Chapter~\ref{ch:NI}), by inverting this response function and applying it to the reconstructed energies.
 The dependence of the energy response on $E^\text{true}$ and $\eta$ can be seen in Figure~\ref{fig:ATLAS:jet_calibration_NI}.
 
-Following the absolute scale correction, a sequence of residual corrections on various features are applied to correct the jet \pt{}.
-The sequence of corrections, called the \textit{global sequential calibration} or \textit{GSC}, corrects the dependence of \pt{} on each feature sequentially; since the dependence of the \pt{} response changes with \pt{}, these steps also proceed via numerical inversion.
+Following the absolute scale correction, the global sequential calibration (GSC) implements a sequence of residual corrections on various features are applied to correct the jet \pt{}.
+The sequence of corrections corrects the dependence of \pt{} on each feature sequentially; since the dependence of the \pt{} response changes with \pt{}, these steps also proceed via numerical inversion.
 The features include those sensitive to the provenance of the jet (quark- or gluon-initiated) like the number of tracks in the jet and the width of tracks in the jet (the average \pt-weighted distance of tracks from the jet axis); removing this dependence makes the response more similar for quark and gluon jets and reduces the uncertainty due to jet fragmentation modeling for a given jet type.
-There are also two features to account for the differences between electromagnetic and hadronic showers (based on the fraction of jet energy in various layers of the electromagnetic and hadronic calorimeters), and finally there is a feature to account for hadronic showers that punch through to the MS.
+There are also two features to account for dead material between the electromagnetic and hadronic calorimeters (based on the fraction of jet energy in the final layer of the electromagnetic calorimeter and in the first layer of the hadronic calorimeters), and finally there is a feature to account for hadronic showers that punch through to the MS.
 The dependence of the \pt{} on some of the features that go into the GSC can be seen in Figure~\ref{fig:ATLAS:jet_calibration_NI}.
 
 Chapter~\ref{ch:GenNI} proposes a new method of accounting for the dependence of the jet \pt{} on each of these auxiliary variables by deriving the correction simultaneously rather than sequentially.

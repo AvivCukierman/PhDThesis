@@ -1,4 +1,4 @@
-Jets reconstructed in the ATLAS detector have their energies corrected in order to be an unbiased measurement of the particle-level jet.
+Jets reconstructed in the ATLAS detector have their energies corrected in order to be an unbiased estimate of the particle-level jet.
 This correction proceeds via multiple steps, the most significant of which include an absolute MC-based jet energy scale correction and following a correction based on auxiliary features of the jet observed in the detector.
 These two steps both use numerical inversion (Chapter~\ref{ch:NI}) in order to remain independent of the underlying spectrum.
 The current method of accounting for these features relies on a sequential application of numerical inversion to one feature at a time.
@@ -16,7 +16,7 @@ The results presented in this Chapter are published in~\cite{ATL-PHYS-PUB-2018-0
 The two searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) use jets extensively, and besides that nearly every analysis at the Large Hadron Collider (LHC) uses jets in some capacity, both Standard Model (SM) measurements and searches for physics beyond the SM.
 All of these analyses rely on an accurate and precise measurement of the jet energy.
 As mentioned in Section~\ref{sec:ATLAS:jet_calibration}, due to various distortions arising from detector effects, the reconstructed jet energy deviates from the particle-level jet energy in the absence of a detector.
-These distortions are corrected for using a series of calibration steps~\cite{PERF-2016-04,Aad:2011he}.
+These distortions are corrected for using a series of calibration steps~\cite{PERF-2016-04,Aad:2011he,Schwartzman:2015ada}.
 All of these steps proceed ultimately via numerical inversion, the properties of which are expounded upon in detail in Chapter~\ref{ch:NI}.
 This Chapter is concerned with improving one particular and important part of the current calibration procedure, the Global Sequential Calibration (GSC).
 This step incorporates auxiliary measurements about the jet, such as its reconstructed charged particle multiplicity, to improve the overall quality of the energy reconstruction~\cite{ATLAS-CONF-2015-002}.
@@ -30,9 +30,9 @@ The current method for the GSC treats the impact of each auxiliary feature seque
 However, there is additional information available which could improve the calibration and yet is not used in the current GSC because of this requirement of uncorrelation.
 This Chapter presents a new technique using neural networks to simultaneously take into account multiple auxiliary variables in this correction which may or may not have correlated effects on the jet energy.
 The technique relies both on the general capacity of neural networks to approximate well complicated functions in high dimensions~\cite{HORNIK1991251} and on recent advances in jet substructure~\cite{Larkoski:2017jix} which indicate useful features for applying this correction.
-As mentioned in Chapter~\ref{ch:NI}, it is important that the calibration is independent of the underlying spectrum, and therefore that ultimately it relies on numerical inversion.
+As mentioned in Chapter~\ref{ch:NI}, it is important that the calibration is independent of the underlying \pt{} spectrum, and therefore that ultimately it relies on numerical inversion.
 The new technique presented here, called \textit{generalized numerical inversion}, incorporates neural networks into the numerical inversion framework in order to accomplish both goals of simultaneously taking into account the effect of multiple auxiliary variables and of remaining independent of the underlying spectrum.
-Ultimately this technique is shown to improve the overall quality of the jet calibration on the three metric outlined above.
+Ultimately this technique is shown to improve the overall quality of the jet calibration on the three metrics outlined above.
 
 This Chapter is organized as follows.
 Section~\ref{sec:GenNI:atlas} discusses the simulated samples used in this study and Section~\ref{sec:GenNI:jetreco} briefly reviews the GSC and describes it in the notation used in this Thesis.
@@ -45,10 +45,10 @@ There is a discussion of the results in Section~\ref{sec:GenNI:discussion} and t
 \label{sec:GenNI:atlas}
 %-------------------------------------------------------------------------------
 
-Studies documented within this chapter are performed using a variety of Monte Carlo (MC) simulated samples.
+Studies documented within this chapter are performed using a variety of Monte Carlo (MC) simulated samples (Section~\ref{sec:ATLAS:simulation}).
 Dijet events are generated at Leading Order (LO) in \PYTHIA 8.1~\cite{Sjostrand:2007gs} with the $2 \rightarrow 2$ matrix element convolved with the NNPDF2.3LO Parton Distribution Function (PDF) set~\cite{Ball:2012cx} and using the A14 set of tuned parameters~\cite{ATL-PHYS-PUB-2014-021}.
 An additional sample is simulated using \textsc{Herwig} 7.0~\cite{Bellm:2015jjp} using the NNPDF3.0 NLO PDF and the default set of tuned parameters for the underlying event.
-Both \PYTHIA and \textsc{Herwig} are interfaced with \textsc{EvtGen} for heavy flavor decays~\cite{Lange:2001uf,ATL-PHYS-PUB-2014-008}.
+Both \PYTHIA{} and \textsc{Herwig} are interfaced with \textsc{EvtGen} for heavy flavor decays~\cite{Lange:2001uf,ATL-PHYS-PUB-2014-008}.
 
 %Additional dijet events are simulated using different generators, in order to study the impact of modeling uncertainties. \SHERPA 2.1~\cite{Gleisberg:2008ta} generates events using multi-leg $2\rightarrow N$ matrix elements, which are matched to parton showers following the CKKW prescription~\cite{Catani:2001cc}. These \SHERPA events are simulated using the CT10 PDF set~\cite{Lai:2010vv} and default \SHERPA event tune. \HERWIGpp 2.7~\cite{Bahr:2008pv,Corcella:2000bw} provides a sample of events where additional radiation is showered using angular-ordering. These events are generated with the $2\rightarrow 2$ matrix element, convolved with the CTEQ6L1PDF set~\cite{Pumplin:2002vw} and configured with the UE-EE-5 tune~\cite{Gieseke:2012ft}.
 
@@ -63,8 +63,10 @@ The effects of multiple simultaneous $pp$ collisions (pile-up) are simulated wit
 %-------------------------------------------------------------------------------
 As mentioned in Section~\ref{sec:ATLAS:jet_calibration}, the ATLAS jet calibration proceeds via multiple steps.
 The largest correction is the absolute MC-based correction which brings the overall scale of the reconstructed jet $E$ to the truth or particle-level $E$.
-The step immediately proceeding is the GSC, which corrects the dependence of the jet \pt{} on various jet quantities derived from information in the tracker, calorimeter, and muon system~\cite{PERF-2016-04}.
-The goal of this correction is to make the response more similar between quark- and gluon-initiated jets, and furthermore reduces the uncertainty due to jet fragmentation modeling for a given jet type.
+The step immediately proceeding is the GSC, which corrects the dependence of the jet \pt{} on various jet quantities derived from information in the tracker, calorimeter, and muon system~\cite{PERF-2011-04,Aaboud:2019ibw,PERF-2016-04}.
+
+%The goal of this correction is to make the response more similar between quark- and gluon-initiated jets, and furthermore reduces the uncertainty due to jet fragmentation modeling for a given jet type.
+
 %The focus of this Chapter is on improving the method used for the MC-based residual calibration of the jet $p_\text{T}$ on various jet quantities following an inclusive calibration, which in ATLAS is accomplished with the GSC.
 
 %To perform a calibration in $\pt$, one may want to learn a function that predicts $\pttrue$ given $ \ptreco$.
@@ -92,10 +94,25 @@ For large-$R$ jets, the $\Delta R$ parameter is $1.0$, allowing for jets with la
 The GSC is not applied to these jets, but rather after the inclusive \Et{} correction an energy-dependent mass calibration is applied (Section~\ref{sec:ATLAS:jet_calibration}).
 The Author has contributed to work which directly uses the techniques developed in this Chapter to employ neural networks to simultaneously calibrate the mass and energy of large-$R$ jets~\cite{ATL-PHYS-PUB-2020-001}.
 
-As mentioned in Chapter~\ref{ch:NI}, after the inclusive correction it is approximately true that $f(x)\equiv \langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x\rangle = x$\footnote{In practice $f(x)$ is measured using the mode of the distribution rather than the mean.} (Equation~\ref{eqn:NI:closure_mode_text}), i.e. that the calibration closes and that the average reconstructed or detector-level jet \pt{} ($p_\text{T}^\text{reco}$) is equal to the truth or particle-level \pt{} ($p_\text{T}^\text{true}$) when conditioning on the truth \pt{}.
-\footnote{Of course, this statement is subject to the stipulations mentioned in that Chapter, and in fact a major result from that study was understanding exactly how and why the calibration \textit{does not} close. However, ultimately the understanding from that study was that the major non-closures would be a bigger issue at higher pile-up conditions that will exist at the LHC in the future.}
-The reason to follow this with the GSC is that even though the overall response closes, $f(x)$ may have a residual dependence on auxiliary information available from the detector, such as the jet radiation pattern and the energy deposition pattern in the detector.
-Let $\theta$ represent the available auxiliary information about a jet.
+As mentioned in Chapter~\ref{ch:NI}, after the inclusive correction it is approximately true that $f(x)\equiv \langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x\rangle = x$\footnote{In practice $f(x)$ is measured using the mode of the distribution rather than the mean.} (Equation~\ref{eqn:NI:closure_mode_text}), i.e. that the calibration closes and that the average reconstructed or detector-level jet \pt{} ($p_\text{T}^\text{reco}$) is an unbiased estimator\footnote{An estimate $\hat{\theta}$ of a fixed but unknown parameter $\theta$ is an unbiased estimator if, for all values of $\theta$, $\mathbb{E}\left[\hat{\theta}|\theta\right] = \theta$.} of the truth or particle-level \pt{} ($p_\text{T}^\text{true}$)
+\footnote{Of course, this statement is subject to the stipulations mentioned in that Chapter, and in fact a major result from that study was understanding exactly how and why the calibration \textit{does not} close. However, ultimately the understanding from that study was that the major non-closures would be a bigger issue at higher pile-up conditions that will exist at the LHC in the future.}.
+The reason to follow this with the GSC is that even though the overall response closes, $f(x)$ may have a residual dependence on auxiliary information available from the detector.
+
+The GSC uses $5$ auxiliary features which can be grouped into $3$ categories based on the effect being corrected for.
+The first two features are the number of tracks in the jet and the width of tracks in the jet (the average \pt-weighted distance of tracks from the jet axis).
+Since the calorimeter-cell response is non-linear due to noise suppression, a jet with more particles (and therefore softer on average for fixed total \pt{}) will tend to have a lower measured energy than a jet with a few hard particles.
+In addition, a jet with a wider radiation pattern will tend to have more unmeasured energy due to out-of-cone effects.
+The second two features are the fraction of jet energy in the final layer of the electromagnetic calorimeter and in the first layer of the hadronic calorimeters; these features account for energy loss in the dead material between the electromagnetic and hadronic calorimeters.
+The final feature counts the number of muon segments behind the jet that register hits; this feature accounts for energy not measured in the calorimeter due to showers that punch through to the MS.
+
+The first two features are correlated with the provenance of the jet (quark- or gluon-initiated).
+This is due to the fact that gluon jets tend to have more particles and a wider radiation pattern than quark jets~\cite{Salam:2009jx}.
+Therefore, the correction for the first two features has the benefit of making the response more similar between quark- and gluon-initiated jets, which reduces the sample dependence of the jet \pt{} closure.
+
+%The goal of the GSC is to correct the jet \pt{} for each of these effects.
+%In doing so, the GSC improves the jet \pt{} closure in all regions of the parameter space, reduces the uncertainty due to jet fragmentation modeling, and reduces the spread of the jet \pt{} inclusively.
+
+Let $\theta$ represent the available auxiliary information about a jet\footnote{Note that $\theta$ can be a single value or a vector with multiple features.}, e.g. the $5$ features used in the GSC.
 Then, the function $f$ can be generalized as $f_\theta(x)\equiv \langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x,\theta\rangle$.
 
 %Although it may seem intuitive that one would want to correct for the dependence of the jet energy on auxiliary variables if such a dependence exists, it is worth delving into exactly what the reasons and implications of such a correction are.
@@ -103,13 +120,14 @@ Then, the function $f$ can be generalized as $f_\theta(x)\equiv \langle p_\text{
 In general, if it is found that the jet energy $f_\theta(x)$ depends on some auxiliary variable $\theta$, then it is desirable that the calibration removes this dependence, for a few reasons.
 First, if the distribution of $\theta$ is sample-dependent, e.g. correlated with the jet originating parton, then there could be closure in one sample but not another, which could cause nonoptimal selections in the final analysis cuts.
 Second, if $\theta$ is not well-modeled by the simulation then even though there may be closure in the simulation there may not be closure in the data, and this could introduce systematic uncertainties in the final calibration.
-Third, there is a degradation of the resolution $\sigma(x)$ due to the spread of $\theta$, which again can cause the sensitivity of final analysis cuts to be worse.
+Third, there is a degradation of the resolution $\sigma(x)$ due to the spread of $\theta$, which can cause the sensitivity of the final analysis selection to be worse than with an undegraded resolution.
 These are the three metrics by which we judge the performance of the GSC and of generalized numerical inversion in this Chapter.
 
 However, this third point is more subtle than it naively appears.
 While it is true that there is a degradation of the resolution due to the spread of $\theta$, it is \emph{not} the case that the resolution always gets better when the dependence of the response on an auxiliary variable is corrected.
 In particular, there exist certain situations where correcting for the dependence of the response on an auxiliary variable can actually make the resolution worse.
-These situations are explored in Appendix~\ref{sec:GenNI_app:auxiliary}.
+This can occur, for example, if $\theta$ is correlated with $\pttrue$ in such a way that removing the correlation between $\ptreco$ and $\theta$ also removes some of the correlation between $\ptreco$ and $\pttrue$.
+These situations are explored in more detail in Appendix~\ref{sec:GenNI_app:auxiliary}.
 
 It is important to note that this auxiliary information $\theta$ is available at the detector or reconstructed level.
 Therefore, while $f_\theta(x)$ is derived in simulation, for a given jet at detector level $\theta$ is known and $f_\theta(x)$ can be inverted as usual across its argument to give the calibration function.
@@ -117,7 +135,7 @@ For $\theta\in\mathbb{R}$, the correction is therefore given by $p_\text{T}^\tex
 In practice, the distribution of $\theta$ is binned and the numerical inversion is performed for different functions in each bin of $\theta$.
 
 
-When $\theta\in\mathbb{R}^n$, the GSC proceeds with a sequential (as the name suggests) application of numerical inversion:
+When $\theta\in\mathbb{R}^n$, a sequential calibration like the GSC (for which $n=5$) proceeds with a sequential (as the name suggests) application of numerical inversion:
 
 \begin{align}
 \label{eqn:GenNI:gsc}
@@ -136,7 +154,7 @@ If there are such dependencies of $f_{\theta}(x)$ on more than one feature $\the
 The idea of generalized numerical inversion is to simply replace the sequential approach in Equation~\ref{eqn:GenNI:gsc} with a single inversion: $p_\text{T}^\text{reco}\mapsto \ptrecohat = f_{\theta_1,...,\theta_n}^{-1}(p_\text{T}^\text{reco})$.  Binning the response in $n$ dimensions would require significant computing resources and so is practically infeasible.  An unbinned approach that can simultaneously capture the dependence on many features is needed to exploit the potential correlations in the response on the $\theta_i$.  One powerful tool for this purpose is a neural network.  In principle, neural networks can approximate any smooth function~\cite{Cybenko1989,HORNIK1991251} and have been shown to provide excellent performance for a wide variety of classification and regression tasks with limited training data.  Inverting a neural network can be non-trivial, so the procedure for generalized numerical inversion is adapted as follows:
 
 \begin{enumerate}
-  \item Learn a neural network approximation $L(x,\theta)$ to the function $f_\theta(x)=\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x,\theta\rangle$.  \\\ Note that $L(x,\theta):\mathbb{R}^{n+1}\rightarrow\mathbb{R}$.
+  \item Learn a neural network approximation $L(x,\theta)$ to the function $f_\theta(x)=\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x,\theta\rangle$.  \\ Note that, if $\theta$ is a vector with $n$ features, then $L(x,\theta):\mathbb{R}^{n+1}\rightarrow\mathbb{R}$.
 \item Learn a neural network $C(L(x,\theta),\theta)$ that tries to predict $x$ given $\theta$ and $L(x,\theta)$.  This is an approximation to the family of functions $f^{-1}_\theta(x)$.  Note that learning the inverse this way is technically simple since $L$ is single-valued.
 \item Calibrate with $\ptreco \mapsto \ptrecohat = C(\ptreco,\theta)$.  The calibration non-closure is defined as usual as the deviation of $\langle \ptrecohat/\pttrue | \pttrue=x,\theta\rangle$ from $1$.
 \end{enumerate}
@@ -144,6 +162,21 @@ The idea of generalized numerical inversion is to simply replace the sequential 
 There are therefore two learning stages in this procedure.
 The first step learns a neural network that predicts the average behavior of $p_\text{T}^\text{reco}$ given $p_\text{T}^\text{true}$ and $\theta$ while the second network tries to approximate a single-valued function.
 In principle, the above procedure could be applied to the entire jet calibration procedure described in Section~\ref{sec:ATLAS:jet_calibration}, but the focus here is on the component addressing residual dependencies, following the inclusive jet energy calibration.
+
+A schematic of the generalized numerical inversion method is shown in Figure~\ref{fig:GenNI:schematic}.
+\begin{figure}[h!]
+  \centering 
+  \includegraphics[width=0.9\textwidth]{{figures/GenNI_schematic.png}}
+  \caption{
+    A schematic of the generalized numerical inversion method.
+    First, a neural network  $L$ is trained to learn $\ptreco$ from $\pttrue$ and $\theta$, which is an approximation to the functions $f_\theta(x)$.
+    Then, a second neural network $C$ is traind to learn $\pttrue$ from $L(\pttrue,\theta)$ and $\theta$, which is an approximation to the functions $f^{-1}_\theta(x)$.
+    Finally, $C$ is used as the calibration function.
+    }
+  \label{fig:GenNI:schematic}
+\end{figure}
+
+\FloatBarrier
 
 %-------------------------------------------------------------------------------
 \section{Results}
@@ -161,7 +194,9 @@ To illustrate the potential of generalized numerical inversion, an example is pr
 \end{cases}
 \]
 The average track radius is also sometimes denoted more explicitly as $\langle p_\text{T,frac}\times \Delta R \rangle$.
-These observables are useful because the calorimeter response depends on the type of parton that initiated the jet as gluon jets have more particles and have a wider radiation pattern than quark jets.  These properties lead to a different response because of the non-linear calorimeter-cell response as well as out-of-cone effects.  Even though it is only sensitive to charged particles, the tracker is insensitive to pile-up and is an excellent detector for measuring these jet radiation properties.
+These observables are useful because the calorimeter response depends on the type of parton that initiated the jet as gluon jets have more particles and have a wider radiation pattern than quark jets.
+These properties lead to a different response because of the non-linear calorimeter-cell response as well as out-of-cone effects.
+Even though it is only sensitive to charged particles, the tracker is insensitive to pile-up and is an excellent detector for measuring these jet radiation properties.
 The underlying distributions of these two variables are given in Figure~\ref{fig:GenNI:distributions}.
 \begin{figure}[h!]
   \centering 
@@ -234,7 +269,7 @@ The advantage of the simultaneous method is highlighted in Figure~\ref{fig:GenNI
 After the calibration, in each step of the sequential method, there is still a residual dependence of the calibrated response $\hat{R}$ on $\ntrack$ in individual bins of $\Rtrack$.
 This residual dependence is monotonic, and so the single value $d\hat{R}/d\ntrack$ (obtained as the slope when fitting $\hat{R}$ versus $\ntrack$ to a line in bins of $\Rtrack$) parameterizes the remaining residual dependence.
 The residual dependence on $\ntrack$ in bins of $\Rtrack$ is nearly the same and clearly not zero at all values of $\Rtrack$ if the $\text{n}_\text{track}$ or sequential $\text{n}_\text{track}$, $\Rtrack$ calibrations are applied.
-However, the reidual dependence is zero and independent of $\Rtrack$ when the simultaneous calibration is performed.
+However, the residual dependence is zero and independent of $\Rtrack$ when the simultaneous calibration is performed.
 Similarly, there is still a residual dependence of $d\hat{R}/d\Rtrack$ on $\ntrack$ if the $\ntrack$ or sequential $\ntrack$, $\Rtrack$ calibrations are applied; this residual dependence goes away with the simultaneous calibration.
 
 Because of this residual dependence, there can be nonclosures in specific regions of the parameter space, despite the calibration closing inclusively overall.
@@ -294,7 +329,7 @@ In either case, since the simultaneous method conditions on both features at onc
 
 A final metric for studying the impact of generalized numerical inversion is the jet energy resolution.
 One component of the jet energy resolution is due to the spread in the jet energy response for various values of $\theta$ - in the extreme case that there is no spread in $p_\text{T}^\text{reco}$ given $p_\text{T}^\text{true}$ and $\theta$, there will still be an effective resolution resulting from the spread in values over the range of $\theta$.
-However, as mentioned in Section~\ref{GenNI:jetreco} and expounded upon in Appendix~\ref{sec:GenNI_app:auxiliary}, the calibrated resolution does not necessarily improve following the correction based on auxiliary variables.
+However, as mentioned in Section~\ref{sec:GenNI:jetreco} and expounded upon in Appendix~\ref{sec:GenNI_app:auxiliary}, the calibrated resolution does not necessarily improve following the correction based on auxiliary variables.
 Figure~\ref{fig:GenNI:stdCR_x_compare_ntrack_wtrackmod} shows both the inclusive (not differential in $\theta$) closure as well as the inclusive resolution as a function of the truth jet $p_\text{T}$, for different calibration methods.
 All methods achieve a similar inclusive closure and as desired, the residual calibration procedures reduce the resolution.
 The overall resolution reduction is similar for the sequential and simultaneous approaches, with the simultaneous slightly better at higher $p_\text{T}$ and the sequential slightly better at low $p_\text{T}$.
@@ -323,6 +358,7 @@ The difference in the resolutions from the various approaches is small compared 
 % The package placeins provides the macro \FloatBarrier to achieve this.
 %\FloatBarrier
 
+\FloatBarrier
 
 %-------------------------------------------------------------------------------
 \section{Discussion}
