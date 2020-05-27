@@ -73,7 +73,7 @@ The goal of this Section is to explain this effect in detail and how CWoLa hunti
 
 Suppose we collect a sample of $N$ data points $\mathbf{x} =\{x_1,...,x_N\}$, where each observation $x_i$ could be multi-dimensional corresponding to $n\geq 1$ features in each observation\footnote{E.g., $x_i = (m_1^i,m_2^i)$ for the $i$th event, in which case $n=2$.}.
 $\mathbf{x}$ can be considered to be a sample from the random variable $\mathbf{X}$ which we observed by taking data.
-We construct a \textit{test statistic}~\cite{Lyons:1900zz,Lyons:2018gtc,cowan_2004,barlow_2002,PDG} $Q(\mathbf{X})$ which is some mapping from the data to a real number, with the property that larger values of $Q$ correspond to increasing tension with the null or background-only hypothesis $H_0$.
+We construct a \textit{test statistic}~\cite{demortier2007p,Lyons:1900zz,Lyons:2018gtc,cowan_2004,barlow_2002,bohm2010introduction,PDG} $Q(\mathbf{X})$ which is some mapping from the data to a real number, with the property that larger values of $Q$ correspond to increasing tension with the null or background-only hypothesis $H_0$.
 The observed test statistic is $q=Q(\mathbf{x})$, and we define the observed $p$-value
 \begin{align}
   p \equiv \text{Prob}(Q \geq q | H_0).
@@ -90,21 +90,21 @@ If the probability is $<\alpha$ then the test is conservative, meaning that the 
 
 $\alpha$ is often mapped to a \textit{significance} $Z=\Phi^{-1}(1-\alpha)$, where $\Phi$ is the cumulative distribution function (CDF) of the normal distribution.
 
-In particle physics, since the null hypothesis is the Standard Model, $\alpha$ is typically set very low - the ``$5-\sigma$ Standard''~\cite{Lyons:2013yja,Sinervo:2002sa} corresponds to $Z=5$, or $\alpha \sim 3\times10^{-7}$, so that the probability of falsely ruling out the SM is very low.
+In particle physics, since the null hypothesis is the Standard Model, $\alpha$ is typically set very low - the ``$5\sigma$ Standard''~\cite{Lyons:2013yja,Sinervo:2002sa} corresponds to $Z=5$, or $\alpha \sim 3\times10^{-7}$, so that the probability of falsely ruling out the SM is very low.
 
 We set up a toy model to demonstrate the background-only $p$-values and signal discovery potential using the various generic signal searches outlined above.
-In the toy model, the observed data are one-dimensional, $x_i \in [0,1]$\footnote{The toy methods outlined below will find small regions in this space of size $\epsilon$, corresponding to line segments $[y-\frac{\epsilon}{2},y+\frac{\epsilon}{2}]$. The multidimensional analog would be balls or hypercubes of volume $\epsilon$ in a space where the $n$ features have been mapped to $[0,1]^n$.}
+In the toy model, the observed data are one-dimensional, $X \in [0,1]$\footnote{The toy methods outlined below will find small regions in this space of size $\epsilon$, corresponding to line segments $[y-\frac{\epsilon}{2},y+\frac{\epsilon}{2}]$. The multidimensional analog would be balls or hypercubes of volume $\epsilon$ in a space where the $n$ features have been mapped to $[0,1]^n$.}.
 Two samples will be considered: a background-only case ($B$ only) and a background plus signal case ($B+S$).
-In the background-only case, there are expected $B$ background events\footnote{I.e., the number of background events is Poisson-distributed with mean $B$.} with values drawn from a uniform distribution $U(0,1)$.
-In the background plus signal case, there are in addition expected $S$ signal events drawn from some very small but unknown region in this space $\mathcal{N}(y_S,\delta)$, with $\delta\ll 1$\footnote{In $n$ dimensions, the volume taken up by the signal in $[0,1]^n$ space would decrease quickly with $n$, so this assumption is realistic. Another way to say this is that, as the number of features increases, a selection with fixed signal efficiency can have a background efficiency $\delta \ll 1$.}.
-In these examples $S$ has been set to $\sqrt{B}$, i.e. a $1-\sigma$ excess over the background-only hypothesis overall.
+In the background-only case, there are expected $B$ background events\footnote{I.e., the number of background events is Poisson-distributed with mean $B$.} with values drawn from a uniform distribution, $X_B\sim U(0,1)$.
+In the background plus signal case, there are in addition expected $S$ signal events drawn from some very small but unknown region in this space, $X_S\sim\mathcal{N}(y_S,\delta)$, with $\delta\ll 1$\footnote{In $n$ dimensions, the volume taken up by the signal in $[0,1]^n$ space would decrease quickly with $n$, so this assumption is realistic. Another way to say this is that, as the number of features increases, a selection with fixed signal efficiency can have a background efficiency $\delta \ll 1$.}.
+In these examples $S$ has been set to $\sqrt{B}$, i.e. a $1\sigma$ excess over the background-only hypothesis overall.
 
 The first approach is the Inclusive Search, in which the test statistic $Q$ is the total number of events observed.
 In the background-only hypothesis $H_0$, $Q\sim\text{Poiss}(B)$, with the $p$-values defined according to the Poisson CDF.
 Note that, in this case and in all cases outlined below, $B$ is estimated from some external information; e.g. in the search in Chapter~\ref{ch:CWoLa} $B$ is estimated via the $m_{JJ}$ fit interpolated in the $m_{JJ}$ region being studied.
 Figure~\ref{fig:CWoLa:p_all} shows the probability distributions of the $p$-values.
 The background-only case has $\text{Prob}(p \leq \alpha | H_0) = \alpha$ as expected, and the background plus signal case has probability $>\alpha$, indicating tension with the background-only hypothesis.
-In particular, the probability of observing a $Z=1$ significance is $50\%$, which makes sense since the injected signal corresponds to a $1-\sigma$ excess.
+In particular, the probability of observing a $Z=1$ significance is $50\%$, which makes sense since the injected signal corresponds to a $1\sigma$ excess.
 As a point of reference, the probability of observing a $Z=2$ significance is $\sim 0.16$ and the probability of observing a $Z=3$ significance is $\sim 0.02$ with this amount of signal.
 
 \begin{figure}[h!]
@@ -116,14 +116,16 @@ As a point of reference, the probability of observing a $Z=2$ significance is $\
 \end{figure}
 
 The second approach is the Direct Scanning method.
-In this approach, the $[0,1]$ space is partitioned into regions of size $\epsilon=0.1$, $[0,\epsilon,2\epsilon,...,1]$.
+In this approach, the $[0,1]$ space is partitioned into $m=10$ regions of size $\epsilon=0.1$: $[0,\epsilon,2\epsilon,...,1]$.
 In each region a signal discovery test is performed, corresponding to discrete searches covering all signal model hypotheses, with $Q$ the number of events in the region and $Q\sim\text{Poiss}(\epsilon B)$ the background-only hypothesis.
-The overall $p$-value (also known as the \textit{global} $p$-value) is taken as the minimum $p$-value over all the regions (i.e., $p<\alpha$ means that at least one of these searches claimed a discovery).
+The overall $p$-value (also known as the \textit{global} $p$-value) is taken as the minimum $p$-value over all the regions (i.e., $p\leq\alpha$ means that at least one of these searches claimed a discovery with significance $Z(\alpha)$).
 Figure~\ref{fig:CWoLa:p_max} shows the probability distributions of the $p$-values.
 The background-only case has $\text{Prob}(p \leq \alpha | H_0) > \alpha$, since there is a high probability that at least one of the tests has a low $p$-value.
 This effect is exactly what is referred to as a trials factor or look-elsewhere effect.
 In principle this global $p$-value can be corrected analytically if the number of tests is fixed~\cite{bonferroni1936teoria,dunn1959,dunn1961} or calibrated by simulating the entire procedure in some sample intended to produce the background-only $p$-value distribution.
-In this example, the analytic correction would require $\alpha \rightarrow \hat{\alpha} \approx \frac{\alpha}{m}$\footnote{The more precise correction is actually $\alpha = 1-(1-\hat{\alpha})^m$.}, with $m=10$ the number of tests, for the same significance level;
+In this example, the analytic correction would require $\alpha \rightarrow \hat{\alpha} \approx \frac{\alpha}{m}$
+\footnote{The more precise correction is actually $\alpha = 1-(1-\hat{\alpha})^m\approx m\hat{\alpha}$, which can easily be derived as $\text{Prob}(p \leq \hat{\alpha}|H_0) = 1-\bigcup_{i=1}^m\text{Prob}(p_i > \hat{\alpha}|H_0) = 1-(1-\hat{\alpha})^m$.}
+, for the same significance level;
 in the simulation it can also be seen that $\text{Prob}(p \leq \hat{\alpha} | H_0) \approx \alpha$.
 However requiring this more stringent test reduces the signal sensitivity - for example, the probability of observing a $Z=2$ significance ($\alpha\approx 0.02 \rightarrow \hat{\alpha}\approx 0.002$) is approximately $0.16$, the same as in the Inclusive Search\footnote{Actually it seems that even with this correction signal sensitivity is slightly higher than in the Inclusive Search, since the true signal does lie in one of the regions and there is some chance that all the other regions have high $p$-values. However the improvement is minimal compared to the improvement that can be made with CWoLa, as will be seen below.}.
 
@@ -140,7 +142,7 @@ Because of this, it's desirable to have a method where the background-only $p$-v
 
 We turn now to the ideas that enable CWoLa to be more sensitive than the Inclusive Search without biasing the background-only $p$-values.
 The first thing to point out is that the trials factor can be removed by splitting the data randomly into a train set comprising $(1-f)$ of the data and a test set comprising $f$ of the data.
-In the \textit{train} set the Direct Scanning method is performed to find the region with minimum $p$-value, but the test statistic is then defined to be the number of events in the \textit{test} set in the region indicated by the train set, which under the background-only hypothesis should be distributed as $\text{Poiss}(f\epsilon B)$.
+In the \textit{train} set the Direct Scanning method is performed to find the region with minimum $p$-value, but the test statistic $Q$ is then defined to be the number of events in the \textit{test} set in the region indicated by the train set, which under the background-only hypothesis should be distributed as $Q\sim\text{Poiss}(f\epsilon B)$.
 Since the train and tests sets are statistically independent in the background-only case, just because there's an excess in the train set that does not imply that there will be an excess in the test set, and the background-only $p$-values should be unbiased.
 
 Figure~\ref{fig:CWoLa:p_traintest} shows the probability distributions of the $p$-values with a $f=\frac{1}{2}$ train/test split.
@@ -148,7 +150,7 @@ The background-only case has $\text{Prob}(p \leq \alpha | H_0) = \alpha$ as expe
 However, the signal sensitivity is actually worse than the Inclusive Search.
 This is due to two factors.
 First, since $(1-f)<1$, it is harder to find the region in which the signal lays than without the train/test split.
-Second, since $f<1$, even in cases where the correct region is found, the significance of the excess in that region is reduced by a factor of $\sim\sqrt{f}$\footnote{The significance is roughly $\frac{S}{\sqrt{B}}$. If both $S$ and $B$ are multiplied by a factor of $f<1$, the significance is multiplied by $\sqrt{f}<1$.}.
+Second, since $f<1$, even in cases where the correct region is found, the significance of the excess in that region is reduced by a factor of $\sim\sqrt{f}$\footnote{The significance in the correct region is roughly $\frac{S}{\sqrt{\epsilon B}}$. If both $S$ and $B$ are multiplied by a factor of $f<1$, the significance is multiplied by $\sqrt{f}<1$.}.
 
 \begin{figure}[h!]
 \centering
@@ -163,11 +165,12 @@ In this method, the data are split randomly into $k$ sets.
 One of the $k$ sets is set as the test set, comprising $f=\frac{1}{k}$ of the data, and the remaining $1-f=\frac{k-1}{k}$ of the data is set as the train set.
 The Direct Scanning method with the train/test split described above is then performed.
 Then, the whole process is repeated with each of the $k$ sets designated as the test set in turn.
-The test statistic is the sum across the $k$ test sets of the number of events in the chosen region from the respective train set, which in the background-only hypothesis is distributed as $\text{Poiss}(\epsilon B)$.
+The test statistic $Q$ is the sum across the $k$ test sets of the number of events in the chosen region from the respective train set, which in the background-only hypothesis is distributed as $Q\sim\text{Poiss}(\epsilon B)$.
 Both of the factors mentioned above are addressed, as the train set comprises $\frac{k-1}{k} \sim 1$ of the data, and the sum of the test set sizes is not reduced by a factor of $f$.
 
 Figure~\ref{fig:CWoLa:p_traintest_kfold} shows the probability distributions of the $p$-values with a $k=5$ $k$-fold cross-testing.
 Unfortunately, the background-only $p$-values are biased, with $\text{Prob}(p \leq \alpha | H_0) > \alpha$.
+This is due to the following effect.
 In cases where there is a large (fake) excess in one of the regions, even when splitting into the $k$ sets, there will still be a large excess in each of the $k$ train sets in that region.
 This means that each of the $k$ trainings will choose the same region to tag in the test set, which is the region in which there is a large excess overall.
 Interestingly, this effect goes away when there are no large excesses in any of the regions, which can be seen in Figure~\ref{fig:CWoLa:p_traintest_kfold} as $\text{Prob}(p \leq \alpha | H_0) = \alpha$ for $\alpha\gtrsim0.3$.
@@ -183,16 +186,16 @@ This effect is made more clear in the case that $k\gg1$ - in that case, the trai
 
 CWoLa hunting makes use of the above ideas with $k$-fold cross-testing.
 However, in addition, CWoLa uses a neural network (NN) to learn what region to tag in the train set before tagging in the test set.
-The NN features a key difference to the Direct Scanning method outlined above in that the NN score has certain regularization requirements which lead to smoothness in the NN output\footnote{In the search in Chapter~\ref{ch:CWoLa}, there is also a validation set which serves to prevent overtraining the network, and the scores from multiple networks across different validation permutations are averaged together, further smoothing the output.}.
-The NN effectively assumes the probability distribution of $x$ is smooth, by finding small regions $\epsilon'<\epsilon$ with overdensities, assuming that corresponds to a local maximum of the probability distribution, and smoothly interpolating from there.
+The NN features a key difference to the Direct Scanning method outlined above in that the NN score has certain regularization requirements which lead to smoothness in the NN output~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}\footnote{In the search in Chapter~\ref{ch:CWoLa}, there is also a validation set which serves to prevent overtraining the network, and the scores from multiple networks across different validation permutations are averaged together, further smoothing the output.}.
+The NN effectively assumes the probability distribution of $X$ is smooth, by finding small regions $\epsilon'<\epsilon$ with overdensities, assuming that corresponds to a local maximum of the probability distribution, and smoothly interpolating from there.
 In the toy model, this behavior is encapsulated by finding the region with length $\epsilon' = \frac{\epsilon}{10} = 0.01$ that has the highest density in the train set, and then designating the region of size $\epsilon$ with the overdensity at its center as the tagging region for the test set.
 
 To demonstrate the advantages of the NN over the Direct Scanning method, this mock NN is demonstrated \textbf{without $k$-fold cross-testing}, but rather training and testing on the same set.
-The test statistic is the number of events observed in the tagging region, which in the background-only hypothesis should be distributed as $\text{Poiss}(\epsilon B)$.
+The test statistic $Q$ is the number of events observed in the tagging region, which in the background-only hypothesis should be distributed as $Q\sim\text{Poiss}(\epsilon B)$.
 
 The probability distributions of the $p$-values with this mock NN are shown in Figure~\ref{fig:CWoLa:p_nokfold}.
 Despite training and testing on the same set, as in the original Direct Scanning approach (Figure~\ref{fig:CWoLa:p_max}), the background-only $p$-values already look better, albeit still biased (since there is an overdensity in the tagged region).
-In addition, the $p$-values in the background plus signal case are significantly higher than in the Direct Scanning approach, indicating that if the background-only $p$-values were calibrated, the signal sensitivity would be better.
+In addition, the $p$-values in the background plus signal case are significantly smaller (significantly higher probability that $p\leq\alpha$ for fixed $\alpha$) than in the Direct Scanning approach, indicating that if the background-only $p$-values were calibrated, the signal sensitivity would be better.
 
 \begin{figure}[h!]
 \centering
@@ -203,11 +206,11 @@ In addition, the $p$-values in the background plus signal case are significantly
 \end{figure}
 
 The CWoLa hunting method makes use of both a NN and a $k$-fold cross-testing ($k=5$), combining the advantages of both innovations over the Direct Scanning method.
-The test statistic is the number of events observed in the tagging region summed across the test sets, which in the background-only hypothesis should be distributed as $\text{Poiss}(\epsilon B)$.
+The test statistic $Q$ is the number of events observed in the tagging region summed across the test sets, which in the background-only hypothesis should be distributed as $Q\sim\text{Poiss}(\epsilon B)$.
 
 The probability distributions of the $p$-values can be seen in Figure~\ref{fig:CWoLa:p_kfold}.
 It can be seen that the background-only $p$-values are approximately unbiased, with $\text{Prob}(p \leq \alpha | H_0) \approx \alpha$ across the whole range.
-In addition, the background plus signal $p$-values are significantly higher than in the Inclusive Search - the probability of a $Z=2$ excess is about $0.9$, and the probability of a $Z=3$ excess is greater than $0.5$.
+In addition, the background plus signal $p$-values are significantly smaller than in the Inclusive Search - the probability of a $Z=2$ excess is about $0.9$, and the probability of a $Z=3$ excess is greater than $0.5$.
 This indicates that the signal sensitivity is significantly better than in the Inclusive Search, without paying a penalty of higher Type I errors.
 
 \begin{figure}[h!]
@@ -225,7 +228,7 @@ In this toy model the size of the signal $\delta$ was set to be smaller than $\e
 However, this is not necessary in general, as long as the presence of the signal causes a significant overdensity in a small region, which the NN can tag according to its regularization requirements. 
 
 In addition, the above discussion points out that the $k$-fold cross-testing is necessary for the CWoLa hunting method to work as expected, but the use of a regularized NN is equally important, which is maybe not as obvious.
-The various complicated steps of the NN training (Section~\ref{sec:CWoLa:network}) serve not only to prevent overtraining the network but also to smooth the NN output and meet these smoothness requirements.
+The various complicated steps of the NN training (Section~\ref{sec:CWoLa:network}) serve not only to prevent overtraining the network but also to smooth the NN output.
 
 Finally, the above discussion is simply a toy model intended to demonstrate how CWoLa hunting can work, but not necessarily that it does, which depends on the NN architecture.
 Ultimately the background-only $p$-values have to be validated as an empirical test of the setup.

@@ -44,7 +44,7 @@ The details of this technique and the application to this specific search are pr
 
 This Chapter presents a search for a generic $A\rightarrow BC$ resonance where the $B$ and $C$ particles are each reconstructed as single massive large-$R$ jets, and the $A$ particle is reconstructed as a resonance in the dijet invariant mass spectrum, but other than that the properties of $A,B,C$ are not specified, and in particular may or may not be BSM.
 Events collected by the ATLAS detector using the full Run 2 $\sqrt{s}=13$ TeV $pp$ collision dataset are used for the search, corresponding to 139\ifb{} of data.
-The CWoLa technique is used by training a neural network (NN) to act as the classifier of potential signal.
+The CWoLa technique is used by training a neural network to act as the classifier of potential signal.
 Though the original proposal for this kind of analysis~\cite{Collins:2019jip} uses a broad class of features related to the substructure of the jet, this analysis uses a reduced feature space of just the masses $\{m_1,m_2\}$ of the two jets.
 As this is the first search of its kind, this reduction is intended to simplify the analysis and understand fully all the various effects.
 This simplification also allows for the setting of limits on specific signal models, since any limit setting requires the use of simulations of signal models, and the large-$R$ jet mass is well-constrained and the uncertainties are well-understood~\cite{Aaboud:2018kfi} (a similar statement cannot be made about the general substructure of large-$R$ jets).
@@ -167,7 +167,7 @@ In fact, the method learns to tag whatever signal is present in the data, allowi
 The setup CWoLa hunting is shown schematically in Figure~\ref{fig:CWoLa:cwolahuntingsetup}.
 There is some feature $m_\text{res}$ for which the background has a smoothly falling spectrum, while the signal is narrowly peaked (\textit{resonant}) in that feature.
 Two mixed samples are formed: one with values of $m_\text{res}$ centered near the potential new resonance and one using events in neighboring regions of $m_\text{res}$.
-A neural network (NN) is trained to distinguish between these two mixed samples based on some other features, resulting in an overall score $y$.
+A neural network is trained to distinguish between these two mixed samples based on some other features, resulting in an overall score $y$.
 The first mixed sample clearly has a higher signal fraction than the second;
 and because the two mixed samples come from nearby regions of $m_\text{res}$, the difference in distributions of features in the background between the two mixed samples can be smaller than the fraction of signal times the difference in distributions between the signal and background.
 Therefore, because of the principles of CWoLa, the scores from the resulting network $y$ can distinguish between signal and background events. 
@@ -667,9 +667,12 @@ Therefore, even though the scaling can be biased by the presence of a signal in 
 \end{figure}
 
 \FloatBarrier
+
 \subsection{Neural Network Architecture}
 \label{sec:CWoLa:network}
 The neural network which determines the final score for each event, indicating more or less signal-like, is derived in multiple stages.
+Neural networks have been shown to have excellent performance on a wide variety of training tasks with limited training data~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}.
+
 These stages are intended to maximize the sensitivity to new potential signals, while remaining robust to statistical fluctuations and true correlations in the background.
 
 In Analysis Step~\ref{step3} (Section~\ref{sec:CWoLa:Analysis:Overview}), some signal bin $s$ is designated. The process below can then be considered an enumeration of the steps in Analysis Step~\ref{step4} (Section~\ref{sec:CWoLa:Analysis:Overview}).

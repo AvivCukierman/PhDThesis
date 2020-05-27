@@ -152,7 +152,12 @@ If there are such dependencies of $f_{\theta}(x)$ on more than one feature $\the
 \label{sec:GenNI:genni}
 %-------------------------------------------------------------------------------
 
-The idea of generalized numerical inversion is to simply replace the sequential approach in Equation~\ref{eqn:GenNI:gsc} with a single inversion: $p_\text{T}^\text{reco}\mapsto \ptrecohat = f_{\theta_1,...,\theta_n}^{-1}(p_\text{T}^\text{reco})$.  Binning the response in $n$ dimensions would require significant computing resources and so is practically infeasible.  An unbinned approach that can simultaneously capture the dependence on many features is needed to exploit the potential correlations in the response on the $\theta_i$.  One powerful tool for this purpose is a neural network.  In principle, neural networks can approximate any smooth function~\cite{Cybenko1989,HORNIK1991251} and have been shown to provide excellent performance for a wide variety of classification and regression tasks with limited training data.  Inverting a neural network can be non-trivial, so the procedure for generalized numerical inversion is adapted as follows:
+The idea of generalized numerical inversion is to simply replace the sequential approach in Equation~\ref{eqn:GenNI:gsc} with a single inversion: $p_\text{T}^\text{reco}\mapsto \ptrecohat = f_{\theta_1,...,\theta_n}^{-1}(p_\text{T}^\text{reco})$.
+Binning the response in $n$ dimensions would require significant computing resources and so is practically infeasible.
+An unbinned approach that can simultaneously capture the dependence on many features is needed to exploit the potential correlations in the response on the $\theta_i$.
+One powerful tool for this purpose is a neural network.
+In principle, neural networks can approximate any smooth function~\cite{Rosenblatt58theperceptron,Cybenko1989,HORNIK1991251} and have been shown to provide excellent performance for a wide variety of classification and regression tasks with limited training data~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}.
+Inverting a neural network can be non-trivial, so the procedure for generalized numerical inversion is adapted as follows:
 
 \begin{enumerate}
   \item Learn a neural network approximation $L(x,\theta)$ to the function $f_\theta(x)=\langle p_\text{T}^\text{reco}|p_\text{T}^\text{true}=x,\theta\rangle$.  \\ Note that, if $\theta$ is a vector with $n$ features, then $L(x,\theta):\mathbb{R}^{n+1}\rightarrow\mathbb{R}$.
