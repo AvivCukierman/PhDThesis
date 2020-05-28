@@ -140,6 +140,7 @@ Or rather, if there are differences between background events in Mixed Sample 1 
 The insight of the CWoLa method is that a classifier can be trained to distinguish between the two mixed samples using any supervised learning technique.
 The resulting classifier learns to distinguish between the signal and background events.
 The main result of~\cite{Metodiev:2017vrx} is that it can be proved that this procedure produces an optimal classifier for distinguishing signal from background in the asymptotic limit (enough data, flexible enough training model, etc.).
+The proof is straightforward and is provided in Appendix~\ref{app:CWoLa:CWoLa_proof}.
 
 \begin{figure}
 \centering
@@ -309,11 +310,11 @@ The distribution of the rapidity difference in the background simulation can be 
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_Wprime_WZqqqq_M3000_m200_m200_4.10.19}.pdf}}
-  %\subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{jet_rapdiff_log_Wprime_WZqqqq_M6000_m200_m200_4.10.19}.pdf}}
-  \caption{Distribution of $|y_1-y_2|$ for a signal model with ($m_A,m_B,m_C=3000,200,200$ GeV).
-    %(a) ($m_A,m_B,m_C=3000,200,200$ GeV);
-    %(b) ($m_A,m_B,m_C=6000,200,200$ GeV).
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{/jet_rapdiff_log_Wprime_WZqqqq_M3000_m200_m200_1.14.20}.pdf}}
+  \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{/jet_rapdiff_log_Wprime_WZqqqq_M5000_m200_m200_1.14.20}.pdf}}
+  \caption{Distribution of $|y_1-y_2|$ for a signal model with 
+    (a) ($m_A,m_B,m_C=3000,200,200$ GeV);
+    (b) ($m_A,m_B,m_C=5000,200,200$ GeV).
     The green line indicates the selection at 1.2 (Section~\ref{sec:CWoLa:eventselection}).}
 \label{fig:CWoLa:sig_rapdiff}
 \end{figure}
@@ -410,7 +411,7 @@ The reasoning behind this selection is explained in more detail in Section~\ref{
 Typically the dijet invariant mass $m_{JJ}$ would be defined as in terms of the sum of the four-momenta of the two jets, $m_{JJ}^2 = (p^\mu_1+p^\mu_2)^2 = m_1^2+m_2^2+2\left(E_1E_2-\vec{p}_1\cdot\vec{p}_2\right)$, with $E^2 = |\vec{p}|^2+m^2$ and $|\vec{p}| = p_T\cosh(\eta)$.
 In this analysis the dijet invariant mass is defined slightly differently: in order to reduce correlations between the features used in the neural network ($m_1,m_2$) and the final $m_{JJ}$ value, the dijet invariant mass is formed by setting all $m_i$ to zero: $m_{JJ}^2 \equiv 2\left(|\vec{p}_1||\vec{p_2}|-\vec{p}_1\cdot\vec{p}_2\right)$.
 This new definition removes all correlations between $m_{JJ}$ and $m_1,m_2$ except for those arising from indirect correlations between the jet $m$ and the jet $p_T$ and $\eta$.
-In practice this is a very small change, because the jets in this analysis typically have energies much larger than their masses, and so the new definition gives almost the same value for the invariant mass.
+In practice this is a very small change, because the jets in this analysis typically have energies much larger than their masses, and so the new definition gives almost the same value for the invariant mass\footnote{For example, an event with back-to-back jets and $m_{JJ}=1.8~\TeV$ under the new definition would have $|\vec{p}_1|=|\vec{p}_2|=0.9~\TeV$. If each of these jets had a mass of $500~\GeV$, then the standard $m_{JJ}$ would be $\sim2.06~\TeV$, a $\sim 15\%$ change. This is less than the dijet mass resolution of $\sim20\%$ (Figure~\ref{fig:CWoLa:sig_m1_m2}). In the background jets with that high mass are very rare (Figure~\ref{fig:CWoLa:bkg_m1_m2}), and with more typical values of $<200~\GeV$ the change in $m_{JJ}$ is $<2\%$.}.
 As will be discussed in Section~\ref{sec:CWoLa:binning}, a selection is applied on the dijet invariant mass of $1.1 \le m_{JJ} < 8.17$ TeV.
 As will be discussed in Section~\ref{sec:CWoLa:fitting}, effectively a selection of $1.8 \le m_{JJ}$ TeV is applied as the fitting range.
 
@@ -672,7 +673,7 @@ Therefore, even though the scaling can be biased by the presence of a signal in 
 \label{sec:CWoLa:network}
 The neural network which determines the final score for each event, indicating more or less signal-like, is derived in multiple stages.
 Neural networks have been shown to have excellent performance on a wide variety of training tasks in high dimensions with limited training data~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}.
-Since there are only two features being used in this search, it may seem like overkill to use a NN, as opposed to simply examining the likelihood ratio by using two-dimensional histograms.
+Since there are only two features being used in this search, it may seem like overkill to use a NN, as opposed to simply examining the likelihood ratio by using two-dimensional histograms, or using a boosted decision tree~\cite{friedman2001greedy,friedman2002stochastic,friedman2000additive,friedman2001elements}.
 
 The first response to this is that, while the NN is a monotonic function of the likelihood ratio in the asymptotic limit, the NN also involves certain regularization constraints which allow the estimation of the likelihood ratio to be smooth.
 This smooth estimation is actually crucial for allowing CWoLa hunting to be generically sensitive without paying a large trials factor - this claim is explored in detail in Appendix~\ref{app:CWoLa:trials}.
@@ -696,6 +697,7 @@ See also Figure~\ref{fig:CWoLa:flowchart} for an overview.
   \label{NNstep5}
   \item A neural network is trained using only the training set, with features $X = \{m_1,m_2\}$, rescaled as described in Section~\ref{sec:CWoLa:decorrelation}. The events are labeled with $Y \in [0,1]$, with $1$ indicating an event in the signal region, and $0$ indicating an event in the sidebands. The events in each of the sideband regions are weighted uniformly in the training so that the sum of weights in each of the sideband regions is equal.
 
+  The details of the NN are given below\footnote{For an excellent introductory explanation of machine learning and neural networks, see~\cite{ng2000cs229}.}.
   The network is a Sequential Neural Network with 4 layers of size 64,32,8,1, and activation functions \texttt{ReLu},\texttt{ReLu},\texttt{ReLu},sigmoid, respectively, as implemented in \texttt{Keras}~\cite{chollet2015keras}.
   The loss used is the binary cross-entropy, and the training loss is minimized using the \texttt{Adam}~\cite{kingma2014adam} optimizer.
   The loss is evaluated on the validation set.
@@ -715,6 +717,8 @@ See also Figure~\ref{fig:CWoLa:flowchart} for an overview.
 
   The score from the neural network output is scaled monotonically as a quantile between 0 and 1 on the events in the signal region test set (note that the scores for all events in the test set are recorded, not just those in the signal region).
   That is to say, after the scaling, an event with a score of $0 \le \epsilon \le 1$ received a higher score from the neural network than exactly a fraction $\epsilon$ of the events in the signal region test set.
+  In particular, a high NN score corresponds to a low $\epsilon$.
+  E.g., a selection choosing the $10\%$ most signal-like events would place a minimum on the NN score, which because of the monotonic rescaling corresponds to a maximum on $\epsilon$, with exactly the selection $\epsilon<0.1$.
   The scaling is done in this way so that different networks can later be combined by averaging their scores; since the network output score is standardized, this averaging is meaningful.
   \item Repeat Steps~\ref{NNstep5}-\ref{NNstep7} by varying $i_v$ to each of the remaining cross-validation sets in turn, keeping the test set $i_t$ fixed.
     I.e., there are 4 different validation set choices for the given test set, and these steps are repeated for each one, resulting in 4 different networks.
@@ -1197,7 +1201,7 @@ Example fits in the coarse bins used for training are shown in Figure~\ref{fig:C
     \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{mjj_loglog_fit_all_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1500_patience1000_SEC_4params_4.10.19}.pdf}}
     \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{mjj_loglog_fit_q99_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1500_patience1000_SEC_4params_4.10.19}.pdf}}
     \caption{Example fits to the $m_{JJ}$ spectrum using the functional form given in Equation~\ref{eqn:CWoLa:fitfunction}.
-    There is an injected signal sample at $m_A,m_B,m_C=3000,200,200$ GeV, which lies mostly in signal segion 5, and with $\frac{S}{\sqrt{B}}\sim 2$ in that region. (a) With no cut on the NN output; (b) Training a NN with signal region $s=5$ ($2.74-3.28$~\TeV), and making a cut on the NN output at efficiency $\epsilon=0.01$.   The uncertainty on the fit is due to the covariance matrix from the fit parameters.}
+    There is an injected signal sample at $m_A,m_B,m_C=3000,200,200$ GeV, which lies mostly in signal segion 5, and with $\frac{S}{\sqrt{B}}\sim 2$ in that region. (a) With no cut on the NN output; (b) Training a NN with signal region $s=5$ ($2.74-3.28$~\TeV), and making a cut on the NN output at efficiency $\epsilon=0.01$.   The red band indicates the uncertainty on the fit, which is due to the covariance matrix from the fit parameters. The green dashed lines indicate the signal region for training.}
     \label{fig:CWoLa:examplefits}
 \end{figure}
 
@@ -1458,7 +1462,7 @@ This indicates that the NN is not sculpting the background distribution in favor
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{q75_sigR5_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}\\
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{q90_sigR5_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{q99_sigR5_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}
-\caption{The background fit when there is no injected signal, in signal region 5, for various efficiency points $\epsilon$. Note that these are data and not simulation, using the inverted rapidity cut data selection.  The red dashed lines indicate the fit uncertainty.}
+\caption{The background fit when there is no injected signal, in signal region 5, for various efficiency points $\epsilon$. Note that these are data and not simulation, using the inverted rapidity cut data selection.  The red dashed lines indicate the fit uncertainty. The green dashed lines indicate the signal region for training.}
 \label{fig:CWoLa:inverted:fit_sigR5_nosignal}
 \end{figure}
 
@@ -1480,7 +1484,7 @@ After cutting on the output of the NN, the background is reduced while the signa
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{combined_q75_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS750_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}\\
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{combined_q90_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS750_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{combined_q99_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS750_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}\\
-\caption{The fit with an injected signal at $m_A=3000,m_B=200,m_C=200$ \GeV, in signal region 5, for various efficiency points $\epsilon$. The strength of the signal is $\mu=750$, corresponding to a $\sim 1.5\sigma$ excess in this bin. \textbf{Note that the data points include both the observed data and the injected signal}. Note that other than the injected signal, these are data and not simulation, using the inverted rapidity cut data selection. The red dashed lines indicate the fit uncertainty.}
+\caption{The fit with an injected signal at $m_A=3000,m_B=200,m_C=200$ \GeV, in signal region 5, for various efficiency points $\epsilon$. The strength of the signal is $\mu=750$, corresponding to a $\sim 1.5\sigma$ excess in this bin. \textbf{Note that the data points include both the observed data and the injected signal}. Note that other than the injected signal, these are data and not simulation, using the inverted rapidity cut data selection. The red dashed lines indicate the fit uncertainty. The green dashed lines indicate the signal region for training.}
 \label{fig:CWoLa:inverted:fit_sigR5_M3000_m200_m200_nS1000}
 \end{figure}
 
@@ -1500,7 +1504,7 @@ At this cut level, for these mass points, there is a maximum excess of $\ge 5\si
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{combined_q99_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1000_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{combined_q99_sigR5_Wprime_WZqqqq_M3000_m200_m400_nS1000_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{combined_q99_sigR5_Wprime_WZqqqq_M3000_m400_m400_nS1000_patience100_yinvertresample_11.2.19_SWiFT_all}.pdf}}\\
-\caption{The fit with an injected signal at $m_A=3000$ \GeV and (a) $m_B=80,m_C=80$; (b) $m_B=80,m_C=200$; (c) $m_B=80,m_C=400$; (d) $m_B=200,m_C=200$; (e) $m_B=200,m_C=400$; and (f) $m_B=400,m_C=400$ \GeV, in signal region 5, for efficiency points $\epsilon=0.1$ (a,b,c) and $\epsilon=0.01$ (d,e,f). The strength of the signal is $\mu=1000$, corresponding to a $\sim 1.7\sigma$ excess in this bin. \textbf{Note that the data points include both the observed data and the injected signal}. Note that other than the injected signal, these are data and not simulation, using the inverted rapidity cut data selection.  The red dashed lines indicate the fit uncertainty.}
+\caption{The fit with an injected signal at $m_A=3000$ \GeV and (a) $m_B=80,m_C=80$; (b) $m_B=80,m_C=200$; (c) $m_B=80,m_C=400$; (d) $m_B=200,m_C=200$; (e) $m_B=200,m_C=400$; and (f) $m_B=400,m_C=400$ \GeV, in signal region 5, for efficiency points $\epsilon=0.1$ (a,b,c) and $\epsilon=0.01$ (d,e,f). The strength of the signal is $\mu=1000$, corresponding to a $\sim 1.7\sigma$ excess in this bin. \textbf{Note that the data points include both the observed data and the injected signal}. Note that other than the injected signal, these are data and not simulation, using the inverted rapidity cut data selection.  The red dashed lines indicate the fit uncertainty. The green dashed lines indicate the signal region for training.}
 \label{fig:CWoLa:inverted:fit_sigR5_nS1000}
 \end{figure}
 
@@ -1709,7 +1713,7 @@ The distribution of significances, in particular the rate of large excesses, is 
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{q90_sigR7_patience100_1.14.20_nomask_corr}.pdf}}
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{q90_sigR8_patience100_1.14.20_nomask_corr}.pdf}}
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{q90_sigR9_patience100_1.14.20_nomask_corr}.pdf}}
-\caption{The background fit when there is no injected signal, for efficiency point $\epsilon=0.1$, in signal region (a) 4; (b) 5; (c) 6; (d) 7; (e) 8; and (f) 9. The red dashed lines indicate the fit uncertainty.}
+\caption{The background fit when there is no injected signal, for efficiency point $\epsilon=0.1$, in signal region (a) 4; (b) 5; (c) 6; (d) 7; (e) 8; and (f) 9. The red dashed lines indicate the fit uncertainty. The green dashed lines indicate the signal region for training, and the green dotted lines indicate the masked region for evaluating the fit quality.}
 \label{fig:CWoLa:unblinded:fit_q90_nosignal}
 \end{figure}
 
@@ -1721,7 +1725,7 @@ The distribution of significances, in particular the rate of large excesses, is 
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{q99_sigR7_patience100_1.14.20_nomask_corr}.pdf}}
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{q99_sigR8_patience100_1.14.20_nomask_corr}.pdf}}
 \subfloat[]{\includegraphics[width=0.33\textwidth]{figures_CWoLa/{q99_sigR9_patience100_1.14.20_nomask_corr}.pdf}}
-\caption{The background fit when there is no injected signal, for efficiency point $\epsilon=0.01$, in signal region (a) 4; (b) 5; (c) 6; (d) 7; (e) 8; and (f) 9. The red dashed lines indicate the fit uncertainty.}
+\caption{The background fit when there is no injected signal, for efficiency point $\epsilon=0.01$, in signal region (a) 4; (b) 5; (c) 6; (d) 7; (e) 8; and (f) 9. The red dashed lines indicate the fit uncertainty. The green dashed lines indicate the signal region for training, and the green dotted lines indicate the masked region for evaluating the fit quality.}
 \label{fig:CWoLa:unblinded:fit_q99_nosignal}
 \end{figure}
 
@@ -1738,7 +1742,9 @@ In both cases, after cutting on the output of the NN, the background is reduced 
 \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{q99_sigR8_Wprime_WZqqqq_M5000_m200_m200_nS225_patience100_1.14.20_nomask_corr}.pdf}}
 \caption{(a,b) The fit with an injected signal at $m_A=3000,m_B=200,m_C=200$ \GeV, in signal region 5, for the two efficiency points $\epsilon$. The strength of the signal is $\mu=500$, corresponding to a $\sim 1.0\sigma$ excess in this bin with no cuts.
 (c,d) The fit with an injected signal at $m_A=5000,m_B=200,m_C=200$ \GeV, in signal region 8, for the two efficiency points $\epsilon$. The strength of the signal is $\mu=225$, corresponding to a $\sim 1.5\sigma$ excess in this bin with no cuts.
-The red dashed lines indicate the fit uncertainty.}
+The red dashed lines indicate the fit uncertainty.
+The green dashed lines indicate the signal region for training, and the green dotted lines indicate the masked region for evaluating the fit quality.
+}
 \label{fig:CWoLa:unblinded:fit_sigR5_M3000_m200_m200_nS500}
 \end{figure}
 
@@ -1746,6 +1752,7 @@ The fit results for all the signals at the injected $\mu$ value that gives rise 
 
 These fits are summarized in Figure~\ref{fig:CWoLa:unblinded:stitched_fits}.
 For each signal region training, only the region of the fit that corresponds to the signal region is shown, and these regions are stitched together across the signal regions 4-9. 
+Because the signal regions from independent fits (with independently trained NNs, and therefore possibly entirely different selections) are stitched together, it is possible for the background fit to be discontinuous when crossing from one signal region to another, even if the background fit is smooth within a single signal region.
 %The distribution of excesses in the case with no injected signal is consistent with the background-only hypothesis at roughly the $2\sigma$ level (Appendix~\ref{app:CWoLa:pulls}).
 The figure also shows simultaneously a signal injected at $m_A=3000$ GeV trained in signal region 5 and a signal injected at $m_A=5000$ GeV trained in signal region 8.
 In each case, the signal strength is just less than that already excluded by existing searches (Section~\ref{sec:CWoLa:unblinded:limits}).
@@ -1852,12 +1859,12 @@ A natural extension of this analysis is to include more features of the two jets
 Indeed, the original proposal for this analysis~\cite{Collins:2018epr} uses jet substructure information like N-subjettiness~\cite{Thaler:2010tr} to tag the jets and be much more sensitive to new signals that have non-trivial distributions in those features.
 Other ideas for using additional information about the jets are to include features which are typically used for $b$- or $c$-tagging~\cite{ref:TODO}, di-$b$-tagging for Higgs identification~\cite{ref:TODO}, photon and electron identification~\cite{ref:TODO}, $\tau$-tagging~\cite{ref:TODO}, or quark-gluon tagging~\cite{ATL-PHYS-PUB-2017-009}.
 Each of these sets of features would allow this analysis to be more sensitive to resonant decays to the given standard model particles, but also other more exotic jets produced from BSM particles.
-For example, using the entire jet image~\cite{ATL-PHYS-PUB-2017-017} to construct features with convolutional neural networks~\cite{ref:TODO} could enable the low-mass extension of the search presented in Chapter~\ref{ch:HBSM}, in which the $a$ particles are each reconstructed as single small-$R$ jets with exotic substructures due to the boosted $gg$ and $\gamma\gamma$ decays.
+For example, using the entire jet image~\cite{Cogan:2014oua,deOliveira:2015xxd,ATL-PHYS-PUB-2017-017} to construct features with convolutional neural networks~\cite{ref:TODO} could enable the low-mass extension of the search presented in Chapter~\ref{ch:HBSM}, in which the $a$ particles are each reconstructed as single small-$R$ jets with exotic substructures due to the boosted $gg$ and $\gamma\gamma$ decays.
 
 A word of caution should be raised here about these exciting possibilities, though.
 The first thing to mention is that one advantage of using a reduced feature space is that calibrations and systematic uncertainties are available on all the included features (Section~\ref{sec:CWoLa:systs}).
 This allows limits to be set on specific signal models while including all the known uncertainties between the simulation and the data.
-The use of any other jet substructure features may not come with these calibrations and uncertainties, meaning that the limit projections may be biased or that additional performance work will need to be done to enable the analysis.
+The use of any other jet substructure features may not come with these calibrations and uncertainties, meaning that the limit projections may be biased or that additional performance work will need to be done to enable the analysis\footnote{Note that other more typical searches do use jet substructure features which are not themselves calibrated. In those searches the signal selection is set in advance, often by training in simulation, so that the overall classifier can be calibrated between data and simulation and the uncertainties understood. Since in this search the selection is not set in advance, this kind of approach would not work.}.
 Of course, one of the main advantages of CWoLa hunting in the first place is that it does not require a specific signal model hypothesis and simply learns to tag whatever signal happens to be in data, if such a signal exists; i.e., the network itself does not need to be calibrated, and the only reason simulations are required are to understand what would have happened if a given signal were present.
 The second consideration that should go into adding additional features has to do with accounting for correlations between the features and $m_{JJ}$.
 This analysis spent considerable effort on imposing a decorrelation between the features and $m_{JJ}$ (Section~\ref{sec:CWoLa:decorrelation}), and it is not clear exactly how this could be extended to arbitrary numbers and types of features.

@@ -186,7 +186,7 @@ This effect is made more clear in the case that $k\gg1$ - in that case, the trai
 CWoLa hunting makes use of the above ideas with $k$-fold cross-testing.
 However, in addition, CWoLa uses a neural network (NN) to learn what region to tag in the train set before tagging in the test set.
 The NN features a key difference to the Direct Scanning method outlined above in that the NN score has certain regularization requirements which lead to smoothness in the NN output~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}\footnote{In the search in Chapter~\ref{ch:CWoLa}, there is also a validation set which serves to prevent overtraining the network, and the scores from multiple networks across different validation permutations are averaged together, further smoothing the output.}.
-The NN effectively assumes the probability distribution of $X$ is smooth, by finding small regions $\epsilon'<\epsilon$ with overdensities, assuming that corresponds to a local maximum of the probability distribution, and smoothly interpolating from there.
+The NN attempts to approximate the likelihood distribution of $X$~\cite{neyman1933ix} with a smooth function, by finding small regions $\epsilon'<\epsilon$ with overdensities, assuming that corresponds to a local maximum of the probability distribution, and smoothly interpolating from there.
 In the toy model, this behavior is encapsulated by finding the region with length $\epsilon' = \frac{\epsilon}{10} = 0.01$ that has the highest density in the train set, and then designating the region of size $\epsilon$ with the overdensity at its center as the tagging region for the test set.
 
 To demonstrate the advantages of the NN over the Direct Scanning method, this mock NN is demonstrated \textbf{without $k$-fold cross-testing}, but rather training and testing on the same set.
@@ -232,6 +232,44 @@ The various complicated steps of the NN training (Section~\ref{sec:CWoLa:network
 Finally, the above discussion is simply a toy model intended to demonstrate how CWoLa hunting can work, but not necessarily that it does, which depends on the NN architecture.
 Ultimately the background-only $p$-values have to be validated as an empirical test of the setup.
 These tests are included in the various steps of the validation (Sections~\ref{sec:CWoLa:simulation_analysis} and~\ref{sec:CWoLa:val_analysis}).
+
+\section{Classification Without Labels Optimality Proof}
+\label{app:CWoLa:CWoLa_proof}
+In a classification problem, there is a sample of events from a signal process $S$ and a sample of events from a background process $B$, and the goal is to determine based on observable features which process a given event comes from.
+Let $\mathbf{x}$ be a set of features which are useful for discriminating signal and background, and let $p_S(\mathbf{x})$ and $p_B(\mathbf{x})$ be the probability distributions of $\mathbf{x}$ for signal and background events, respectively.
+A classifier $h: \mathbf{x}\rightarrow \mathcal{R}$ is designed to distinguish between signal and background events.
+For a given selection $h>c$, the efficiency on the signal is $\epsilon_S = \int d\mathbf{x} p_S(\mathbf{x}) \Theta\left(h(\mathbf{x})-c\right)$, and the efficiency on the background is $\epsilon_B = \int d\mathbf{x} p_B(\mathbf{x}) \Theta\left(h(\mathbf{x})-c\right)$, with $\Theta$ the Heaviside step function.
+It is clear that a monotonic rescaling of $h$ corresponds only to a monotonic rescaling of the threshold $c$, and that the performance of the classifier is determined entirely by the function $\epsilon_B(\epsilon_S)$, also known as the receiver operating characteristic (ROC) curve~\cite{egan1975signal}.
+
+A classifier $h$ is considered to be \textit{optimal} if for all other classifier $h'$, $\epsilon_B^{h'}(\epsilon_S) \geq \epsilon_B^{h}(\epsilon_S)$.
+By the Neyman-Pearson Lemma~\cite{neyman1933ix}, an optimal classifer is the likelihood ratio $h^\text{optimal} = p_S(\mathbf{x})/p_B(\mathbf{x})$.
+The goal is therefore to derive a classifier that is the likelihood ratio, up to monotonic rescalings.
+
+In a fully supervised learning problem, the labels of data in the training set are known, and a classifier is trained to distinguish between the signal and background samples.
+With a suitable loss function, a flexible enough classifier architecture, and enough training data, the derived classifier approximates the optimal likelihood ratio classifier.
+
+In Classification Without Labels (CWoLa), there are only two mixed samples, $M_1$ and $M_2$, with signal fractions $f_1$ and $f_2$ ($f_1>f_2$), respectively, which are unknown.
+The key insight of the CWoLa method is that the optimal classifier for distinguishing $M_1$ and $M_2$ is the same as the optimal classifier for distinguishing $S$ and $B$.
+That is to say, training a classifier to distinguish $M_1$ and $M_2$ will, in the asymptotic limit, result in an optimal classifier for distinguishing signal and background.
+
+The proof is as follows.
+The likelihood distributions of the mixed samples are
+\begin{align}
+  p_{M_1}(\mathbf{x}) &= f_1p_S(\mathbf{x})+(1-f_1)p_B(\mathbf{x}),\\
+  p_{M_2}(\mathbf{x}) &= f_2p_S(\mathbf{x})+(1-f_2)p_B(\mathbf{x}).
+\end{align}
+The optimal classifier for distinguishing $M_1$ and $M_2$ is the likelihood ratio $L_{M_1/M_2} = p_{M_1}/p_{M_2}$, and the optimal classifier for distinguishing $S$ and $B$ is the likelihood ratio $L_{S/B} = p_S/p_B$.
+
+We see that
+\begin{align}
+L_{M_1/M_2} = \frac{p_{M_1}}{p_{M_2}} = \frac{f_1p_S+(1-f_1)p_B}{f_2p_S+(1-f_2)p_B} = \frac{f_1L_{S/B}+(1-f_1)}{f_2L_{S/B}+(1-f_2)}.
+\end{align}
+Then, with $f_1>f_2$, we have
+\begin{align}
+\frac{\partial}{\partial L_{S/B}}L_{M_1/M_2} = \frac{f_1-f_2}{(f_2L_{S/B}+(1-f_2))^2} > 0,
+\end{align}
+so that $L_{M_1/M_2}$ is a monotonic rescaling of $L_{S/B}$\footnote{With $f_1<f_2$, the classifier is simply reversed.}.
+Therefore, $L_{M_1/M_2}$ and $L_{S/B}$ define the same optimal classifier.$\hspace{1 cm}\Box$
 
 \section{Alternate Ideas for Validation}
 \label{app:CWoLa:validation_alternate}
