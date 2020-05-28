@@ -39,7 +39,7 @@ A novel analysis technique is proposed in~\cite{Collins:2018epr,Collins:2019jip}
 The new technique trains a classifier directly on data, using features of the jets within events, to distinguish between events at different values of the dijet invariant mass $m_{JJ}$ which should be indistinguishable, if not for the presence of a signal resonant at one particular value of $m_{JJ}$.
 Since the classifier is trained directly on data, no specific signal model hypothesis is required, and the analysis is sensitive to a wide variety of new signal models.
 In addition, since the classifier is trained and tested on statistically independent datasets, there is no trials factor associated with scanning the feature space of the jets.
-This intuition is explored and verified in Appendix~\ref{app:CWoLa:trials}.
+This intuition is explored in detail and verified in Appendix~\ref{app:CWoLa:trials}.
 The details of this technique and the application to this specific search are presented in later Sections.
 
 This Chapter presents a search for a generic $A\rightarrow BC$ resonance where the $B$ and $C$ particles are each reconstructed as single massive large-$R$ jets, and the $A$ particle is reconstructed as a resonance in the dijet invariant mass spectrum, but other than that the properties of $A,B,C$ are not specified, and in particular may or may not be BSM.
@@ -273,7 +273,7 @@ Under these assumptions, the outline of the analysis is as follows.
 \end{enumerate}
 Since there is a difference in the observed outcomes between the case where there is presence of signal and when there is no signal, limits can be set on specific signal models based on what would have been observed if those signals were present.
 
-Since the network learns what features distinguish the signal from the background automatically, this analysis is sensitive to a wide range of possible signal distributions of these features, and thus the analysis can be sensitive to a wide range of signal models without paying the price of a trials factor that a dedicated search for each one of these signal models would entail.
+Since the network learns what features distinguish the signal from the background automatically, this analysis is sensitive to a wide range of possible signal distributions of these features, and thus the analysis can be sensitive to a wide range of signal models without paying the price of a trials factor that a dedicated search for each one of these signal models would entail (Appendix~\ref{app:CWoLa:trials}).
 
 Furthermore, since the network learns the features that distinguish the signal from the background directly from data, the tagger does not suffer from suboptimality due to differences between simulation and background, as could be the case with a tagger trained to distinguish between signal and background in simulation.
 
@@ -671,9 +671,16 @@ Therefore, even though the scaling can be biased by the presence of a signal in 
 \subsection{Neural Network Architecture}
 \label{sec:CWoLa:network}
 The neural network which determines the final score for each event, indicating more or less signal-like, is derived in multiple stages.
-Neural networks have been shown to have excellent performance on a wide variety of training tasks with limited training data~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}.
+Neural networks have been shown to have excellent performance on a wide variety of training tasks in high dimensions with limited training data~\cite{haykin1994neural,Kriesel2007NeuralNetworks,bishop_2013,reed_marks_1999,goodfellow_bengio_courville_2017,ng2000cs229}.
+Since there are only two features being used in this search, it may seem like overkill to use a NN, as opposed to simply examining the likelihood ratio by using two-dimensional histograms.
 
-These stages are intended to maximize the sensitivity to new potential signals, while remaining robust to statistical fluctuations and true correlations in the background.
+The first response to this is that, while the NN is a monotonic function of the likelihood ratio in the asymptotic limit, the NN also involves certain regularization constraints which allow the estimation of the likelihood ratio to be smooth.
+This smooth estimation is actually crucial for allowing CWoLa hunting to be generically sensitive without paying a large trials factor - this claim is explored in detail in Appendix~\ref{app:CWoLa:trials}.
+The multiple stages in the derivation of the final NN score are intended to maximize the sensitivity to new potential signals, while remaining robust to statistical fluctuations and maintaining or enhancing this smooth behavior.
+
+The second response is that the natural extension of this search is to involve a large number of features of the jets (Section~\ref{sec:CWoLa:discussion}).
+In that case, a NN is the natural choice to handle this high-dimensional classification problem.
+In order to set up this search (the first of its kind) to be able to be extended as straightforwardly as possible, a NN is used here in anticipation of the next iteration of this search.
 
 In Analysis Step~\ref{step3} (Section~\ref{sec:CWoLa:Analysis:Overview}), some signal bin $s$ is designated. The process below can then be considered an enumeration of the steps in Analysis Step~\ref{step4} (Section~\ref{sec:CWoLa:Analysis:Overview}).
 See also Figure~\ref{fig:CWoLa:flowchart} for an overview. 
@@ -689,7 +696,7 @@ See also Figure~\ref{fig:CWoLa:flowchart} for an overview.
   \label{NNstep5}
   \item A neural network is trained using only the training set, with features $X = \{m_1,m_2\}$, rescaled as described in Section~\ref{sec:CWoLa:decorrelation}. The events are labeled with $Y \in [0,1]$, with $1$ indicating an event in the signal region, and $0$ indicating an event in the sidebands. The events in each of the sideband regions are weighted uniformly in the training so that the sum of weights in each of the sideband regions is equal.
 
-  The network is a Sequential Neural Network with 4 hidden layers of size 64,32,8,1, and activation functions \texttt{ReLu},\texttt{ReLu},\texttt{ReLu},sigmoid, respectively, as implemented in \texttt{Keras}~\cite{chollet2015keras}.
+  The network is a Sequential Neural Network with 4 layers of size 64,32,8,1, and activation functions \texttt{ReLu},\texttt{ReLu},\texttt{ReLu},sigmoid, respectively, as implemented in \texttt{Keras}~\cite{chollet2015keras}.
   The loss used is the binary cross-entropy, and the training loss is minimized using the \texttt{Adam}~\cite{kingma2014adam} optimizer.
   The loss is evaluated on the validation set.
   
@@ -1823,7 +1830,7 @@ For $m_A=5000$ GeV, CWoLa hunting suffers from low statistics in the training, b
 \label{sec:CWoLa:discussion}
 %-------------------------------------------------------------------------------
 The search presented in this Chapter demonstrates for the first time the use of a generic signal and background model-independent method to search for unanticipated signals directly in data.
-As such, considerable effort was put into the neural network training, especially the intricate cross-validation procedure (Section~\ref{sec:CWoLa:network}).
+As such, considerable effort was put into the neural network training, especially the intricate cross-validation procedure (Section~\ref{sec:CWoLa:network}), which is necessary for being able to tag true signals without a high rate of false signals (Appendix~\ref{app:CWoLa:trials}).
 However, some of the most challenging aspects of this analysis were the fitting procedure (Section~\ref{sec:CWoLa:fitting}) and the subsequent limit setting (Section~\ref{sec:CWoLa:limits}).
 While the task of fitting an $m_{JJ}$ spectrum with a parametric fit function over large numbers of events is one aspect that this analysis shares with almost every other dijet resonance search, the number of such fits required in this analysis is far greater than any existing analysis.
 Most dijet searches only do a few fits ultimately, especially if the background fit is decoupled from the POI scan (so that the POI scan fits have only a couple free parameters and converge quickly) like in this analysis.
