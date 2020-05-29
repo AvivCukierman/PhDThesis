@@ -38,7 +38,7 @@ Several searches have been performed for $H\rightarrow a a$ in various final sta
 
 The work presented here explores in particular the search for $H\rightarrow a a$, where the final state contains two photons ($\gamma$) and two gluons ($g$) ($H\rightarrow aa \rightarrow \gamma\gamma gg$).
 This decay mode becomes relevant in models where the $a\rightarrow$ fermion decays are suppressed 
-and the $a$ decays only to photons and gluons
+and the $a$ decays only to photons and gluons\footnote{This search is also sensitive to signal models of the type $H\rightarrow a a'$ ($a\ne a'$), where $a$ decays primarily to $\gamma\gamma$, $a'$ decays primarily to $gg$, and $m_a\approx m_{a'}$. For these models the $H\rightarrow aa \rightarrow 4\gamma$ search is not sensitive and there are no limits other than on the generic $\text{B}_\text{exotic}$ rate, but these models are not as well-motivated.}
 ~\cite{Curtin:2013fra,hep-ph/0703247}.
 The ATLAS Run 1 search for $H\rightarrow aa \to 4\gamma$~\cite{Aad:2015bua} sets 
 a limit $\sigma\times \text{B}(H\to aa\rightarrow 4\gamma)<10^{-3}\sigma_\text{SM}$ 
@@ -176,7 +176,7 @@ OR of triggers                                        & 0.201  & 0.242 & 0.234\\
 \label{sec:HBSM:photons}
 The photon candidates are reconstructed from the clusters of energy deposits in the EM calorimeter within the range $|\eta|<2.37$.
 The energies of the clusters are calibrated to account for energy losses upstream of the calorimeter and for energy leakage outside the cluster, as well as other effects due to the detector geometry and response.
-The calibration is refined by applying $\eta$-dependent correction factors of the order of $\pm1$\%, derived from $Z\to ee$ events~\cite{PERF-2013-05}.
+The calibration is refined by applying $\eta$-dependent correction factors of approximately $\pm1$\%, derived from $Z\to ee$ events~\cite{PERF-2013-05}.
 As in the trigger selection, photon candidates are required to satisfy a set of identification criteria based on the shape of the EM cluster~\cite{PERF-2013-04}.
 Two working points are defined: a \textit{Loose} working point, used for the preselection and the data-driven background estimation, and a 
 \textit{Tight} working point, with requirements that further reduce the misidentification of neutral hadrons decaying to two photons.
@@ -369,7 +369,7 @@ This selection is summarized in Table~\ref{tab:HBSM:VBF_selection}.
 \subsection{Combined Signal Selection}
 \label{sec:HBSM:signal_selection}
 As mentioned in~\ref{sec:HBSM:VBF_sel}, the two remaining highest-\pt{} jets after the VBF jet assignment are referred to as \textit{signal jets}, with invariant mass $m_{jj}$.
-The distribution of $m_{jj}$ is shown in Figure~\ref{fig:HBSM:signal_kinematics}; the resolution is quite broad, on the order of 30\% of the central value.
+The distribution of $m_{jj}$ is shown in Figure~\ref{fig:HBSM:signal_kinematics}; the resolution is quite broad, approximately 30\% of the central value.
 The tail of the $m_{jj}$ distribution comes from misidentifying the signal jets.
 In signal events it is expected that $m_{jj}\sim m_{\gamma\gamma} \sim m_a$ up to misidentifications of the signal jets and resolution of the signal objects.
 Because of this, the difference $|m_{jj}-m_{\gamma\gamma}|$ is expected to be smaller for signal events than for the background; the distribution of this quantity is also shown in Figure~\ref{fig:HBSM:signal_kinematics}.
@@ -633,7 +633,7 @@ assuming the SM cross-section and kinematics for the different production modes 
   \end{center}
 \end{table}
 
-Assuming no correlation in the background events between the two observables used to define the A/B/C/D regions,
+Assuming the two observables used to define the A/B/C/D regions are independent in the background distribution,
 the number of background events in the signal region D ($N^\text{bkg}_\text{D}$) is related to the number
 of background events in the control regions A, B and C, denoted by $N^\text{bkg}_\text{A}$, $N^\text{bkg}_\text{B}$
 and $N^\text{bkg}_\text{C}$, respectively, by the formula
@@ -742,7 +742,7 @@ The effect of these uncertainties on the best fit signal strength are included i
 
 Nuisance parameters corresponding to each source of uncertainty are included in the profile likelihood as Gaussian constraints.
 
-The likelihood is maximized over all possible values of $\mu_S$, $\mu$, $\tau_B$, and $\tau_C$ using the \texttt{MINUIT} migrad algorithm, marginalizing over the nuisance parameters.
+The likelihood is maximized over all possible values of $\mu_S$, $\mu$, $\tau_B$, and $\tau_C$ using the \texttt{MINUIT} migrad algorithm~\cite{James:1975dr}, marginalizing over the nuisance parameters.
 Then the maximum likelihood (MLE) value of $\hat{\mu} = \text{BR}(H\rightarrow aa\rightarrow gg\gamma\gamma)$ is obtained by appropriately 
 normalizing the signal Monte Carlo efficiency to the expected number of Higgs events in the data sample based on the total integrated luminosity.
 
@@ -861,7 +861,7 @@ of the $m_{\gamma\gamma}$ regimes for an illustrative $m_a$ hypothesis. The stat
 
 The best-fit values of the parameters of the likelihood function are given in Table~\ref{tab:HBSM:MLE}.
 The probability that the data are compatible with the background-only hypothesis is computed for each $m_{\gamma\gamma}$ regime and no significant 
-excess is observed. The smallest local $p$-value, obtained for the $m_{\gamma\gamma}$ regime 2 ($m_a\approx30~\GeV{}$), is of the order of 4\%.
+excess is observed. The smallest local $p$-value, obtained for the $m_{\gamma\gamma}$ regime 2 ($m_a\approx30~\GeV{}$), is approximately 4\%.
 \begin{table}[t]
   \begin{center}
     \caption{Maximum-likelihood fit values for each of the free parameters of the likelihood function 
@@ -951,7 +951,7 @@ Figure~\ref{fig:HBSM:compare_4gamma} shows a quantitative comparison of the two 
 
 The two analyses have different sensitivities in different parts of the phase space, 
 parameterized by $\rho=\text{BR}(a\rightarrow \gamma\gamma)/\text{BR}(a\rightarrow jj)$. 
-The analysis presented in this note is more sensitive for lower values of $\rho$, 
+The analysis presented in this Chapter is more sensitive for lower values of $\rho$, 
 closer to SM-like couplings with photons and gluons; a typical value of $\rho$ in a 2HDM model as discussed in~\cite{Curtin:2013fra} is shown for reference.
 The $H\to 2a \to 4\gamma$ search is more sensitive if there is a large BR to photons.
  
