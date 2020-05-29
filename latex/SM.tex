@@ -16,7 +16,8 @@ The SM describes three fundamental forces, each with a corresponding gauge symme
 The electromagnetic and weak forces are combined into a single \textit{electroweak} interaction under SU(2)$\times$U(1) (Section~\ref{sec:SM:EW}). 
 The SU(2) symmetry is spontaneously broken by the Higgs boson, giving rise to massive bosons and to the mass of quarks.
 The strong force is described by \textit{quantum chromodynamics}, with symmetry group SU(3) (Section~\ref{sec:SM:QCD}).
-The strong force is unique in that it gets weaker at higher energy scales, a phenomenon called \textit{asymptotic freedom}, which cause quarks to \textit{confine} into multi-quark \textit{hadrons} like protons and neutrons.
+The strong force is unique in that, due to the strengthening of the coupling constant at low energy scales, quarks \textit{confine} into multi-quark \textit{hadrons} like protons and neutrons.
+However, the strong force gets weaker at higher energy scales, a phenomenon called \textit{asymptotic freedom}.
 The SM is summarized in Section~\ref{sec:SM:summary}.
 Despite the successes of the SM, there are still unexplained phenomena like dark matter and other curious features (which, if left unexplained, are at least unsatisfying) like the quark mass hierarchy (Section~\ref{sec:SM:BSM}).
 There are many theories \textit{beyond the SM}, or \textit{BSM}, which attempt to answer these questions, many of which predict new particles that may be produced at the LHC (Chapter~\ref{ch:LHC}).
@@ -87,8 +88,8 @@ However, it does interact via $3$- and $4$-point interactions with the $W^\pm$ a
 There are also $3$- and $4$-point self-interactions of the Higgs.
 The mass of the Higgs is $m_h = \sqrt{2}m$, which again is a free parameter of the theory.
 
-The four original free parameters $m,\lambda,g,g'$ are therefore related to experimentally observable quantities~\cite{PDG}: $\alpha_e = \frac{e^2}{4\pi} = \frac{1}{137}$ is the fine structure constant; $m_Z = 91.2~\GeV$; $m_W = 80.4~\GeV$; and $m_h = 125~\GeV$.
-In particular, $\sin^2\theta_w=0.22$ and $v=246~\GeV$.
+The four original free parameters $m,\lambda,g,g'$ are therefore related to experimentally observable quantities~\cite{PDG}: $\alpha_e = \frac{e^2}{4\pi} \approx \frac{1}{137}$ is the fine structure constant; $m_Z \approx 91.2~\GeV$; $m_W \approx 80.4~\GeV$; and $m_h \approx 125~\GeV$.
+In particular, $\sin^2\theta_w \approx 0.22$ and $v \approx 246~\GeV$.
 
 \subsection{Fermions}
 \label{sec:SM:EW_matter}
@@ -242,9 +243,9 @@ where $\cancel{D}=\gamma^\mu D_\mu$; $D_\mu = \partial_\mu - ig_sG_\mu^aT^a$ is 
 We see immediately that the set of fundamental interactions are: $2$ quarks + $1$ gluon, either with a color exchange or no color exchange; $3$ gluons; and $4$ gluons.
 
 In contrast to the electroweak theory (Section~\ref{sec:SM:EW}), there is no Higgs boson to break the symmetry, and so in some sense the model is much simpler.
-However, phenomenologically and empirically QCD is much more complicated, due to the running of the coupling $g_s$.
+However, phenomenologically and empirically QCD is much more complicated, due to the manner in which the coupling $g_s$ runs as a function of energy scale.
 
-In every theory scattering cross sections and other observables are calculated perturbatively in the interaction constant.
+In every theory scattering cross sections and other observables can be calculated perturbatively in the interaction constant.
 Formally some of these terms, which correspond to loops in Feynman diagrams, are infinite; in order to account for these infinities calculations can instead be carried out by comparing calculations between two finite scales, so that the infinities cancel, a technique called \textit{renormalization}.
 One consequence of renormalization (which is necessary to make finite predictions) is that the effective strength of the coupling $g$ in the theory changes, or \textit{runs} depending on the scale being probed.
 This running of the coupling is encoded in the \textit{beta function}:
@@ -254,7 +255,7 @@ This running of the coupling is encoded in the \textit{beta function}:
 where $\mu$ is the energy scale being probed.
 
 In QCD\footnote{Like everything else, $\beta$ is calculated perturbatively in $g$. Given here is the one-loop contribution.} $\beta(g) = -\frac{g^3}{(4\pi)^2}\beta_0$, with $\beta_0=(\frac{11}{3}n_\text{c} - \frac{2}{3} n_\text{f})$; $n_\text{c}=3$ is the number of colors, and $n_\text{f}=6$ is the number of flavors, so $\beta_0=7>0$.
-This implies that in QCD the coupling strength gets weaker at higher energies, and stronger at lower energies, a phenomenon known as \textit{asymptotic freedom}\footnote{The couplings for the electroweak theory, $g$ and $g'$, also run but much less, and stay perturbative at all energy scales.}~\cite{Gross:1973id,Politzer:1973fx,Gross:1974fm}.
+This implies that in QCD the coupling strength gets weaker at higher energies, and stronger at lower energies, a phenomenon known as \textit{asymptotic freedom}\footnote{The couplings for U(1) and SU(2) also run. The U(1) coupling has a negative $\beta$ function, so it gets stronger at higher energy scales, but remains perturbative even at the Planck scale, where it is expected that a higher-energy theory will become relevant. The SU(2) coupling has a positive $\beta$ function, so it gets stronger at lower energy scales (larger distances), but since the $W/Z$ bosons are massive the weak force is short-range and these energy scales are not relevant for the theory~\cite{Kazakov:2000ra}.}~\cite{Gross:1973id,Politzer:1973fx,Gross:1974fm}.
 Said another way, at low energy scales $g_s$ grows so large that perturbative calculations are impossible and the theory breaks down; at high energy scales $g_s$ is small and perturbative calculations can be performed.
 The running of the coupling (expressed in terms of $\alpha_s = \frac{g_s^2}{4\pi}$) can be seen in Figure~\ref{fig:SM:alphas}.
 It can be seen that the coupling gets too strong and the theory becomes non-perturbative around $\mathcal{O}(\GeV)$.
@@ -278,7 +279,7 @@ The familiar protons are baryons composed of two up quarks and one down quark.
 When protons collide in the LHC (Chapter~\ref{ch:LHC}), the energy scales are high enough such that the individual constituent quarks and gluons do interact rather than the entire hadron~\cite{Feynman:1989dd}.
 The QCD factorization theorem allows the cross section calculation to be factorized between the hard-scatter and perturbative $2\rightarrow N$ process and the non-perturbative hadronic structure.
 However, even with this simplification, the interaction between the constituent partons has to be averaged over the distribution of momenta each could be carrying, at the energy scale of the interaction.
-This information is contained in the \textit{parton distribution function}~\cite{Amoroso:2020lgh,DelDebbio:2018siw}, or \textit{PDF}, $f_q(x,\mu^2)$, which is the probability distribution function for a parton $q$ to be carrying momentum fraction $x$ at energy scale $\mu^2$.
+This information is contained in the \textit{parton distribution function}~\cite{Amoroso:2020lgh,DelDebbio:2018siw}, or \textit{PDF}, $f_q(x,\mu^2)$, which is the probability distribution function for a parton $q$ to be carrying momentum fraction $x$ at energy scale $\mu$.
 The hard-scatter interactions can either occur via the \textit{valence partons}, which are the constituent up and down quarks, or via \textit{sea partons}, which are virtual quarks of any flavor or gluons in the interior of the proton.
 A calculation of the PDFs at two energy scales can be seen in Figure~\ref{fig:SM:PDF}.
 At high $x$, the valence quarks dominate, but at lower $x$ the sea partons, especially the gluons, become more prominent.
@@ -316,7 +317,7 @@ The phenomenology of the strong force implies color confinement, which leads to 
 The Higgs boson gives mass via Yukawa couplings to the charged leptons and the quarks.
 It also gives mass to the $W^\pm$ and $Z$ bosons.
 The $W^\pm$ bosons are charged under electromagnetism and therefore interact with the photon.
-Finally, each of the gauge bosons other than the photon has self-interactions.
+Finally, each of the gauge bosons other than the photon has self-interactions\footnote{At tree level. E.g., the photon does have self-interactions involving fermion loops.}.
 
 \section{Beyond the Standard Model}
 \label{sec:SM:BSM}
@@ -331,17 +332,18 @@ There are many BSM models~\cite{Lykken:2010mc,Lee:2019zbu,Ellis:2009pz,Ellis:201
 Some of the more popular models are included with the problem they account for.
 
 %QCD non-perturbative
-As mentioned in Section~\ref{sec:SM:QCD}, below a certain energy scale QCD becomes non-perturbative, and the theory cannot make predictions.
-In particular, there is no fundamental theory describing hadrons, and descriptions have to rely on phenomenological models, e.g. to describe the hadron PDFs.
-While not necessarily a failure of the theory itself, this does indicate there may exist a different formulation of the SM which would be able to calculate quantities and make predictions about hadrons from a fundamental level.
-One alternative formulation is lattice QCD~\cite{Gupta:1997nd}, which analyzes QCD on a lattice in spacetime, to some but limited success.
+As mentioned in Section~\ref{sec:SM:QCD}, below a certain energy scale QCD becomes non-perturbative, and the theory therefore becomes intractable analytically.
+One alternative formulation is lattice QCD~\cite{Gupta:1997nd}, which analyzes QCD on a lattice in spacetime.
+This formulation has had success, for example accurately predicting the hadron masses from first principles~\cite{Durr:2008zz}.
+However, numerical lattice QCD calculations using Monte Carlo methods can be extremely computationally intensive, and often the only available descriptions rely on phenomenological models, e.g. to describe the hadron PDFs.
+While not necessarily a failure of the theory itself, there may exist a different formulation of the SM which would be able to calculate quantities and make predictions about hadrons analytically from a fundamental level.
 
 %Muon g-2
 As mentioned in Section~\ref{sec:SM:intro}, the SM makes predictions that can be calculated very precisely, and these predictions have been remarkably well-tested.
 There are only a couple of precision measurements that are in tension with the SM predictions, of the tens or hundreds of precision SM tests.
 The muon anomalous magnetic moment~\cite{Blum:2013xva}, or muon $g-2$, has been calculated~\cite{Aoyama:2012wk} up to $10$th order, including weak and hadronic effects in addition to the primary quantum electromagnetic effects, yielding a precision of $10$ decimal places.
 This quantity has also been measured~\cite{Bennett:2006fi} to an uncertainty of $0.54$ parts per million.
-There is a tension of almost $3\sigma$ (with $\sigma$ equal to the experimental uncertainty) between the experimental and theoretical values, which may be an indication of new physics or may be a statistical fluctuation.
+There is a tension of almost $3\sigma$ (with $\sigma$ equal to the experimental uncertainty\footnote{The theoretical uncertainty is much smaller than the experimental uncertainty, and so the uncertainty on the difference is dominated by the experimental measurement.}) between the experimental and theoretical values, which may be an indication of new physics or may be a statistical fluctuation.
 A new experiment~\cite{Chapelain:2017syu} at Fermilab will reduce the experimental uncertainty by a factor of around $4$, which can elucidate whether this is a real tension or not.
 
 There is also evidence from LHCb~\cite{Alves:2008zz} of tension with the SM in $B$-hadron decays~\cite{Capdevila:2017bsm}, at the level of $3-4\sigma$.
@@ -363,7 +365,7 @@ These are only mass differences, but the implication is that there must necessar
 
 The neutrino masses can be generated via Yukawa couplings in the same manner as the charged leptons and the quarks, which is called \textit{Dirac masses}.
 However, there is an even larger hierarchy between the neutrinos and the lepton masses (a factor of $10^9$ between the tau and the tau neutrino), indicating these masses may come from a different mechanism~\cite{King:2003jb}.
-For example, the neutrinoless double beta decay process (two neutrinos decaying to two protons with no associated missing energy corresponding to neutrinos), which has not yet been observed and would violate the SM~\cite{Schwingenheuer:2012zs}, would imply that neutrinos are their own anti-particles, allowing a \textit{Majorana mass} term in the electroweak Lagrangian.
+For example, the neutrinoless double beta decay process (two neutrons decaying to two protons with no associated missing energy corresponding to neutrinos), which has not yet been observed and would violate the SM~\cite{Schwingenheuer:2012zs}, would imply that neutrinos are their own anti-particles, allowing a \textit{Majorana mass} term in the electroweak Lagrangian.
 
 %Higgs boson mass | SUSY
 All particles have quantum corrections to their mass due to loop terms involving other particles.
@@ -399,13 +401,13 @@ A proposed solution is the presence of light pseudoscalar particles called \text
 These particles would drive the $\theta$ parameter to $0$, explaining the lack of strong CP violation.
 
 %Dark matter | WIMPs
-A significant phenomenon unexplained by the SM is existence of \textit{dark matter}~\cite{Trimble:1987ee,Bertone:2010zza,darkmatter}.
+A significant phenomenon underexplained by the SM is the existence of \textit{dark matter}~\cite{Trimble:1987ee,Bertone:2010zza,darkmatter}.
 It has been known for a long time~\cite{Zwicky:1937} that the amount of visible matter in galaxy clusters is not enough to keep the galaxies from escaping the cluster's pull.
 However, the idea of missing matter in galaxies was not generally accepted until observations of galaxy rotation curves~\cite{rubin:1970,freeman:1970,vanAlbada:1984js} indicated the existence of additional matter other than what could be seen, i.e. dark matter.
 Since then, observations using weak lensing~\cite{Clowe:2003tk} and galaxy cluster merging~\cite{Markevitch:2003at} have confirmed the existence of dark matter.
 Cosmological models indicate~\cite{Aghanim:2018eyx} that dark matter comprises about $85\%$ of all matter, the rest being the particles included in the SM.
 
-There are of course electromagnatically neutral\footnote{The particles are dark, i.e. they do not produce light. This means they do not interact with photons, so they are electrically neutral.}  stable particles in the SM - neutrinos. However, neutrinos are found to be too light to explain the abudance of observed dark matter~\cite{White:1984yj}.
+There are of course electromagnatically neutral\footnote{The particles are dark, i.e. they do not produce light. This means they do not interact with photons, so they are electrically neutral.}  stable particles in the SM - neutrinos. However, neutrinos are found to be too light to explain the abudance of observed dark matter~\cite{White:1984yj}\footnote{Which is why dark matter can be considered to be \textit{under}explained rather than \textit{un}explained - there is a dark matter candidate in the SM, it just doesn't adequately explain the observed phenomena.}.
 Instead, the predominant theory is that of cold dark matter, composed of \textit{weakly-interacting massive particles}, or \textit{WIMPS} - massive particles that are electrically neutral but interact via the weak force.
 Either axions~\cite{Raffelt:1995ym} or SUSY particles~\cite{Jungman:1995df} could serve as WIMP candidates, which would solve two problems at once for either theory to be correct. 
 
@@ -415,7 +417,7 @@ There is of course the enormously successful theory of general relativity, and t
 Such a theory would involve a spin-$2$ \textit{graviton} as the force-carrying gauge boson~\cite{PhysRev.98.1118}.
 Gravity at low energies is much weaker than the other three forces, and so its effects on the quantum level are mostly negligible.
 However, at around the \textit{Planck scale}, $m_\text{P}\sim 10^{19}~\GeV$, it is expected that quantum gravitational effects will become important.
-String theory~\cite{Mukhi:2011zz}, often incorporating supersymmetry~\cite{wess_bagger_2009,Schwarz:1998ny} attempts to devise a theory of quantum gravity, but it has struggled to make testable predictions.
+String theory~\cite{Mukhi:2011zz}, often incorporating supersymmetry~\cite{wess_bagger_2009,Schwarz:1998ny} attempts to devise a theory of quantum gravity, but it has struggled to make unique testable predictions.
 %Observations of gravitational waves~\cite{Abbott:2016blz} could shed light on quantum gravity theories, as the graviton would be the particle analogue of the gravitational waves.
 
 %Dark energy ~\cite{Peebles:2002gy}; supernovae ~\cite{Riess:1998cb} | 
