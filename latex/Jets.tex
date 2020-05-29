@@ -33,14 +33,14 @@ For example, Figure~\ref{fig:jets:eventdisplays} shows two events recorded in th
 \end{figure}
 
 In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeters~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker; or as the tracks themselves without using the calorimeter.
-From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum (\pt) and some position ($\eta,\phi$) in the detector (in particular, seeds are assumed to have zero mass).
+From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum and mass ($\pt,m$) and some position ($\eta,\phi$) in the detector.
 Figure~\ref{fig:jets:seeds} shows an event display with the seeds in the ($\eta,\phi$) plane.
 
 Jets have a long history in high energy physics and various definition with different properties have been used~\cite{Salam:2009jx}.
 The Snowmass Accords~\cite{Huth:1990mi} laid out a series of properties jet definitions should have in order to be both useful experimentally and also tractable theoretically and computationally.
 In particular, jets should be \textit{IRC} safe, which is a portmanteau of \textit{IR} and \textit{collinear} safety.
 IR safety requires that soft (i.e., infrared) emissions should not affect the set of jets the algorithm produces, as soft emissions can grow without bound in theoretical computations.
-Collinear safety requires that if a single seed splits into multiple collinear seeds sharing the original seed's momentum, this should also not affect the output of the algorithm; again, theoretically there is no difference between a single particle and that same particle split into multiple entities with the same total four-momentum.
+Collinear safety requires that if a single seed splits into multiple collinear seeds sharing the original seed's momentum, this should also not affect the output of the algorithm; again, hard partons can undergo many collinear splittings, which can lead to divergences in perturbative QCD calculations.
 In practice detectors tend to be both IR and collinear safe, as noise-suppression removes soft emissions and the finite size of calorimeter cells and tracking pixels sum up nearly collinear particles; but it is still desired for the algorithm itself to obey these properties for theoretical calculations.
 
 The most common contemporary jet algorithms are called \textit{sequential recombination} algorithms, though there is a long history of other types of algorithms which will not covered here~\cite{Salam:2009jx}.
@@ -87,7 +87,7 @@ The decay products of light quarks and gluons have a spread due to the hadronic 
 The calculation of the size of this spread is in general very complicated, but jets with $R=0.4$ are used to capture the decay products of these partons.
 Gluons are slightly wider than quarks due to the difference in their color charge, and for $R=0.4$ roughly 89\% of the originating particle \pt{} for gluons and 95\% for quarks ends up within the catchment area of the jet~\cite{Salam:2009jx}.
 
-Photons and electrons decay primarily in the electromagnetic calorimeter, but as the seeds are formed from clusters in the electromagnetic and hadronic calorimeters, and the typical size of photon and electron decays is $\sim 0.2$~\cite{Aad:2019tso}, these are also reconstructed as small-$R$ jets.
+Photons and electrons shower primarily in the electromagnetic calorimeter, but as the seeds are formed from clusters in the electromagnetic and hadronic calorimeters, and the typical size of photon and electron decays is $\sim 0.2$~\cite{Aad:2019tso}, these are also reconstructed as small-$R$ jets.
 However jets originating from photons and electrons can be identified with high discrimination power based on the three-dimensional energy shower shape~\cite{Aad:2019tso} (Section~\ref{sec:ATLAS:EM}), and typically jets that overlap with these are identified and removed from consideration of the hadronic activity in the event (``overlap-removed'').
 In addition, jets originating from bottom quarks take advantage of the relatively long lifetime of hadrons containing bottom quarks and the resulting presence of tracks with large impact parameters and/or a secondary vertex~\cite{Aad:2015ydr,Aaboud:2018xwy,Aad:2019aic} (Section~\ref{sec:ATLAS:btagging}).
 
@@ -111,8 +111,9 @@ These large-$R$ jets have substructure that can be used to tag the provenance of
 \section{Grooming}
 \label{sec:jets:grooming}
 A typical $pp$ collision at the LHC produces many radiative particles other than the hard-scatter interaction just from the interactions of all the constituent quarks and internal gluons in the protons; this is referred to as \textit{underlying event}.
-In addition, as will be mentioned in Section~\ref{sec:LHC:luminosity}, the collisions occur in whole bunches of $10^{11}$ protons, so that there are multiple simultaneous interactions in a single bunch crossing; this is referred to as \textit{in-time pile-up}.
-There is also \textit{out-of-time pile-up}, which are leftover energy deposits from previous bunch crosses.
+In addition there are secondary hard-scatter interactions, or \textit{multiple parton interactions}.
+Furthermore, as will be mentioned in Section~\ref{sec:LHC:luminosity}, the collisions occur in whole bunches of $10^{11}$ protons, so that there are multiple simultaneous interactions in a single bunch crossing; this is referred to as \textit{in-time pile-up}.
+There is also \textit{out-of-time pile-up}, which are energy deposits from previous and future bunch crosses which are integrated into the signal shape when reconstructing a seed.
 Taken together these effects form a layer of soft particles spread diffusely over the entire event, which can end up in the catchment area of jets and add noise to the jet measurements.
 
 Because of this, there is a desire to \textit{groom} jets by removing whatever seeds ended up in their catchment areas and originate from underlying event or pile-up.
