@@ -5,7 +5,7 @@ Other massive particles, like $W/Z$ bosons, the Higgs boson, top quarks, and $\t
 The hadronic decays of these massive particles are the primary way or one extremely important way of identifying their production in an event.
 \textit{Jets}~\cite{Ali:2010tw,Asquith:2018igt,Larkoski:2017jix,Salam:2009jx} are algorithmic objects intended to group together the hadronic decay products of these partons or massive particles and derive the four-momentum of the originating particle.
 
-There are a variety of jet algorithms; the most common one being used at the LHC today is the \antikt{} algorithm~\cite{Cacciari:2008gp}, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
+There are a variety of jet algorithms; the most common contemporary one at the LHC is the \antikt{} algorithm~\cite{Cacciari:2008gp}, with distance parameter $R$=0.4 (\textit{small-$R$ jets}) or $R$=1.0 (\textit{large-$R$ jets}).
 These algorithms group together constituent four-vector objects called \textit{seeds}.
 Small-$R$ jets are intended to approximate light particles, in particular quarks and gluons, though in ATLAS $\tau$ leptons, photons, and electrons are in addition reconstructed as small-$R$ jets in the detector; large-$R$ jets are intended to approximate boosted massive objects decaying hadronically.
 Both small- and large-$R$ jets have a variety of \textit{grooming} techniques applied to clean up the substructure in order to remove the effects of the underlying event and of multiple in and out of time simultaneous collisions (\textit{pile-up}).
@@ -33,7 +33,7 @@ For example, Figure~\ref{fig:jets:eventdisplays} shows two events recorded in th
 \end{figure}
 
 In ATLAS seeds are defined either as topologically connected, noise-suppressed cell-clusters in the electromagnetic and hadronic calorimeters~\cite{Aad:2016upy}, which may themselves be calibrated or uncalibrated; as particle flow objects~\cite{Aaboud:2017aca} which combine information from the calorimeter and tracker; or as the tracks themselves without using the calorimeter.
-From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum and mass ($\pt,m$) and some position ($\eta,\phi$) in the detector.
+From the point of view of the jet algorithm these distinctions are irrelevant, as the seeds are abstracted into individual points with some transverse momentum ($\pt$) and some position ($\eta,\phi$) in the detector\footnote{Seeds may also be given a small mass, e.g. the pion mass, for the purposes of four-momentum summation.}.
 Figure~\ref{fig:jets:seeds} shows an event display with the seeds in the ($\eta,\phi$) plane.
 
 Jets have a long history in high energy physics and various definition with different properties have been used~\cite{Salam:2009jx}.
@@ -58,7 +58,7 @@ The algorithm then proceeds as folows:
   d_{ij} &= \text{min}\left(p_{\text{T}i}^{2p},p_{\text{T}j}^{2p}\right)\frac{\Delta R_{ij}^2}{R^2}, \hspace{2cm}\Delta R_{ij}^2 = (y_i-y_j)^2+(\phi_i-\phi_j)^2\\
   d_{iB}&=p_{\text{T}i}^{2p}
 \end{align}
-with $p$ and $R$ free parameters of the algorithm\footnote{Here the rapidity $y$ is used instead of the pseudorapidity $\eta$. $y$ is a kinematic quantity: $y=\frac{1}{2}\ln\frac{E+p_z}{E-p_z}$; while $\eta$ is a geometric quantity: $\eta = -\ln\tan\theta/2$. For massless particles $y=\eta$, so originally the distinction is meaningless; however, proto-jets may and in general do have non-zero mass. Differences in rapidity are invariant under longitudinal boosts, while differences in pseudorapidity are invariant only for massless particles.}.
+with $p$ and $R$ free parameters of the algorithm\footnote{Here the rapidity $y$ is used instead of the pseudorapidity $\eta$. $y$ is a kinematic quantity: $y=\frac{1}{2}\ln\frac{E+p_z}{E-p_z}$; while $\eta$ is a geometric quantity: $\eta = -\ln\tan\theta/2$. For massless particles $y=\eta$, and the distinction is meaningless; however, proto-jets may and in general do have non-zero mass. Differences in rapidity are invariant under longitudinal boosts, while differences in pseudorapidity are invariant only for massless particles.}.
 $d_{iB}$ is called the beam distance, and if $d_\text{min}$ is a $d_{iB}$ the proto-jet is removed from the event and added to the list of final jets; there is no minimum threshold but rather the algorithm continues until there are no more proto-jets in the event.
 
 The algorithm with $p=1$ is called the \kt{} algorithm~\cite{Ellis:1993tq}, with $p=0$ is called the Cambridge-Aachen algorithm~\cite{Dokshitzer:1997in}, and with $p=-1$ is called the \antikt algorithm~\cite{Cacciari:2008gp}.

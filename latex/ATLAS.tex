@@ -71,19 +71,19 @@ The pixel detectors are composed of silicon and operate as ionizing radiation de
 As charged particles pass through the material, electrons are knocked loose and these are measured in each individual pixel, without substantially affecting the momentum of the charged particle.
 The pixel system has very good spatial resolution, with each pixel having a size of $50\times 400$ $\mu\text{m}^2$ in the outer 3 layers and $50\times 250$ $\mu\text{m}^2$ in the IBL.
 There is both a cylindrical set of pixel detectors in the barrel and an endcap set on the ends.
-The accuracies of the pixels are $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times z$ in the barrel and also $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times R$ in the endcaps.
+The precision of the pixels is $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times z$ in the barrel and also $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times R$ in the endcaps.
 There are roughly 80.4 million independent pixel channels.
 
 The next outermost layer is the SCT, which operates under very similar principles to the pixel detectors.
 However, insted of small pixels long and thin strips are used, which provide spatial information in only one direction.
 Because of this, each of the 4 layers of the SCT are actually composed of 2 layered and slightly offset strips at an angle of 40 mrad to each other, in order to get a (rough) measurement in the second direction as well.
 In the barrel region these strips are parallel to the beam direction; in the endcaps they are radial.
-The strips have an accuracy of $17\times 580$ $\mu\text{m}$ in $R-\phi \times z$ in the barrel and also $17\times 580$ $\mu\text{m}$ in $R-\phi \times R$ in the endcaps.
+The strips have a precision of $17\times 580$ $\mu\text{m}$ in $R-\phi \times z$ in the barrel and also $17\times 580$ $\mu\text{m}$ in $R-\phi \times R$ in the endcaps.
 There are approximately 6.3 million readout channels in the SCT.
 
 The final layer consists of the TRT, which is composed of $4$ mm (in diameter) drift tubes.
 These drift tubes are not made out of silicon, but rather are filled with gas which, as charged particles pass through, gets ionized; this signal is amplified by a large voltage difference (1530 V) between the center and exterior of the tube.
-The tubes do not provide any $z$ resolution, but only information in $R-\phi$ with an accuracy of 130 $\mu\text{m}$, both in the barrel and endcap regions.
+The tubes do not provide any $z$ resolution, but only information in $R-\phi$ with an precision of 130 $\mu\text{m}$, both in the barrel and endcap regions.
 However, this is mitigated somewhat by every particle passing through about 30 tubes before exiting the tracker.
 There are approximately 351000 readout channels in the TRT.
 
@@ -116,7 +116,7 @@ However, the innermost layer of electromagnetic calorimeter is a presampler whic
 High energy charged electrons and positrons interacting with nuclei in the materials are dominated by bremsstrahlung, which is photon radiation due to deceleration in the material~\cite{Lechner:2674116}.
 High energy photons, in turn, primarily convert to electron-positron pairs in the field of nuclei, which further lose energy to bremsstrahlung; this back-and-forth is referred to as an \textit{electromagnetic shower}.
 Below a certain energy (depending on the material, but usually some MeV), other processes take over.
-Muons can be considered to be heavy electrons; however, because of their higher mass, bremmstrahlung does not dominate until the muon energy is above $\sim 1000$ GeV~\cite{TASI_day3_school}; thus muons tend to pass through the entire calorimeter without losing much energy and can only be measured in the muon spectrometer (Section~\ref{sec:ATLAS:MS}).
+Muons can be considered to be heavy electrons; however, because of their higher mass, bremmstrahlung does not dominate until the muon energy is above $\sim 1000$ GeV~\cite{TASI_day3_school}; thus muons tend to pass through the entire calorimeter without losing much energy and are reconstructed using hits in the muon spectrometer (combined with tracks from the ID - Section~\ref{sec:ATLAS:MS}).
 
 The loss of energy in an electromagnetic shower at high energies can be characterized as
 \begin{align}
@@ -193,7 +193,7 @@ The matrix element calculations cover the initial $2\rightarrow N$ interactions 
 The parton showering further simulates the produced partons as they radiate down to the hadronization scale around $\mathcal{O}($GeV$)$.
 Because the energies in these steps are above the hadronization scale, they can be calculated perturbatively at fixed order in $\alpha_s$, and the generators are specified as to what order they go to (leading order ``LO'', next-to-leading order ``NLO'', etc.).
 The three most common generators in use are \PYTHIA~\cite{Sjostrand:2007gs,Sjostrand:2014zea}, \SHERPA~\cite{Gleisberg:2008ta}, and \HERWIG~\cite{Bahr:2008pv,Bellm:2015jjp}.
-Each of these can use \POWHEGBOX~\cite{Frixione:2007vw,Alioli:2010xd} to interface between the matrix element and parton showering.
+These generators can use \POWHEGBOX~\cite{Frixione:2007vw,Alioli:2010xd} to interface between the matrix element and parton showering.
 Often a single generator will be used primarily for the simulated events in an analysis, and one or multiple other generators will be used to estimate the uncertainties related to the theoretical calculations.
 
 The fragmentation and hadronization covers the conversion of partons to hadrons.
@@ -202,7 +202,7 @@ The underlying event that comes from the soft interactions of the proton constit
 These are also typically covered by the above-mentioned generators.
 The decays of heavy flavor hadrons (those containing bottom and charm quarks) are also simulated at this stage using dedicated programs like EvtGen~\cite{Lange:2001uf}.
 
-The other simultaneous $pp$ collisions in the event (pile-up) are not simulated but rather overlay minimum bias (i.e., minimal triggering requirements) events on top of the simulated ones, according to the expected number of interactions in the event.
+The other simultaneous $pp$ collisions in the event (pile-up) are also simulated~\cite{Marshall:2014mza}, but there are proposals to overlay minimum bias (i.e., minimal triggering requirements) data events on top of the simulated ones, according to the expected number of interactions in the event\footnote{In fact, this is what is done for heavy-ion collisions in ATLAS.}.
 
 The above-mentioned steps constitute what is known as the ``truth'' event.
 The observables related to the particles at this stage (in particular, the four-momentum) are not accessible in real life, because they have to be observed in the detector (Section~\ref{sec:ATLAS:ATLAS}).
@@ -327,7 +327,7 @@ The muon reconstruction algorithm first runs a fast algorithm which then seeds R
 The fast algorithm matches the RoIs identified at L1Muon to data from the MDT chambers (Section~\ref{sec:ATLAS:MS}) to form tracks in the MS.
 These tracks are then back-extrapolated back to the interaction point and combined with tracks in the inner detector.
 The precision step basically repeats this process with a refined track-finding and \pt{} measurement, with an additional step of extrapolating tracks from the inner detector to hits in the MS in case the back-extrapolation fails.
-Dimuon triggers (with dimuon mass requirements) are also used for tagging $b$-hadrons, e.g. $\Upsilon(1S)\rightarrow \mu\mu$ and intermediate decays involving $J/\psi\rightarrow \mu\mu$.
+Dimuon triggers (with dimuon mass requirements) are also used for tagging resonant hadrons, e.g. $J/\psi\rightarrow \mu\mu$.
 
 Finally, there are dedicated triggers with low rates for exotic signatures, e.g. long-lived particles~\cite{Aad:2013txa}.
 
@@ -354,7 +354,7 @@ Track seeds are then formed from sets of three space-points.
 A combinatorial Kalman filter~\cite{Fruhwirth:1987fm} is then used to incorporate additional space-points from other layers of the pixel and SCT detectors which are compatible with the particle trajectory into a track candidate.
 An ambiguity solver is then used to identify clusters with track candidates, using a neural network to identify and predict merged clusters resulting from multiple tracks~\cite{Aad:2014yva}.
 The clusters are identified with the track candidates in order of quality of the track, considering criteria like the number of holes (missing clusters) across the layers and $\chi^2$ of the track fit.
-Track candidates are also rejected if they do not meet basic requirements like $\pt>400$ MeV (in which case the particle's trajectory would curve so much in the magnetic field it would never leave the inner detector).
+Track candidates are also rejected if they do not meet basic requirements like $\pt>400$ MeV (in which case the particle's trajectory would curve so much in the magnetic field it would never leave the inner detector)\footnote{With the $B \approx 2\text{T}$ magnetic field, the radius of curvature has to be $R \gtrsim 0.5\text{m}$ in order to escape the ID at a distance of $\sim 1\text{m}$ from the beamline. Therefore the momentum has to be $\pt \gtrsim 300~\MeV$ (Equation~\ref{eqn:LHC:chargedparticle}), with $q=\pm 1$.}.
 Finally, a track fit is performed using all available information (in particular including information from the TRTs) to determine the track parameters.
 The radius of curvature of the track, when combined with the known magnetic field, gives the charge to momentum ratio $q/p$ (Equation~\ref{eqn:LHC:chargedparticle}), and the direction of curvature gives the sign of the charge.
 The other relevant track parameters are the direction in $\eta,\phi$ after exiting the tracker (after which the expected trajectory of the charged particle is straight), transverse impact parameter off the beamline $d_0$ (i.e., the closest approach of the track trajectory to the beamline), and longitudinal displacement along the beamline $z_0$ (at the point of closest approach).
@@ -617,7 +617,7 @@ There is also an in situ $\eta$-intercalibration comparing jets at high $\eta$ t
 This correction also proceeds via numerical inversion.
 There can be uncertainties in the value of this correction due to mismodeling of physics effects; uncertainties in the kinematics of the reference object; and uncertainties in the \pt{} balance due to the event topology.
 These uncertainties are propagated at systematic uncertainties on the jet energy correction.
-The total systematic uncertainty on the jet energy is around 2\%, rising up to around 5\% for low-$\pt$ jets.
+The total systematic uncertainty on the jet energy is around 1\%, rising up to around 5\% for low-$\pt$ jets~\cite{JETM-2018-006}.
 
 The calibration of large-$R$ jets~\cite{Aaboud:2018kfi} does not include a pile-up subtraction step, as large-$R$ jets are trimmed (Section~\ref{sec:jets:grooming}) and are intended for high \pt{} massive objects for which pile-up has a small effect on the jet \pt{}.
 The energy correction for large-$R$ jets in bins of $\eta$ is derived in simulation similarly to that for small-$R$ jets, again using numerical inversion.
@@ -635,10 +635,10 @@ The energy and mass response before calibration can be seen in Figure~\ref{fig:A
 The Author has been involved in a project~\cite{ATL-PHYS-PUB-2020-001} intended to calibrate the jet energy and mass simultaneously rather than the sequential process outlined above.
 This project uses the simultaneous techniques enabled by neural networks introdued in Chapter~\ref{ch:GenNI}.
 
-There are two linearly independent definitions of the jet mass~\cite{ATLAS-CONF-2016-035}.
+There are two independent definitions of the jet mass~\cite{ATLAS-CONF-2016-035}.
 The first is directly from summing together the four momenta of the constituent topoclusters (which are themselves assumed to be massless) and is called $m^\text{calo}$, or \textit{calorimeter} mass.
 The second, called the \textit{track} mass or $m^\text{track}$, is measured from tracks ghost-associated to the jet.
-This measurement can be more accurate than the calorimeter mass due to the improved angular resolution of tracks compared to topoclusters; however, the tracks only comprise the charged particle component of the hadronic shower, so the overal scale of the mass will be off, even as the angular distribution is relatively accurate.
+This measurement can provide a better measurement than the calorimeter mass due to the improved angular resolution of tracks compared to topoclusters; however, the tracks only comprise the charged particle component of the hadronic shower, so the overal scale of the mass will be off, even as the angular distribution is relatively accurate.
 To account for the absence of neutral particles in the track mass which are measured in the calorimeter, the track mass is scaled up by the ratio of the calorimeter and track \pt{}, forming the \textit{track-assisted} mass~\cite{Elder:2018mcr} or $m^\text{TA}=m^\text{track}\frac{\pt^\text{calo}}{\pt^\text{calo}}$.
 Each of these two mass definitions are calibrated separately.
 The \textit{combined} mass or $m^\text{comb}$ is defined as a weighted sum between $m^\text{track}$ and $m^\text{TA}$ based on the (inverse) resolution of the truth jet mass under each definition.
@@ -661,7 +661,7 @@ A jet-topology dependence and uncertainty can also be derived from forward foldi
 The jet mass response uncertainty depends on the jet \pt{}, but is generally less than $5\%$.
 
 The tagging of jets based on their substructure is covered in Section~\ref{sec:jets:tagging}.
-Briefly, small-$R$ jets can be tagged as originating from quarks or gluons based on the distribution of tracks within the jet (gluons are wider than quarks).
+Briefly, small-$R$ jets can be tagged as originating from quarks or gluons based on the number and distribution of tracks within the jet (gluons produce more particles and their showers are wider than those for quarks).
 Large-$R$ jets can be tagged as fully hadronic decays originating from $W/Z$ bosons (with two hard subprongs), from top quarks (with a $W$ and a $b$-tagged subjet (Section~\ref{sec:ATLAS:btagging})), or from Higgs bosons (with two $b$-tagged subjets).
 There are also decays involving leptons that can be used to tag large-$R$ jets, e.g. $Z\rightarrow ee/\mu\mu$.
 
