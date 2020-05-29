@@ -100,7 +100,7 @@ In order to fully populate a wide range of jet \pt, these samples are generated 
 %Two alternative samples are generated with the \SHERPA{} v2.1~\cite{Gleisberg:2008ta} and \HERWIG{} v7.0.4~\cite{Bahr:2008pv,,Bellm:2015jjp} generators. The \HERWIG{} v7.0.4 sample is generated with the NNPDF 3.0 NLO PDF set and using the H7UE~\cite{Bellm:2015jjp} set of tuned parameters. The \SHERPA{} v2.1 leading-order multileg samples use the CT10 PDF set~\cite{Lai:2010vv} and are generated with the default \SHERPA{} tune and include $2\rightarrow 2$ and $2\rightarrow3$ processes at matrix element level, combined using the CKKW prescription~\cite{Catani:2001cc}.
 
 %\href{https://its.cern.ch/jira/browse/ATLMCPROD-6767}{Signal samples are generated} using \PYTHIA{} v8.2 and the process $Z'\rightarrow WZ$, where the $W$ and $Z$ masses are altered, the widths are set to 0.1 GeV.
-Signal samples are generated using \PYTHIA{} v8.2 and the process $Z'\rightarrow WZ$, where the $W$ and $Z$ masses are altered, and their widths are set to 0.1 GeV.
+Signal samples are generated using \PYTHIA{} v8.2 and the process $W'\rightarrow WZ$, where the $W$ and $Z$ masses are altered, and their widths are set to 0.1 GeV.
 These altered bosons are required to decay hadronically, except that top quark decays are switched off.
 As the parameter space of this simplified model is three-dimensional, we consider only a subset of all possibilities in order to demonstrate the method on some example signal models.
 The samples shown for the rest of this Chapter use $m_{Z'}\in\{3,5\}$~TeV and $\{m_W,m_Z\}\in\{80,200,400\}$~GeV.
@@ -940,7 +940,7 @@ The fitting procedure is very similar to the procedure in the data validation an
 In particular, bins of size 100 GeV are used for the fitting, spanning 1.8 TeV to 8.2 TeV.
 Like the all-hadronic diboson search, and unlike the fitting for the validation analysis described in Section~\ref{sec:CWoLa:fitting:val_analysis}, \textbf{the signal region is not masked for this fit}, and the likelihood of the fit function is minimized across the entire range.
 However, in order to fit the background when there is the presence a potential signal, there is still a masked region defined, and \textbf{the fit quality is evaluated on only the sidebands outside the masked region}.
-This change was applied as it was found that the fit function was sometimes performing poorly in the masked regions.
+This change was applied as it was found that the fit function was sometimes performing poorly in the masked regions\footnote{In the validation data fits.}.
 The masked regions are the same as for the validation analysis as described in Section~\ref{sec:CWoLa:fitting:val_analysis} (Table~\ref{tab:mjj_bins2}); in particular, the masked region for each bin is enlarged to include half of both the left and right neighboring bins.
 
 The fitting procedure is exactly the same as described in Section~\ref{sec:CWoLa:fitting:val_analysis}, other than that, in Fit Step~\ref{fitstep:1}, the fit includes the masked region.
@@ -993,8 +993,8 @@ This significance is directly used as the test of the background-only hypothesis
 \label{sec:CWoLa:limits}
 The observed results are interpreted using a frequentist statistical analysis when setting limits.
 The parameter of interest is the signal strength, $\mu$, defined as a scale factor on the total number of signal events expected relative to some benchmark, so that $\mu=0$ corresponds to no signal, and $\mu=1$ corresponds to the benchmark.
-As we do not have a specific signal model, the couplings and thus cross-sections are free parameters.
-Therefore, we define the benchmark to be such that, in the benchmark model, the total number of events expected to be produced is exactly 1: $\sigma\times\text{B}\times\mathcal{L}=1$, with $\sigma$ the signal cross section for $A$ production, $\text{BR}$ the signal branching ratio to $BC$ which then decay hadronically, and $\mathcal{L}$ the data luminosity.
+As there is no specific signal model, the couplings and thus cross-sections are free parameters.
+Therefore, the benchmark is defined to be such that, in the benchmark model, the total number of events expected to be produced is exactly 1: $\sigma\times\text{B}\times\mathcal{L}=1$, with $\sigma$ the signal cross section for $A$ production, $\text{BR}$ the signal branching ratio to $BC$ which then decay hadronically, and $\mathcal{L}$ the data luminosity.
 Then $\mu$ is exactly the total number of signal events expected to be produced.
 
 A likelihood function $\mathcal{L}(\mu,\theta)$ is defined, with $\theta=\{\theta_s,\theta_b\}$ going over the nuisance parameters in the signal ($\theta_s$) and background ($\theta_b$).
@@ -1007,10 +1007,12 @@ The likelihood function is defined as follows:
 \end{align}
 where $n_\text{obs}^i$ is the number of events observed in bin $i$,
 $s_i$ is the fraction of signal expected in bin $i$ (including the event selection due to the NN selection),
-$\theta_s$ are the nuisance parameters corresponding to the systematic uncertainties on the signal shape (Section~\ref{sec:CWoLa:systs}),
+$\theta_s$ are the nuisance parameters corresponding to the systematic uncertainties on the signal shape\footnote{I.e., $s_i \rightarrow s_i(1+\theta_s\sigma_{s_i})$ with the size of the variation $\sigma_{s_i}$ derived by varying the systematic uncertainties in simulation.}
+(Section~\ref{sec:CWoLa:systs}),
 $b_i$ is the total number of background expected in bin $i$,
-$\theta_b$ are the nuisance parameters corresponding to the uncertainty on the background fit, as derived from the fitting and described in Section~\ref{sec:CWoLa:fitting},
-$P_\text{pois}(n|e)$ is a Poisson likelihood of $n$ events given $e$ expected, and $\mathcal{G}$ is a  Gaussian.
+$\theta_b$ are the nuisance parameters corresponding to the uncertainty on the background fit\footnote{I.e., $b_i \rightarrow b_i(1+\theta_b\sigma_{b_i})$ with the size of the variation $\sigma_{b_i}$ the uncertainty on the background fit in bin $i$.},
+as derived from the fitting and described in Section~\ref{sec:CWoLa:fitting},
+$P_\text{pois}(n|e)$ is a Poisson likelihood of $n$ events given $e$ expected, and $\mathcal{G}$ is a Gaussian.
 Note that, since $\theta_s$ only affect the shape of the signal, these uncertainties cannot be profiled.
 %Furthermore, they are not included in the likelihood function directly, but are rather used as post-fit uncertainties on the derived limits, as explained below.
 %\footnote{Note that the likelihood defined here is a \textit{single-bin} likelihood. We do this in order to be as agnostic as possible to the shape of the signal. Note also then that the nuisance parameters cannot be profiled.}
@@ -1036,7 +1038,7 @@ $\epsilon$ & [1.0,0.25,0.1,0.01] \\
     \hline
   \end{tabular}
 \end{table}
-Each choice of $\epsilon$ is treated as a separate statistical analysis; since the choices of $\epsilon$ differ by factors of more than $2$, the results with a given NN at different values of $\epsilon$ are mostly uncorrelated.
+Each choice of $\epsilon$ is treated as a separate statistical analysis; since the choices of $\epsilon$ differ by factors of more than $2$, the results with a given NN at different values of $\epsilon$ should be mostly independent.
 %In particular, the analysis with a cut at $\epsilon=1.0$ is very similar to the standard dijet search~\cite{ATLAS:2015nsi}, and is included as a cross-check on the results relative to existing results.
 
 %For deriving the discovery potential $\mu_{5\sigma}$ or 95\% confidence exclusion limits $\mu_{95}$, it is necessary to inject signal on top of the background expectation in order to evaluate the profile likelihood $\lambda(\mu)$.
@@ -1815,8 +1817,7 @@ The limits from the inclusive dijet search are visually separated between signal
 The diboson search limits are computing using the Heavy Vector Triplet~\cite{Pappadopulo:2014qza} $W'$ signal used in that search.
 The acceptance for the $W'$ using the selection in this search, compared to the $W'$ acceptance in~\cite{Aad:2019fbh}, is 86\% and 54\% at $m_{W'}=3$ and 5~\TeV, respectively.
 That search uses dedicated $W$ jet taggers that make use of more features than just the mass of the jet, and so is expected to achieve sensitivity to those signals that would not be possible with the setup of this search (but would be possible in a future iteration of this analysis - Section~\ref{sec:CWoLa:discussion}).
-
-The comparison between the diboson resonance search and the inclusive dijet search is performed for the first time in the rightmost column of Figure~\ref{fig:CWoLa:sigma95}.
+%The comparison between the diboson resonance search and the inclusive dijet search is performed for the first time in the rightmost column of Figure~\ref{fig:CWoLa:sigma95}.
 As expected, the targeted diboson search is more sensitive and the difference in limits is about a factor of $10$.
 
 %Away from the SM dibosons, CWoLa hunting with $\epsilon<1$ outperforms the other searches by as much as a factor of five for the heaviest masses.
