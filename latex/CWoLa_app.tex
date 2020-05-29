@@ -126,15 +126,16 @@ In this example, the analytic correction would require $\alpha \rightarrow \hat{
 \footnote{The more precise correction is actually $\alpha = 1-(1-\hat{\alpha})^m\approx m\hat{\alpha}$, which can easily be derived as $\text{Prob}(p \leq \hat{\alpha}|H_0) = 1-\bigcup_{i=1}^m\text{Prob}(p_i > \hat{\alpha}|H_0) = 1-(1-\hat{\alpha})^m$.}
 , for the same significance level;
 in the simulation it can also be seen that $\text{Prob}(p \leq \hat{\alpha} | H_0) \approx \alpha$.
-However requiring this more stringent test reduces the signal sensitivity - for example, the probability of observing a $Z=2$ significance ($\alpha\approx 0.02 \rightarrow \hat{\alpha}\approx 0.002$) is approximately $0.2$, only slightly better than in the Inclusive Search\footnote{The signal sensitivity is slightly higher than in the Inclusive Search, since the true signal does lie in one of the regions and there is some chance that all the other regions have high $p$-values. However the improvement is minimal compared to the improvement that can be made with CWoLa, as will be seen below.}.
+However requiring this more stringent test reduces the signal sensitivity - for example, the probability of observing a $Z=2$ significance ($\alpha\approx 0.02 \rightarrow \hat{\alpha}\approx 0.002$) is approximately $0.6$, as opposed to $\sim 0.9$ as the naive $p$-values would indicate.
+This is better than for the Inclusive Search, since the true signal does lie in one of the regions and there is some chance that all the other regions have high $p$-values.
+However, we will see the improvement is worse than the improvement that can be made with CWoLa.
 
 In any case, there are good reasons to avoid having to re-calibrate the background-only $p$-values: most often the disparate searches will not be so clear-cut as to allow an analytic correction; and a simulation of the background-only $p$-values is often hard to come by.
 Because of this, it's desirable to have a method where the background-only $p$-values are defined correctly.
 
 \begin{figure}[h!]
 \centering
-%\subfloat[]{\includegraphics[width=0.45\textwidth]{/Users/acukierm/Documents/ATLAS/CWoLa/ToyMC/{p_all}.png}}
-\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_max}.pdf}
+\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_max_newsig}.pdf}
 \caption{Probability distributions of $p$-values for the Direct Scanning approach in the (blue) background-only and (red) background plus signal cases. The black dotted line indicates the ideal background-only case of $\text{Prob}(p \leq \alpha | H_0) = \alpha$. Then green dashed lines indicate the $\alpha$ thresholds corresponding to integer significances $Z$.}
 \label{fig:CWoLa:p_max}
 \end{figure}
@@ -146,15 +147,15 @@ Since the train and tests sets are statistically independent in the background-o
 
 Figure~\ref{fig:CWoLa:p_traintest} shows the probability distributions of the $p$-values with a $f=\frac{1}{2}$ train/test split.
 The background-only case has $\text{Prob}(p \leq \alpha | H_0) \leq \alpha$\footnote{There is a small effect that, given there is an excess in the train set in one of the regions, there are fewer events to go around for all the other regions (train and test), so $Q$ is actually biased low.}.
-However, the signal sensitivity is actually worse than the Inclusive Search.
-This is due to two factors.
+The signal sensitivity is better than the Inclusive Search, with the probability of a $Z=2$ excess about $0.4$, and the probability of a $Z=3$ excess about $0.15$.
+However, there are two factors which could be addressed to make the signal sensitivity better.
 First, since $(1-f)<1$, it is harder to find the region in which the signal lays than without the train/test split.
 Second, since $f<1$, even in cases where the correct region is found, the significance of the excess in that region is reduced by a factor of $\sim\sqrt{f}$\footnote{The significance in the correct region is roughly $\frac{S}{\sqrt{\epsilon B}}$. If both $S$ and $B$ are multiplied by a factor of $f<1$, the significance is multiplied by $\sqrt{f}<1$.}.
 
 \begin{figure}[h!]
 \centering
 %\subfloat[]{\includegraphics[width=0.45\textwidth]{/Users/acukierm/Documents/ATLAS/CWoLa/ToyMC/{p_all}.png}}
-\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_traintest}.pdf}
+\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_traintest_newsig}.pdf}
 \caption{Probability distributions of $p$-values for the Direct Scanning approach with a $f=\frac{1}{2}$ train/test split in the (blue) background-only and (red) background plus signal cases. The black dotted line indicates the ideal background-only case of $\text{Prob}(p \leq \alpha | H_0) = \alpha$. Then green dashed lines indicate the $\alpha$ thresholds corresponding to integer significances $Z$.}
 \label{fig:CWoLa:p_traintest}
 \end{figure}
@@ -178,7 +179,7 @@ This effect is made more clear in the case that $k\gg1$ - in that case, the trai
 \begin{figure}[h!]
 \centering
 %\subfloat[]{\includegraphics[width=0.45\textwidth]{/Users/acukierm/Documents/ATLAS/CWoLa/ToyMC/{p_all}.png}}
-\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_traintest_kfold}.pdf}
+\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_traintest_kfold_newsig}.pdf}
 \caption{Probability distributions of $p$-values with a $k=5$ $k$-fold cross-testing in the (blue) background-only and (red) background plus signal cases. The black dotted line indicates the ideal background-only case of $\text{Prob}(p \leq \alpha | H_0) = \alpha$. Then green dashed lines indicate the $\alpha$ thresholds corresponding to integer significances $Z$.}
 \label{fig:CWoLa:p_traintest_kfold}
 \end{figure}
@@ -194,12 +195,12 @@ The test statistic $Q$ is the number of events observed in the tagging region, w
 
 The probability distributions of the $p$-values with this mock NN are shown in Figure~\ref{fig:CWoLa:p_nokfold}.
 Despite training and testing on the same set, as in the original Direct Scanning approach (Figure~\ref{fig:CWoLa:p_max}), the background-only $p$-values already look better, albeit still biased (since there is an overdensity in the tagged region).
-In addition, the $p$-values in the background plus signal case are significantly smaller (significantly higher probability that $p\leq\alpha$ for fixed $\alpha$) than in the Direct Scanning approach, indicating that if the background-only $p$-values were calibrated, the signal sensitivity would be better.
+In addition, the $p$-values in the background plus signal case are smaller (higher probability that $p\leq\alpha$ for fixed $\alpha$) than in the Direct Scanning approach, indicating that if the background-only $p$-values were calibrated, the signal sensitivity would be better.
 
 \begin{figure}[h!]
 \centering
 %\subfloat[]{\includegraphics[width=0.45\textwidth]{/Users/acukierm/Documents/ATLAS/CWoLa/ToyMC/{p_all}.png}}
-\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_nokfold}.pdf}
+\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_nokfold_newsig}.pdf}
 \caption{Probability distributions of $p$-values with a mock NN with no $k$-fold cross-testing in the (blue) background-only and (red) background plus signal cases. The black dotted line indicates the ideal background-only case of $\text{Prob}(p \leq \alpha | H_0) = \alpha$. Then green dashed lines indicate the $\alpha$ thresholds corresponding to integer significances $Z$.}
 \label{fig:CWoLa:p_nokfold}
 \end{figure}
@@ -209,13 +210,13 @@ The test statistic $Q$ is the number of events observed in the tagging region su
 
 The probability distributions of the $p$-values can be seen in Figure~\ref{fig:CWoLa:p_kfold}.
 It can be seen that the background-only $p$-values are approximately unbiased, with $\text{Prob}(p \leq \alpha | H_0) \approx \alpha$ across the whole range\footnote{There is a small bias towards smaller $p$-values, but correcting for this would not significantly change the signal sensitivity.}.
-In addition, the background plus signal $p$-values are significantly smaller than in the Inclusive Search - the probability of a $Z=2$ excess is about $0.9$, and the probability of a $Z=3$ excess is greater than $0.5$.
-This indicates that the signal sensitivity is significantly better than in the Inclusive Search, without paying a penalty of higher Type I errors.
+In addition, the background plus signal $p$-values are significantly smaller than in the Inclusive Search - the probability of a $Z=2$ excess is about $0.9$, and the probability of a $Z=3$ excess is greater than $50\%$.
+This indicates that the signal sensitivity is significantly better than in the Inclusive Search, without paying a penalty of higher Type I errors (or recalibrating the $p$-values in order to set the rate of Type I errors correctly).
 
 \begin{figure}[h!]
 \centering
 %\subfloat[]{\includegraphics[width=0.45\textwidth]{/Users/acukierm/Documents/ATLAS/CWoLa/ToyMC/{p_all}.png}}
-\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_kfold}.pdf}
+\includegraphics[width=0.8\textwidth]{figures_CWoLa/{p_kfold_newsig}.pdf}
 \caption{Probability distributions of $p$-values with a mock NN and with $k=5$ $k$-fold cross-testing in the (blue) background-only and (red) background plus signal cases. The black dotted line indicates the ideal background-only case of $\text{Prob}(p \leq \alpha | H_0) = \alpha$. Then green dashed lines indicate the $\alpha$ thresholds corresponding to integer significances $Z$.}
 \label{fig:CWoLa:p_kfold}
 \end{figure}
