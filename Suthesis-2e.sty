@@ -485,6 +485,22 @@ of Doctor of Philosophy.
 \end{minipage}
 \end{flushright}}
 
+\long\def\authorheader{%
+\begin{flushright}
+\begin{minipage}{5in}
+\begin{flushright}
+\parindent=0pt
+\@author
+\par
+\end{flushright}
+\vspace{0.5\signaturespace}
+%\hbox to 4in{\hfil\shortstack{\vrule width 3in height 0.4pt\\ #1}}
+\hbox to 5in{\hfil\begin{tabular}{@{}l@{}}
+                    %\vrule width 3in height 0.4pt depth 0pt\\
+                    %\\
+                  \end{tabular}}
+\end{minipage}
+\end{flushright}}
 
 \def\signaturepage{% 
 \ifonline
@@ -492,6 +508,7 @@ of Doctor of Philosophy.
 \def\thepage{}
 \thispagestyle{myheadings}
 \markboth{\rm \@author}{\rm \@author}\fi
+\authorheader
 \signature{(\@principaladviser)\quad Principal \advis@r}
   \vfill
 % if second principal advisor
