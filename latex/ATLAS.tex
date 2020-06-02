@@ -75,7 +75,7 @@ The precision of the pixels is $10\times 115$ $\mu\text{m}^2$ in $R-\phi \times 
 There are roughly 80.4 million independent pixel channels.
 
 The next outermost layer is the SCT, which operates under very similar principles to the pixel detectors.
-However, insted of small pixels long and thin strips are used, which provide spatial information in only one direction.
+However, instead of small pixels, long and thin strips are used, which provide spatial information in only one direction.
 Because of this, each of the 4 layers of the SCT are actually composed of 2 layered and slightly offset strips at an angle of 40 mrad to each other, in order to get a (rough) measurement in the second direction as well.
 In the barrel region these strips are parallel to the beam direction; in the endcaps they are radial.
 The strips have a precision of $17\times 580$ $\mu\text{m}$ in $R-\phi \times z$ in the barrel and also $17\times 580$ $\mu\text{m}$ in $R-\phi \times R$ in the endcaps.
@@ -285,7 +285,7 @@ A schematic of the L1Calo trigger towers and RoIs can be seen in Figure~\ref{fig
 
 The L1Muon system uses the information from the RPCs and TGCs (Section~\ref{sec:ATLAS:MS}) to identify muon candidates in time to pass on to the HLT.
 
-There is finally an L1Topo system which combines information from L1Calo and L1Muon to evaluate event-wide information, in particular the \textit{missing transverse energy} or \Etmiss{}, which corresponds to inbalances of momentum in the transverse plane (Section~\ref{sec:ATLAS:met}).
+There is finally an L1Topo system which combines information from L1Calo and L1Muon to evaluate event-wide information, in particular the \textit{missing transverse energy} or \Etmiss{}, which corresponds to imbalances of momentum in the transverse plane (Section~\ref{sec:ATLAS:met}).
 
 \subsection{High Level Trigger}
 \label{sec:ATLAS:HLT}
@@ -335,7 +335,7 @@ Finally, there are dedicated triggers with low rates for exotic signatures, e.g.
 \label{sec:ATLAS:objects}
 Events passing the triggers (Section~\ref{sec:ATLAS:trigger}) are written to disk and the detector observables are \textit{reconstructed} with algorithms into objects intended to correspond to particular physics particles.
 Tracks derived from hits in the inner detector (Section~\ref{sec:ATLAS:tracks}) and topological clusters of cells in the calorimeter (Section~\ref{sec:ATLAS:clusters}) are used to build up objects corresponding to photons and electrons (Section~\ref{sec:ATLAS:EM}) and jets (Section~\ref{sec:ATLAS:jets}).
-Muons are also reconstructed using inormation from the MS (Section~\ref{sec:ATLAS:muons}).
+Muons are also reconstructed using information from the MS (Section~\ref{sec:ATLAS:muons}).
 Finally, these objects are combined together to estimate the missing transverse energy (Section~\ref{sec:ATLAS:met}).
 
 \subsection{Tracks}
@@ -493,10 +493,10 @@ For example, the fraction of energy of the supercluster in the electromagnetic c
 These features (formed separately for electrons and photons) are combined together into a multivariate likelihood in bins of \ET{} and $\eta$ to be used in the final identification.
 More information about the electron identification can be found in~\cite{Aaboud:2019ynx}.
 The shower shape variables are particularly useful for distinguishing between prompt photons and neutral pions decaying to collimated $\gamma\gamma$.
-Both photons and electrons have working points at \texttt{Loose}, \texttt{Medium}, or \texttt{Tight}, which can be chosen at the analysis level based on the signal efficiency - background rejection tradeoff.
+Both photons and electrons have working points at \texttt{Loose}, \texttt{Medium}, or \texttt{Tight}, which can be chosen at the analysis level based on the signal efficiency - background rejection trade-off.
 
 In addition, a set of isolation variables are defined based on calorimeter and tracking activity outside the supercluster but inside a cone of $\Delta R = 0.2$.
-The isolation is intended to discriminate between prompt electrons and electrons from heavy flavor decays or light hadrons misidentified as electrons, and further between prompt photons and neutral pions decaying to collimbated $\gamma\gamma$.
+The isolation is intended to discriminate between prompt electrons and electrons from heavy flavor decays or light hadrons misidentified as electrons, and further between prompt photons and neutral pions decaying to collimated $\gamma\gamma$.
 Isolation working points are defined at \texttt{Loose}, \texttt{Tight}, and \texttt{CaloOnly} which uses only calorimeter information.
 
 The efficiency of the identification and isolation working points are evaluated in data using high-fidelity $Z\rightarrow ee$ and $J/\psi \rightarrow ee$ events for electrons~\cite{ATLAS-CONF-2016-024} and $Z\rightarrow ee\gamma$ and $Z\rightarrow \mu\mu\gamma$ events for photons~\cite{PERF-2013-04,Aaboud:2018yqu}.
@@ -633,12 +633,12 @@ The energy and mass response before calibration can be seen in Figure~\ref{fig:A
 \end{figure}
 
 The Author has been involved in a project~\cite{ATL-PHYS-PUB-2020-001} intended to calibrate the jet energy and mass simultaneously rather than the sequential process outlined above.
-This project uses the simultaneous techniques enabled by neural networks introdued in Chapter~\ref{ch:GenNI}.
+This project uses the simultaneous techniques enabled by neural networks introduced in Chapter~\ref{ch:GenNI}.
 
 There are two independent definitions of the jet mass~\cite{ATLAS-CONF-2016-035}.
 The first is directly from summing together the four momenta of the constituent topoclusters (which are themselves assumed to be massless) and is called $m^\text{calo}$, or \textit{calorimeter} mass.
 The second, called the \textit{track} mass or $m^\text{track}$, is measured from tracks ghost-associated to the jet.
-This measurement can provide a better measurement than the calorimeter mass due to the improved angular resolution of tracks compared to topoclusters; however, the tracks only comprise the charged particle component of the hadronic shower, so the overal scale of the mass will be off, even as the angular distribution is relatively accurate.
+This measurement can provide a better measurement than the calorimeter mass due to the improved angular resolution of tracks compared to topoclusters; however, the tracks only comprise the charged particle component of the hadronic shower, so the overall scale of the mass will be off, even as the angular distribution is relatively accurate.
 To account for the absence of neutral particles in the track mass which are measured in the calorimeter, the track mass is scaled up by the ratio of the calorimeter and track \pt{}, forming the \textit{track-assisted} mass~\cite{Elder:2018mcr} or $m^\text{TA}=m^\text{track}\frac{\pt^\text{calo}}{\pt^\text{calo}}$.
 Each of these two mass definitions are calibrated separately.
 The \textit{combined} mass or $m^\text{comb}$ is defined as a weighted sum between $m^\text{track}$ and $m^\text{TA}$ based on the (inverse) resolution of the truth jet mass under each definition.
@@ -652,7 +652,7 @@ The total systematic uncertainty on the jet energy rises from around 2\% at low 
 
 An in situ correction for the jet mass is also derived, though this correction cannot take advantage of \pt{} balance with a reference object.
 Two methods are employed to derive this correction.
-The first method compares the ratio of $m^\text{calo}$ to $m^\text{track}$ in data and simulation and provides a correction based on any differencs, and uncertainties on this correction are applied as systematic uncertainties.
+The first method compares the ratio of $m^\text{calo}$ to $m^\text{track}$ in data and simulation and provides a correction based on any differences, and uncertainties on this correction are applied as systematic uncertainties.
 The second method is called \textit{forward folding}~\cite{ATLAS-CONF-2016-008}.
 Both data and simulation are subjected to an event selection targeting $t\bar{t}$ events with high fidelity.
 This event selection takes advantage of events where one of the top quarks decays semileptonically ($t\rightarrow Wb \rightarrow l\nu b$) to unambiguously identify the top quark and the other decays hadronically ($t\rightarrow Wb \rightarrow qqb$), using the hadronic decay to calibrate the jet mass.
@@ -678,7 +678,7 @@ It can be seen that there is a linear component of the dependence on pile-up, co
 \begin{figure}[htbp]
   \centering 
   \subfloat[]{\includegraphics[width=0.5\textwidth]{figures/{pileup_JVT}.pdf}}
-  \caption{Dependence of number of jets ($\pt>20$ GeV) per event on the average number of interactions per bunch crossing. In blue, all jets. In red, after applying a selection of JVT$>0.59$. Events from 2017 data-taking with a dimuon trigger and $81<M_{\mu\mu}<101$ GeV, correponding to an event topology of $Z+$jets. Figure sourced from~\cite{JETM-2017-009}.}
+  \caption{Dependence of number of jets ($\pt>20$ GeV) per event on the average number of interactions per bunch crossing. In blue, all jets. In red, after applying a selection of JVT$>0.59$. Events from 2017 data-taking with a dimuon trigger and $81<M_{\mu\mu}<101$ GeV, corresponding to an event topology of $Z+$jets. Figure sourced from~\cite{JETM-2017-009}.}
   \label{fig:ATLAS:JVT}
 \end{figure}
 
@@ -796,7 +796,7 @@ Also shown is the background rejection rate as a function of the tau-jet efficie
 The energy of tau-jets is further calibrated to the truth visible energy (i.e. not including the neutrinos), in a manner similar to that for generic jets (Section~\ref{sec:ATLAS:jet_calibration}).
 
 The efficiency of the tau tagger and the energy calibration are measured in data with high-fidelity $Z\rightarrow \tau\tau$ events, where one of the taus decays to a muon to identify the event and the other decays hadronically.
-Any differences between data and simulation are corrected, and uncertanties on the correction are applied as systematic uncertainties.
+Any differences between data and simulation are corrected, and uncertainties on the correction are applied as systematic uncertainties.
 
 \subsection{Muons}
 \label{sec:ATLAS:muons}
@@ -819,7 +819,7 @@ In regions that the MS covers but the inner detector does not ($2.5<|\eta|<2.7$)
 
 Fake muons can come from a variety of sources: from charged hadrons, primarily pions and kaons, decaying to muons, which produces a kink in the track in the inner detector; from charged hadrons punching through to the MS, which lose significant energy in the calorimeter relative to the track momentum; and from cosmic muons, which do not originate from the primary vertex.
 Each of these sources of background can be distinguished from prompt muons by testing the quality of the track in the inner detector and its compatibility with the track in the MS, especially the charge to momentum ratio.
-A few different working points are defined by selecting on these features - the \texttt{Medium} working point, which is the default for analyses, has about a 95\% efficiency on prompt muons with $4<\pt<100$ GeV and $<0.5\%$ efficiency on charged pions decaying midflight to muons.
+A few different working points are defined by selecting on these features - the \texttt{Medium} working point, which is the default for analyses, has about a 95\% efficiency on prompt muons with $4<\pt<100$ GeV and $<0.5\%$ efficiency on charged pions decaying mid-flight to muons.
 
 Muons can also be required to be isolated using similar variables as for photons and electrons (Section~\ref{sec:ATLAS:EM}), depending on the signal topology targeted in an analysis.
 
@@ -863,5 +863,5 @@ In addition, the \Etmiss{} distribution is compared between simulation and data 
 
 There have been a variety of alternate definitions proposed for calculating \Etmiss.
 One proposed method is to incorporate the \pt{} resolution of the individual objects to get an $\Etmiss$ significance~\cite{ATLAS-CONF-2018-038}.
-An exciting alternative is to use a convolutional neural network to predict \Etmiss, treating the entire event as an image in $(\eta,\phi)$~\cite{ATL-PHYS-PUB-2019-028}.
+An exciting alternative is to use a convolutional neural network~\cite{fukushima1980neocognitron,lecun1998gradient,schmidhuber2015deep} to predict \Etmiss, treating the entire event as an image in $(\eta,\phi)$~\cite{ATL-PHYS-PUB-2019-028}.
 

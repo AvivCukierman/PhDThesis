@@ -121,14 +121,14 @@ However, because of this other analysis need, this trigger was running unprescal
 This trigger has potential to be efficient on our signals at low $m_a$.
 First, the photon isolation at L1 only goes out to $\Delta R=0.2$~\cite{Aad:2019wsl}; and furthermore, no isolation at all is applied if the \pt{} of the photon is $>50$ \GeV{}.
 As argued above, for fixed $m_a$ as $\Delta R$ between the photons gets smaller the \pt{} of the leading photon gets larger, so that these two effects can mostly cancel out and allow our signals to pass the L1 trigger.
-The top row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this trigger as a function of the leading offine photon \pt{}; the efficiency goes to 100\% for $\pt{}>30$ \GeV{} for $m_a \ge 10$ \GeV{}, indicating that the leading photon is passing the trigger requirement.
+The top row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this trigger as a function of the leading offline photon \pt{}; the efficiency goes to 100\% for $\pt{}>30$ \GeV{} for $m_a \ge 10$ \GeV{}, indicating that the leading photon is passing the trigger requirement.
 For $m_a=2$ \GeV{}, the efficiency only goes to 100\% for $\pt{}>50$ \GeV{}, in accord with the isolation requirements mentioned above.
 
 Second, for the VBF signals the decay products of each of the two $a$ particles are reconstructed as a single jet in the HLT (photons are reconstructed as jets both at trigger level and offline); these two jets plus the two VBF jets reach the requirement of 4 jets with $\pt{}>35$ \GeV{}, and in particular the \pt{} of each of the signal jets contains the full \pt{} of each of the $a$ particles rather than just one of the decay products.
-The middle row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this trigger as a function of the 4th-leading offine jet \pt{} (including jets overlapping photons); the efficiency goes to 100\% for $\pt{}>40$ \GeV{}, indicating that the photons are being picked up as jets in the HLT.
+The middle row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this trigger as a function of the 4th-leading offline jet \pt{} (including jets overlapping photons); the efficiency goes to 100\% for $\pt{}>40$ \GeV{}, indicating that the photons are being picked up as jets in the HLT.
 
 Finally, the photon in the HLT requirement is met by the leading photon, since no isolation is required at HLT; and the invariant mass requirement is of course met in the VBF topology.
-The bottom row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this trigger as a function of the maximum dijet invariant mass; the efficiency goes to 100\% for invariant mass $>1100$ \GeV{}, indicating the level at which the turnon occurs.
+The bottom row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this trigger as a function of the maximum dijet invariant mass; the efficiency goes to 100\% for invariant mass $>1100$ \GeV{}, indicating the level at which the turn-on occurs.
 
 \begin{figure}[t]
   \centering 
@@ -149,7 +149,7 @@ The bottom row of Figure~\ref{fig:HBSM_app:turnons} shows the efficiency of this
   \label{fig:HBSM_app:turnons}
 \end{figure}
 
-In summary, with an offline selection of at least one photon with $\pt{}>30$ \GeV{}, at least 4 jets (including any that overlap photons) with $\pt{}>40$ \GeV{}, and a maximum invariant mass of $>1100$ \GeV{}, the \texttt{HLT\_g25\_medium\_4j35\_0eta490\_invm1000} trigger is fully efficienct.
+In summary, with an offline selection of at least one photon with $\pt{}>30$ \GeV{}, at least 4 jets (including any that overlap photons) with $\pt{}>40$ \GeV{}, and a maximum invariant mass of $>1100$ \GeV{}, the \texttt{HLT\_g25\_medium\_4j35\_0eta490\_invm1000} trigger is fully efficiency.
 This offline selection is listed in Table~\ref{tab:HBSM_app:new_preselection}.
 \begin{table}[htbp]
   \begin{center}
@@ -209,7 +209,7 @@ Jets with two prongs are a signature of $W$-jet decays, and so most work with th
 There are no existing taggers that target small-R jets with two hard prongs.
 
 The Author has advised on a project intended to identify collimated photon decays reconstructed in a single jet~\cite{mergedphotonid}.
-The tagging algorithm uses convolutional neural networks to tag jet images~\cite{Cogan:2014oua,deOliveira:2015xxd}, which have been used in ATLAS before for quark-gluon discrimination~\cite{ATL-PHYS-PUB-2017-017}.
+The tagging algorithm uses convolutional neural networks~\cite{fukushima1980neocognitron,lecun1998gradient,schmidhuber2015deep} to tag jet images~\cite{Cogan:2014oua,deOliveira:2015xxd}, which have been used in ATLAS before for quark-gluon discrimination~\cite{ATL-PHYS-PUB-2017-017}.
 The tagging performance indicates a greatly improved signal/background discrimination power, enabling the offline selection for this analysis at low mass.
 These techniques could also be used to target the collimated gluon decays.
 

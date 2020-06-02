@@ -26,8 +26,8 @@ First, using features correlated with the provenance of the jet, the difference 
 Second, by reducing the dependence of the scale on auxiliary features, the effects of mismodeling in the underlying spectrum of these features can be mitigated.
 Third, the correction can remove the additional component of the jet energy resolution relative to the particle-level quantity due to the spread of these underlying features.
 
-The current method for the GSC treats the impact of each auxiliary feature sequentially and independently, which requires the set of features used in the correction to be chosen in such a way to have uncorrelated effects on the jet energy.
-However, there is additional information available which could improve the calibration and yet is not used in the current GSC because of this requirement of uncorrelation.
+The current method for the GSC treats the impact of each auxiliary feature sequentially and independently, which requires the set of features used in the correction to be chosen in such a way to have independent effects on the jet energy.
+However, there is additional information available which could improve the calibration and yet is not used in the current GSC because of this requirement of independence.
 This Chapter presents a new technique using neural networks to simultaneously take into account multiple auxiliary variables in this correction which may or may not have correlated effects on the jet energy.
 The technique relies both on the general capacity of neural networks to approximate well complicated functions in high dimensions~\cite{HORNIK1991251} and on recent advances in jet substructure~\cite{Larkoski:2017jix} which indicate useful features for applying this correction.
 As mentioned in Chapter~\ref{ch:NI}, it is important that the calibration is independent of the underlying \pt{} spectrum, and therefore that ultimately it relies on numerical inversion.
@@ -35,7 +35,7 @@ The new technique presented here, called \textit{generalized numerical inversion
 Ultimately this technique is shown to improve the overall quality of the jet calibration on the three metrics outlined above.
 
 This Chapter is organized as follows.
-Section~\ref{sec:GenNI:atlas} discusses the simulated samples used in this study and Section~\ref{sec:GenNI:jetreco} briefly reviews the GSC and describes it in the notation used in this Thesis.
+Section~\ref{sec:GenNI:atlas} discusses the simulated samples used in this study, and Section~\ref{sec:GenNI:jetreco} reviews the GSC and describes it in the notation used in this Thesis.
 Generalized numerical inversion is described in Section~\ref{sec:GenNI:genni} and first results using this new method are presented in Section~\ref{sec:GenNI:results}.
 There is a discussion of the results in Section~\ref{sec:GenNI:discussion} and the Chapter concludes with Section~\ref{sec:GenNI:conclusion}.
 
@@ -119,7 +119,7 @@ Then, the function $f$ can be generalized as $f_\theta(x)\equiv \langle p_\text{
 %Although it may seem intuitive that one would want to correct for the dependence of the jet energy on auxiliary variables if such a dependence exists, it is worth delving into exactly what the reasons and implications of such a correction are.
 
 In general, if it is found that the jet energy $f_\theta(x)$ depends on some auxiliary variable $\theta$, then it is desirable that the calibration removes this dependence, for a few reasons.
-First, if the distribution of $\theta$ is sample-dependent, e.g. correlated with the jet originating parton, then there could be closure in one sample but not another, which could cause nonoptimal selections in the final analysis cuts.
+First, if the distribution of $\theta$ is sample-dependent, e.g. correlated with the jet originating parton, then there could be closure in one sample but not another, which could cause suboptimal selections in the final analysis cuts.
 Second, if $\theta$ is not well-modeled by the simulation then even though there may be closure in the simulation there may not be closure in the data, and this could introduce systematic uncertainties in the final calibration.
 Third, there is a degradation of the resolution $\sigma(x)$ due to the spread of $\theta$, which can cause the sensitivity of the final analysis selection to be worse than with an undegraded resolution.
 These are the three metrics by which we judge the performance of the GSC and of generalized numerical inversion in this Chapter.
@@ -176,7 +176,7 @@ A schematic of the generalized numerical inversion method is shown in Figure~\re
   \caption{
     A schematic of the generalized numerical inversion method.
     First, a neural network  $L$ is trained to learn $\ptreco$ from $\pttrue$ and $\theta$, which is an approximation to the functions $f_\theta(x)$.
-    Then, a second neural network $C$ is traind to learn $\pttrue$ from $L(\pttrue,\theta)$ and $\theta$, which is an approximation to the functions $f^{-1}_\theta(x)$.
+    Then, a second neural network $C$ is trained to learn $\pttrue$ from $L(\pttrue,\theta)$ and $\theta$, which is an approximation to the functions $f^{-1}_\theta(x)$.
     Finally, $C$ is used as the calibration function.
     }
   \label{fig:GenNI:schematic}
@@ -191,7 +191,7 @@ A schematic of the generalized numerical inversion method is shown in Figure~\re
 
 To illustrate the potential of generalized numerical inversion, an example is provided using jets from the ATLAS full detector simulation.
 Neural network training is performed using scikit-learn~\cite{scikit-learn} with a simple two-layer feed-forward neural network that has 100 hidden nodes in each layer and a rectified linear unit activation function.
-To lay the groundwork for application to the full GSC, two key jet features are studied: the number of tracks above 1 GeV associated to the jet ($n_\text{track}$) and the average track radius\footnote{The GSC currently used in ATLAS uses instead the track width, which is the average track radius multiplied by $(n_\text{track}+1)$.  The residual dependence of the $n_\text{track}$-calibrated response on the track width is negligible and is thus not useful for benchmarking generalized numerical inversion as the sequential calibration is nearly the same as the simultaneous calibration. 
+To lay the groundwork for application to the full GSC, two key jet features are studied: the number of tracks above $1$ GeV associated to the jet ($n_\text{track}$) and the average track radius\footnote{The GSC currently used in ATLAS uses instead the track width, which is the average track radius multiplied by $(n_\text{track}+1)$.  The residual dependence of the $n_\text{track}$-calibrated response on the track width is negligible and is thus not useful for benchmarking generalized numerical inversion as the sequential calibration is nearly the same as the simultaneous calibration. 
   %There are observables which blah.
 }:
 \[
@@ -398,7 +398,7 @@ The technique outlined here does not address the question of how to simultaneous
 The Author has contributed to a project~\cite{ATL-PHYS-PUB-2020-001} in which an extension of generalized numerical inversion is proposed that addresses exactly this question, and it is found that it is possible to calibrate multiple variables simultaneously while taking into account multiple simultaneous auxiliary variables.
 In particular, this project answers this question in the context of the large-$R$ jet calibration, which could directly further improve the sensitivity of the search in Chapter~\ref{ch:CWoLa}.
 
-One point that is not addressed in the formulation of generalized numerical inversion is the difference between the mean, median, and mode of the target distributions; this difference was expounded on particularly thorougly in the discussion of numerical inversion itself in Chapter~\ref{ch:NI}.
+One point that is not addressed in the formulation of generalized numerical inversion is the difference between the mean, median, and mode of the target distributions; this difference was expounded on particularly thoroughly in the discussion of numerical inversion itself in Chapter~\ref{ch:NI}.
 The neural network $L$ in generalized numerical inversion learns whatever the loss function indicates it to learn; e.g., if the loss is a mean squared loss then it learns the mean over the corresponding distribution.
 The Author has contributed to a project~\cite{Cheong:2019upg} which discusses exactly how to learn the mean, median, or mode of the corresponding distributions with neural networks.
 This technique can be used to more closely align with the physics goals of the ATLAS jet calibration.
@@ -413,6 +413,6 @@ This technique can be used to more closely align with the physics goals of the A
 This Chapter has presented a novel regression-based jet energy calibration procedure implemented with neural networks, called generalized numerical inversion.
 Generalized numerical inversion generalizes numerical inversion and in particular retains the key property of being independent of the underlying spectrum (Chapter~\ref{ch:NI}).
 The new method is able to take into account multiple auxiliary jet features simultaneously, which is an improvement over the current sequential method - in particular, correlations in the response between various jet features can be corrected for.
-The new technique is shown to reduce the response difference between quark and gluon jets by using features associated with the jet provenance, and furthermore is shown to mitigate the effect of mismodeling of the underlying disrtribution of the features themselves.
+The new technique is shown to reduce the response difference between quark and gluon jets by using features associated with the jet provenance, and furthermore is shown to mitigate the effect of mismodeling of the underlying distribution of the features themselves.
 The simultaneous calibration offers similar benefits to the sequential calibration for the jet energy resolution and by construction has no impact on the inclusive closure of the jet calibration.
 These improvements and new extensions of this technique can directly improve the performance of the searches presented in this Thesis (Chapter~\ref{ch:HBSM} and Chapter~\ref{ch:CWoLa}) and of searches and measurements in ATLAS in general.

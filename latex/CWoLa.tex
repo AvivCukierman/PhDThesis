@@ -65,7 +65,7 @@ for other signals, especially at low $m_B,m_C$, the technique sets about the sam
 This Chapter is organized as follows.
 First, Section~\ref{sec:CWoLa:eventsamples} introduces the data and simulated event samples.
 Section~\ref{sec:CWoLa:analysis} gives a broad overview of the analysis, including the validation and blinding approach, and Section~\ref{sec:CWoLa:analysis_details} goes over the steps of the analysis in detail.
-Section~\ref{sec:CWoLa:simulation_analysis} demonstrates the full analysis pipeline using dijet monte carlo to simulate the expected data.
+Section~\ref{sec:CWoLa:simulation_analysis} demonstrates the full analysis pipeline using dijet Monte Carlo events to simulate the expected data.
 Section~\ref{sec:CWoLa:val_analysis} demonstrates the full analysis pipeline using validation data with an inverted delta rapidity cut as a proxy for the expected data in the non-inverted signal region.
 The results of the unblinded analysis are presented in Section~\ref{sec:CWoLa:unblinded}.
 Finally, some aspects of the analysis, including the future outlook, are discussed in Section~\ref{sec:CWoLa:discussion} and the conclusions are provided in Section~\ref{sec:CWoLa:conclusion}.
@@ -257,7 +257,7 @@ Under these assumptions, the outline of the analysis is as follows.
       \item If the signal mass peak does not lie in the signal region or sideband regions, or if there is no signal at all, then the network will learn to distinguish between the background events in the signal and sideband regions based on the features $X$, as far as such correlations exist.\label{case3}
     \end{enumerate}
     Note that, in Cases~\ref{case1} and~\ref{case2}, the network is sensitive to both the difference in the distribution of the features $X$ between the signal and the background, and to the differences between the background in the signal region and the background in the sideband regions.
-    In order to allow the network to focus on tagging the signal versus the background, the sideband regions are chosen to be adjacent to the signal region in kinematic space so that the difference in the features in the background between the signal and sideband regions is minimzed.
+    In order to allow the network to focus on tagging the signal versus the background, the sideband regions are chosen to be adjacent to the signal region in kinematic space so that the difference in the features in the background between the signal and sideband regions is minimized.
   \label{step4}
   \item Tag events by choosing events with high neural network output.
     In Case~\ref{case1}, the neural network is a signal tagger, so the signal-to-background ratio increases, in particular increasing the significance of the signal peak over the background $m_{JJ}$ shape. 
@@ -333,7 +333,7 @@ In general, doing a parametric background fit on large datasets tends to be a ke
 this challenge was compounded due to the effective statistics of the background in each of these steps, which is expanded on below.
 
 The effective statistics of the inverted sample compared with the nominal sample and the simulation are presented in Figure~\ref{fig:CWoLa:effectivestats}\footnote{Also given for good measure are the statistics for 3.2\ifb, which corresponds to the 2015 LHC dataset.}.
-The binnings presented there are those defined in Section~\ref{sec:CWoLa:binning}, and given in Table~\ref{tab:mjj_bins}.
+The bins presented there are those defined in Section~\ref{sec:CWoLa:binning}, and given in Table~\ref{tab:mjj_bins}.
 For the simulation, the effective statistics is defined as the inverse of the sum of the squares of the normalized event weights.
 For the central dataset, the MC statistics are relatively uniform in $m_{JJ}$ and there are only more effective events past the third bin, with boundaries at $1.90 \le m_{JJ} < 2.28$ TeV.
 Even in the fourth bin ($2.28 \le m_{JJ} < 2.74$ TeV), there are events with a large weight, which makes the training and fitting unrealistic.
@@ -618,7 +618,7 @@ Note that the distribution of $\Phi_s(m)$ over all jets in $m_{JJ}$ region $s$ i
 The ECDF is a good approximation of the true CDF in regions where there are a sufficient number of samples.
 This motivates the choice to place a maximum cut on the jet mass at $500 \GeV$, in order to restrict to the region in which the CDF can be approximated well.
 
-Then, for a given signal segion $s$, the masses of all jets in the sideband segions $s-1$ and $s+1$ are rescaled to the signal segion:
+Then, for a given signal region $s$, the masses of all jets in the sideband regions $s-1$ and $s+1$ are rescaled to the signal region:
 \begin{align}
   \begin{cases}
     m \rightarrow \Phi^{-1}_s\left(\Phi_{s-1}\left(m\right)\right) & m \in \text{region } s-1 \\
@@ -637,7 +637,7 @@ This scaling is demonstrated for an example signal and sideband regions in Figur
     \caption{The distributions of $m$ in simulation, comparing between signal region $s=5$ and sideband regions $s-1=4$ and $s+1=6$.
     (a) Before any scaling.
     (b) After scaling via the empirical cumulative distribution function.
-    (c) Including an injected signal sample with $m_A,m_B,m_C=3000,200,200$ GeV, which lies mostly in signal segion 5, and with $\frac{S}{\sqrt{B}}\sim 2$ in that region.
+    (c) Including an injected signal sample with $m_A,m_B,m_C=3000,200,200$ GeV, which lies mostly in signal region 5, and with $\frac{S}{\sqrt{B}}\sim 2$ in that region.
     (d) After scaling, with the presence of the signal sample.}
     \label{fig:CWoLa:m_scaling}
 \end{figure}
@@ -1046,7 +1046,7 @@ For deriving the 95\% confidence exclusion limits $\mu_{95}$, it is necessary to
 The NN output depends on the presence of the signal, and in particular gets better at tagging signal the more signal there is (Section~\ref{sec:CWoLa:simulation:NN}). 
 Therefore, the $\mu_{95}$ values are evaluated by first injecting a certain amount of signal $\mu$, running the NN training, and then performing the statistical analysis, deriving a limit $\mu_{95}(\mu)$ which is a multiple of the injected signal strength while keeping the NN fixed. 
 In particular, the values $\mu_{95}(\mu)$ are functions of the injected signal strength $\mu$, derived from performing the statistical analysis after such a signal is injected.
-Ideally, $\mu$ would be scanned until $\mu_{95}(\mu)=\mu\equiv\hat{\mu}_{95}$ - with this strength of signal present, that exact signal would be exluded.
+Ideally, $\mu$ would be scanned until $\mu_{95}(\mu)=\mu\equiv\hat{\mu}_{95}$ - with this strength of signal present, that exact signal would be excluded.
 
 However, it is expensive to scan finely over the injected $\mu$ (because of the requirement to retrain the NN at each value), so upper limits on $\hat{\mu}_{95}$ are derived by injecting a coarse grid of signal strengths $\mu$; for each analysis (validation in simulation (Section~\ref{sec:CWoLa:simulation:statanalysis}), validation in data (Section~\ref{sec:CWoLa:inverted:statisticalanalysis}), and unblinded (Section~\ref{sec:CWoLa:unblinded:limits})) this grid is provided in the respective section.
 In order to simulate a true signal, for each given injected signal strength $\mu$, exactly $\mu$ events are chosen from the given signal MC sample, with probability proportional to the MC weight.
@@ -1108,7 +1108,7 @@ A study is performed by training the neural network with different injected sign
 For $m_A=3000$ GeV, this signal lies in signal region 5.
 In this region, there are roughly $1.0\times10^5$ background events, and $\mu$ is set to 1500; after all event selections ($~45\%$ efficiency), there are roughly $650$ signal events in signal region 5, for a signal fraction of $\sim 0.7\%$ and an estimated significance $\frac{S}{\sqrt{B}}$ $\sim 2$.
 The results of this study can be seen in Figure~\ref{fig:CWoLa:vary_signal_sigR5}.
-The network succesfully learns to tag the kinematic region near the true signal as being signal-like.
+The network successfully learns to tag the kinematic region near the true signal as being signal-like.
 
 \begin{figure}[htbp]
   \centering 
@@ -1203,7 +1203,7 @@ Example fits in the coarse bins used for training are shown in Figure~\ref{fig:C
     \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{mjj_loglog_fit_all_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1500_patience1000_SEC_4params_4.10.19}.pdf}}
     \subfloat[]{\includegraphics[width=0.45\textwidth]{figures_CWoLa/{mjj_loglog_fit_q99_sigR5_Wprime_WZqqqq_M3000_m200_m200_nS1500_patience1000_SEC_4params_4.10.19}.pdf}}
     \caption{Example fits to the $m_{JJ}$ spectrum using the functional form given in Equation~\ref{eqn:CWoLa:fitfunction}.
-    There is an injected signal sample at $m_A,m_B,m_C=3000,200,200$ GeV, which lies mostly in signal segion 5, and with $\frac{S}{\sqrt{B}}\sim 2$ in that region. (a) With no cut on the NN output; (b) Training a NN with signal region $s=5$ ($2.74-3.28$~\TeV), and making a cut on the NN output at efficiency $\epsilon=0.01$.   The red band indicates the uncertainty on the fit, which is due to the covariance matrix from the fit parameters. The green dashed lines indicate the signal region for training.}
+    There is an injected signal sample at $m_A,m_B,m_C=3000,200,200$ GeV, which lies mostly in signal region 5, and with $\frac{S}{\sqrt{B}}\sim 2$ in that region. (a) With no cut on the NN output; (b) Training a NN with signal region $s=5$ ($2.74-3.28$~\TeV), and making a cut on the NN output at efficiency $\epsilon=0.01$.   The red band indicates the uncertainty on the fit, which is due to the covariance matrix from the fit parameters. The green dashed lines indicate the signal region for training.}
     \label{fig:CWoLa:examplefits}
 \end{figure}
 
@@ -1598,7 +1598,7 @@ The jet mass distributions in a few representative signal regions are shown in F
 \label{fig:CWoLa:unblinded:m1m2plane}
 \end{figure}
 
-As mentioned in Section~\ref{sec:CWoLa:fitting}, the efficiency values used in this analysis are restrcted to $\epsilon=\{0.1,0.01\}$.
+As mentioned in Section~\ref{sec:CWoLa:fitting}, the efficiency values used in this analysis are restricted to $\epsilon=\{0.1,0.01\}$.
 These values are listed in Table~\ref{tab:effs_final}.
 \begin{table}[htb]
   \centering
