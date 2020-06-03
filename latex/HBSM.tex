@@ -532,7 +532,7 @@ The efficiency of the event selection for the $pp\to H\to aa \to \gamma\gamma gg
 assuming the SM cross-section and kinematics for the different production modes as described in~\cite{deFlorian:2016spz}.
 
 \begin{table}[htbp]
-  \begin{adjustwidth}{-2cm}{-2cm}
+  %\begin{adjustwidth}{-2cm}{-2cm}
   \begin{center}
     \caption{Efficiency of analysis cuts for a sample of signal masses $m_a$ in each of the ABCD regions.
       The analysis regime used is the one most efficient at that signal mass.
@@ -563,33 +563,93 @@ assuming the SM cross-section and kinematics for the different production modes 
 	\hline
 	\end{tabular}
         \egroup
-          }
+          }\\
     %VBF effs:
     \subfloat[][]{\footnotesize
             \bgroup
             \def\arraystretch{1.5}
-            \begin{tabular}{llll}
+            \begin{tabular}{cllll}
               \hline
                  %$m_a$ [GeV] & A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
-                 A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
+                 $m_a$ [GeV] & A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
               \hline
 %                          $4.1^{+2.2}_{-0.9}$    & $14^{+6}_{-5}$   & $27^{+16}_{-12}$ & $60^{+17}_{-17}$  \\
 %                          $6.9^{+2.6}_{-1.8}$    & $31^{+9}_{-8}$   & $55^{+20}_{-15}$ & $260^{+60}_{-70}$ \\
 %                          $8.6^{+4.5}_{-2.5}$    & $30^{+10}_{-9}$   & $68^{+16}_{-18}$ & $250^{+60}_{-60}$ \\
 %                          $10.1^{+2.5}_{-3.2}$   & $44^{+12}_{-16}$ & $42^{+18}_{-10}$ & $230^{+50}_{-70}$ \\
 %                          $9^{+4}_{-4}$          & $35^{+10}_{-13}$ & $50^{+16}_{-16}$ & $230^{+50}_{-60}$ \\
- $4.1\pm1.6$           & $14\pm5$           & $27\pm13$          & $60\pm17$           \\
- $6.9\pm2.1$           & $31\pm9$           & $55\pm18$          & $260^{+60}_{-80}$ \\
- $8.6\pm3.4$           & $30\pm9$           & $68^{+14}_{-19}$ & $250\pm60$          \\
- $10.1\pm2.8$           & $44\pm14$          & $42^{+18}_{-10}$ & $230^{+60}_{-70}$ \\
- $9\pm4$           & $34\pm11$          & $50\pm16$          & $230\pm60$          \\
+              20 & $4.1\pm1.6$           & $14\pm5$           & $27\pm13$          & $60\pm17$           \\
+              30 & $6.9\pm2.1$           & $31\pm9$           & $55\pm18$          & $260^{+60}_{-80}$ \\
+              40 & $8.6\pm3.4$           & $30\pm9$           & $68^{+14}_{-19}$ & $250\pm60$          \\
+              50 & $10.1\pm2.8$           & $44\pm14$          & $42^{+18}_{-10}$ & $230^{+60}_{-70}$ \\
+              60 & $9\pm4$           & $34\pm11$          & $50\pm16$          & $230\pm60$          \\
               \hline
             \end{tabular}
             \egroup
           }
   \end{center}
-\end{adjustwidth}
+%\end{adjustwidth}
 \end{table}
+
+%\begin{table}[htbp]
+%  \begin{adjustwidth}{-2cm}{-2cm}
+%  \begin{center}
+%    \caption{Efficiency of analysis cuts for a sample of signal masses $m_a$ in each of the ABCD regions.
+%      The analysis regime used is the one most efficient at that signal mass.
+%      The uncertainties account for the total effect of the systematic sources of uncertainty.
+%      (a) Simulated signal events produced in the gluon fusion mode.
+%      (b) Simulated signal events produced in the vector boson fusion mode.}
+%    %(c) Combined production modes.}
+%    \label{tab:HBSM:ABCD_separated}
+%    % ggH effs:
+%    \subfloat[][]{\footnotesize
+%      \bgroup
+%      \def\arraystretch{1.5}
+%      \begin{tabular}{cllll}
+%	\hline
+%	   $m_a$ [GeV] & A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$   \\
+%	   %A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$   \\
+%	\hline
+%%		    20 & $0.25^{+0.19}_{-0.10}$  & $0.26^{+0.20}_{-0.11}$  & $2.4^{+0.4}_{-0.4}$  & $2.4^{+0.8}_{-0.8}$   \\
+%%		    30 & $0.86^{+0.25}_{-0.26}$ & $1.40^{+0.29}_{-0.34}$  & $4.4^{+0.8}_{-1.1}$   & $8.5^{+2.0}_{-1.9}$    \\
+%%		    40 & $0.66^{+0.25}_{-0.26}$ & $1.4^{+0.6}_{-0.4}$   & $3.8^{+0.9}_{-1.3}$   & $10.0^{+2.4}_{-2.3}$   \\
+%%		    50 & $0.28^{+0.11}_{-0.18}$ & $1.6^{+0.4}_{-0.4}$  & $2.4^{+0.6}_{-0.7}$  & $9.0^{+2.3}_{-2.0}$    \\
+%%		    60 & $0.16^{+0.24}_{-0.05}$ & $1.8^{+0.4}_{-0.4}$  & $1.8^{+0.6}_{-0.5}$  & $8.4^{+2.4}_{-2.1}$    \\
+%                    20 & $0.25^{+0.17}_{-0.12}$ & $0.26^{+0.20}_{-0.11}$ & $2.4\pm0.4$          & $2.4\pm0.8$          \\
+%                    30 & $0.86\pm0.24$          & $1.39\pm0.31$          & $4.4^{+0.8}_{-1.1}$  & $8.5\pm2.0$           \\
+%                    40 & $0.67\pm0.25$          & $1.4\pm0.5$          & $3.8^{+0.9}_{-1.3}$  & $10.3\pm2.3$           \\
+%                    50 & $0.28\pm0.14$          & $1.6\pm0.4$          & $2.4\pm0.6$          & $9.0\pm2.2$           \\
+%                    60 & $0.16^{+0.19}_{-0.11}$  & $1.8\pm0.4$          & $1.8\pm0.5$          & $8.4\pm2.2$           \\
+%	\hline
+%	\end{tabular}
+%        \egroup
+%          }
+%    %VBF effs:
+%    \subfloat[][]{\footnotesize
+%            \bgroup
+%            \def\arraystretch{1.5}
+%            \begin{tabular}{llll}
+%              \hline
+%                 %$m_a$ [GeV] & A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
+%                 A $(\times 10^{-5})$   & B $(\times 10^{-5})$   & C $(\times 10^{-5})$   & D $(\times 10^{-5})$    \\
+%              \hline
+%%                          $4.1^{+2.2}_{-0.9}$    & $14^{+6}_{-5}$   & $27^{+16}_{-12}$ & $60^{+17}_{-17}$  \\
+%%                          $6.9^{+2.6}_{-1.8}$    & $31^{+9}_{-8}$   & $55^{+20}_{-15}$ & $260^{+60}_{-70}$ \\
+%%                          $8.6^{+4.5}_{-2.5}$    & $30^{+10}_{-9}$   & $68^{+16}_{-18}$ & $250^{+60}_{-60}$ \\
+%%                          $10.1^{+2.5}_{-3.2}$   & $44^{+12}_{-16}$ & $42^{+18}_{-10}$ & $230^{+50}_{-70}$ \\
+%%                          $9^{+4}_{-4}$          & $35^{+10}_{-13}$ & $50^{+16}_{-16}$ & $230^{+50}_{-60}$ \\
+% $4.1\pm1.6$           & $14\pm5$           & $27\pm13$          & $60\pm17$           \\
+% $6.9\pm2.1$           & $31\pm9$           & $55\pm18$          & $260^{+60}_{-80}$ \\
+% $8.6\pm3.4$           & $30\pm9$           & $68^{+14}_{-19}$ & $250\pm60$          \\
+% $10.1\pm2.8$           & $44\pm14$          & $42^{+18}_{-10}$ & $230^{+60}_{-70}$ \\
+% $9\pm4$           & $34\pm11$          & $50\pm16$          & $230\pm60$          \\
+%              \hline
+%            \end{tabular}
+%            \egroup
+%          }
+%  \end{center}
+%\end{adjustwidth}
+%\end{table}
 
 \begin{table}[t]
   \begin{center}
@@ -650,27 +710,45 @@ In order to quantify the non-closure, the data-driven estimation as described ab
 in the validation region.
 For each $m_{\gamma\gamma}$ regime, the closure uncertainty is defined to be the central value of the non-closure if it is found to be significant ($>1\sigma$) in comparison with its statistical uncertainty; otherwise, the statistical uncertainty of its estimate is used.
 The events in region D of the signal region were blinded while the analysis selections were being optimized, and only unblinded after the entire analysis strategy was frozen.
-Figure~\ref{fig:HBSM:ABCD_bars} shows the distribution of the data in each of the $m_{\gamma\gamma}$ analyses regimes, in the validation and signal regions, with an expected signal that has high efficiency in that analysis regime.
+Figures~\ref{fig:HBSM:ABCD_bars_val} and~\ref{fig:HBSM:ABCD_bars_sig} show the distribution of the data in each of the $m_{\gamma\gamma}$ analyses regimes, in the validation and signal regions, respectively, with an expected signal that has high efficiency in that analysis regime.
 The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the predicted contribution from the background closure and the signal contribution.
 The unblinded results can be found in Section~\ref{sec:HBSM:results}.
 
 \begin{figure}[htbp]
   \centering 
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m20_a20_ggyy_8.7.17}.pdf}}
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m20_a20_ggyy_8.7.17}.pdf}}\\
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m30_a30_ggyy_8.7.17}.pdf}}
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m30_a30_ggyy_8.7.17}.pdf}}\\
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m40_a40_ggyy_8.7.17}.pdf}}
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m40_a40_ggyy_8.7.17}.pdf}}\\
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m50_a50_ggyy_8.7.17}.pdf}}
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m50_a50_ggyy_8.7.17}.pdf}}\\
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_val_VBF8_m60_a60_ggyy_8.7.17}.pdf}}
-  \subfloat[]{\includegraphics[width=0.25\textwidth]{figures/{ABCD_bars_sig_VBF8_m60_a60_ggyy_8.7.17}.pdf}}\\
-  \caption{Number of events in data and signal MC (with (top row) $m_a=20$ GeV; (second row) $m_a=30$ GeV; (third row) $m_a=40$ GeV; (fourth row) $m_a=50$ GeV; (fifth row) $m_a=60$ GeV) in each region of the ABCD method.
-  The analysis regimes are 1-5 from the top row to the bottom, respectively,. The data prediction assumes closure (\ref{eqn:HBSM:closure}) in the background in the absence of signal. The signal is normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$. The errors shown are statistical. (left) The validation region. (right) The signal region.
-The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the expected and the signal contribution.
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_val_VBF8_m20_a20_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_val_VBF8_m30_a30_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_val_VBF8_m40_a40_ggyy_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_val_VBF8_m50_a50_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_val_VBF8_m60_a60_ggyy_8.7.17}.pdf}}
+  \caption{
+  %Number of events in data and signal MC (with (top row) $m_a=20$ GeV; (second row) $m_a=30$ GeV; (third row) $m_a=40$ GeV; (fourth row) $m_a=50$ GeV; (fifth row) $m_a=60$ GeV) in each region of the ABCD method.
+  Number of events in data and signal MC in each region of the ABCD method, in the validation region.
+  The analysis regimes are (a-e) 1-5.
+  The data prediction assumes closure (\ref{eqn:HBSM:closure}) in the background in the absence of signal.
+  The signal is normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$.
+  The errors shown are statistical.
+  %The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the expected and the signal contribution.
 }
-  \label{fig:HBSM:ABCD_bars}
+  \label{fig:HBSM:ABCD_bars_val}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering 
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_sig_VBF8_m20_a20_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_sig_VBF8_m30_a30_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_sig_VBF8_m40_a40_ggyy_8.7.17}.pdf}}\\
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_sig_VBF8_m50_a50_ggyy_8.7.17}.pdf}}
+  \subfloat[]{\includegraphics[width=0.33\textwidth]{figures/{ABCD_bars_sig_VBF8_m60_a60_ggyy_8.7.17}.pdf}}
+  \caption{
+  Number of events in data and signal MC in each region of the ABCD method, in the signal region.
+  The analysis regimes are (a-e) 1-5.
+  The data prediction assumes closure (\ref{eqn:HBSM:closure}) in the background in the absence of signal.
+  The signal is normalized to a branching ratio BR($H\rightarrow aa \rightarrow \gamma\gamma jj)=0.03$.
+  The errors shown are statistical.
+  The observed events in the signal D region are blinded to draw attention to the closure in the validation region and the difference between the expected and the signal contribution.
+}
+  \label{fig:HBSM:ABCD_bars_sig}
 \end{figure}
 
 In the validation region closure can be observed, to within the statistical uncertainties.
@@ -842,9 +920,9 @@ of the $m_{\gamma\gamma}$ regimes for an illustrative $m_a$ hypothesis. The stat
           {\footnotesize
 	  \begin{tabular}{cccccc}
 	  \hline
-          &\multicolumn{5}{c}{$m_{\gamma\gamma}$ regime} \\
-          Source of Uncert.   &    1  &   2  &   3  &   4  &   5  \\
-            &   $m_a=20~\GeV{}$ &  $m_a=30~\GeV{}$ &  $m_a=40~\GeV{}$ &  $m_a=50~\GeV{}$ &  $m_a=60~\GeV{}$ \\
+          &\multicolumn{5}{c}{$m_{\gamma\gamma}$ regime ($m_a$)} \\
+          Source of Uncert.   &    1 ($20~\GeV$)  &   2 ($30~\GeV$)  &   3 ($40~\GeV$)  &   4 ($50~\GeV$)  &   5 ($60~\GeV$)  \\
+          %  &   $m_a=20~\GeV{}$ &  $m_a=30~\GeV{}$ &  $m_a=40~\GeV{}$ &  $m_a=50~\GeV{}$ &  $m_a=60~\GeV{}$ \\
           \hline
 	  Statistical          &     0.73 &     0.51 &     0.89 &     1.13 &     0.92 \\
 	  Closure              &     0.44 &     0.27 &     0.39 &     0.64 &     0.89 \\
@@ -902,14 +980,16 @@ The limit is calculated using a frequentist $\text{CL}_\text{s}$ calculation~\ci
   \begin{center}
     \caption{Observed (expected) upper limits at the 95\% CL, for each of the $m_a$ values considered in the search.
       In each case, the $m_{\gamma\gamma}$ regime used to calculate the limits is also indicated.
-      The uncertainties include both the statistical and systematic sources of uncertainty in the fit.}
+      The uncertainties include both the statistical and systematic sources of uncertainty in the fit.
+      $B=B(H\to aa \to \gamma\gamma gg)$ is defined as the branching ratio to the signal being targeted in this search.
+    }
     \label{tab:HBSM:limits}
           {\footnotesize
             \bgroup
             \def\arraystretch{1.5}
             \begin{tabular}{ccr@{}lr@{}lr@{}l}
 	    \hline
-            $m_{\gamma\gamma}$ regime & $m_a$ [\GeV{}] & \multicolumn{2}{c}{$\mu_\text{S}$}   & \multicolumn{2}{c}{$\sigma_H\times B(H\to aa \to \gamma\gamma gg)$ [pb]}  & \multicolumn{2}{c}{$\frac{\sigma_H}{\sigma_\text{SM}}\times B(H\to aa \to \gamma\gamma gg)$} \\
+            $m_{\gamma\gamma}$ regime & $m_a$ [\GeV{}] & \multicolumn{2}{c}{$\mu_\text{S}$}   & \multicolumn{2}{c}{\hspace{1.005cm}$\sigma_H\times B$ [pb]}  & \multicolumn{2}{c}{$\frac{\sigma_H}{\sigma_\text{SM}}\times B$} \\
 	    \hline
             1 & 20 & $10.8\Big(10.4$&$^{+4.6}_{-3.1}\Big)$   & \hspace{1.1cm}$4.8\Big(4.6$&$^{+2.1}_{-1.4}\Big)$  & \hspace{0.505cm}$0.086\Big(0.082$&$^{+0.037}_{-0.025}\Big)$ \\
             1 & 25 & $10.4\Big(10.9$&$^{+3.8}_{-2.5}\Big)$   & $1.9\Big(2.0$&$^{+0.7}_{-0.5}\Big)$  & $0.034\Big(0.036$&$^{+0.013}_{-0.008}\Big)$ \\
