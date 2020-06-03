@@ -308,15 +308,15 @@ However, the median dataset can be used to test the validity of the background s
 \section{Analysis Software}
 \label{app:CWoLa:software}
 
-The \href{https://gitlab.cern.ch/acukierm/mc16-xAOD-ntuple-maker}{mc16-xAOD-ntuple-maker} package is used to create ntuples used for the analysis.
-The machine learning code can be found in \href{https://gitlab.cern.ch/cwola-hunting/cwola-hunting-learning}{cwola-hunting-learning} package.
+The \texttt{mc16-xAOD-ntuple-maker} (\href{https://gitlab.cern.ch/acukierm/mc16-xAOD-ntuple-maker}{https://gitlab.cern.ch/acukierm/mc16-xAOD-ntuple-maker}) package is used to create ntuples used for the analysis.
+The machine learning code can be found in the \texttt{cwola-hunting-learning} (\href{https://gitlab.cern.ch/cwola-hunting/cwola-hunting-learning}{https://gitlab.cern.ch/cwola-hunting/cwola-hunting-learning}) package.
 %The final fit was performed using the \href{https://gitlab.cern.ch/atlas-phys/exot/dbl/ResonanceFinder}{ResonanceFinder} package.   Our modifications to this package can be found \href{https://gitlab.cern.ch/cwola-hunting/fitting/tree/minimal}{here}.
 
 \section{Fitting Software}
 \label{app:CWoLa:fitting_software}
-The statistical analysis uses the \href{https://gitlab.cern.ch/atlas-phys/exot/dbl/ResonanceFinder}{\texttt{ResonanceFinder}} package from the DBL group.
+The statistical analysis uses the \texttt{ResonanceFinder} package from the DBL group.
 This code is based on RooFit~\cite{Verkerke:2003ir}, RooStats~\cite{Moneta:2010pm}, and HistFactory~\cite{Cranmer:1456844}.
-Significant modifications for the background fitting were made for this analysis, which can be found \href{https://gitlab.cern.ch/cwola-hunting/fitting/tree/minimal}{here}.
+Significant modifications for the background fitting were made for this analysis, which can be found in the dedicated branch (\href{https://gitlab.cern.ch/cwola-hunting/fitting/tree/minimal}{https://gitlab.cern.ch/cwola-hunting/fitting/tree/minimal}).
 
 
 \section{Bin Offset Test}
@@ -724,7 +724,7 @@ There are far more jobs with injected signal.
 We look at 12 signal mass points, and $\mathcal{O}(10)$ $\mu$ values for each, and for a given signal hypothesis only in a single signal region.
 For the full unblinded analysis each training is repeated $5$ times with random samplings of the signal.
 Therefore, for the full unblinded analysis, there are $4\times 5\times 12\times 10\times 5 = 12000$ jobs.
-The Author is especially grateful for the \href{https://atlas.slac.stanford.edu/using-the-slac-computing-resourcesi}{computing resources at SLAC}, which provide a batch CPU system on which a single user can reliably run about 400 jobs simultaneously.
+The Author is especially grateful for the computing resources at SLAC (\href{https://atlas.slac.stanford.edu/using-the-slac-computing-resources}{https://atlas.slac.stanford.edu/using-the-slac-computing-resources}), which provide a batch CPU system on which a single user can reliably run about 400 jobs simultaneously.
 Altogether it takes $\mathcal{O}$(days-weeks) in compute time to reproduce all the results in this analysis. 
 
 Each job stores $\mathcal{O}(100)$ MB of data in output, since there are tens of millions of events for which a few key features have to be stored, e.g. the NN output and the values of the features and $m_{JJ}$.
